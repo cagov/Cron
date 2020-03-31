@@ -1,5 +1,5 @@
 {
-  "name": "@cagov/Cron",
+  "name": "scraper",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^3.0.0",
     "node-fetch": "^2.6.0",
-    "xlsx": "^0.15.5"
+    "puppeteer": "^2.1.0",
+    "readdir": "^0.1.0"
   }
 }
