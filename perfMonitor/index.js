@@ -62,14 +62,11 @@ module.exports = async function(context, myTimer) {
       ]
     };
 
-    fetch(
-      "https://hooks.slack.com/services/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",
-      {
-        method: "post",
-        body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json" }
-      }
-    ).then(res => {
+    fetch(process.env["SLACK_PERF_WEBHOOK"], {
+      method: "post",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" }
+    }).then(res => {
       console.log(res);
     });
   };
