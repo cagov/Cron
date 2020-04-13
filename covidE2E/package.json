@@ -1,0 +1,16 @@
+{
+  "name": "covidE2E",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest test/*.spec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^25.3.0",
+    "puppeteer": "^2.1.1"
+  }
+}
