@@ -26,7 +26,7 @@ const height = 800;
 
 beforeAll(async () => {
   browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     slowMo: 80,
     args: [`--window-size=${width},${height}`]
   });
@@ -40,8 +40,45 @@ describe('homepage', () => {
     await page.waitForSelector('.jumbotron');
 
     const links = await page.$$eval('a', anchors => anchors);
-    expect(links.length).toBeGreaterThan(4);
+    expect(links.length).toBeGreaterThan(10);
+
+    let answers = await page.$$eval('.col-md-6 li', answers => { return answers })
+    expect(answers.length).toBeGreaterThan(6);
+    
   }, timeout);
+});
+
+
+describe("stay home", () => {
+  test("stay home", async () => {
+    await page.goto(hostname+'/stay-home-except-for-essential-needs/');
+    let answers = await page.$$eval('.col-lg-8 p', answers => { return answers });
+    expect(answers.length).toBeGreaterThan(1);
+
+   
+  }, timeout);
+
+});
+
+describe("alerts", () => {
+  test("sign up for alerts", async () => {
+    await page.goto(hostname+'/sign-up-for-county-alerts/');
+
+    await page.waitForSelector(".city-search");
+    await page.type(".city-search", '9582');
+
+    await page.waitForSelector("#awesomplete_list_1 li");
+    let listitems = await page.$$eval('#awesomplete_list_1 li', listitems => { return listitems });
+    expect(listitems.length).toBeGreaterThan(1);
+
+    await page.type(".city-search", '1');
+    await page.click('button[type="submit"]');
+
+    let answers = await page.$$eval('.js-county-alert p', answers => { return answers });
+    expect(answers.length).toBeGreaterThan(0);
+   
+  }, timeout);
+
 });
 
 
