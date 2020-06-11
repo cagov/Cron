@@ -2,6 +2,17 @@
 
 This project scrapes the www.covid19.ca.gov website to create sets of questions and answers we can populate a database with and present to users on the search result page when they query for something closely related to that Q&A pair. This is helpful when the answer to a specific question is available somewhere on a larger page.
 
+## Content Authors
+
+The authors of the site content can help the scraper find question and answer pairs by adding classes to the elements on the site. The scraper successfully scrapes things using our accordions without additional help. Content we want to include outside of accordions should use these classes:
+
+- Every Quick Answer question or answer content needs to have the "js-qa" class
+- Every Quick Answer question should also have the js-qa-question class
+- Every Quick Answer answer should also have the js-qa-answer class
+- The order of the elements on the page is important, all js-qa-answer elements will be associated with the nearest js-qa-question element above them. We often have multiple elements that comprise a single answer which is fine: Add the class js-qa-answer to each separate WordPress block element
+- Using invisible elements for questions or answers is fine you can use code like <div style="display:none;" class="js-qa js-qa-question">The text of the desired question</div>
+
+
 ## Run scraper
 
 ```
@@ -15,9 +26,12 @@ The data collected in the scraper is put into a google sheet <a href="https://do
 Run the following commands to create a dataset with the metadata the content team has provided:
 
 ```
+node merge-editorial.js
 node compare.js
 npx json2csv -i all.json -o all.csv
 ```
+
+The output merged.tsv is the new knowledge base for azure qnamaker.ai
 
 ## Data collection
 

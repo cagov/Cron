@@ -12,6 +12,7 @@
   "dependencies": {
     "csvtojson": "^2.0.10",
     "json2csv": "^5.0.1",
+    "node-xlsx": "^0.15.0",
     "puppeteer": "^3.1.0",
     "tsvtojson": "^1.0.1",
     "turndown": "^6.0.0"

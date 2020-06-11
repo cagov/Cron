@@ -3,7 +3,7 @@ const fs = require('fs');
 const TurndownService = require('turndown')
 let turndownService = new TurndownService()
 
-let urls = ["https://covid19.ca.gov/taxes/", "https://covid19.ca.gov/stay-home-except-for-essential-needs/", "https://covid19.ca.gov/healthcare/", "https://covid19.ca.gov/business-and-employers/", "https://covid19.ca.gov/get-financial-help/", "https://covid19.ca.gov/education/", "https://covid19.ca.gov/workers/", "https://covid19.ca.gov/housing-and-homelessness/", "https://covid19.ca.gov/childcare/", "https://covid19.ca.gov/state-local-resources/", "https://covid19.ca.gov/guide-immigrant-californians/", "https://covid19.ca.gov/resources-for-emotional-support-and-well-being/", "https://covid19.ca.gov/contact-tracing/", "https://covid19.ca.gov/roadmap-counties/", "https://covid19.ca.gov/testing-and-treatment/", "https://covid19.ca.gov/healthcorps/", "https://covid19.ca.gov/industry-guidance/", "https://covid19.ca.gov/manage-stress-for-health/", "https://covid19.ca.gov/food-resources/", "https://covid19.ca.gov/masks-and-ppe/" ]
+let urls = ["https://covid19.ca.gov/symptoms-and-risks/", "https://covid19.ca.gov/taxes/", "https://covid19.ca.gov/stay-home-except-for-essential-needs/", "https://covid19.ca.gov/healthcare/", "https://covid19.ca.gov/business-and-employers/", "https://covid19.ca.gov/education/", "https://covid19.ca.gov/workers/", "https://covid19.ca.gov/get-financial-help/", "https://covid19.ca.gov/housing-and-homelessness/", "https://covid19.ca.gov/childcare/", "https://covid19.ca.gov/state-local-resources/", "https://covid19.ca.gov/guide-immigrant-californians/", "https://covid19.ca.gov/resources-for-emotional-support-and-well-being/", "https://covid19.ca.gov/contact-tracing/", "https://covid19.ca.gov/roadmap-counties/", "https://covid19.ca.gov/testing-and-treatment/", "https://covid19.ca.gov/healthcorps/", "https://covid19.ca.gov/industry-guidance/", "https://covid19.ca.gov/manage-stress-for-health/", "https://covid19.ca.gov/food-resources/", "https://covid19.ca.gov/masks-and-ppe/" ]
 
 async function goTo(url, page) {
   await page.goto(url);
@@ -19,9 +19,31 @@ async function goTo(url, page) {
       acObj.question = acc.querySelector('.accordion-title').textContent.trim();
       if(acObj.question !== "Menu") {
         acObj.answer = acc.querySelector('.card-body').innerHTML.replace(/\r?\n|\r/g,'');
-        data.accordions.push(acObj);  
+        data.accordions.push(acObj);
       }
     })
+
+    let otherQAItems = document.querySelectorAll(`.js-qa`);
+    let freeRangeQA = {};
+    otherQAItems.forEach(el => {
+      if(el.classList.contains('js-qa-question')) {
+        if(freeRangeQA.question && freeRangeQA.answer) {
+          data.accordions.push(freeRangeQA);
+          freeRangeQA = {};
+        }
+        freeRangeQA.question = el.textContent.trim();
+      }
+      if(el.classList.contains('js-qa-answer')) {
+        let answerContent = el.outerHTML.replace(/\r?\n|\r/g,'');
+        if(freeRangeQA.answer) {
+          freeRangeQA.answer += ' '+answerContent;
+        } else {
+          freeRangeQA.answer = answerContent;
+        }
+      }
+    })
+    data.accordions.push(freeRangeQA);
+
     return data;
   });
   return pageData;
@@ -33,10 +55,12 @@ async function run() {
   const page = await browser.newPage();
   for(let i = 0;i<urls.length;i++) {
     pageData = await goTo(urls[i], page);
-    pageData.accordions.forEach(item => {
-      let answer = turndownService.turndown(`${item.answer}<p>More info: <a href="${urls[i]}">${pageData.title}</a></p>`).replace(/\r?\n|\r/g,'\\n');
-      qnaFile += `${item.question}	${answer}	${urls[i]}\n`;
-    })
+    if(pageData.accordions) {
+      pageData.accordions.forEach(item => {
+        let answer = turndownService.turndown(`${item.answer}<p>More info: <a href="${urls[i]}">${pageData.title}</a></p>`).replace(/\r?\n|\r/g,'\\n');
+        qnaFile += `${item.question}	${answer}	${urls[i]}\n`;
+      })
+    }
   }
   // console.log(qnaFile)
   fs.writeFileSync('./qna.tsv',qnaFile,'utf8');

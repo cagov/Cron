@@ -14,7 +14,7 @@ async function run() {
       googleSheet = jsonObj;
     })
 
-  await tsvtojson('./qna.tsv')
+  await tsvtojson('./merged.tsv')
     .then(data=>{
       qnaScrape = data;
     })
