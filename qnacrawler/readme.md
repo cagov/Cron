@@ -6,12 +6,12 @@ This project scrapes the www.covid19.ca.gov website to create sets of questions 
 
 The authors of the site content can help the scraper find question and answer pairs by adding classes to the elements on the site. The scraper successfully scrapes things using our accordions without additional help. Content we want to include outside of accordions should use these classes:
 
-- Every Quick Answer question or answer content needs to have the "js-qa" class
-- Every Quick Answer question should also have the js-qa-question class
-- Every Quick Answer answer should also have the js-qa-answer class
+- Every Quick Answer question or answer content needs to have the ```js-qa``` class
+- Every Quick Answer question should also have the ```js-qa-question``` class
+- Every Quick Answer answer should also have the ```js-qa-answer``` class
 - The order of the elements on the page is important, all js-qa-answer elements will be associated with the nearest js-qa-question element above them. We often have multiple elements that comprise a single answer which is fine: Add the class js-qa-answer to each separate WordPress block element
-- Using invisible elements for questions or answers is fine you can use code like <div style="display:none;" class="js-qa js-qa-question">The text of the desired question</div>
-
+- Using invisible elements for questions or answers is fine you can use code like ```<div style="display:none;" class="js-qa js-qa-question">The text of the desired question</div>```
+- If you want to exclude an accordion from being turned into a quick answer add the class ```js-qa-exclude``` to it
 
 ## Run scraper
 
