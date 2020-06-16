@@ -27,10 +27,13 @@ async function writeFile() {
   })
 
   let scrapeMap = new Map();
+  let dups = [];
 
   function addItem(s){
     if(scrapeMap.get(s.Question)) {
       console.log('found dup');
+      s.duplicate = scrapeMap.get(s.Question)
+      dups.push(s)
     } else {
       scrapeMap.set(s.Question,s);
       console.log('unique')
@@ -52,6 +55,7 @@ async function writeFile() {
     QnaId++;
   })
   fs.writeFileSync('./merged.tsv',qnaFile,'utf8');
+  // console.log(dups)
 }
 
 writeFile();

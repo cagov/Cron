@@ -16,10 +16,12 @@ async function goTo(url, page) {
     let accordions = document.querySelectorAll(`cwds-accordion`);
     accordions.forEach((acc) => {
       let acObj = {};
-      acObj.question = acc.querySelector('.accordion-title').textContent.trim();
-      if(acObj.question !== "Menu") {
-        acObj.answer = acc.querySelector('.card-body').innerHTML.replace(/\r?\n|\r/g,'');
-        data.accordions.push(acObj);
+      if(!acc.querySelector('.js-qa-exclude')) {
+        acObj.question = acc.querySelector('.accordion-title').textContent.trim();
+        if(acObj.question !== "Menu") {
+          acObj.answer = acc.querySelector('.card-body').innerHTML.replace(/\r?\n|\r/g,'');
+          data.accordions.push(acObj);
+        }  
       }
     })
 
@@ -42,7 +44,9 @@ async function goTo(url, page) {
         }
       }
     })
-    data.accordions.push(freeRangeQA);
+    if(freeRangeQA.question && freeRangeQA.answer) {
+      data.accordions.push(freeRangeQA);
+    }
 
     return data;
   });
@@ -57,12 +61,20 @@ async function run() {
     pageData = await goTo(urls[i], page);
     if(pageData.accordions) {
       pageData.accordions.forEach(item => {
+        // we are using comments to add keywords but they get stripped by turndown so the following lines
+        let commentContent = '';
+        let commentStart = item.answer.indexOf('<!--');
+        if(commentStart > -1) {
+          let commentEnd = item.answer.indexOf('-->');
+          if(commentEnd > commentStart) {
+            commentContent = item.answer.substr(commentStart,commentEnd - commentStart + 3);
+          }
+        }
         let answer = turndownService.turndown(`${item.answer}<p>More info: <a href="${urls[i]}">${pageData.title}</a></p>`).replace(/\r?\n|\r/g,'\\n');
-        qnaFile += `${item.question}	${answer}	${urls[i]}\n`;
+        qnaFile += `${item.question}	${answer + commentContent}	${urls[i]}\n`;
       })
     }
   }
-  // console.log(qnaFile)
   fs.writeFileSync('./qna.tsv',qnaFile,'utf8');
   browser.close();
 }

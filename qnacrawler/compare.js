@@ -1,5 +1,5 @@
 const fs = require('fs')
-const csvFilePath='./Quick Answers content 05_26_2020 - Scrape v2.csv'
+const csvFilePath='./Quick Answers content.csv'
 const csv=require('csvtojson')
 const tsvtojson = require('tsvtojson');
 
