@@ -29,9 +29,15 @@ module.exports = async function (context, req) {
 	const yest = new Date()
 	yest.setDate(yest.getDate() - 1)
 	const yesterday = yest.toISOString().slice(0, 10);
+	const dayBeforeYest = new Date()
+	dayBeforeYest.setDate(dayBeforeYest.getDate() - 2)
+	const dayBeforeYesterday = dayBeforeYest.toISOString().slice(0, 10);
+
+	// SELECT * FROM "COVID"."OPEN_DATA"."STATEWIDE_CASES" where DATE(date) > '2020-06-30' -- starts yesterday
+	// SELECT * FROM "COVID"."OPEN_DATA"."STATEWIDE_TESTING" where DATE(date) >= '2020-06-30'
 
 	const testingData = new Promise((resolve, reject) => {
-		let sqlStatement = `select * from COVID.PUBLIC.TESTING_TALL where DATE(date) > '${yesterday}'`;
+		let sqlStatement = `SELECT * FROM "COVID"."OPEN_DATA"."STATEWIDE_TESTING" where DATE(date) = '${yesterday}'`;
 		connection.execute({
 			sqlText: sqlStatement,
 			complete: function(err, stmt, rows) {
@@ -40,42 +46,14 @@ module.exports = async function (context, req) {
 				} else {
 					console.log('Successfully executed statement: ' + stmt.getSqlText());
 				}
-				let output = {};
-				rows.forEach(row => {
-					if(row.TESTING === "Approximate Number of Tests Conducted") {
-						output.totalTestsConducted = row.TESTED
-					}
-				})
-				resolve({"testing": output})
-			}
-		});
-	});
-	const yesterdayCaseData = new Promise((resolve, reject) => {
-		connection.execute({
-			sqlText: `select * from COVID.PUBLIC.RUNNINGTOTALCASECOUNTS_TALL where DATE(date) = '${yesterday}'`,
-			complete: function(err, stmt, rows) {
-				if (err) {
-					console.error('Failed to execute statement due to the following error: ' + err.message);
-				} else {
-					console.log('Successfully executed statement: ' + stmt.getSqlText());
-				}
-				let totalDead = 0;
-				let totalCases = 0;
-				rows.forEach(row => {
-					totalDead += row.NUMBERDIED;
-					totalCases += row.TOTALCONFIRMED;	
-				})
-				resolve({"yesterdayCases": {
-					totalDead,
-					totalCases,
-				}})
+				resolve({"testing": rows[0]})
 			}
 		});
 	});
 
-	const todayCaseData = new Promise((resolve, reject) => {
+	const yesterdayCaseData = new Promise((resolve, reject) => {
 		connection.execute({
-			sqlText: `select * from COVID.PUBLIC.RUNNINGTOTALCASECOUNTS_TALL where DATE(date) = '${today}'`,
+			sqlText: `SELECT * FROM "COVID"."OPEN_DATA"."STATEWIDE_CASES" where DATE(date) = '${yesterday}'`,
 			complete: function(err, stmt, rows) {
 				if (err) {
 					console.error('Failed to execute statement due to the following error: ' + err.message);
@@ -84,13 +62,17 @@ module.exports = async function (context, req) {
 				}
 				let totalDead = 0;
 				let totalCases = 0;
+				let newDead = 0;
+				let newCases = 0;
 				countyData = [];
 				rows.forEach(row => {
-					totalDead += row.NUMBERDIED;
-					totalCases += row.TOTALCONFIRMED;
+					totalDead += row.TOTALCOUNTDEATHS;
+					totalCases += row.TOTALCOUNTCONFIRMED;
+					newDead += row.NEWCOUNTDEATHS;
+					newCases += row.NEWCOUNTCONFIRMED;
 					let truncatedObj = {};
-					truncatedObj.NUMBERDIED = row.NUMBERDIED;
-					truncatedObj.TOTALCONFIRMEDCASES = row.TOTALCONFIRMED;
+					truncatedObj.TOTALCOUNTDEATHS = row.TOTALCOUNTDEATHS;
+					truncatedObj.TOTALCOUNTCONFIRMED = row.TOTALCOUNTCONFIRMED;
 					truncatedObj.COUNTY = row.COUNTY;
 					truncatedObj.DATE = row.DATE;
 					countyData.push(truncatedObj)	
@@ -98,6 +80,8 @@ module.exports = async function (context, req) {
 				resolve({"todayCases": {
 					totalDead,
 					totalCases,
+					newDead,
+					newCases,
 					countyData
 				}})
 			}
@@ -106,25 +90,23 @@ module.exports = async function (context, req) {
 
 	let homeStats = {};
 
-	await Promise.all([testingData, yesterdayCaseData, todayCaseData]).then((values) => {
-		let caseDiff = values[2].todayCases.totalCases - values[1].yesterdayCases.totalCases;
-		let casePercentDiff = (caseDiff/values[1].yesterdayCases.totalCases * 100).toFixed(1);
-		let deathDiff = values[2].todayCases.totalDead - values[1].yesterdayCases.totalDead;
-		let deathPercentDiff = (deathDiff/values[1].yesterdayCases.totalDead * 100).toFixed(1);
-		values[2].todayCases.deadIncrease = deathPercentDiff;
-		values[2].todayCases.caseIncrease = casePercentDiff;
+	await Promise.all([testingData, yesterdayCaseData]).then((values) => {
+		let caseDiff = values[1].todayCases.newCases;
+		let casePercentDiff = (caseDiff/values[1].todayCases.totalCases * 100).toFixed(1);
+		let deathDiff = values[1].todayCases.newDead;
+		let deathPercentDiff = (deathDiff/values[1].todayCases.totalDead * 100).toFixed(1);
 
-		if(values[2].todayCases.totalCases > 80000) {
+		if(values[1].todayCases.totalCases > 80000) {
 			homeStats["Table1"] = [
 					{
-						"0 – year": today.split("-")[0],
-						"1 – month": today.split("-")[1],
-						"2 – day": today.split("-")[2],
-						"3 – total cases": values[2].todayCases.totalCases.toLocaleString(),
+						"0 – year": yesterday.split("-")[0],
+						"1 – month": yesterday.split("-")[1],
+						"2 – day": yesterday.split("-")[2],
+						"3 – total cases": values[1].todayCases.totalCases.toLocaleString(),
 						"4 – total cases increase": casePercentDiff,
-						"5 – total deaths": values[2].todayCases.totalDead.toLocaleString(),
+						"5 – total deaths": values[1].todayCases.totalDead.toLocaleString(),
 						"6 – total deaths increase": " "+deathPercentDiff,
-						"7 - tests reported": values[0].testing.totalTestsConducted.toLocaleString()
+						"7 - tests reported": values[0].testing.TESTED.toLocaleString()
 					}
 				]
 			}
@@ -132,6 +114,7 @@ module.exports = async function (context, req) {
 	});
 
 	let writtenFileCount = 0;
+
 	await new Promise((resolve, reject) => {
 		addToGithub(JSON.stringify(homeStats), githubBranch, githubApiUrl, statsLoc, (result) => {
 			if(result) {
@@ -142,24 +125,13 @@ module.exports = async function (context, req) {
 			}
 		})
 	})
-	
-	if(writtenFileCount) {
-		context.res = {
-			headers: {
-				'Content-Type' : 'application/json'
-			},
-			body: JSON.stringify(homeStats)
-		};
-	} else {
-		context.res = {
-			headers: {
-				'Content-Type' : 'application/json'
-			},
-			body: JSON.stringify({"error":"failed to write to github"})
-		};
-	}
+
+	homeStats.writtenFileCount = writtenFileCount;
+	context.res = {
+		headers: {
+			'Content-Type' : 'application/json'
+		},
+		body: JSON.stringify(homeStats)
+	};
 
 }
-
-// select * from COVID.PUBLIC.DOF_COUNTYPOP
-// CA Pop: 39740508
