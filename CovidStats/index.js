@@ -114,7 +114,7 @@ module.exports = async function (context, req) {
 	});
 
 	let writtenFileCount = 0;
-
+/*
 	await new Promise((resolve, reject) => {
 		addToGithub(JSON.stringify(homeStats), githubBranch, githubApiUrl, statsLoc, (result) => {
 			if(result) {
@@ -125,7 +125,7 @@ module.exports = async function (context, req) {
 			}
 		})
 	})
-
+*/
 	homeStats.writtenFileCount = writtenFileCount;
 	context.res = {
 		headers: {
