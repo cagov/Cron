@@ -92,9 +92,9 @@ module.exports = async function (context, req) {
 
 	await Promise.all([testingData, yesterdayCaseData]).then((values) => {
 		let caseDiff = values[1].todayCases.newCases;
-		let casePercentDiff = (caseDiff/values[1].todayCases.totalCases * 100).toFixed(1);
+		let casePercentDiff = (caseDiff/(values[1].todayCases.totalCases - caseDiff) * 100).toFixed(1);
 		let deathDiff = values[1].todayCases.newDead;
-		let deathPercentDiff = (deathDiff/values[1].todayCases.totalDead * 100).toFixed(1);
+		let deathPercentDiff = (deathDiff/(values[1].todayCases.totalDead - deathDiff) * 100).toFixed(1);
 
 		if(values[1].todayCases.totalCases > 80000) {
 			homeStats["Table1"] = [
