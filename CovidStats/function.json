@@ -4,7 +4,7 @@
       "name": "CovidStats",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 0 18 * * *"
+      "schedule": "0 45 18 * * *"
     }
   ]
 }
