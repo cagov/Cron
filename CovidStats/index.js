@@ -1,6 +1,6 @@
 const snowflake = require('snowflake-sdk');
 const githubApiUrl = "https://api.github.com/repos/cagov/covid19/";
-const githubBranch = "master";
+const githubBranch = "staging";
 const statsLoc = 'pages/_data/caseStats.json';
 const addToGithub = require('./git.js');
 
@@ -29,6 +29,7 @@ module.exports = async function (context, req) {
 	const yest = new Date()
 	yest.setDate(yest.getDate() - 1)
 	const yesterday = yest.toISOString().slice(0, 10);
+	const todayISO = today.toISOString().slice(0, 10);
 	const dayBeforeYest = new Date()
 	dayBeforeYest.setDate(dayBeforeYest.getDate() - 2)
 	const dayBeforeYesterday = dayBeforeYest.toISOString().slice(0, 10);
@@ -99,9 +100,9 @@ module.exports = async function (context, req) {
 		if(values[1].todayCases.totalCases > 80000) {
 			homeStats["Table1"] = [
 					{
-						"0 – year": yesterday.split("-")[0],
-						"1 – month": yesterday.split("-")[1],
-						"2 – day": yesterday.split("-")[2],
+						"0 – year": todayISO.split("-")[0],
+						"1 – month": todayISO.split("-")[1],
+						"2 – day": todayISO.split("-")[2],
 						"3 – total cases": values[1].todayCases.totalCases.toLocaleString(),
 						"4 – total cases increase": casePercentDiff,
 						"5 – total deaths": values[1].todayCases.totalDead.toLocaleString(),
