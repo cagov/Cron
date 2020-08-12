@@ -29,7 +29,6 @@ module.exports = async function (context, req) {
 	const yest = new Date()
 	yest.setDate(yest.getDate() - 1)
 	const yesterday = yest.toISOString().slice(0, 10);
-	const todayISO = today.toISOString().slice(0, 10);
 	const dayBeforeYest = new Date()
 	dayBeforeYest.setDate(dayBeforeYest.getDate() - 2)
 	const dayBeforeYesterday = dayBeforeYest.toISOString().slice(0, 10);
@@ -100,9 +99,9 @@ module.exports = async function (context, req) {
 		if(values[1].todayCases.totalCases > 80000) {
 			homeStats["Table1"] = [
 					{
-						"0 – year": todayISO.split("-")[0],
-						"1 – month": todayISO.split("-")[1],
-						"2 – day": todayISO.split("-")[2],
+						"0 – year": today.split("-")[0],
+						"1 – month": today.split("-")[1],
+						"2 – day": today.split("-")[2],
 						"3 – total cases": values[1].todayCases.totalCases.toLocaleString(),
 						"4 – total cases increase": casePercentDiff,
 						"5 – total deaths": values[1].todayCases.totalDead.toLocaleString(),
