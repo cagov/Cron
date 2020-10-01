@@ -23,9 +23,7 @@ node index.js
 
 This will write a new qna.tsv file which is the expected format of the Microsoft azure knowledge base. The internal search service on covid19.ca.gov currently points at the API provided by this knowledge base: <a href="https://www.qnamaker.ai/Edit/KnowledgeBase?kbId=714baa2f-18e8-4849-9d7d-6645e954aea0">call-center</a>
 
-The data collected in the scraper is put into a google sheet <a href="https://docs.google.com/spreadsheets/d/1ecR3d15c-zxF8ayjNdoQoOZRVej400I4sxaAB3n_EXo/edit#gid=1359512648">here</a> so the content team can review it. This google sheet is also included in the data studio linked below
-
-Run the following commands to create a dataset with the metadata the content team has provided:
+We have a couple manually created quick answers like the Larry David Easter egg. Run the following commands to merge those:
 
 ```
 node merge-editorial.js
