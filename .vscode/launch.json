@@ -7,6 +7,13 @@
       "request": "attach",
       "port": 9229,
       "preLaunchTask": "func: host start"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug sandbox/accordion_replacer",
+      "program": "accordion_replacer",
+      "cwd": "${workspaceRoot}/sandbox",
     }
   ]
 }
