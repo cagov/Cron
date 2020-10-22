@@ -8,11 +8,11 @@ const { queryDataset, getDatabaseConnection } = require('../CovidStateDashboard/
 
 (async () => {
 
-//const masterbranch='synctest3', stagingbranch='synctest3_staging';
-const masterbranch='master', stagingbranch='staging';
-const mergetargets = [masterbranch,stagingbranch];
+  //const masterbranch='synctest3', stagingbranch='synctest3_staging';
+  const masterbranch='master', stagingbranch='staging';
+  const mergetargets = [masterbranch,stagingbranch];
 
-  //await doDailyStatsPr(mergetargets);
+  await doDailyStatsPr(mergetargets);
 
 
   const targetChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
