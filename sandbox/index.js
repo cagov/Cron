@@ -1,8 +1,9 @@
-const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
-const { slackBotChatPost } = require('../CovidStateDashboard/slackBot');
+//Loading environment variables
 const { Values } = require('../local.settings.json');
 Object.keys(Values).forEach(x=>process.env[x]=Values[x]); //Load local settings file for testing
 
+const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
+const { slackBotChatPost } = require('../CovidStateDashboard/slackBot');
 const { queryDataset, getDatabaseConnection } = require('../CovidStateDashboard/snowflakeQuery');
 
 (async () => {
