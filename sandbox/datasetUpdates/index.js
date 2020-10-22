@@ -28,15 +28,14 @@ const doDailyStatsPr = async mergetargets => {
         if(PR) {console.log(`PR "${branch}" found...skipping`); continue;}; //PR found, nothing to do
 
         sqlResults = sqlResults || (await queryDataset(sql))[0][0]; //only run the query if needed
-        if (sqlResults) {
-            const content = Buffer.from(JSON.stringify(sqlResults,null,2)).toString('base64');
+        const content = Buffer.from(JSON.stringify(sqlResults,null,2)).toString('base64');
 
-            await gitHubBranchCreate(branch,mergetarget);
-            const targetfile = await gitHubFileGet(`pages/_data/${statsFileName}`,branch);
-            await gitHubFileUpdate(content,targetfile.url,targetfile.sha,gitHubMessage(`${today} Update`,statsFileName),branch);
-            const autoApproveMerge = mergetarget !== mergetargets[0]; //auto-push non-master
-            await gitHubBranchMerge(branch,mergetarget,true,`${today} Stats Update`,PrLabels,autoApproveMerge);
-        }
+        await gitHubBranchCreate(branch,mergetarget);
+        const targetfile = await gitHubFileGet(`pages/_data/${statsFileName}`,branch);
+        await gitHubFileUpdate(content,targetfile.url,targetfile.sha,gitHubMessage(`${today} Update`,statsFileName),branch);
+        const autoApproveMerge = mergetarget !== mergetargets[0]; //auto-push non-master
+        await gitHubBranchMerge(branch,mergetarget,true,`${today} Stats Update`,PrLabels,autoApproveMerge);
+        
     }
 }
 
