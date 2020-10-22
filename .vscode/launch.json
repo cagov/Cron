@@ -11,9 +11,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug sandbox/accordion_replacer",
-      "program": "accordion_replacer",
-      "cwd": "${workspaceRoot}/sandbox",
+      "name": "Debug sandbox",
+      "program": "index",
+      "cwd": "${workspaceRoot}/sandbox"
     }
   ]
 }
