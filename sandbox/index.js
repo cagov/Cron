@@ -11,12 +11,12 @@ const { queryDataset, getDatabaseConnection } = require('./snowflakeQuery');
 const masterbranch='master', stagingbranch='staging';
 const mergetargets = [masterbranch,stagingbranch];
 
-  //await doDailyStatsPr(mergetargets);
+  await doDailyStatsPr(mergetargets);
 
 
 
-  const sqlText = `SELECT TOP 1 * from COVID.PRODUCTION.VW_TABLEAU_COVID_METRICS_STATEWIDE ORDER BY DATE DESC`;
-  console.log(JSON.stringify(await queryDataset(sqlText),null,2));
+  //const sqlText = `SELECT TOP 1 * from COVID.PRODUCTION.VW_TABLEAU_COVID_METRICS_STATEWIDE ORDER BY DATE DESC`;
+  //console.log(JSON.stringify(await queryDataset(sqlText),null,2));
 
   //console.log(JSON.stringify(await queryDataset(sqlText),null,2));
 })();
