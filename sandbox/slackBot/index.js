@@ -1,6 +1,9 @@
 const fetch = require('node-fetch');
 const slackApiChatPost = 'https://slack.com/api/chat.postMessage';
 
+//For help building attachments...go here...
+//https://api.slack.com/docs/messages/builder
+
 const slackBotGetToken = () => {
   const token = process.env["SLACKBOT_TOKEN"];
 
