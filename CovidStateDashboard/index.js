@@ -11,12 +11,12 @@ module.exports = async function (context, myTimer) {
   //}
   //context.log('JavaScript timer trigger function ran!', timeStamp);   
 
-  const response = await slackBotChatPost(targetChannel,'Cron job ran new 10:45am');
+  await slackBotChatPost(targetChannel,'Cron job ran new 10:45am');
 
   const masterbranch='master', stagingbranch='staging';
   const mergetargets = [masterbranch,stagingbranch];
 
   await doDailyStatsPr(mergetargets);
 
-  const response = await slackBotChatPost(targetChannel,'Cron job finished');
+  await slackBotChatPost(targetChannel,'Cron job finished');
 };
