@@ -21,6 +21,7 @@ const doDailyStatsPr = async mergetargets => {
 
     for(const mergetarget of mergetargets) {
         const branch = `auto-stats-update-${mergetarget}-${today}`;
+        const isMaster = mergetarget !== mergetargets[0];
 
         if(await gitHubBranchExists(branch)) {console.log(`Branch "${branch}" found...skipping`); continue;} //branch exists, probably another process working on it...skip
 
@@ -33,9 +34,9 @@ const doDailyStatsPr = async mergetargets => {
         await gitHubBranchCreate(branch,mergetarget);
         const targetfile = await gitHubFileGet(`pages/_data/${statsFileName}`,branch);
         await gitHubFileUpdate(content,targetfile.url,targetfile.sha,gitHubMessage(`${today} Update`,statsFileName),branch);
-        const autoApproveMerge = mergetarget !== mergetargets[0]; //auto-push non-master
-        await gitHubBranchMerge(branch,mergetarget,true,`${today} Stats Update`,PrLabels,autoApproveMerge);
-        
+        const autoApproveMerge = !isMaster; //auto-push non-master
+        const PrTitle = `${today} Stats Update${(isMaster) ? `` : ` (${mergetarget})`}`;
+        await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);
     }
 }
 
