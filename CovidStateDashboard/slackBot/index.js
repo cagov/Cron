@@ -36,6 +36,23 @@ const slackBotChatPost = async (channel,text,attachments) => {
   return await fetch(slackApiChatPost,slackApiPost(payload));
 }
 
+//request/data is optional
+const slackBotReportError = async (channel,title,errorObject,request,data) => {
+  console.error(errorObject);
+
+  let slackText = `${title}\n*Error Stack*\n\`\`\`${errorObject.stack}\`\`\``;
+
+  if (request) {
+    slackText += `\n\n*Request*\n\`\`\`${JSON.stringify(request,null,2)}\`\`\``;
+  }
+  if (data) {
+    slackText += `\n\n*Data*\n\`\`\`${JSON.stringify(data,null,2)}\`\`\``;
+  }
+
+  return await slackBotChatPost(channel,slackText);
+}
+
 module.exports = {
-  slackBotChatPost
+  slackBotChatPost,
+  slackBotReportError
 }
