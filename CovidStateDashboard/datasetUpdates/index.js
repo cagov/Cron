@@ -21,7 +21,7 @@ const doDailyStatsPr = async mergetargets => {
 
     for(const mergetarget of mergetargets) {
         const branch = `auto-stats-update-${mergetarget}-${today}`;
-        const isMaster = mergetarget !== mergetargets[0];
+        const isMaster = mergetarget === mergetargets[0];
 
         if(await gitHubBranchExists(branch)) {console.log(`Branch "${branch}" found...skipping`); continue;} //branch exists, probably another process working on it...skip
 
