@@ -5,14 +5,21 @@ const githubUser = 'cagov';
 const githubRepo = 'covid19';
 const githubApiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/`;
 const committer = {
-  'name': 'WordPressService',
-  'email': 'data@alpha.ca.gov'
+  'name': process.env["GITHUB_NAME"],
+  'email': process.env["GITHUB_EMAIL"]
 };
 
-const gitAuthheader = () => ({
-  'Authorization' : `Bearer ${process.env["GITHUB_TOKEN"]}`,
-  'Content-Type': 'application/json'
-});
+const gitAuthheader = () => {
+    const token = process.env["GITHUB_TOKEN"];
+    if (!committer.name || !committer.email || !token) {
+        throw new Error(`Must define env variables for Github (GITHUB_NAME, GITHUB_EMAIL, GITHUB_TOKEN)`);
+    }
+
+    return {
+        'Authorization' : `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
+}
 
 const gitDefaultOptions = () => ({method: 'GET', headers:gitAuthheader() });
 
