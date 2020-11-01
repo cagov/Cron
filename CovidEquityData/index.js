@@ -41,7 +41,7 @@ module.exports = async function (context, req) {
     // cumulative for R/E per 100K, R/E by % pop. there used to be a REPORT_DATE here and we used to have to do where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE); but that has been removed and we expect a single cumulative value here now
 	const cumulativeData = new Promise((resolve, reject) => {
 		connection.execute({
-			sqlText: `select * from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE`,
+            sqlText: `select COUNTY, DEMOGRAPHIC_SET, DEMOGRAPHIC_SET_CATEGORY, METRIC, METRIC_VALUE, METRIC_VALUE_PER_100K, APPLIED_SUPPRESSION, POPULATION_PERCENTAGE, METRIC_TOTAL_PERCENTAGE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_PER_100K_30_DAYS_AGO, METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO, METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO, METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE where DEMOGRAPHIC_SET = 'race_ethnicity'`,
 			complete: function(err, stmt, rows) {
 				if (err) {
 					console.error('Failed to execute statement due to the following error: ' + err.message);
@@ -187,14 +187,20 @@ module.exports = async function (context, req) {
         if(!countyInfo) {
             countyInfo = [];
         }
-
         item.SORT_METRIC = item.METRIC_TOTAL_PERCENTAGE / item.POPULATION_PERCENTAGE;
         item.METRIC_TOTAL_DELTA = 100 - item.METRIC_TOTAL_PERCENTAGE;
         item.POPULATION_PERCENTAGE_DELTA = 100 - item.POPULATION_PERCENTAGE;
-        item.WORST_VALUE = [...allData[1].cumulative].reduce((a, e ) => e["METRIC_VALUE_PER_100K"] > a["METRIC_VALUE_PER_100K"] ? e : a).METRIC_VALUE_PER_100K;
-        item.LOWEST_VALUE = [...allData[1].cumulative].filter(item => item["METRIC_VALUE_PER_100K"] != null).reduce((a, e ) => e["METRIC_VALUE_PER_100K"] < a["METRIC_VALUE_PER_100K"] ? e : a).METRIC_VALUE_PER_100K;
+        let allMetricItemsInCounty = [...allData[1].cumulative].filter(f => f.COUNTY === item.COUNTY && f.METRIC === item.METRIC);
+        item.WORST_VALUE = allMetricItemsInCounty.reduce((a, e ) => e["METRIC_VALUE_PER_100K"] > a["METRIC_VALUE_PER_100K"] ? e : a).METRIC_VALUE_PER_100K;
         item.WORST_VALUE_DELTA = item.WORST_VALUE - item.METRIC_VALUE_PER_100K;
-        item.PCT_FROM_LOWEST_VALUE = item.METRIC_VALUE_PER_100K / item.LOWEST_VALUE;
+        let nonNulls = allMetricItemsInCounty.filter(f => f["METRIC_VALUE_PER_100K"] != null);
+        if(nonNulls.length == 0) {
+          item.LOWEST_VALUE = null;
+          item.PCT_FROM_LOWEST_VALUE = null;  
+        } else {
+          item.LOWEST_VALUE = nonNulls.reduce((a, e ) => e["METRIC_VALUE_PER_100K"] < a["METRIC_VALUE_PER_100K"] ? e : a).METRIC_VALUE_PER_100K;
+          item.PCT_FROM_LOWEST_VALUE = item.METRIC_VALUE_PER_100K / item.LOWEST_VALUE;  
+        }
         countyInfo.push(item)
         allFilesMap.set(mapKey,countyInfo)
     })
