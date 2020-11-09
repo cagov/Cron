@@ -84,7 +84,7 @@ module.exports = async function (context, req) {
     });
     // missingness sexual orientation, gender identity
 	const missingnessSOGIData = new Promise((resolve, reject) => {
-        let sqlStatement = `select COUNTY, SOGI_CATEGORY, METRIC,MISSING, NOT_MISSING, TOTAL,PERCENT_COMPLETE, PERCENT_COMPLETE_30_DAYS_AGO, DIFF_30_DAY,REPORT_DATE from PRODUCTION.VW_CDPH_SOGI_COMPLETENESS where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_COMPLETENESS)`;
+        let sqlStatement = `select COUNTY, SOGI_CATEGORY, METRIC, MISSING, NOT_MISSING, TOTAL,PERCENT_COMPLETE, PERCENT_COMPLETE_30_DAYS_AGO, DIFF_30_DAY,REPORT_DATE from PRODUCTION.VW_CDPH_SOGI_COMPLETENESS where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_COMPLETENESS)`;
 		connection.execute({
 			sqlText: sqlStatement,
 			complete: function(err, stmt, rows) {
@@ -170,6 +170,7 @@ module.exports = async function (context, req) {
             countyInfo[item.SOGI_CATEGORY] = {};
         }
         countyInfo[item.SOGI_CATEGORY][item.METRIC] = {};
+        countyInfo[item.SOGI_CATEGORY][item.METRIC].METRIC = item.METRIC;
         countyInfo[item.SOGI_CATEGORY][item.METRIC].MISSING = item.MISSING;
         countyInfo[item.SOGI_CATEGORY][item.METRIC].NOT_MISSING = item.NOT_MISSING;
         countyInfo[item.SOGI_CATEGORY][item.METRIC].TOTAL = item.TOTAL;
