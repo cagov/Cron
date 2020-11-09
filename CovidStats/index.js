@@ -1,6 +1,6 @@
 const snowflake = require('snowflake-sdk');
 const githubApiUrl = "https://api.github.com/repos/cagov/covid19/";
-const githubBranch = "master";
+const githubBranch = "staging";
 const statsLoc = 'pages/_data/caseStats.json';
 const addToGithub = require('./git.js');
 
