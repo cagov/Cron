@@ -29,6 +29,15 @@ const doDailyStatsPr = async mergetargets => {
         if(PR) {console.log(`PR "${branch}" found...skipping`); continue;}; //PR found, nothing to do
 
         sqlResults = sqlResults || (await queryDataset(sql))[0][0]; //only run the query if needed
+
+        //Add tier dates
+        let target = new Date();
+        while(target.getDay()!==2)
+            target.setDate(target.getDate() - 1);
+        sqlResults[0].TIER_DATE = target.toJSON().split('T')[0];
+        target.setDate(target.getDate() - 10);
+        sqlResults[0].TIER_ENDDATE = target.toJSON().split('T')[0];
+
         const content = Buffer.from(JSON.stringify(sqlResults,null,2)).toString('base64');
 
         await gitHubBranchCreate(branch,mergetarget);
