@@ -43,7 +43,7 @@ const doWorkPr = async mergetargets => {
 
         sqlResults = sqlResults || await prepData(); //only run the query if needed
 
-        const content = Buffer.from(JSON.stringify(sqlResults)).toString('base64');
+        const content = Buffer.from(JSON.stringify(sqlResults,null,2)).toString('base64');
 
         await gitHubBranchCreate(branch,mergetarget);
         const targetfile = await gitHubFileGet(`src/js/roadmap/${statsFileName}`,branch);
