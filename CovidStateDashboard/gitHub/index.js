@@ -191,7 +191,7 @@ const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels
           await gitHubBranchDelete(branch);
       }
 
-      return PrResult.html_url;
+      return PrResult;
   }
 }
 

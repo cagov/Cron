@@ -17,6 +17,7 @@ const PrLabels = ['Automatic Deployment'];
 const doDailyStatsPr = async mergetargets => {
     const sql = `SELECT TOP 1 * from COVID.PRODUCTION.VW_TABLEAU_COVID_METRICS_STATEWIDE ORDER BY DATE DESC`;
     let sqlResults = null;
+    let masterPr = null;
     const today = getTodayPacificTime().replace(/\//g,'-');
 
     for(const mergetarget of mergetargets) {
@@ -43,10 +44,15 @@ const doDailyStatsPr = async mergetargets => {
         await gitHubBranchCreate(branch,mergetarget);
         const targetfile = await gitHubFileGet(`pages/_data/${statsFileName}`,branch);
         await gitHubFileUpdate(content,targetfile.url,targetfile.sha,gitHubMessage(`${today} Update`,statsFileName),branch);
-        const autoApproveMerge = !isMaster; //auto-push non-master
+        const autoApproveMerge = !isMaster || (new Date()).getDate()!==2; //Don't auto-merge on Tuesdays
         const PrTitle = `${today} Stats Update${(isMaster) ? `` : ` (${mergetarget})`}`;
-        await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);
+        const Pr = 
+            await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);
+        if(isMaster) {
+            masterPr = Pr;
+        }
     }
+    return masterPr;
 }
 
 const getTodayPacificTime = () =>
