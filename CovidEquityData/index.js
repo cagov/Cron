@@ -53,6 +53,20 @@ module.exports = async function (context, req) {
 		});
     });
 
+    const cumulativeStatewideData = new Promise((resolve, reject) => {
+		connection.execute({
+            sqlText: `select COUNTY, DEMOGRAPHIC_SET, DEMOGRAPHIC_SET_CATEGORY, METRIC, METRIC_VALUE, METRIC_VALUE_PER_100K, APPLIED_SUPPRESSION, POPULATION_PERCENTAGE, METRIC_TOTAL_PERCENTAGE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_PER_100K_30_DAYS_AGO, METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO, METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO, METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE where DEMOGRAPHIC_SET = 'Combined'`,
+			complete: function(err, stmt, rows) {
+				if (err) {
+					console.error('Failed to execute statement due to the following error: ' + err.message);
+				} else {
+					console.log('Successfully executed statement: ' + stmt.getSqlText());
+				}
+				resolve({"cumulative": rows})
+			}
+		});
+    });
+
     // statewide stats for comparison
 	const statewideData = new Promise((resolve, reject) => {
 		connection.execute({
@@ -129,7 +143,7 @@ module.exports = async function (context, req) {
 
 	let allData = {};
 
-	await Promise.all([missingnessData, cumulativeData, socialData, statewideData, missingnessSOGIData, healthEquityData]).then((values) => {
+	await Promise.all([missingnessData, cumulativeData, socialData, statewideData, missingnessSOGIData, healthEquityData, cumulativeStatewideData]).then((values) => {
         allData = values;
 	});
 
@@ -229,6 +243,17 @@ module.exports = async function (context, req) {
         }
         countyInfo[item.METRIC].push(item);        
         allFilesMap.set(mapKey,countyInfo)
+    })
+
+    allData[6].cumulative.forEach(item => {
+        let info = allFilesMap.get('cumulative-combined');
+        if(!info) {
+            info = {};
+        }
+        if(!info[item.METRIC]) {
+            info[item.METRIC] = item; // just one row for cases, deaths, tests in this query
+        }
+        allFilesMap.set('cumulative-combined',info)
     })
 
     // write one file for statewide data
