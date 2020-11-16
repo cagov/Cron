@@ -1,4 +1,4 @@
-const { doWorkPr } = require('./doUpdate');
+const { doWeeklyUpdatePrs } = require('./doUpdate');
 const { slackBotChatPost, slackBotReportError } = require('../CovidStateDashboard/slackBot');
 const targetChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 const appName = 'CoivdWeeklyTierUpdate';
@@ -10,7 +10,7 @@ try {
   const masterbranch='master', stagingbranch='staging';
   const mergetargets = [masterbranch,stagingbranch];
 
-  await doWorkPr(mergetargets);
+  await doWeeklyUpdatePrs(mergetargets);
 
   await slackBotChatPost(targetChannel,`${appName} finished`);
 } catch (e) {

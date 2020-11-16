@@ -2,7 +2,7 @@
 const { Values } = require('../local.settings.json');
 Object.keys(Values).forEach(x=>process.env[x]=Values[x]); //Load local settings file for testing
 
-const { doWorkPr } = require('../CovidWeeklyTierUpdate/doUpdate');
+const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 const { slackBotChatPost, slackBotReportError } = require('../CovidStateDashboard//slackBot');
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
@@ -13,12 +13,15 @@ const targetChannel = 'C01AA1ZB05B';
     //const masterbranch='master', stagingbranch='staging';
     const mergetargets = [masterbranch,stagingbranch];
   
+    //await doWeeklyUpdatePrs(mergetargets);
+    await doDailyStatsPr(mergetargets);
+
     //const PrUrl = (await doDailyStatsPr(mergetargets));
 
-    const x =1;
+    //const x =1;
 
     //.html_url
-    const PrUrl = 'https://github.com/cagov/covid19/pull/2311';
+    //const PrUrl = 'https://github.com/cagov/covid19/pull/2311';
   
 
     //await slackBotChatPost(targetChannel,`(TEST MESSAGE) Daily stats deployed\n${PrUrl}`);

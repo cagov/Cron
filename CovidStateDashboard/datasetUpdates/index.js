@@ -12,6 +12,7 @@ const {
 } = require('../gitHub');
 
 const PrLabels = ['Automatic Deployment'];
+const tierUpdateDay = 1 //Monday
 
 //Check to see if we need stats update PRs, make them if we do.
 const doDailyStatsPr = async mergetargets => {
@@ -33,10 +34,15 @@ const doDailyStatsPr = async mergetargets => {
 
         //Add tier dates
         let target = new Date();
-        while(target.getDay()!==2)
+        while(target.getDay()!==tierUpdateDay)
             target.setDate(target.getDate() - 1);
         sqlResults[0].TIER_DATE = target.toJSON().split('T')[0];
-        target.setDate(target.getDate() - 10);
+
+
+        target.setDate(target.getDate() - 7); //Go back a week
+        while(target.getDay()!==6) //Look back for a Saturday
+            target.setDate(target.getDate() - 1);
+
         sqlResults[0].TIER_ENDDATE = target.toJSON().split('T')[0];
 
         const content = Buffer.from(JSON.stringify(sqlResults,null,2)).toString('base64');
@@ -44,7 +50,7 @@ const doDailyStatsPr = async mergetargets => {
         await gitHubBranchCreate(branch,mergetarget);
         const targetfile = await gitHubFileGet(`pages/_data/${statsFileName}`,branch);
         await gitHubFileUpdate(content,targetfile.url,targetfile.sha,gitHubMessage(`${today} Update`,statsFileName),branch);
-        const autoApproveMerge = !isMaster || (new Date()).getDate()!==2; //Don't auto-merge on Tuesdays
+        const autoApproveMerge = !isMaster || (new Date()).getDay()!==tierUpdateDay; //Don't auto-merge on tierUpdateDay
         const PrTitle = `${today} Stats Update${(isMaster) ? `` : ` (${mergetarget})`}`;
         const Pr = 
             await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);

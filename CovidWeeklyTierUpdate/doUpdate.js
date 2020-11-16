@@ -12,7 +12,7 @@ const {
 } = require('../CovidStateDashboard/gitHub');
 
 const PrLabels = ['Automatic Deployment'];
-const sql = `select COUNTY,CURRENT_TIER from COVID.PRODUCTION.CDPH_COUNTY_TIER_DATA_STAGE where date = (select max(DATE) from COVID.PRODUCTION.CDPH_COUNTY_TIER_DATA_STAGE Where DATE <= Current_DATE() + iff(Timestampdiff('hours',to_Timestamp(LAST_DAY(current_date(),'WEEK')-7), Current_Timestamp()) >=59,0,-10))`;
+const sql = `select COUNTY, CURRENT_TIER from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA where date = (select max(DATE) from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA)`;
  
 const prepData = async () => {
     const sqlResults = (await queryDataset(sql))[0][0];
@@ -28,7 +28,7 @@ const prepData = async () => {
 }
 
 //Check to see if we need stats update PRs, make them if we do.
-const doWorkPr = async mergetargets => {
+const doWeeklyUpdatePrs = async mergetargets => {
     let sqlResults = null;
     const today = getTodayPacificTime().replace(/\//g,'-');
 
@@ -59,5 +59,5 @@ const getTodayPacificTime = () =>
     new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"});
 
 module.exports = {
-  doWorkPr
+  doWeeklyUpdatePrs
 }
