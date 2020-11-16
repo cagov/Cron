@@ -54,8 +54,6 @@ const gitHubBranchCreate = async (branch,mergetarget) => {
       })
   };
 
-  await gitHubBranchDelete(branch); //in case the branch was never cleaned up
-
   await fetchJSON(`${githubApiUrl}git/refs`, branchCreateBody)
       .then(() => {console.log(`BRANCH CREATE Success: ${branch}`); });
 }
