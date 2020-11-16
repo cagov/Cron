@@ -226,6 +226,10 @@ const gitHubFileAdd = async (content, newFilePath, message, branch) =>
 const gitHubFileGet = async (path, branch) =>
     await fetchJSON(`${githubApiUrl}contents/${path}?ref=${branch}`,gitDefaultOptions());
 
+//input a previously queryed github file, returns an updated file.  Great for sync ops.
+const gitHubFileRefresh = async gitHubFile =>
+    await fetchJSON(gitHubFile.url,gitDefaultOptions());
+
 const gitHubFileGetBlob = async sha => 
     await fetchJSON(`${githubApiUrl}git/blobs/${sha}`,gitDefaultOptions());
 
@@ -237,6 +241,7 @@ module.exports = {
   gitHubFileUpdate,
   gitHubFileAdd,
   gitHubFileGet,
+  gitHubFileRefresh,
   gitHubFileGetBlob,
   gitHubBranchExists,
   gitHubPrGetByBranchName
