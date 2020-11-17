@@ -2,7 +2,7 @@ const {
     gitHubPrs,
     gitHubMergePr,
     gitHubGet
-} = require('../../CovidStateDashboard/gitHub');
+} = require('../../common/gitHub');
 
 const labelFilter = 'Translated Content';
 

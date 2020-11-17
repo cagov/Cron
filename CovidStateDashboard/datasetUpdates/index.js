@@ -1,4 +1,4 @@
-const { queryDataset } = require('../snowflakeQuery');
+const { queryDataset } = require('../../common/snowflakeQuery');
 const statsFileName = 'tableauCovidMetrics.json';
 
 const {
@@ -9,7 +9,7 @@ const {
     gitHubFileGet,
     gitHubBranchExists,
     gitHubPrGetByBranchName
-} = require('../gitHub');
+} = require('../../common/gitHub');
 
 const PrLabels = ['Automatic Deployment'];
 const tierUpdateDay = 1 //Monday

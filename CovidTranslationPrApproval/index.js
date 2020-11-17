@@ -1,5 +1,5 @@
 const { doTranslationPrUpdate  } = require('./worker');
-const { slackBotChatPost, slackBotReportError } = require('../CovidStateDashboard/slackBot');
+const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 const notifyChannel = 'C01AA1ZB05B';
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 const appName = 'CovidTranslationPrApproval';

@@ -1,4 +1,4 @@
-const { queryDataset } = require('../CovidStateDashboard/snowflakeQuery');
+const { queryDataset } = require('../common/snowflakeQuery');
 const statsFileName = 'countystatus.json';
 
 const {
@@ -9,7 +9,7 @@ const {
     gitHubFileGet,
     gitHubBranchExists,
     gitHubPrGetByBranchName
-} = require('../CovidStateDashboard/gitHub');
+} = require('../common/gitHub');
 
 const PrLabels = ['Automatic Deployment'];
 const sql = `select COUNTY, CURRENT_TIER from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA_LAG where date = (select max(DATE) from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA)`;
