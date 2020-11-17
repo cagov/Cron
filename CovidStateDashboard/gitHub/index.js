@@ -76,7 +76,7 @@ const gitHubPrs = async base =>
     //xample...
    //https://developer.github.com/v3/pulls/#list-pull-requests
    //https://api.github.com/repos/cagov/covid19/pulls?base=master
-    await gitHubGet(`pulls?base=${base}`);
+    await gitHubGet(`pulls?direction=asc&base=${base}`);
 
 //get matching references example...
 //https://developer.github.com/v3/git/refs/#get-a-reference
@@ -204,7 +204,7 @@ const gitHubMergePr = async pr => {
             return r;
         });
 
-    await gitHubBranchDelete(branch);
+    await gitHubBranchDelete(pr.head.ref);
 }
 
 const gitHubFileDelete = async (url, sha, message, branch) => 
