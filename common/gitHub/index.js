@@ -249,6 +249,7 @@ module.exports = {
   gitHubMessage,
   gitHubBranchCreate,
   gitHubBranchMerge,
+  gitHubBranchDelete,
   gitHubFileDelete,
   gitHubFileUpdate,
   gitHubFileAdd,
