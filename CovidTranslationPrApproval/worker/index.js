@@ -20,8 +20,12 @@ const doTranslationPrUpdate = async (masterbranch) => {
         
         const checks = await gitHubGet(`commits/${pr.head.ref}/check-runs`);
         const pass = checks.check_runs.every(x=>x.status==='completed'&&x.conclusion==='success');
-        if(pass) {
+
+        if (pass) {
             await gitHubMergePr(pr);
+        } else {
+            //If the oldest PR does not pass, halt processing.
+            return;
         }
     }
 }
