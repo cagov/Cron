@@ -1,5 +1,5 @@
 const { doWeeklyUpdatePrs } = require('./doUpdate');
-const { slackBotChatPost, slackBotReportError } = require('../CovidStateDashboard/slackBot');
+const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 const targetChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 const appName = 'CoivdWeeklyTierUpdate';
 

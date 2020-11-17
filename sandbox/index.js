@@ -5,7 +5,7 @@ Object.keys(Values).forEach(x=>process.env[x]=Values[x]); //Load local settings 
 const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker');
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
-const { slackBotChatPost, slackBotReportError } = require('../CovidStateDashboard//slackBot');
+const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 const targetChannel = 'C01AA1ZB05B';
 

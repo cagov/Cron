@@ -1,5 +1,5 @@
 const { doDailyStatsPr } = require('./datasetUpdates');
-const { slackBotChatPost, slackBotReportError } = require('./slackBot');
+const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 const notifyChannel = 'C01AA1ZB05B';
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 const appName = 'CovidStateDashboard';
