@@ -21,7 +21,14 @@ const doTranslationPrUpdate = async (masterbranch) => {
         const checks = await gitHubGet(`commits/${pr.head.ref}/check-runs`);
         const pass = checks.check_runs.every(x=>x.status==='completed'&&x.conclusion==='success');
 
-        if (pass) {
+        //compare docs...
+        //https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#compare-two-commits
+        //example
+        //https://api.github.com/repos/cagov/covid19/compare/master...avantpage_translation_symptoms-and-risks_98289254
+        const compare = await gitHubGet(`compare/${masterbranch}...${pr.head.ref}`);
+        const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
+
+        if (pass && fileaccessok) {
             await gitHubMergePr(pr);
         } else {
             //If the oldest PR does not pass, halt processing.
