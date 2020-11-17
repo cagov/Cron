@@ -58,15 +58,25 @@ const gitHubBranchCreate = async (branch,mergetarget) => {
       .then(() => {console.log(`BRANCH CREATE Success: ${branch}`); });
 }
 
+//using the default github api path and get options, run a path
+const gitHubGet = async path => 
+    await fetchJSON(githubApiUrl+path, gitDefaultOptions());
+
 const gitHubPrGetByBranchName = async (base, branch) => {
 //xample...
 //https://developer.github.com/v3/pulls/#list-pull-requests
 //https://api.github.com/repos/cagov/covid19/pulls?state=all&base=master&head=cagov:mybranch
-    const url = `${githubApiUrl}pulls?state=all&base=${base}&head=${githubUser}:${branch}`;
+    const url = `pulls?state=all&base=${base}&head=${githubUser}:${branch}`;
 
-    const results = await fetchJSON(url, gitDefaultOptions());
+    const results = await gitHubGet(url);
     return results.length ? results[0] : null;
 }
+
+const gitHubPrs = async base => 
+    //xample...
+   //https://developer.github.com/v3/pulls/#list-pull-requests
+   //https://api.github.com/repos/cagov/covid19/pulls?base=master
+    await gitHubGet(`pulls?direction=asc&base=${base}`);
 
 //get matching references example...
 //https://developer.github.com/v3/git/refs/#get-a-reference
@@ -163,34 +173,38 @@ const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels
 
       if(ApprovePr) {
           //Auto Merge PR
-          //https://developer.github.com/v3/pulls/#merge-a-pull-request
-          //Merge method to use. Possible values are merge, squash or rebase. Default is merge.
-          const prsha = PrResult.head.sha;
-          const prurl = PrResult.url;
-          
-          const prmergebody = {
-              method: 'PUT',
-              headers: gitAuthheader(),
-              body: JSON.stringify({
-                  committer,
-                  //commit_title: 'PR merge commit title',
-                  //commit_message: 'PR merge commit message',
-                  sha: prsha,
-                  merge_method: 'squash'
-              })
-          };
-
-          await fetchJSON(`${prurl}/merge`, prmergebody)
-          .then(r => {
-                  console.log(`PR MERGE Success`);
-                  return r;
-              });
-
-          await gitHubBranchDelete(branch);
+          gitHubMergePr(PrResult);
       }
 
       return PrResult;
   }
+}
+
+const gitHubMergePr = async pr => {
+    //https://developer.github.com/v3/pulls/#merge-a-pull-request
+    //Merge method to use. Possible values are merge, squash or rebase. Default is merge.
+    const prsha = pr.head.sha;
+    const prurl = pr.url;
+    
+    const prmergebody = {
+        method: 'PUT',
+        headers: gitAuthheader(),
+        body: JSON.stringify({
+            committer,
+            //commit_title: 'PR merge commit title',
+            //commit_message: 'PR merge commit message',
+            sha: prsha,
+            merge_method: 'squash'
+        })
+    };
+
+    await fetchJSON(`${prurl}/merge`, prmergebody)
+        .then(r => {
+            console.log(`PR MERGE Success`);
+            return r;
+        });
+
+    await gitHubBranchDelete(pr.head.ref);
 }
 
 const gitHubFileDelete = async (url, sha, message, branch) => 
@@ -222,14 +236,14 @@ const gitHubFileAdd = async (content, newFilePath, message, branch) =>
     }));
 
 const gitHubFileGet = async (path, branch) =>
-    await fetchJSON(`${githubApiUrl}contents/${path}?ref=${branch}`,gitDefaultOptions());
+    await gitHubGet(`contents/${path}?ref=${branch}`);
 
 //input a previously queryed github file, returns an updated file.  Great for sync ops.
 const gitHubFileRefresh = async gitHubFile =>
     await fetchJSON(gitHubFile.url,gitDefaultOptions());
 
 const gitHubFileGetBlob = async sha => 
-    await fetchJSON(`${githubApiUrl}git/blobs/${sha}`,gitDefaultOptions());
+    await gitHubGet(`git/blobs/${sha}`);
 
 module.exports = {
   gitHubMessage,
@@ -242,5 +256,8 @@ module.exports = {
   gitHubFileRefresh,
   gitHubFileGetBlob,
   gitHubBranchExists,
-  gitHubPrGetByBranchName
+  gitHubMergePr,
+  gitHubPrs,
+  gitHubPrGetByBranchName,
+  gitHubGet
 }

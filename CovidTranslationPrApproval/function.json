@@ -1,0 +1,10 @@
+{
+  "bindings": [
+    {
+      "name": "CovidTranslationPrApproval",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0/5 * * * * *"
+    }
+  ]
+}
