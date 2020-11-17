@@ -7,11 +7,11 @@ const masterbranch='master';
 
 module.exports = async function (context, myTimer) {
 try {
-  await slackBotChatPost(debugChannel,`${appName} ran`);
+  //await slackBotChatPost(debugChannel,`${appName} ran`);
 
   await doTranslationPrUpdate(masterbranch);
 
-  await slackBotChatPost(debugChannel,`${appName} finished`);
+  //await slackBotChatPost(debugChannel,`${appName} finished`);
 
 } catch (e) {
   await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
