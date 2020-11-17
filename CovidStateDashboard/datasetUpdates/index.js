@@ -53,7 +53,8 @@ const doDailyStatsPr = async mergetargets => {
         const autoApproveMerge = !isMaster || (new Date()).getDay()!==tierUpdateDay; //Don't auto-merge on tierUpdateDay
         const PrTitle = `${today} Stats Update${(isMaster) ? `` : ` (${mergetarget})`}`;
         const Pr = 
-            await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);
+            await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,false);
+        // await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);
         if(isMaster) {
             masterPr = Pr;
         }
