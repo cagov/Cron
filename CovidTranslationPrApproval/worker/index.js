@@ -26,7 +26,9 @@ const doTranslationPrUpdate = async (masterbranch) => {
         //example
         //https://api.github.com/repos/cagov/covid19/compare/master...avantpage_translation_symptoms-and-risks_98289254
         const compare = await gitHubGet(`compare/${masterbranch}...${pr.head.ref}`);
-        const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
+
+        //limit file access to a single folder with 'modified' status only.
+        const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/') && x.status==='modified');
 
         if (pass && fileaccessok) {
             await gitHubMergePr(pr);
