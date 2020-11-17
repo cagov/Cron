@@ -12,7 +12,7 @@ const {
 } = require('../CovidStateDashboard/gitHub');
 
 const PrLabels = ['Automatic Deployment'];
-const sql = `select COUNTY, CURRENT_TIER from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA where date = (select max(DATE) from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA)`;
+const sql = `select COUNTY, CURRENT_TIER from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA_LAG where date = (select max(DATE) from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA)`;
  
 const prepData = async () => {
     const sqlResults = (await queryDataset(sql))[0][0];
