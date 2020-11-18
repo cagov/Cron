@@ -1,5 +1,6 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const statsFileName = 'countystatus.json';
+const statsFilePath = `src/js/roadmap/${statsFileName}`;
 
 const {
     gitHubMessage,
@@ -12,7 +13,7 @@ const {
 } = require('../common/gitHub');
 
 const PrLabels = ['Automatic Deployment'];
-const sql = `select COUNTY, CURRENT_TIER from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA_LAG where date = (select max(DATE) from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA)`;
+const sql = `select COUNTY, CURRENT_TIER from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA where date = (select max(DATE) from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA)`;
  
 const prepData = async () => {
     const sqlResults = (await queryDataset(sql))[0][0];
@@ -32,8 +33,10 @@ const doWeeklyUpdatePrs = async mergetargets => {
     let sqlResults = null;
     const today = getTodayPacificTime().replace(/\//g,'-');
 
+    const report = [];
+
     for(const mergetarget of mergetargets) {
-        const branch = `auto-weekly-update-${mergetarget}-${today}`;
+        const branch = `auto-tier-update-${mergetarget}-${today}`;
         const isMaster = mergetarget === mergetargets[0];
 
         if(await gitHubBranchExists(branch)) {console.log(`Branch "${branch}" found...skipping`); continue;} //branch exists, probably another process working on it...skip
@@ -45,14 +48,27 @@ const doWeeklyUpdatePrs = async mergetargets => {
 
         const content = Buffer.from(JSON.stringify(sqlResults,null,2)).toString('base64');
 
-        await gitHubBranchCreate(branch,mergetarget);
-        const targetfile = await gitHubFileGet(`src/js/roadmap/${statsFileName}`,branch);
-        await gitHubFileUpdate(content,targetfile.url,targetfile.sha,gitHubMessage(`${today} Update`,statsFileName),branch);
-        const autoApproveMerge = !isMaster; //auto-push non-master
-        const PrTitle = `${today} Weekly Update${(isMaster) ? `` : ` (${mergetarget})`}`;
-        await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);
-        
+        //Content compare to determine if we need to create a PR.
+        const comparefile = await gitHubFileGet(statsFilePath,mergetarget);
+        if(comparefile.content.replace(/\n/g,'')!==content) {
+            //Content changed...perform update
+            await gitHubBranchCreate(branch,mergetarget);
+            const targetfile = await gitHubFileGet(statsFilePath,branch);
+            await gitHubFileUpdate(content,targetfile.url,targetfile.sha,gitHubMessage(`${today} Update`,statsFileName),branch);
+            const autoApproveMerge = !isMaster; //auto-push non-master
+            let PrTitle = `${today} Tier Update${(isMaster) ? `` : ` (${mergetarget})`}`;
+            const Pr = await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);
+            
+            report.push({
+                mergetarget,
+                branch,
+                autoApproveMerge,
+                Pr
+            });
+        }
     }
+
+    return report;
 }
 
 const getTodayPacificTime = () =>

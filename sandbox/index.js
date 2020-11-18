@@ -7,17 +7,24 @@ const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker'
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
-const targetChannel = 'C01AA1ZB05B';
+//const notifyChannel = 'C01DBP67MSQ';
 
 (async () => {
-    //const masterbranch='synctest3', stagingbranch='synctest3_staging';
-    const masterbranch='master', stagingbranch='staging';
+    const masterbranch='synctest3', stagingbranch='synctest3_staging';
+    //const masterbranch='master', stagingbranch='staging';
     const mergetargets = [masterbranch,stagingbranch];
   
-    //await doWeeklyUpdatePrs(mergetargets);
+    //const report = await doWeeklyUpdatePrs(mergetargets);
+
+
+//for(const val of report) {
+//    await slackBotChatPost(notifyChannel,`Tier Update Deployed\n${val.Pr.html_url}`);
+//}
+
+
     //await doDailyStatsPr(mergetargets);
 
-    await doTranslationPrUpdate(masterbranch);
+    //await doTranslationPrUpdate(masterbranch);
 
     //const PrUrl = (await doDailyStatsPr(mergetargets));
 
