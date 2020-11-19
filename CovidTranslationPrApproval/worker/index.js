@@ -13,8 +13,9 @@ const doTranslationPrUpdate = async (masterbranch) => {
    //https://api.github.com/repos/cagov/covid19/pulls?base=master
 
     const Prs = (await gitHubPrs(masterbranch))
-        .filter(x=>!x.labels
-            .some(s=>x.name===labelFilter));
+        .filter(p=>
+            !p.draft //ignore drafts
+            &&!p.labels.some(s=>p.name===labelFilter)); //require the 'Translated Content' label
 
     for (const pr of Prs) {
         
