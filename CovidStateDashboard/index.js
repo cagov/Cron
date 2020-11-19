@@ -15,8 +15,9 @@ try {
 
   await slackBotChatPost(debugChannel,`${appName} finished`);
 
-  await slackBotChatPost(notifyChannel,`Daily stats deployed\n${PrResult.html_url}`);
-
+  if(PrResult) {
+    await slackBotChatPost(notifyChannel,`Daily stats deployed\n${PrResult.html_url}`);
+  }
 } catch (e) {
   await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
 }
