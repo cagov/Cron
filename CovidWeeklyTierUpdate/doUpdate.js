@@ -3,6 +3,7 @@ const statsFileName = 'countystatus.json';
 const statsFilePath = `src/js/roadmap/${statsFileName}`;
 
 const {
+    gitHubSetConfig,
     gitHubMessage,
     gitHubBranchCreate,
     gitHubBranchMerge,
@@ -30,6 +31,7 @@ const prepData = async () => {
 
 //Check to see if we need stats update PRs, make them if we do.
 const doWeeklyUpdatePrs = async mergetargets => {
+    gitHubSetConfig('cagov','covid',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
     let sqlResults = null;
     const today = getTodayPacificTime().replace(/\//g,'-');
 
