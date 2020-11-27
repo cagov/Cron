@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "calibre": "^3.2.0",
     "node-fetch": "^2.6.0",
+    "snowflake-sdk": "^1.5.3",
     "xlsx": "^0.15.5"
   }
 }

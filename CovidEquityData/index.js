@@ -1,18 +1,15 @@
 const snowflake = require('snowflake-sdk');
-const sha1 = require('sha1');
 const githubApiUrl = "https://api.github.com/repos/cagov/covid-static/";
 const githubBranch = "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const {
-    gitHubMessage,
     gitHubBranchCreate,
     gitHubBranchMerge,
-    gitHubFileDelete,
-    gitHubFileUpdate,
     gitHubFileAdd,
+    gitHubFileUpdate,
     gitHubFileGet,
     gitHubFileGetBlob
-} = require('./gitHub');
+} = require('../common/gitHub');
 
 const fs = require('fs')
 
@@ -286,7 +283,6 @@ module.exports = async function (context, req) {
         console.log('new file name is: '+newFilePath)
         const targetfile = targetfiles.find(y=>newFileName===y.filename);
         const content = Buffer.from(JSON.stringify(value)).toString('base64');
-        const mysha = sha1(JSON.stringify(value));
 
         if(targetfile) {
             //UPDATE

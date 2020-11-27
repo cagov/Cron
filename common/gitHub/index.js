@@ -1,18 +1,25 @@
 const fetch = require('node-fetch');
-const { fetchJSON } = require('./fetchJSON');
+const { fetchJSON } = require('../fetchJSON');
 
 const githubUser = 'cagov';
-const githubRepo = 'covid-static';
+const githubRepo = 'covid19';
 const githubApiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/`;
 const committer = {
-  'name': 'WordPressService',
-  'email': 'data@alpha.ca.gov'
+  'name': process.env["GITHUB_NAME"],
+  'email': process.env["GITHUB_EMAIL"]
 };
 
-const gitAuthheader = () => ({
-  'Authorization' : `Bearer ${process.env["GITHUB_TOKEN"]}`,
-  'Content-Type': 'application/json'
-});
+const gitAuthheader = () => {
+    const token = process.env["GITHUB_TOKEN"];
+    if (!committer.name || !committer.email || !token) {
+        throw new Error(`Must define env variables for Github (GITHUB_NAME, GITHUB_EMAIL, GITHUB_TOKEN)`);
+    }
+
+    return {
+        'Authorization' : `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
+}
 
 const gitDefaultOptions = () => ({method: 'GET', headers:gitAuthheader() });
 
@@ -34,10 +41,7 @@ const branchGetHead = async branch =>
 
 //create a branch for this update
 const gitHubBranchCreate = async (branch,mergetarget) => {
-  console.log('merging target:');
-  console.log(mergetarget)
   const branchGetResult = await branchGetHead(mergetarget);
-  console.log(branchGetResult)
   const sha = branchGetResult.object.sha;
 
   const branchCreateBody = {
@@ -50,11 +54,41 @@ const gitHubBranchCreate = async (branch,mergetarget) => {
       })
   };
 
-  await gitHubBranchDelete(branch); //in case the branch was never cleaned up
-
   await fetchJSON(`${githubApiUrl}git/refs`, branchCreateBody)
       .then(() => {console.log(`BRANCH CREATE Success: ${branch}`); });
 }
+
+//using the default github api path and get options, run a path
+const gitHubGet = async path => 
+    await fetchJSON(githubApiUrl+path, gitDefaultOptions());
+
+const gitHubPrGetByBranchName = async (base, branch) => {
+//xample...
+//https://developer.github.com/v3/pulls/#list-pull-requests
+//https://api.github.com/repos/cagov/covid19/pulls?state=all&base=master&head=cagov:mybranch
+    const url = `pulls?state=all&base=${base}&head=${githubUser}:${branch}`;
+
+    const results = await gitHubGet(url);
+    return results.length ? results[0] : null;
+}
+
+const gitHubPrs = async base => 
+    //xample...
+   //https://developer.github.com/v3/pulls/#list-pull-requests
+   //https://api.github.com/repos/cagov/covid19/pulls?base=master
+    await gitHubGet(`pulls?direction=asc&base=${base}`);
+
+//get matching references example...
+//https://developer.github.com/v3/git/refs/#get-a-reference
+//https://api.github.com/repos/cagov/covid19/git/ref/heads/staging
+
+//https://developer.github.com/v3/git/refs/#list-matching-references
+//https://api.github.com/repos/cagov/covid19/git/matching-refs/heads/staging
+const gitHubBranchExists = async branch => 
+    (await fetch(branchGetHeadUrl(branch), {
+        method: 'HEAD',
+        headers: gitAuthheader()
+    })).ok;
 
 const gitHubBranchDelete = async branch => {
   //delete
@@ -139,32 +173,38 @@ const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels
 
       if(ApprovePr) {
           //Auto Merge PR
-          //https://developer.github.com/v3/pulls/#merge-a-pull-request
-          //Merge method to use. Possible values are merge, squash or rebase. Default is merge.
-          const prsha = PrResult.head.sha;
-          const prurl = PrResult.url;
-          
-          const prmergebody = {
-              method: 'PUT',
-              headers: gitAuthheader(),
-              body: JSON.stringify({
-                  committer,
-                  //commit_title: 'PR merge commit title',
-                  //commit_message: 'PR merge commit message',
-                  sha: prsha,
-                  merge_method: 'squash'
-              })
-          };
-
-          await fetchJSON(`${prurl}/merge`, prmergebody)
-          .then(r => {
-                  console.log(`PR MERGE Success`);
-                  return r;
-              });
-
-          await gitHubBranchDelete(branch);
+          gitHubMergePr(PrResult);
       }
+
+      return PrResult;
   }
+}
+
+const gitHubMergePr = async pr => {
+    //https://developer.github.com/v3/pulls/#merge-a-pull-request
+    //Merge method to use. Possible values are merge, squash or rebase. Default is merge.
+    const prsha = pr.head.sha;
+    const prurl = pr.url;
+    
+    const prmergebody = {
+        method: 'PUT',
+        headers: gitAuthheader(),
+        body: JSON.stringify({
+            committer,
+            //commit_title: 'PR merge commit title',
+            //commit_message: 'PR merge commit message',
+            sha: prsha,
+            merge_method: 'squash'
+        })
+    };
+
+    await fetchJSON(`${prurl}/merge`, prmergebody)
+        .then(r => {
+            console.log(`PR MERGE Success`);
+            return r;
+        });
+
+    await gitHubBranchDelete(pr.head.ref);
 }
 
 const gitHubFileDelete = async (url, sha, message, branch) => 
@@ -196,18 +236,29 @@ const gitHubFileAdd = async (content, newFilePath, message, branch) =>
     }));
 
 const gitHubFileGet = async (path, branch) =>
-    await fetchJSON(`${githubApiUrl}contents/${path}?ref=${branch}`,gitDefaultOptions());
+    await gitHubGet(`contents/${path}?ref=${branch}`);
+
+//input a previously queryed github file, returns an updated file.  Great for sync ops.
+const gitHubFileRefresh = async gitHubFile =>
+    await fetchJSON(gitHubFile.url,gitDefaultOptions());
 
 const gitHubFileGetBlob = async sha => 
-    await fetchJSON(`${githubApiUrl}git/blobs/${sha}`,gitDefaultOptions());
+    await gitHubGet(`git/blobs/${sha}`);
 
 module.exports = {
   gitHubMessage,
   gitHubBranchCreate,
   gitHubBranchMerge,
+  gitHubBranchDelete,
   gitHubFileDelete,
   gitHubFileUpdate,
   gitHubFileAdd,
   gitHubFileGet,
-  gitHubFileGetBlob
+  gitHubFileRefresh,
+  gitHubFileGetBlob,
+  gitHubBranchExists,
+  gitHubMergePr,
+  gitHubPrs,
+  gitHubPrGetByBranchName,
+  gitHubGet
 }
