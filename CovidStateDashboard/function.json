@@ -1,17 +1,10 @@
 {
   "bindings": [
     {
-<<<<<<< HEAD:CovidEquityData/function.json
       "name": "myTimer",
       "type": "timerTrigger",
       "direction": "in",
       "schedule": "0 0 23 * * *"
-=======
-      "name": "CovidStateDashboard",
-      "type": "timerTrigger",
-      "direction": "in",
-      "schedule": "0 45 18 * * *"
->>>>>>> master:CovidStateDashboard/function.json
     }
   ]
 }

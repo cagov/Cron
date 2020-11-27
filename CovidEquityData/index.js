@@ -2,6 +2,7 @@ const snowflake = require('snowflake-sdk');
 const githubApiUrl = "https://api.github.com/repos/cagov/covid-static/";
 const githubBranch = "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
+const productionFileLoc = 'data/reviewed/equitydash/';
 const {
     gitHubBranchCreate,
     gitHubBranchMerge,
@@ -9,7 +10,7 @@ const {
     gitHubFileUpdate,
     gitHubFileGet,
     gitHubFileGetBlob
-} = require('../common/gitHub');
+} = require('./git'); // committing to covid-static, not covid19, need to make common accept destination repo as param to reuse here
 
 const fs = require('fs')
 
@@ -144,16 +145,27 @@ module.exports = async function (context, req) {
         allData = values;
 	});
 
-    let newBranchName = `data-${new Date().toISOString().split('T')[0]}-equitydash`;
-    await gitHubBranchCreate(newBranchName, githubBranch);
+    let reviewBranchName = `data-${new Date().toISOString().split('T')[0]}-equitydash-2-review`;
+    let reviewCompletedBranchName = `data-${new Date().toISOString().split('T')[0]}-equitydash-review-complete`;
+    await gitHubBranchCreate(reviewBranchName, githubBranch);
+    await gitHubBranchCreate(reviewCompletedBranchName, githubBranch);
 
-    const targetfiles = (await gitHubFileGet(stagingFileLoc,newBranchName))
+    const stagingTargetFiles = (await gitHubFileGet(stagingFileLoc,reviewBranchName))
         .filter(x=>x.type==='file'&&(x.name.endsWith('.json'))); 
 
     //Add custom columns to targetfile data
-    targetfiles.forEach(x=>{
+    stagingTargetFiles.forEach(x=>{
         //just get the filename, special characters and all
         x.filename = x.url.split(`${stagingFileLoc}`)[1].split('?ref')[0].toLowerCase();
+    });
+
+    const productionTargetFiles = (await gitHubFileGet(productionFileLoc,reviewCompletedBranchName))
+    .filter(x=>x.type==='file'&&(x.name.endsWith('.json'))); 
+
+    //Add custom columns to targetfile data
+    productionTargetFiles.forEach(x=>{
+        //just get the filename, special characters and all
+        x.filename = x.url.split(`${productionFileLoc}`)[1].split('?ref')[0].toLowerCase();
     });
 
 	let writtenFileCount = 0;
@@ -267,22 +279,36 @@ module.exports = async function (context, req) {
         let nextVal = iterator1.next().value;
         if(nextVal) {
             console.log('getting '+nextVal)
-            putFile(allFilesMap.get(nextVal),nextVal,getNext);    
+            let fileResult = null;
+            fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewBranchName,stagingFileLoc);
+            console.log(fileResult)
+            fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewCompletedBranchName,productionFileLoc);
+            console.log(fileResult)
+            getNext();
         } else {
             console.log('done')
-            await gitHubBranchMerge(newBranchName, githubBranch);
+            // the to-review branch will merge to the /to-review location and delete its merge PR
+            await gitHubBranchMerge(reviewBranchName, githubBranch);
+            // the reviewedComplete branch should stay open
+            const Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false);
         }
     }
     getNext();
 
 
     // reusable file write function
-    async function putFile(value,key,callback) {
+    async function putFile(value,key,targetBranchName,fileLoc,callback) {
         const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
-        const newFilePath = `${stagingFileLoc}${newFileName}`;
+        const newFilePath = `${fileLoc}${newFileName}`;
         console.log('new file name is: '+newFilePath)
-        const targetfile = targetfiles.find(y=>newFileName===y.filename);
+        let targetfile = null;
+        if(fileLoc === stagingFileLoc) {
+            targetfile = stagingTargetFiles.find(y=>newFileName===y.filename);
+        } else {
+            targetfile = productionTargetFiles.find(y=>newFileName===y.filename);
+        }
         const content = Buffer.from(JSON.stringify(value)).toString('base64');
+        let resultMessage = "";
 
         if(targetfile) {
             //UPDATE
@@ -291,25 +317,25 @@ module.exports = async function (context, req) {
             if(content!==targetcontent.content.replace(/\n/g,'')) {
                 //Update file
                 let message = `Update page - ${targetfile.name}`;
-                const updateResult = await gitHubFileUpdate(content,targetfile.url,targetfile.sha,message,newBranchName)
+                const updateResult = await gitHubFileUpdate(content,targetfile.url,targetfile.sha,message,targetBranchName)
                     .then(r => {
                         console.log(`UPDATE Success: ${newFileName}`);
                         return r;
                     });
                 // await gitHubBranchMerge(branch, mergetarget);
-                
+                resultMessage = message;
             } else {
-                console.log(`File compare matched: ${newFileName}`);
+                resultMessage = `File compare matched: ${newFileName}`;
             }
         } else {
             let message = `Add page - ${newFileName}`;
                     
-            const addResult = await gitHubFileAdd(content,newFilePath,message,newBranchName)
+            const addResult = await gitHubFileAdd(content,newFilePath,message,targetBranchName)
                 .then(r => {console.log(`ADD Success: ${newFileName}`);return r;})   
                 
-            console.log(addResult)
+            resultMessage = addResult;
         }
-        callback();
+        return resultMessage;
     }
 
 	allData.writtenFileCount = writtenFileCount;
@@ -322,12 +348,5 @@ module.exports = async function (context, req) {
 
 }
 
-/*module.exports = async function (context, myTimer) {
-    var timeStamp = new Date().toISOString();
-    
-    if (myTimer.isPastDue)
-    {
-        context.log('JavaScript is running late!');
-    }
-    context.log('JavaScript timer trigger function ran!', timeStamp);   
-};*/
+const getTodayPacificTime = () =>
+    new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"});
