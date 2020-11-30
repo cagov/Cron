@@ -2,6 +2,8 @@
 
 This service retrieves information to power the covid19 equity dashboard. It queries snowflake and writes resulting static json files to the cagov/covid-static repo
 
-### ToDo
+### Approvals
 
-Right now it writes all data into the /to-review folder. This will be used by charts in the staging environment. Next phase will open PR to write charts to the location used in production. This PR will be merged after stakeholder approval and data integrity checks pass daily.
+Data consumed by charts in staging is written into the /to-review folder. A PR is created and merged for these json files.
+A separate PR is created in the /reviewed folder but not merged
+A slack message is sent to the covid-equity channel with a 5 minute delay to notify people the latest data is available for review in staging and the PR can be approved at will for use in production. The delay is meant to give the covid-static repo time to deploy the staging files just merged and for the short CDN cache on files.covid19 to expire.

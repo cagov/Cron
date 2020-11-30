@@ -1,3 +1,5 @@
+// this is a duplicate file which should be deleted when common/git supports different repository targets. That change was already in progress in an open PR
+
 const fetch = require('node-fetch');
 const { fetchJSON } = require('../common/fetchJSON');
 
