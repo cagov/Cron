@@ -293,7 +293,8 @@ module.exports = async function (context, functionInput) {
                 await gitHubBranchMerge(reviewBranchName, githubBranch);
                 // the reviewedComplete branch should stay open
                 const Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false);
-                await slackBotDelayedChatPost('C01BMCQK0F6',`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, new Date().getTime() + 1000 * 300);
+                let postTime = (new Date().getTime() + (1000 * 300)) / 1000;
+                await slackBotDelayedChatPost('C01BMCQK0F6',`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
             }
         }
         getNext();

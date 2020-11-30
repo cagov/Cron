@@ -42,9 +42,10 @@ const slackBotDelayedChatPost = async (channel,text,post_at) => {
     text,
     post_at
   }
-  console.log(payload)
 
-  return await fetch("https://slack.com/api/chat.scheduledMessage",slackApiPost(payload));
+  const fetchResp = await fetch("https://slack.com/api/chat.scheduleMessage",slackApiPost(payload));
+  const postInfo = await fetchResp.json();
+  return postInfo;
 }
 
 //request/data is optional
