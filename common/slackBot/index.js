@@ -36,6 +36,18 @@ const slackBotChatPost = async (channel,text,attachments) => {
   return await fetch(slackApiChatPost,slackApiPost(payload));
 }
 
+const slackBotDelayedChatPost = async (channel,text,post_at) => {
+  const payload = {
+    channel,
+    text,
+    post_at
+  }
+
+  const fetchResp = await fetch("https://slack.com/api/chat.scheduleMessage",slackApiPost(payload));
+  const postInfo = await fetchResp.json();
+  return postInfo;
+}
+
 //request/data is optional
 const slackBotReportError = async (channel,title,errorObject,request,data) => {
   console.error(errorObject);
@@ -54,5 +66,6 @@ const slackBotReportError = async (channel,title,errorObject,request,data) => {
 
 module.exports = {
   slackBotChatPost,
+  slackBotDelayedChatPost,
   slackBotReportError
 }
