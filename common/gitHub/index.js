@@ -257,20 +257,20 @@ const gitHubFileGetBlob = async sha =>
     await gitHubGet(`git/blobs/${sha}`);
 
 module.exports = {
-    gitHubSetConfig,
-    gitHubMessage,
-    gitHubBranchCreate,
-    gitHubBranchMerge,
-    gitHubBranchDelete,
-    gitHubFileDelete,
-    gitHubFileUpdate,
-    gitHubFileAdd,
-    gitHubFileGet,
-    gitHubFileRefresh,
-    gitHubFileGetBlob,
-    gitHubBranchExists,
-    gitHubMergePr,
-    gitHubPrs,
-    gitHubPrGetByBranchName,
-    gitHubGet
+  gitHubSetConfig,
+  gitHubMessage,
+  gitHubBranchCreate,
+  gitHubBranchMerge,
+  gitHubBranchDelete,
+  gitHubFileDelete,
+  gitHubFileUpdate,
+  gitHubFileAdd,
+  gitHubFileGet,
+  gitHubFileRefresh,
+  gitHubFileGetBlob,
+  gitHubBranchExists,
+  gitHubMergePr,
+  gitHubPrs,
+  gitHubPrGetByBranchName,
+  gitHubGet
 }
