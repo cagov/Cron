@@ -1,4 +1,5 @@
 const {
+    gitHubSetConfig,
     gitHubPrs,
     gitHubMergePr,
     gitHubGet
@@ -8,6 +9,8 @@ const labelFilter = 'Translated Content';
 
 //Check to see if we need stats update PRs, make them if we do.
 const doTranslationPrUpdate = async (masterbranch) => {
+    gitHubSetConfig('cagov','covid19',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
+
    //https://developer.github.com/v3/pulls/#list-pull-requests
 
    //https://api.github.com/repos/cagov/covid19/pulls?base=master

@@ -1,25 +1,36 @@
 const fetch = require('node-fetch');
 const { fetchJSON } = require('../fetchJSON');
 
-const githubUser = 'cagov';
-const githubRepo = 'covid19';
-const githubApiUrl = `https://api.github.com/repos/${githubUser}/${githubRepo}/`;
-const committer = {
-  'name': process.env["GITHUB_NAME"],
-  'email': process.env["GITHUB_EMAIL"]
-};
+let committer = {};
+const gitAuthheader = () => ({
+    'Authorization' : `Bearer ${gitHubToken()}`,
+    'Content-Type': 'application/json'
+});
+const githubApiUrl = () => `https://api.github.com/repos/${gitHubUser()}/${gitHubRepo()}/`;
 
-const gitAuthheader = () => {
-    const token = process.env["GITHUB_TOKEN"];
-    if (!committer.name || !committer.email || !token) {
-        throw new Error(`Must define env variables for Github (GITHUB_NAME, GITHUB_EMAIL, GITHUB_TOKEN)`);
-    }
+let _gitHubConfig = {};
+const gitHubSetConfig = (user, repo, token, committer_name, committer_email) => {
+    _gitHubConfig = {
+        user, 
+        repo, 
+        token
+    };
 
-    return {
-        'Authorization' : `Bearer ${token}`,
-        'Content-Type': 'application/json'
+    committer = {
+        name:committer_name, 
+        email:committer_email
     };
 }
+
+const errorIfNull = (value,message) => {
+    if(value)
+        return value
+    else
+        throw new Error(message);
+}
+const gitHubUser = () => errorIfNull(_gitHubConfig.user,'GitHub user not defined. Use gitHubSetConfig().');
+const gitHubRepo = () => errorIfNull(_gitHubConfig.repo,'GitHub repo not defined. Use gitHubSetConfig().');
+const gitHubToken = () => errorIfNull(_gitHubConfig.token,'GitHub token not defined. Use gitHubSetConfig().');
 
 const gitDefaultOptions = () => ({method: 'GET', headers:gitAuthheader() });
 
@@ -33,7 +44,7 @@ const gitPutOptions = bodyJSON =>
 
 const gitHubMessage = (action, file) => `${action} - ${file}`;
 
-const branchGetHeadUrl = branch => `${githubApiUrl}git/refs/heads/${branch}`;
+const branchGetHeadUrl = branch => `${githubApiUrl()}git/refs/heads/${branch}`;
 
 //Return a branch head record
 const branchGetHead = async branch =>
@@ -54,19 +65,19 @@ const gitHubBranchCreate = async (branch,mergetarget) => {
       })
   };
 
-  await fetchJSON(`${githubApiUrl}git/refs`, branchCreateBody)
+  await fetchJSON(`${githubApiUrl()}git/refs`, branchCreateBody)
       .then(() => {console.log(`BRANCH CREATE Success: ${branch}`); });
 }
 
 //using the default github api path and get options, run a path
 const gitHubGet = async path => 
-    await fetchJSON(githubApiUrl+path, gitDefaultOptions());
+    await fetchJSON(githubApiUrl()+path, gitDefaultOptions());
 
 const gitHubPrGetByBranchName = async (base, branch) => {
 //xample...
 //https://developer.github.com/v3/pulls/#list-pull-requests
 //https://api.github.com/repos/cagov/covid19/pulls?state=all&base=master&head=cagov:mybranch
-    const url = `pulls?state=all&base=${base}&head=${githubUser}:${branch}`;
+    const url = `pulls?state=all&base=${base}&head=${gitHubUser()}:${branch}`;
 
     const results = await gitHubGet(url);
     return results.length ? results[0] : null;
@@ -124,7 +135,7 @@ const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels
           })
       };
 
-      await fetchJSON(`${githubApiUrl}merges`, mergeOptions)
+      await fetchJSON(`${githubApiUrl()}merges`, mergeOptions)
           .then(() => {console.log(`MERGE Success: ${branch} -> ${mergetarget}`);});
       //End Merge
 
@@ -145,7 +156,7 @@ const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels
           })
       };
 
-      const PrResult = await fetchJSON(`${githubApiUrl}pulls`, prbody)
+      const PrResult = await fetchJSON(`${githubApiUrl()}pulls`, prbody)
           .then(r => {
               console.log(`PR create Success`);
               return r;
@@ -164,7 +175,7 @@ const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels
 
           const issue_number = PrResult.number;
   
-          await fetchJSON(`${githubApiUrl}issues/${issue_number}/labels`, prlabelbody)
+          await fetchJSON(`${githubApiUrl()}issues/${issue_number}/labels`, prlabelbody)
           .then(r => {
               console.log(`PR Label Success`);
               return r;
@@ -228,7 +239,7 @@ const gitHubFileUpdate = async (content, url, sha, message, branch) =>
     }));
 
 const gitHubFileAdd = async (content, newFilePath, message, branch) =>
-    await fetchJSON(`${githubApiUrl}contents/${newFilePath}`, gitPutOptions({
+    await fetchJSON(`${githubApiUrl()}contents/${newFilePath}`, gitPutOptions({
         committer,
         content,
         message,
@@ -246,6 +257,7 @@ const gitHubFileGetBlob = async sha =>
     await gitHubGet(`git/blobs/${sha}`);
 
 module.exports = {
+  gitHubSetConfig,
   gitHubMessage,
   gitHubBranchCreate,
   gitHubBranchMerge,
