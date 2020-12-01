@@ -4,20 +4,21 @@ const githubBranch = "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const {
+    gitHubSetConfig,
     gitHubBranchCreate,
     gitHubBranchMerge,
     gitHubFileAdd,
     gitHubFileUpdate,
     gitHubFileGet,
     gitHubFileGetBlob
-} = require('./git'); // committing to covid-static, not covid19, need to make common accept destination repo as param to reuse here
+} = require('../common/gitHub');
 
 const fs = require('fs')
 
 module.exports = async function (context, functionInput) {
-    try {
-        const AZURE_STORAGE_CONNECTION_STRING = process.env["AZURE_STORAGE_CONNECTION_STRING"];
+    gitHubSetConfig('cagov','covid-static',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
 
+    try {
         let attrs = {
             account: 'cdt.west-us-2.azure',
             username: process.env["SNOWFLAKE_USER"],
