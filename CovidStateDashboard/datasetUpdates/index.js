@@ -16,7 +16,7 @@ const PrLabels = ['Automatic Deployment'];
 
 //Check to see if we need stats update PRs, make them if we do.
 const doDailyStatsPr = async mergetargets => {
-    gitHubSetConfig('cagov','covid',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
+    gitHubSetConfig('cagov','covid19',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
     const sql = `SELECT TOP 1 * from COVID.PRODUCTION.VW_TABLEAU_COVID_METRICS_STATEWIDE ORDER BY DATE DESC`;
     let sqlResults = null;
     let masterPr = null;

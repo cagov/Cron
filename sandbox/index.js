@@ -15,7 +15,7 @@ const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
     const masterbranch='synctest3', stagingbranch='synctest3_staging';
     //const masterbranch='master', stagingbranch='staging';
     const mergetargets = [masterbranch,stagingbranch];
-    //gitHubSetConfig('cagov','covid',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
+    //gitHubSetConfig('cagov','covid19',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
   
     //const report = await doWeeklyUpdatePrs(mergetargets);
 

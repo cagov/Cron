@@ -77,7 +77,7 @@ const gitHubPrGetByBranchName = async (base, branch) => {
 //xample...
 //https://developer.github.com/v3/pulls/#list-pull-requests
 //https://api.github.com/repos/cagov/covid19/pulls?state=all&base=master&head=cagov:mybranch
-    const url = `pulls?state=all&base=${base}&head=${githubUser()}:${branch}`;
+    const url = `pulls?state=all&base=${base}&head=${gitHubUser()}:${branch}`;
 
     const results = await gitHubGet(url);
     return results.length ? results[0] : null;
