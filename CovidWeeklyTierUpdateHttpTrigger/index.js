@@ -14,7 +14,7 @@ module.exports = async function (context, req) {
 
         activity.report = await doWeeklyUpdatePrs(mergetargets);
 
-        for (const val of report) {
+        for (const val of activity.report) {
             await slackBotChatPost(notifyChannel,`Tier Update Deployed\n${val.Pr.html_url}`);
         }
 
