@@ -3,6 +3,11 @@ const { slackBotDelayedChatPost, slackBotReportError } = require('../common/slac
 const githubBranch = "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
+const branchPrefix = 'data-';
+const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+//const slackBotCompletedWorkChannel = 'C01DBP67MSQ'; //Carter debug
+//const slackBotDebugChannel = 'C01DBP67MSQ'; //Carter debug
+const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
 const {
     gitHubSetConfig,
     gitHubBranchCreate,
@@ -118,13 +123,13 @@ module.exports = async function (context, functionInput) {
 
         const allData = await executeSql(DbSqlWork);
 
-        let reviewBranchName = `data-${new Date().toISOString().split('T')[0]}-equitydash-2-review`;
-        let reviewCompletedBranchName = `data-${new Date().toISOString().split('T')[0]}-equitydash-review-complete`;
+        let reviewBranchName = `${branchPrefix}${new Date().toISOString().split('T')[0]}-equitydash-2-review`;
+        let reviewCompletedBranchName = `${branchPrefix}${new Date().toISOString().split('T')[0]}-equitydash-review-complete`;
         await gitHubBranchCreate(reviewBranchName, githubBranch);
         await gitHubBranchCreate(reviewCompletedBranchName, githubBranch);
 
         const stagingTargetFiles = (await gitHubFileGet(stagingFileLoc,reviewBranchName))
-            .filter(x=>x.type==='file'&&(x.name.endsWith('.json'))); 
+            .filter(x=>x.type==='file'&&(x.name.endsWith('.json')));
 
         //Add custom columns to targetfile data
         stagingTargetFiles.forEach(x=>{
@@ -133,7 +138,7 @@ module.exports = async function (context, functionInput) {
         });
 
         const productionTargetFiles = (await gitHubFileGet(productionFileLoc,reviewCompletedBranchName))
-        .filter(x=>x.type==='file'&&(x.name.endsWith('.json'))); 
+            .filter(x=>x.type==='file'&&(x.name.endsWith('.json'))); 
 
         //Add custom columns to targetfile data
         productionTargetFiles.forEach(x=>{
@@ -144,6 +149,9 @@ module.exports = async function (context, functionInput) {
         let writtenFileCount = 0;
 
         let allFilesMap = new Map();
+        allFilesMap.set('equityTopBoxData',allData.casesAndDeathsStatewide);
+
+
         // this is combining cases, testing and deaths metrics
         allData.missingnessData.forEach(item => {
             let mapKey = `missingness-${item.COUNTY}`;
@@ -266,7 +274,7 @@ module.exports = async function (context, functionInput) {
                 // the reviewedComplete branch should stay open
                 const Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false);
                 let postTime = (new Date().getTime() + (1000 * 300)) / 1000;
-                await slackBotDelayedChatPost('C01BMCQK0F6',`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
+                await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
             }
         }
         getNext();
@@ -275,12 +283,11 @@ module.exports = async function (context, functionInput) {
         async function putFile(value,key,targetBranchName,fileLoc,callback) {
             const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
             const newFilePath = `${fileLoc}${newFileName}`;
-            let targetfile = null;
-            if(fileLoc === stagingFileLoc) {
-                targetfile = stagingTargetFiles.find(y=>newFileName===y.filename);
-            } else {
-                targetfile = productionTargetFiles.find(y=>newFileName===y.filename);
-            }
+            const targetfile = (
+                (fileLoc === stagingFileLoc) 
+                ? stagingTargetFiles 
+                : productionTargetFiles
+            ).find(y=>newFileName===y.filename);
             const content = Buffer.from(JSON.stringify(value,null,2)).toString('base64');
             let resultMessage = "";
 
@@ -315,7 +322,7 @@ module.exports = async function (context, functionInput) {
         allData.writtenFileCount = writtenFileCount;
 
     } catch (e) {
-        await slackBotReportError('C0112NK978D',`Error running equity stats update`,e,context,functionInput);
+        await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
 }
 
