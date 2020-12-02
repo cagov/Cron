@@ -18,7 +18,7 @@ const doTranslationPrUpdate = async (masterbranch) => {
     const Prs = (await gitHubPrs(masterbranch))
         .filter(p=>
             !p.draft //ignore drafts
-            &&p.labels.some(s=>p.name===labelFilter)); //require the 'Translated Content' label
+            &&p.labels.some(s=>s.name===labelFilter)); //require the 'Translated Content' label
 
     for (const pr of Prs) {
         
