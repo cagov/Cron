@@ -52,6 +52,7 @@ module.exports = async function (context, functionInput) {
             healthEquityData : `select COUNTY, DATE, METRIC, METRIC_VALUE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_DIFF from COVID.PRODUCTION.VW_EQUITY_METRIC_POS_30_DAY_BY_CNT`,
         };
 
+        //runs a name/SQL object and returns a matching object with name/Results 
         const executeSql = async (sqlWork) => {
             const promises = [];
 
@@ -73,7 +74,7 @@ module.exports = async function (context, functionInput) {
             return result;
         }
 
-
+        //creates a new Snowflake Db Promise witht the result set name
         const getDbPromise = (name, sqlText) => new Promise((resolve, reject) => {
             connection.execute({
                 sqlText,
