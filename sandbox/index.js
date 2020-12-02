@@ -7,6 +7,7 @@ const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker'
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 const { gitHubSetConfig } = require('../common/gitHub');
+const CovidEquityData = require('../CovidEquityData');
 
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 //const notifyChannel = 'C01DBP67MSQ';
@@ -17,6 +18,9 @@ const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
     const mergetargets = [masterbranch,stagingbranch];
     //gitHubSetConfig('cagov','covid19',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
   
+
+    const yo = await CovidEquityData();
+
     //const report = await doWeeklyUpdatePrs(mergetargets);
 
 
