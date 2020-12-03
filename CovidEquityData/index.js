@@ -5,17 +5,18 @@ const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'data-';
 const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
 //const slackBotCompletedWorkChannel = 'C01DBP67MSQ'; //Carter debug
 //const slackBotDebugChannel = 'C01DBP67MSQ'; //Carter debug
-const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
+
 const {
     gitHubSetConfig,
+    gitHubBranchExists,
     gitHubBranchCreate,
     gitHubBranchMerge,
     gitHubFileAdd,
     gitHubFileUpdate,
-    gitHubFileGet,
-    gitHubFileGetBlob
+    gitHubFileGet
 } = require('../common/gitHub');
 
 const fs = require('fs')
@@ -122,29 +123,17 @@ module.exports = async function (context, functionInput) {
         });
 
         const allData = await executeSql(DbSqlWork);
+        const today = getTodayPacificTime().replace(/\//g,'-');
+        let reviewBranchName = `${branchPrefix}${today}-equitydash-2-review`;
+        let reviewCompletedBranchName = `${branchPrefix}${today}-equitydash-review-complete`;
+        
+        if(!(await gitHubBranchExists(reviewBranchName))) {
+            await gitHubBranchCreate(reviewBranchName, githubBranch);
+        }
+        if(!(await gitHubBranchExists(reviewCompletedBranchName))) {
+            await gitHubBranchCreate(reviewCompletedBranchName, githubBranch);
+        }
 
-        let reviewBranchName = `${branchPrefix}${new Date().toISOString().split('T')[0]}-equitydash-2-review`;
-        let reviewCompletedBranchName = `${branchPrefix}${new Date().toISOString().split('T')[0]}-equitydash-review-complete`;
-        await gitHubBranchCreate(reviewBranchName, githubBranch);
-        await gitHubBranchCreate(reviewCompletedBranchName, githubBranch);
-
-        const stagingTargetFiles = (await gitHubFileGet(stagingFileLoc,reviewBranchName))
-            .filter(x=>x.type==='file'&&(x.name.endsWith('.json')));
-
-        //Add custom columns to targetfile data
-        stagingTargetFiles.forEach(x=>{
-            //just get the filename, special characters and all
-            x.filename = x.url.split(`${stagingFileLoc}`)[1].split('?ref')[0].toLowerCase();
-        });
-
-        const productionTargetFiles = (await gitHubFileGet(productionFileLoc,reviewCompletedBranchName))
-            .filter(x=>x.type==='file'&&(x.name.endsWith('.json'))); 
-
-        //Add custom columns to targetfile data
-        productionTargetFiles.forEach(x=>{
-            //just get the filename, special characters and all
-            x.filename = x.url.split(`${productionFileLoc}`)[1].split('?ref')[0].toLowerCase();
-        });
 
         let writtenFileCount = 0;
 
@@ -283,19 +272,13 @@ module.exports = async function (context, functionInput) {
         async function putFile(value,key,targetBranchName,fileLoc,callback) {
             const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
             const newFilePath = `${fileLoc}${newFileName}`;
-            const targetfile = (
-                (fileLoc === stagingFileLoc) 
-                ? stagingTargetFiles 
-                : productionTargetFiles
-            ).find(y=>newFileName===y.filename);
+            const targetfile = await gitHubFileGet(newFilePath,targetBranchName);
             const content = Buffer.from(JSON.stringify(value,null,2)).toString('base64');
             let resultMessage = "";
 
-            if(targetfile) {
-                //UPDATE
-                const targetcontent = await gitHubFileGetBlob(targetfile.sha);
-                
-                if(content!==targetcontent.content.replace(/\n/g,'')) {
+            if(targetfile&&targetfile.sha) {
+                //UPDATE                
+                if(content!==(targetfile.content || '').replace(/\n/g,'')) {
                     //Update file
                     let message = `Update page - ${targetfile.name}`;
                     const updateResult = await gitHubFileUpdate(content,targetfile.url,targetfile.sha,message,targetBranchName)
@@ -327,4 +310,4 @@ module.exports = async function (context, functionInput) {
 }
 
 const getTodayPacificTime = () =>
-    new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"});
+    new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"});
