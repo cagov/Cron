@@ -6,7 +6,7 @@ const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker');
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
-const { gitHubSetConfig } = require('../common/gitHub');
+const { gitHubSetConfig,gitHubPrRequestReview,gitHubBranchCreate,gitHubBranchMerge,gitHubFileAdd } = require('../common/gitHub');
 const CovidEquityData = require('../CovidEquityData');
 
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
@@ -16,10 +16,25 @@ const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
     //const masterbranch='synctest3', stagingbranch='synctest3_staging';
     const masterbranch='master', stagingbranch='staging';
     const mergetargets = [masterbranch,stagingbranch];
-    //gitHubSetConfig('cagov','covid19',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
+    
+    
+    gitHubSetConfig('cagov','covid-static',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
   
 
-    const yo = await CovidEquityData();
+    //const yo = await CovidEquityData();
+
+
+    //const targetBranchName = 'carter-test-branch';
+    //const b = await gitHubBranchCreate(targetBranchName,'master');
+    //await gitHubFileAdd('test','delme.txt','adding test file',targetBranchName)
+    //const pr = await gitHubBranchMerge(targetBranchName,"master",true,'carter test PR',null,false);
+    
+    //const pr = {url:'https://api.github.com/repos/cagov/covid-static/pulls/16'};
+    //const r = await gitHubPrRequestReview(pr,['aaronhans']);
+
+
+
+
 
     //const report = await doWeeklyUpdatePrs(mergetargets);
 

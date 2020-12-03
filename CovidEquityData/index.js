@@ -4,10 +4,10 @@ const githubBranch = "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'data-';
-const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
-//const slackBotCompletedWorkChannel = 'C01DBP67MSQ'; //Carter debug
-//const slackBotDebugChannel = 'C01DBP67MSQ'; //Carter debug
+//const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+//const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
+const slackBotCompletedWorkChannel = 'C01DBP67MSQ'; //Carter debug
+const slackBotDebugChannel = 'C01DBP67MSQ'; //Carter debug
 
 const {
     gitHubSetConfig,
@@ -16,7 +16,8 @@ const {
     gitHubBranchMerge,
     gitHubFileAdd,
     gitHubFileUpdate,
-    gitHubFileGet
+    gitHubFileGet,
+    gitHubPrRequestReview
 } = require('../common/gitHub');
 
 const fs = require('fs')
@@ -262,6 +263,8 @@ module.exports = async function (context, functionInput) {
                 await gitHubBranchMerge(reviewBranchName, githubBranch);
                 // the reviewedComplete branch should stay open
                 const Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false);
+                await gitHubPrRequestReview(Pr,['vargoCDPH']);
+                
                 let postTime = (new Date().getTime() + (1000 * 300)) / 1000;
                 await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
             }
