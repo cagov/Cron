@@ -3,14 +3,20 @@ const { slackBotDelayedChatPost, slackBotReportError } = require('../common/slac
 const githubBranch = "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
+const branchPrefix = 'data-';
+const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
+//const slackBotCompletedWorkChannel = 'C01DBP67MSQ'; //Carter debug
+//const slackBotDebugChannel = 'C01DBP67MSQ'; //Carter debug
+
 const {
     gitHubSetConfig,
+    gitHubBranchExists,
     gitHubBranchCreate,
     gitHubBranchMerge,
     gitHubFileAdd,
     gitHubFileUpdate,
-    gitHubFileGet,
-    gitHubFileGetBlob
+    gitHubFileGet
 } = require('../common/gitHub');
 
 const fs = require('fs')
@@ -39,17 +45,41 @@ module.exports = async function (context, functionInput) {
         });
         
         const DbSqlWork = {
+            casesAndDeathsStatewide :
+                `select
+                    *,
+                    CASES/POPULATION*100000 as CASE_RATE,
+                    DEATHS/POPULATION*100000 as DEATH_RATE
+                from
+                (
+                select
+                    RACE_ETHNICITY,
+                    sum(cases) as cases,
+                    sum(deaths) as deaths,
+                    (select sum(POPULATION) from COVID.PRODUCTION.CDPH_STATIC_DEMOGRAPHICS d1 where d1.RACE_ETHNICITY = demoTab.RACE_ETHNICITY) as POPULATION,
+                    REPORT_DATE
+                from 
+                    COVID.PRODUCTION.VW_CDPH_CASE_DEMOGRAPHICS as demoTab
+                where
+                    RACE_ETHNICITY!='Other'
+                    and REPORT_DATE = (SELECT max(REPORT_DATE) from COVID.PRODUCTION.VW_CDPH_CASE_DEMOGRAPHICS)
+                group by
+                    RACE_ETHNICITY,
+                    REPORT_DATE
+                order by
+                    RACE_ETHNICITY
+                )`,
             // cumulative for R/E per 100K, R/E by % pop. there used to be a REPORT_DATE here and we used to have to do where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE); but that has been removed and we expect a single cumulative value here now
-            cumulativeData : `select COUNTY, DEMOGRAPHIC_SET, DEMOGRAPHIC_SET_CATEGORY, METRIC, METRIC_VALUE, METRIC_VALUE_PER_100K, APPLIED_SUPPRESSION, POPULATION_PERCENTAGE, METRIC_TOTAL_PERCENTAGE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_PER_100K_30_DAYS_AGO, METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO, METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO, METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE where DEMOGRAPHIC_SET = 'race_ethnicity'`,
-            cumulativeStatewideData : `select COUNTY, DEMOGRAPHIC_SET, DEMOGRAPHIC_SET_CATEGORY, METRIC, METRIC_VALUE, METRIC_VALUE_PER_100K, APPLIED_SUPPRESSION, POPULATION_PERCENTAGE, METRIC_TOTAL_PERCENTAGE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_PER_100K_30_DAYS_AGO, METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO, METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO, METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE where DEMOGRAPHIC_SET = 'Combined'`,
+            cumulativeData :            `select COUNTY, DEMOGRAPHIC_SET, DEMOGRAPHIC_SET_CATEGORY, METRIC, METRIC_VALUE, METRIC_VALUE_PER_100K, APPLIED_SUPPRESSION, POPULATION_PERCENTAGE, METRIC_TOTAL_PERCENTAGE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_PER_100K_30_DAYS_AGO, METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO, METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO, METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE where DEMOGRAPHIC_SET = 'race_ethnicity'`,
+            cumulativeStatewideData :   `select COUNTY, DEMOGRAPHIC_SET, DEMOGRAPHIC_SET_CATEGORY, METRIC, METRIC_VALUE, METRIC_VALUE_PER_100K, APPLIED_SUPPRESSION, POPULATION_PERCENTAGE, METRIC_TOTAL_PERCENTAGE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_PER_100K_30_DAYS_AGO, METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO, METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO, METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE where DEMOGRAPHIC_SET = 'Combined'`,
             // statewide stats for comparison
-            statewideData : `select AGE_GROUP, GENDER, RACE_ETHNICITY, POPULATION, SF_LOAD_TIMESTAMP from COVID.PRODUCTION.CDPH_STATIC_DEMOGRAPHICS where SF_LOAD_TIMESTAMP = (select max(SF_LOAD_TIMESTAMP) from PRODUCTION.CDPH_STATIC_DEMOGRAPHICS)`,
-            missingnessData : `select COUNTY, METRIC, MISSING, NOT_MISSING, TOTAL, PERCENT_COMPLETE, PERCENT_COMPLETE_30_DAYS_PRIOR, PERCENT_COMPLETE_30_DAYS_DIFF, REPORT_DATE from PRODUCTION.VW_CDPH_DEMOGRAPHIC_COMPLETENESS where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_COMPLETENESS)`,
+            statewideData :             `select AGE_GROUP, GENDER, RACE_ETHNICITY, POPULATION, SF_LOAD_TIMESTAMP from COVID.PRODUCTION.CDPH_STATIC_DEMOGRAPHICS where SF_LOAD_TIMESTAMP = (select max(SF_LOAD_TIMESTAMP) from PRODUCTION.CDPH_STATIC_DEMOGRAPHICS)`,
+            missingnessData :           `select COUNTY, METRIC, MISSING, NOT_MISSING, TOTAL, PERCENT_COMPLETE, PERCENT_COMPLETE_30_DAYS_PRIOR, PERCENT_COMPLETE_30_DAYS_DIFF, REPORT_DATE from PRODUCTION.VW_CDPH_DEMOGRAPHIC_COMPLETENESS where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_COMPLETENESS)`,
             // missingness sexual orientation, gender identity
-            missingnessSOGIData : `select COUNTY, SOGI_CATEGORY, METRIC, MISSING, NOT_MISSING, TOTAL,PERCENT_COMPLETE, PERCENT_COMPLETE_30_DAYS_AGO, DIFF_30_DAY,REPORT_DATE from PRODUCTION.VW_CDPH_SOGI_COMPLETENESS where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_COMPLETENESS)`,
-            socialData : `select DATE, SOCIAL_DET, SOCIAL_TIER, SORT, CASES_7DAYAVG_7DAYSAGO, POPULATION, CASE_RATE_PER_100K, STATE_CASE_RATE_PER_100K, CASE_RATE_PER_100K_30_DAYS_AGO, RATE_DIFF_30_DAYS from PRODUCTION.VW_CDPH_CASE_RATE_BY_SOCIAL_DET where DATE = (select max(DATE) from PRODUCTION.VW_CDPH_CASE_RATE_BY_SOCIAL_DET)`,
+            missingnessSOGIData :       `select COUNTY, SOGI_CATEGORY, METRIC, MISSING, NOT_MISSING, TOTAL,PERCENT_COMPLETE, PERCENT_COMPLETE_30_DAYS_AGO, DIFF_30_DAY,REPORT_DATE from PRODUCTION.VW_CDPH_SOGI_COMPLETENESS where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_COMPLETENESS)`,
+            socialData :                `select DATE, SOCIAL_DET, SOCIAL_TIER, SORT, CASES_7DAYAVG_7DAYSAGO, POPULATION, CASE_RATE_PER_100K, STATE_CASE_RATE_PER_100K, CASE_RATE_PER_100K_30_DAYS_AGO, RATE_DIFF_30_DAYS from PRODUCTION.VW_CDPH_CASE_RATE_BY_SOCIAL_DET where DATE = (select max(DATE) from PRODUCTION.VW_CDPH_CASE_RATE_BY_SOCIAL_DET)`,
             // equity metric line chart
-            healthEquityData : `select COUNTY, DATE, METRIC, METRIC_VALUE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_DIFF from COVID.PRODUCTION.VW_EQUITY_METRIC_POS_30_DAY_BY_CNT`,
+            healthEquityData :          `select COUNTY, DATE, METRIC, METRIC_VALUE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_DIFF from COVID.PRODUCTION.VW_EQUITY_METRIC_POS_30_DAY_BY_CNT`,
         };
 
         //runs a name/SQL object and returns a matching object with name/Results 
@@ -93,33 +123,24 @@ module.exports = async function (context, functionInput) {
         });
 
         const allData = await executeSql(DbSqlWork);
+        const today = getTodayPacificTime().replace(/\//g,'-');
+        let reviewBranchName = `${branchPrefix}${today}-equitydash-2-review`;
+        let reviewCompletedBranchName = `${branchPrefix}${today}-equitydash-review-complete`;
+        
+        if(!(await gitHubBranchExists(reviewBranchName))) {
+            await gitHubBranchCreate(reviewBranchName, githubBranch);
+        }
+        if(!(await gitHubBranchExists(reviewCompletedBranchName))) {
+            await gitHubBranchCreate(reviewCompletedBranchName, githubBranch);
+        }
 
-        let reviewBranchName = `data-${new Date().toISOString().split('T')[0]}-equitydash-2-review`;
-        let reviewCompletedBranchName = `data-${new Date().toISOString().split('T')[0]}-equitydash-review-complete`;
-        await gitHubBranchCreate(reviewBranchName, githubBranch);
-        await gitHubBranchCreate(reviewCompletedBranchName, githubBranch);
-
-        const stagingTargetFiles = (await gitHubFileGet(stagingFileLoc,reviewBranchName))
-            .filter(x=>x.type==='file'&&(x.name.endsWith('.json'))); 
-
-        //Add custom columns to targetfile data
-        stagingTargetFiles.forEach(x=>{
-            //just get the filename, special characters and all
-            x.filename = x.url.split(`${stagingFileLoc}`)[1].split('?ref')[0].toLowerCase();
-        });
-
-        const productionTargetFiles = (await gitHubFileGet(productionFileLoc,reviewCompletedBranchName))
-        .filter(x=>x.type==='file'&&(x.name.endsWith('.json'))); 
-
-        //Add custom columns to targetfile data
-        productionTargetFiles.forEach(x=>{
-            //just get the filename, special characters and all
-            x.filename = x.url.split(`${productionFileLoc}`)[1].split('?ref')[0].toLowerCase();
-        });
 
         let writtenFileCount = 0;
 
         let allFilesMap = new Map();
+        allFilesMap.set('equityTopBoxData',allData.casesAndDeathsStatewide);
+
+
         // this is combining cases, testing and deaths metrics
         allData.missingnessData.forEach(item => {
             let mapKey = `missingness-${item.COUNTY}`;
@@ -242,7 +263,7 @@ module.exports = async function (context, functionInput) {
                 // the reviewedComplete branch should stay open
                 const Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false);
                 let postTime = (new Date().getTime() + (1000 * 300)) / 1000;
-                await slackBotDelayedChatPost('C01BMCQK0F6',`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
+                await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
             }
         }
         getNext();
@@ -251,20 +272,13 @@ module.exports = async function (context, functionInput) {
         async function putFile(value,key,targetBranchName,fileLoc,callback) {
             const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
             const newFilePath = `${fileLoc}${newFileName}`;
-            let targetfile = null;
-            if(fileLoc === stagingFileLoc) {
-                targetfile = stagingTargetFiles.find(y=>newFileName===y.filename);
-            } else {
-                targetfile = productionTargetFiles.find(y=>newFileName===y.filename);
-            }
-            const content = Buffer.from(JSON.stringify(value)).toString('base64');
+            const targetfile = await gitHubFileGet(newFilePath,targetBranchName);
+            const content = Buffer.from(JSON.stringify(value,null,2)).toString('base64');
             let resultMessage = "";
 
-            if(targetfile) {
-                //UPDATE
-                const targetcontent = await gitHubFileGetBlob(targetfile.sha);
-                
-                if(content!==targetcontent.content.replace(/\n/g,'')) {
+            if(targetfile&&targetfile.sha) {
+                //UPDATE                
+                if(content!==(targetfile.content || '').replace(/\n/g,'')) {
                     //Update file
                     let message = `Update page - ${targetfile.name}`;
                     const updateResult = await gitHubFileUpdate(content,targetfile.url,targetfile.sha,message,targetBranchName)
@@ -291,9 +305,9 @@ module.exports = async function (context, functionInput) {
         allData.writtenFileCount = writtenFileCount;
 
     } catch (e) {
-        await slackBotReportError('C0112NK978D',`Error running equity stats update`,e,context,functionInput);
+        await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
 }
 
 const getTodayPacificTime = () =>
-    new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"});
+    new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"});
