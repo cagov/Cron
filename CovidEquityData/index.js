@@ -46,7 +46,7 @@ module.exports = async function (context, functionInput) {
         });
         
         const DbSqlWork = {
-            casesAndDeathsStatewide :
+            casesAndDeathsByDemographic :
                 `select
                     *,
                     CASES/POPULATION*100000 as CASE_RATE,
@@ -70,6 +70,22 @@ module.exports = async function (context, functionInput) {
                 order by
                     RACE_ETHNICITY
                 )`,
+            casesLowIncome :
+                `select top 1
+                    DATE,
+                    STATE_CASE_RATE_PER_100K,
+                    CASE_RATE_PER_100K,
+                    POPULATION,
+                    CASES_7DAYAVG_7DAYSAGO,
+                    RATE_DIFF_30_DAYS
+                from
+                    COVID.PRODUCTION.VW_CDPH_CASE_RATE_BY_SOCIAL_DET
+                where 
+                    SOCIAL_DET='income' and
+                    SOCIAL_TIER='below $40K'
+                order by
+                    DATE desc
+                `,
             // cumulative for R/E per 100K, R/E by % pop. there used to be a REPORT_DATE here and we used to have to do where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE); but that has been removed and we expect a single cumulative value here now
             cumulativeData :            `select COUNTY, DEMOGRAPHIC_SET, DEMOGRAPHIC_SET_CATEGORY, METRIC, METRIC_VALUE, METRIC_VALUE_PER_100K, APPLIED_SUPPRESSION, POPULATION_PERCENTAGE, METRIC_TOTAL_PERCENTAGE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_PER_100K_30_DAYS_AGO, METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO, METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO, METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE where DEMOGRAPHIC_SET = 'race_ethnicity'`,
             cumulativeStatewideData :   `select COUNTY, DEMOGRAPHIC_SET, DEMOGRAPHIC_SET_CATEGORY, METRIC, METRIC_VALUE, METRIC_VALUE_PER_100K, APPLIED_SUPPRESSION, POPULATION_PERCENTAGE, METRIC_TOTAL_PERCENTAGE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_PER_100K_30_DAYS_AGO, METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO, METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO, METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE where DEMOGRAPHIC_SET = 'Combined'`,
@@ -139,7 +155,13 @@ module.exports = async function (context, functionInput) {
         let writtenFileCount = 0;
 
         let allFilesMap = new Map();
-        allFilesMap.set('equityTopBoxData',allData.casesAndDeathsStatewide);
+
+        allFilesMap.set('equityTopBoxDataV2',
+            {
+                LowIncome : allData.casesLowIncome,
+                Demographics : allData.casesAndDeathsByDemographic
+            }
+        );
 
 
         // this is combining cases, testing and deaths metrics
