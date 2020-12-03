@@ -4,10 +4,10 @@ const githubBranch = "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'data-';
-//const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-//const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
-const slackBotCompletedWorkChannel = 'C01DBP67MSQ'; //Carter debug
-const slackBotDebugChannel = 'C01DBP67MSQ'; //Carter debug
+const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
+//const slackBotCompletedWorkChannel = 'C01DBP67MSQ'; //Carter debug
+//const slackBotDebugChannel = 'C01DBP67MSQ'; //Carter debug
 
 const {
     gitHubSetConfig,
