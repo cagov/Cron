@@ -69,6 +69,26 @@ const gitHubBranchCreate = async (branch,mergetarget) => {
       .then(() => {console.log(`BRANCH CREATE Success: ${branch}`); });
 }
 
+//requests a review for a Pr
+//usage...await gitHubPrRequestReview(pr,['aaronhans']);
+//expecting pr to have a "url"
+//https://docs.github.com/en/free-pro-team@latest/rest/reference/pulls#request-reviewers-for-a-pull-request
+const gitHubPrRequestReview = async (Pr, reviewers) => {
+
+    const targetUrl = `${Pr.url}/requested_reviewers`;
+
+    const body = {
+        method: 'POST',
+        headers: gitAuthheader(),
+        body: JSON.stringify({
+            reviewers
+        })
+    };
+
+    await fetchJSON(targetUrl, body)
+        .then(() => {console.log(`Pr Review Requested: ${reviewers}`); });
+}
+
 //using the default github api path and get options, run a path
 const gitHubGet = async path => 
     await fetchJSON(githubApiUrl()+path, gitDefaultOptions());
@@ -272,5 +292,6 @@ module.exports = {
   gitHubMergePr,
   gitHubPrs,
   gitHubPrGetByBranchName,
+  gitHubPrRequestReview,
   gitHubGet
 }
