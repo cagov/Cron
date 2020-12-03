@@ -62,7 +62,8 @@ module.exports = async function (context, functionInput) {
                 from 
                     COVID.PRODUCTION.VW_CDPH_CASE_DEMOGRAPHICS as demoTab
                 where
-                    REPORT_DATE = (SELECT max(REPORT_DATE) from COVID.PRODUCTION.VW_CDPH_CASE_DEMOGRAPHICS)
+                    RACE_ETHNICITY!='Other'
+                    and REPORT_DATE = (SELECT max(REPORT_DATE) from COVID.PRODUCTION.VW_CDPH_CASE_DEMOGRAPHICS)
                 group by
                     RACE_ETHNICITY,
                     REPORT_DATE
