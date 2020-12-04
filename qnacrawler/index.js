@@ -30,6 +30,7 @@ let urls = [
   "https://covid19.ca.gov/taxes/",
   "https://covid19.ca.gov/testing-and-treatment/",
   "https://covid19.ca.gov/workers/",
+  "https://covid19.ca.gov/vaccines/"
 ];
 
 async function goTo(url, page) {
