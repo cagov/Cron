@@ -81,7 +81,7 @@ module.exports = async function (context, functionInput) {
                 from
                     COVID.PRODUCTION.VW_CDPH_CASE_RATE_BY_SOCIAL_DET
                 where 
-                    SOCIAL_DET='income' and
+                    SOCIAL_DET='income_cumulative' and
                     SOCIAL_TIER='below $40K'
                 order by
                     DATE desc
