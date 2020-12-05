@@ -18,7 +18,7 @@ const {
     gitHubFileUpdate,
     gitHubFileGet,
     gitHubPrRequestReview
-} = require('../common/gitHub');
+} = require('./gitHub.js');
 
 const fs = require('fs')
 
