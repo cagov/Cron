@@ -284,7 +284,7 @@ module.exports = async function (context, functionInput) {
                 // the to-review branch will merge to the /to-review location and delete its merge PR
                 await gitHubBranchMerge(reviewBranchName, githubBranch);
                 // the reviewedComplete branch should stay open
-                const Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false);
+                const Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false,'Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/');
                 await gitHubPrRequestReview(Pr,['vargoCDPH','sindhuravuri']);
                 
                 let postTime = (new Date().getTime() + (1000 * 300)) / 1000;
