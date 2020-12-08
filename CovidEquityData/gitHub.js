@@ -138,7 +138,7 @@ const gitHubBranchDelete = async branch => {
 }
 
 //merge and delete branch
-const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels, ApprovePr) => {
+const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels, ApprovePr, PrBody) => {
 
   if(!bPrMode) {
       //just merge and delete
@@ -170,8 +170,8 @@ const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels
               committer,
               base: mergetarget,
               head: branch,
-              title: PrTitle
-              //body: PrBody
+              title: PrTitle,
+              body: PrBody
               //,draft: bKeepPrOpen
           })
       };
