@@ -41,26 +41,27 @@ const doWeeklyUpdatePrs = async mergetargets => {
         const branch = `auto-tier-update-${mergetarget}-${today}`;
         const isMaster = mergetarget === mergetargets[0];
 
-        if(await gitHubBranchExists(branch)) {console.log(`Branch "${branch}" found...skipping`); continue;} //branch exists, probably another process working on it...skip
-
-        const PR = await gitHubPrGetByBranchName(mergetarget,branch);
-        if(PR) {console.log(`PR "${branch}" found...skipping`); continue;}; //PR found, nothing to do
-
         sqlResults = sqlResults || await prepData(); //only run the query if needed
 
         const content = Buffer.from(JSON.stringify(sqlResults,null,2)).toString('base64');
 
+        const branchExists = await gitHubBranchExists(branch);
+
         //Content compare to determine if we need to create a PR.
-        const comparefile = await gitHubFileGet(statsFilePath,mergetarget);
+        const comparefile = await gitHubFileGet(statsFilePath, branchExists ? branch : mergetarget);
         if(comparefile.content.replace(/\n/g,'')!==content) {
             //Content changed...perform update
-            await gitHubBranchCreate(branch,mergetarget);
+            if (!branchExists) await gitHubBranchCreate(branch,mergetarget);
             const targetfile = await gitHubFileGet(statsFilePath,branch);
             await gitHubFileUpdate(content,targetfile.url,targetfile.sha,gitHubMessage(`${today} Update`,statsFileName),branch);
             const autoApproveMerge = !isMaster; //auto-push non-master
             let PrTitle = `${today} Tier Update${(isMaster) ? `` : ` (${mergetarget})`}`;
-            const Pr = await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);
-            
+
+            let Pr = await gitHubPrGetByBranchName(mergetarget,branch);
+            if (!Pr) {
+                Pr = await gitHubBranchMerge(branch,mergetarget,true,PrTitle,PrLabels,autoApproveMerge);
+            }
+
             report.push({
                 mergetarget,
                 branch,
