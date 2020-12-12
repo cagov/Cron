@@ -296,7 +296,7 @@ If there are issues with the data:
 - Work with Triston directly to resolve data issues
 
 - Alert the COVID19 site team in Slack (in the Equity page channel)`);
-                await gitHubPrRequestReview(Pr,['vargoCDPH']); // planning to add ,'sindhuravuri' ass soon as github invite is accepted
+                await gitHubPrRequestReview(Pr,['vargoCDPH','sindhuravuri']);
                 
                 let postTime = (new Date().getTime() + (1000 * 300)) / 1000;
                 await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
