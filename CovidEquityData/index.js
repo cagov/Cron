@@ -274,8 +274,7 @@ module.exports = async function (context, functionInput) {
             if(nextVal) {
                 console.log('getting '+nextVal)
                 let fileResult = null;
-                fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewBranchName,stagingFileLoc);
-                console.log(fileResult)
+                putFile(allFilesMap.get(nextVal),nextVal,reviewBranchName,stagingFileLoc);
                 fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewCompletedBranchName,productionFileLoc);
                 console.log(fileResult)
                 getNext();
