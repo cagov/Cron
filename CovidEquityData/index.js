@@ -239,7 +239,7 @@ module.exports = async function (context, functionInput) {
             let mapKey = `healthequity-${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey);
             if(!countyInfo) {
-                countyInfo = {};
+                countyInfo = {ts:Date.now()}; // TS insures file uniqueness
             }
             if(!countyInfo[item.METRIC]) {
                 countyInfo[item.METRIC] = [];
@@ -251,7 +251,7 @@ module.exports = async function (context, functionInput) {
         allData.cumulativeStatewideData.forEach(item => {
             let info = allFilesMap.get('cumulative-combined');
             if(!info) {
-                info = {};
+                info = {ts:Date.now()};
             }
             if(!info[item.METRIC]) {
                 info[item.METRIC] = item; // just one row for cases, deaths, tests in this query
