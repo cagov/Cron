@@ -44,11 +44,10 @@ const rl = readline.createInterface({
             const report = await doWeeklyUpdatePrs(mergetargets);
         } else if (opt == 'q') {
             console.log("Buh bye!")
-            process.exit(0);
         } else {
             console.log("Invalid option, bye!")
-            process.exit(0);
         }
+        process.exit(0);
     });
     rl.on("close", () => {
         console.log("Buh bye!")
