@@ -12,15 +12,48 @@ const CovidEquityData = require('../CovidEquityData');
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 //const notifyChannel = 'C01DBP67MSQ';
 
+const readline = require("readline");
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
 (async () => {
-    //const masterbranch='synctest3', stagingbranch='synctest3_staging';
-    const masterbranch='master', stagingbranch='staging';
-    const mergetargets = [masterbranch,stagingbranch];
-    
-    
+   
     gitHubSetConfig('cagov','covid-static',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
   
-
+    console.log("1. Run CovidEquityData");
+    console.log("2. Run doDailyStatsPr");
+    console.log("3. Run doTranslationPrUpdate");
+    console.log("4. Run doWeeklyUpdatePrs");
+    console.log("q. quit");
+    rl.question("Your choice> ", async function(opt) {
+        if (opt == '1') {
+            console.log("Running CovidEquityData");
+            await CovidEquityData();
+        } else if (opt == '2') {
+            console.log("Running doDailyStatsPr");
+            await doDailyStatsPr(mergetargets);
+        } else if (opt == '3') {
+            console.log("Running doTranslationPrUpdate");
+            await doTranslationPrUpdate();
+        } else if (opt == '4') {
+            console.log("Running doWeeklyUpdatePrs");
+            const masterbranch='master', stagingbranch='staging';
+            const mergetargets = [masterbranch,stagingbranch];
+            const report = await doWeeklyUpdatePrs(mergetargets);
+        } else if (opt == 'q') {
+            console.log("Buh bye!")
+            process.exit(0);
+        } else {
+            console.log("Invalid option, bye!")
+            process.exit(0);
+        }
+    });
+    rl.on("close", () => {
+        console.log("Buh bye!")
+        process.exit(0);
+    });
     //const yo = await CovidEquityData();
 
 
@@ -31,9 +64,6 @@ const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
     
     //const pr = {url:'https://api.github.com/repos/cagov/covid-static/pulls/16'};
     //const r = await gitHubPrRequestReview(pr,['aaronhans']);
-
-
-
 
 
     //const report = await doWeeklyUpdatePrs(mergetargets);
