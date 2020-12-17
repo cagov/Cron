@@ -13,7 +13,22 @@
       "request": "launch",
       "name": "Debug sandbox",
       "program": "index",
+      "args": ["${input:echoPrompt}"],
       "cwd": "${workspaceRoot}/sandbox"
-    }
-  ]
+    },
+    
+  ],
+  "inputs": [
+		{
+      "id": "echoPrompt",
+      "type": "pickString",
+      "options": [
+        "1:CovidEquityData",
+        "2:doDailyStatsPr",
+        "3:doTranslationPrUpdate",
+        "4:doWeeklyUpdatePrs"
+      ],
+			"description": "Select code to debug"
+		}
+	]
 }

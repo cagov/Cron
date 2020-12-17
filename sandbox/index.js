@@ -18,41 +18,57 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+const doWork = async (opt) => {
+    if (opt == '1') {
+        console.log("Running CovidEquityData");
+        await CovidEquityData();
+    } else if (opt == '2') {
+        console.log("Running doDailyStatsPr");
+        const masterbranch='master', stagingbranch='staging';
+        const mergetargets = [masterbranch,stagingbranch];
+        await doDailyStatsPr(mergetargets);
+    } else if (opt == '3') {
+        console.log("Running doTranslationPrUpdate");
+        const masterbranch='master';
+        await doTranslationPrUpdate(masterbranch);
+    } else if (opt == '4') {
+        console.log("Running doWeeklyUpdatePrs");
+        const masterbranch='master', stagingbranch='staging';
+        const mergetargets = [masterbranch,stagingbranch];
+        const report = await doWeeklyUpdatePrs(mergetargets);
+    } else if (opt == 'q') {
+        console.log("Buh bye!")
+    } else {
+        console.log("Invalid option, bye!")
+    }
+}
+
 (async () => {
    
-    gitHubSetConfig('cagov','covid-static',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
-  
-    console.log("1. Run CovidEquityData");
-    console.log("2. Run doDailyStatsPr");
-    console.log("3. Run doTranslationPrUpdate");
-    console.log("4. Run doWeeklyUpdatePrs");
-    console.log("q. quit");
-    rl.question("Your choice> ", async function(opt) {
-        if (opt == '1') {
-            console.log("Running CovidEquityData");
-            await CovidEquityData();
-        } else if (opt == '2') {
-            console.log("Running doDailyStatsPr");
-            await doDailyStatsPr(mergetargets);
-        } else if (opt == '3') {
-            console.log("Running doTranslationPrUpdate");
-            await doTranslationPrUpdate();
-        } else if (opt == '4') {
-            console.log("Running doWeeklyUpdatePrs");
-            const masterbranch='master', stagingbranch='staging';
-            const mergetargets = [masterbranch,stagingbranch];
-            const report = await doWeeklyUpdatePrs(mergetargets);
-        } else if (opt == 'q') {
+    let debugModeArg = process.argv[2];
+    if(debugModeArg) {
+        //debug mode arg was specified
+        let opt = debugModeArg.split(':')[0];
+        await doWork(opt);
+    } else {
+        //command line prompt
+        console.log("1. Run CovidEquityData");
+        console.log("2. Run doDailyStatsPr");
+        console.log("3. Run doTranslationPrUpdate");
+        console.log("4. Run doWeeklyUpdatePrs");
+        console.log("q. quit");
+        rl.question("Your choice> ", async function(opt) {
+            await doWork(opt);
+            process.exit(0);
+        });
+        rl.on("close", () => {
             console.log("Buh bye!")
-        } else {
-            console.log("Invalid option, bye!")
-        }
-        process.exit(0);
-    });
-    rl.on("close", () => {
-        console.log("Buh bye!")
-        process.exit(0);
-    });
+            process.exit(0);
+        });
+    }
+
+
+
     //const yo = await CovidEquityData();
 
 
