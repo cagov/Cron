@@ -19,7 +19,7 @@
     
   ],
   "inputs": [
-		{
+    {
       "id": "echoPrompt",
       "type": "pickString",
       "options": [
@@ -28,7 +28,7 @@
         "3:doTranslationPrUpdate",
         "4:doWeeklyUpdatePrs"
       ],
-			"description": "Select code to debug"
-		}
-	]
+      "description": "Select code to debug"
+    }
+  ]
 }
