@@ -26,7 +26,8 @@
         "1:CovidEquityData",
         "2:doDailyStatsPr",
         "3:doTranslationPrUpdate",
-        "4:doWeeklyUpdatePrs"
+        "4:doWeeklyUpdatePrs",
+        "5:CovidNewsFeed"
       ],
       "description": "Select code to debug"
     }
