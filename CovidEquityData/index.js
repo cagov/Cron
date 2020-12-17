@@ -5,9 +5,10 @@ const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'data-';
 const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
+//const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
 //const slackBotCompletedWorkChannel = 'C01DBP67MSQ'; //Carter debug
-//const slackBotDebugChannel = 'C01DBP67MSQ'; //Carter debug
+const slackBotDebugChannel = 'C01DBP67MSQ'; //Carter debug
+const appName = 'CovidEquityData';
 
 const {
     gitHubSetConfig,
@@ -23,6 +24,8 @@ const {
 const fs = require('fs')
 
 module.exports = async function (context, functionInput) {
+    await slackBotChatPost(slackBotDebugChannel,`${appName} started`);
+
     gitHubSetConfig('cagov','covid-static',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
 
     try {
@@ -342,6 +345,7 @@ If there are issues with the data:
     } catch (e) {
         await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
+    await slackBotChatPost(slackBotDebugChannel,`${appName} finished`);
 }
 
 const getTodayPacificTime = () =>
