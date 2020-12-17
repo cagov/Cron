@@ -23,6 +23,7 @@ const {
 const fs = require('fs')
 
 module.exports = async function (context, functionInput) {
+
     gitHubSetConfig('cagov','covid-static',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
 
     try {
@@ -141,8 +142,9 @@ module.exports = async function (context, functionInput) {
 
         const allData = await executeSql(DbSqlWork);
         const today = getTodayPacificTime().replace(/\//g,'-');
-        let reviewBranchName = `${branchPrefix}${today}-equitydash-2-review`;
-        let reviewCompletedBranchName = `${branchPrefix}${today}-equitydash-review-complete`;
+        const hhmm = getHHMMPacificTime(); // to avoid dupicates for manual runs
+        let reviewBranchName = `${branchPrefix}${today}-${hhmm}-equitydash-2-review`;
+        let reviewCompletedBranchName = `${branchPrefix}${today}-${hhmm}-equitydash-review-complete`;
         
         if(!(await gitHubBranchExists(reviewBranchName))) {
             await gitHubBranchCreate(reviewBranchName, githubBranch);
@@ -346,3 +348,13 @@ If there are issues with the data:
 
 const getTodayPacificTime = () =>
     new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"});
+
+ const getHHMMPacificTime = () => {
+    const now = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+    const h = now.getHours();
+    const hh = (h < 10? '0' : '') + h;
+    const m = now.getMinutes();
+    const mm = (m < 10? '0' : '') + m;
+    return hh + '' + mm;
+};
+
