@@ -1,5 +1,5 @@
 const snowflake = require('snowflake-sdk');
-const { slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
+const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
 const githubBranch = "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
