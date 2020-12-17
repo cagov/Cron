@@ -13,14 +13,14 @@
       "request": "launch",
       "name": "Debug sandbox",
       "program": "index",
-      "args": ["${input:echoPrompt}"],
+      "args": ["${input:sandboxCodeSelection}"],
       "cwd": "${workspaceRoot}/sandbox"
     },
     
   ],
   "inputs": [
     {
-      "id": "echoPrompt",
+      "id": "sandboxCodeSelection",
       "type": "pickString",
       "options": [
         "1:CovidEquityData",
