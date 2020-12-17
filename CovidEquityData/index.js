@@ -103,7 +103,7 @@ module.exports = async function (context, functionInput) {
         const executeSql = async (sqlWork) => {
             const promises = [];
 
-            for(name of Object.keys(sqlWork)) {
+            for(let name of Object.keys(sqlWork)) {
                 promises.push(getDbPromise(name,sqlWork[name]));
             }
 
@@ -113,7 +113,7 @@ module.exports = async function (context, functionInput) {
 
             //flatten results
             for(promiseResult of resultDatasets) {
-                for(name of Object.keys(promiseResult)) {
+                for(let name of Object.keys(promiseResult)) {
                     result[name] = promiseResult[name];
                 }
             }
@@ -239,7 +239,7 @@ module.exports = async function (context, functionInput) {
             let mapKey = `healthequity-${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey);
             if(!countyInfo) {
-                countyInfo = {};
+                countyInfo = {}; // ts:Date.now() insures file uniqueness
             }
             if(!countyInfo[item.METRIC]) {
                 countyInfo[item.METRIC] = [];
