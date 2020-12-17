@@ -18,7 +18,8 @@ const {
     gitHubFileAdd,
     gitHubFileUpdate,
     gitHubFileGet,
-    gitHubPrRequestReview
+    gitHubPrRequestReview,
+    gitHubPrGetByBranchName
 } = require('./gitHub.js');
 
 const fs = require('fs')
@@ -276,8 +277,7 @@ module.exports = async function (context, functionInput) {
             let nextVal = iterator1.next().value;
             if(nextVal) {
                 console.log('getting '+nextVal)
-                let fileResult = null;
-                putFile(allFilesMap.get(nextVal),nextVal,reviewBranchName,stagingFileLoc);
+                let fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewBranchName,stagingFileLoc);
                 fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewCompletedBranchName,productionFileLoc);
                 console.log(fileResult)
                 getNext();
@@ -286,7 +286,9 @@ module.exports = async function (context, functionInput) {
                 // the to-review branch will merge to the /to-review location and delete its merge PR
                 await gitHubBranchMerge(reviewBranchName, githubBranch);
                 // the reviewedComplete branch should stay open
-                const Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false,`
+                let Pr = await gitHubPrGetByBranchName(githubBranch,reviewCompletedBranchName);
+                if (!Pr) {
+                    Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false,`
 Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/
 
 After reviewing, if all looks well, approve and merge this Pull Request.
@@ -298,8 +300,9 @@ If there are issues with the data:
 - Work with Triston directly to resolve data issues
 
 - Alert the COVID19 site team in Slack (in the Equity page channel)`);
-                await gitHubPrRequestReview(Pr,['vargoCDPH','sindhuravuri']);
-                
+                    await gitHubPrRequestReview(Pr,['vargoCDPH','sindhuravuri']);
+                }
+                await slackBotChatPost(slackBotDebugChannel,`${appName} finished`);
                 let postTime = (new Date().getTime() + (1000 * 300)) / 1000;
                 await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
             }
@@ -345,7 +348,6 @@ If there are issues with the data:
     } catch (e) {
         await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
-    await slackBotChatPost(slackBotDebugChannel,`${appName} finished`);
 }
 
 const getTodayPacificTime = () =>
