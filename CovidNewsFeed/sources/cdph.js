@@ -40,16 +40,13 @@ function parseItem(news) {
   let anchorLink = Array.from(news.querySelectorAll('a')).find(x=>x.textContent.trim().length>3);
 
   if(anchorLink) {
-    newsObject.title = anchorLink.textContent;
+    newsObject.title = anchorLink.textContent.replace(/"/g,'&quot;');
     newsObject.url = anchorLink.href;
 
     let desc = news.textContent; //all the text
     //remove all the anchor link text from the desc
     Array.from(news.querySelectorAll('a')).forEach(t => desc = desc.replace(t.textContent,'') );
-
-    //let desc = news.textContent.replace(newsObject.title,'');
-    newsObject.title = newsObject.title.replace(/"/g,'&quot;');
-    let delimiter = ', 2020';
+    let delimiter = ', 2020'; //This will need to be changed next month.
     if(desc.indexOf(delimiter) > -1) {
       let pieces = desc.split(delimiter);
       let parsedDate = new Date(pieces[0]
