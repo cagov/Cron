@@ -36,11 +36,17 @@ function parseItem(news) {
   <p style="line-height: 1.6; color: #777777;">March 15, 2020 -&nbsp;<span lang="EN">The California Department of Public Health today announced the most recent statistics on COVID-19.&nbsp;</span></p></th>"
   */
   let newsObject = {};
-  if(news.querySelector('a')) {
-    newsObject.title = news.querySelector('a').textContent.replace(/"/g,'&quot;');
-    newsObject.url = news.querySelector('a').href;
-    let desc = news.textContent.replace(newsObject.title,'');
-    let delimiter = ', 2020';
+  //find the first anchor link that has content in the row.
+  let anchorLink = Array.from(news.querySelectorAll('a')).find(x=>x.textContent.trim().length>3);
+
+  if(anchorLink) {
+    newsObject.title = anchorLink.textContent.replace(/"/g,'&quot;');
+    newsObject.url = anchorLink.href;
+
+    let desc = news.textContent; //all the text
+    //remove all the anchor link text from the desc
+    Array.from(news.querySelectorAll('a')).forEach(t => desc = desc.replace(t.textContent,'') );
+    let delimiter = ', 2020'; //This will need to be changed next month.
     if(desc.indexOf(delimiter) > -1) {
       let pieces = desc.split(delimiter);
       let parsedDate = new Date(pieces[0]
@@ -49,7 +55,7 @@ function parseItem(news) {
       if(parsedDate && parsedDate.getTime() > 1577865600000 && parsedDate.getTime() < 1609401600000) {
         newsObject.date = parsedDate.toISOString();
       } else {
-        console.error('date fail');
+        console.error(`date fail - ${pieces}`);
       }
       let description = pieces[1].trim();
       if(description.indexOf('-') === 0 || description.indexOf('–') === 0) {

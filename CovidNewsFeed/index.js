@@ -11,7 +11,7 @@ const cdphNews = require("./sources/cdph.js");
 const gitNews = require("./sources/git.js");
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 const appName = 'CovidNewsFeed';
-const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
+const { slackBotReportError } = require('../common/slackBot');
 
 const getGovNews = new Promise((resolve, reject) => {
   govNews(resolve,reject);
@@ -27,7 +27,7 @@ const getExistingCDPHNews = new Promise((resolve, reject) => {
 });
 
 module.exports = async function (context, myTimer) {
-  await slackBotChatPost(debugChannel,`${appName} started`);
+  //await slackBotChatPost(debugChannel,`${appName} started`);
 
   try {
   await Promise.all([getGovNews, getExistingGovNews, getCDPHNews, getExistingCDPHNews]).then( 
@@ -74,7 +74,7 @@ module.exports = async function (context, myTimer) {
       }
       // respond with success here
       console.log(`Done, wrote - ${writtenFileCount}`);
-      await slackBotChatPost(debugChannel,`${appName} finished`);
+      //await slackBotChatPost(debugChannel,`${appName} finished`);
     }
   );
 } catch (e) {
