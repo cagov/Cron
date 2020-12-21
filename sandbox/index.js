@@ -62,10 +62,7 @@ const doWork = async opt => {
         console.log("4. Run doWeeklyUpdatePrs");
         console.log("5. Run CovidNewsFeed");
         console.log("q. quit");
-        rl.question("Your choice> ", async opt => {
-            await doWork(opt);
-            process.exit(0);
-        });
+        rl.question("Your choice> ", doWork);
         rl.on("close", () => {
             console.log("Buh bye!");
             process.exit(0);
