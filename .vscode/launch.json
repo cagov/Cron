@@ -16,7 +16,14 @@
       "args": ["${input:sandboxCodeSelection}"],
       "cwd": "${workspaceRoot}/sandbox"
     },
-    
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DIRECT doDailyStatsPr",
+      "program": "index",
+      "args": ["2:doDailyStatsPr"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
   ],
   "inputs": [
     {

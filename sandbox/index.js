@@ -13,6 +13,10 @@ const CovidNewsFeed = require('../CovidNewsFeed');
 //const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 //const notifyChannel = 'C01DBP67MSQ';
 
+const masterbranch='master', stagingbranch='staging';
+//const masterbranch='synctest3', stagingbranch='synctest3_staging';
+const mergetargets = [masterbranch,stagingbranch];
+
 const readline = require("readline");
 const rl = readline.createInterface({
     input: process.stdin,
@@ -25,17 +29,13 @@ const doWork = async opt => {
         await CovidEquityData();
     } else if (opt == '2') {
         console.log("Running doDailyStatsPr");
-        const masterbranch='master', stagingbranch='staging';
-        const mergetargets = [masterbranch,stagingbranch];
         await doDailyStatsPr(mergetargets);
     } else if (opt == '3') {
         console.log("Running doTranslationPrUpdate");
-        const masterbranch='master';
         await doTranslationPrUpdate(masterbranch);
     } else if (opt == '4') {
         console.log("Running doWeeklyUpdatePrs");
-        const masterbranch='master', stagingbranch='staging';
-        const mergetargets = [masterbranch,stagingbranch];
+
         await doWeeklyUpdatePrs(mergetargets);
     } else if (opt == '5') {
         console.log("Running CovidNewsFeed");
