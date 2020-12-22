@@ -26,7 +26,7 @@ const doDailyStatsPr = async mergetargets => {
 
     for(const mergetarget of mergetargets) {
         const isMaster = mergetarget === mergetargets[0];
-        const title = `${todayDateString} Stats Update${(isMaster) ? `` : ` (${mergetarget})`}`;
+        const title = `${todayDateString} Stats Update${isMaster ? `` : ` (${mergetarget})`}`;
         let branch = `auto-stats-update-${mergetarget}-${todayDateString}-${todayTimeString}`;
 
         const prs = await gitRepo.listPullRequests({
@@ -58,7 +58,7 @@ const doDailyStatsPr = async mergetargets => {
                         base: mergetarget
                     }))
                     .data;
-
+                    
                 await gitIssues.editIssue(Pr.number,{
                     labels: PrLabels
                 });
@@ -79,8 +79,8 @@ const doDailyStatsPr = async mergetargets => {
         }
     }
     return masterPr;
-}
+};
 
 module.exports = {
   doDailyStatsPr
-}
+};
