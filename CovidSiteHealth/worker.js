@@ -1,5 +1,5 @@
 const { slackBotChannelHistory, slackBotChannelReplies, slackBotReplyPost } = require('../common/slackBot');
-const scanChannel = 'CUUAH7Z7G';
+const scanChannel = 'CUUAH7Z7G'; //#code-movement
 const bot_name = 'cagov Slackbot';
 
 const fileToCheck = "https://covid19.ca.gov/commit-info.json";
