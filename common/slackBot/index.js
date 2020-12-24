@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const slackApiChatPost = 'https://slack.com/api/chat.postMessage';
 const slackApiChannelHistory = 'https://slack.com/api/conversations.history';
 const slackApiChannelReplies = 'https://slack.com/api/conversations.replies';
+const slackApiReaction = 'https://slack.com/api/reactions.add';
 
 //For help building attachments...go here...
 //https://api.slack.com/docs/messages/builder
@@ -39,11 +40,13 @@ const slackBotChannelHistory = async channel =>
   fetch(`${slackApiChannelHistory}?channel=${channel}`,slackApiGet());
 
 
-//https://api.slack.com/methods/conversations.replies
+    //https://api.slack.com/methods/conversations.replies
 const slackBotChannelReplies = async (channel,ts) => 
    fetch(`${slackApiChannelReplies}?channel=${channel}&ts=${ts}`,slackApiGet());
 
 
+   //https://api.slack.com/methods/chat.postMessage
+   //https://api.slack.com/docs/messages/builder
 const slackBotChatPost = async (channel,text,attachments) => {
   const payload = {
     channel,
@@ -51,7 +54,7 @@ const slackBotChatPost = async (channel,text,attachments) => {
     attachments
   };
 
-  return await fetch(slackApiChatPost,slackApiPost(payload));
+  return fetch(slackApiChatPost,slackApiPost(payload));
 };
 
 const slackBotReplyPost = async (channel,thread_ts,text,attachments) => {
@@ -62,7 +65,18 @@ const slackBotReplyPost = async (channel,thread_ts,text,attachments) => {
     attachments
   };
 
-  return await fetch(slackApiChatPost,slackApiPost(payload));
+  return fetch(slackApiChatPost,slackApiPost(payload));
+};
+
+//https://api.slack.com/methods/reactions.add
+const slackBotReactionAdd = async (channel,timestamp,name) => {
+  const payload = {
+    channel,
+    timestamp,
+    name
+  };
+
+  return fetch(slackApiReaction,slackApiPost(payload));
 };
 
 const slackBotDelayedChatPost = async (channel,text,post_at) => {
@@ -90,7 +104,7 @@ const slackBotReportError = async (channel,title,errorObject,request,data) => {
     slackText += `\n\n*Data*\n\`\`\`${JSON.stringify(data,null,2)}\`\`\``;
   }
 
-  return await slackBotChatPost(channel,slackText);
+  return slackBotChatPost(channel,slackText);
 };
 
 module.exports = {
@@ -99,5 +113,6 @@ module.exports = {
   slackBotDelayedChatPost,
   slackBotReportError,
   slackBotChannelHistory,
-  slackBotChannelReplies
+  slackBotChannelReplies,
+  slackBotReactionAdd
 };
