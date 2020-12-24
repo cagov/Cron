@@ -36,7 +36,7 @@ async function writeFile() {
       dups.push(s)
     } else {
       scrapeMap.set(s.Question,s);
-      console.log('unique')
+      // console.log('unique')
     }
   }
 
