@@ -14,7 +14,7 @@ const responseOk = async response => {
   console.log('Response OK');
   const commitinfo = await response.json();
 
-  if(commitinfo.some(c => (new Date - new Date(c.timestamp))/1000/60/60) < 1 ) {
+  if(commitinfo.some(c => (new Date - new Date(c.timestamp))/1000/60/60 < 1) ) {
     //Some commits deployed within the last hour
     console.log('recent commit found.');
 
@@ -26,17 +26,21 @@ const responseOk = async response => {
       for(let m of matches) {
         //mark all matches deployed
         //check for replies first
+        let hasReplies = !!m.latest_reply;
   
-          if(m.latest_reply) {
-            console.log('Checking replies on match.');
-            const replies = await (await slackBotChannelReplies(scanChannel,m.ts)).json();
-  
-            if(!replies.messages.some(r=>r.bot_profile&&r.bot_profile.name===bot_name)) {
-              //If the reply isn't there...add it
-              console.log('Marking a reply deployed');
-              await slackBotReplyPost(scanChannel,m.ts,'*Deployment Confirmed*');
-            }
-          }
+        if(hasReplies) {
+          console.log('Checking replies on match.');
+          const repliesResponse = await slackBotChannelReplies(scanChannel,m.ts);
+          const replies = await repliesResponse.json();
+
+          hasReplies = replies.messages.some(r=>r.bot_profile&&r.bot_profile.name===bot_name);
+        }
+
+        if (!hasReplies) {
+          //If the reply isn't there...add it
+          console.log('Marking a reply deployed');
+          await slackBotReplyPost(scanChannel,m.ts,'*Deployment Confirmed*');
+        }
       }
     }
   } else {

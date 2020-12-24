@@ -35,14 +35,14 @@ const slackApiGet = () =>
   });
 
     //https://api.slack.com/methods/conversations.history
-const slackBotChannelHistory = async channel => {
-  return await fetch(`${slackApiChannelHistory}?channel=${channel}`,slackApiGet());
-};
+const slackBotChannelHistory = async channel => 
+  fetch(`${slackApiChannelHistory}?channel=${channel}`,slackApiGet());
+
 
 //https://api.slack.com/methods/conversations.replies
-const slackBotChannelReplies = async (channel,ts) => {
-  return await fetch(`${slackApiChannelReplies}?channel=${channel}&ts=${ts}`,slackApiGet());
-};
+const slackBotChannelReplies = async (channel,ts) => 
+   fetch(`${slackApiChannelReplies}?channel=${channel}&ts=${ts}`,slackApiGet());
+
 
 const slackBotChatPost = async (channel,text,attachments) => {
   const payload = {
