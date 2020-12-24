@@ -19,9 +19,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DIRECT doDailyStatsPr",
+      "name": "Debug DIRECT doHealthCheck",
       "program": "index",
-      "args": ["2:doDailyStatsPr"],
+      "args": ["6:doHealthCheck"],
       "cwd": "${workspaceRoot}/sandbox"
     },
   ],
@@ -34,7 +34,8 @@
         "2:doDailyStatsPr",
         "3:doTranslationPrUpdate",
         "4:doWeeklyUpdatePrs",
-        "5:CovidNewsFeed"
+        "5:CovidNewsFeed",
+        "6:doHealthCheck"
       ],
       "description": "Select code to debug"
     }
