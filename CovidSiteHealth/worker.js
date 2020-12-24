@@ -1,4 +1,9 @@
-const { slackBotChannelHistory, slackBotChannelReplies, slackBotReplyPost } = require('../common/slackBot');
+const { 
+  slackBotChannelHistory, 
+  slackBotChannelReplies, 
+  slackBotReplyPost,
+  slackBotReactionAdd
+} = require('../common/slackBot');
 const scanChannel = 'CUUAH7Z7G'; //#code-movement
 const bot_name = 'cagov Slackbot';
 
@@ -40,6 +45,9 @@ const responseOk = async response => {
           //If the reply isn't there...add it
           console.log('Marking a reply deployed');
           await slackBotReplyPost(scanChannel,m.ts,`*Deployment Confirmed*\n${commit.message}`);
+
+          console.log('Adding reaction');
+          await slackBotReactionAdd(scanChannel,m.ts,'white_check_mark');
         }
       }
     }
