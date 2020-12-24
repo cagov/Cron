@@ -4,6 +4,7 @@ Object.keys(Values).forEach(x=>process.env[x]=Values[x]); //Load local settings 
 
 const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker');
+const { doHealthCheck } = require('../CovidSiteHealth/worker');
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 //const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 //const { gitHubSetConfig,gitHubPrRequestReview,gitHubBranchCreate,gitHubBranchMerge,gitHubFileAdd } = require('../common/gitHub');
@@ -24,25 +25,36 @@ const rl = readline.createInterface({
 });
 
 const doWork = async opt => {
-    if (opt == '1') {
+    console.log(`Option ${opt} selected`);
+    switch (opt) {
+    case '1':
         console.log("Running CovidEquityData");
         await CovidEquityData();
-    } else if (opt == '2') {
+        break;
+    case '2':
         console.log("Running doDailyStatsPr");
         await doDailyStatsPr(mergetargets);
-    } else if (opt == '3') {
+        break;
+    case '3':
         console.log("Running doTranslationPrUpdate");
         await doTranslationPrUpdate(masterbranch);
-    } else if (opt == '4') {
+        break;
+    case '4':
         console.log("Running doWeeklyUpdatePrs");
-
         await doWeeklyUpdatePrs(mergetargets);
-    } else if (opt == '5') {
+        break;
+    case '5':
         console.log("Running CovidNewsFeed");
         await CovidNewsFeed();
-    } else if (opt == 'q') {
+        break;
+    case '6':
+        console.log("Running doHealthCheck");
+        await doHealthCheck();
+        break;
+    case 'q':
         console.log("Buh bye!");
-    } else {
+        break;
+    default:
         console.log("Invalid option, bye!");
     }
 };
