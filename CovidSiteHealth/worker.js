@@ -1,7 +1,8 @@
-const { slackBotChannelHistory, slackBotChannelReplies } = require('../common/slackBot');
+const { slackBotChannelHistory, slackBotChannelReplies, slackBotReplyPost, slackBotChatPost } = require('../common/slackBot');
 //const notifyChannel = 'C01H6RB99E2'; //'C01DBP67MSQ';
-//const debugChannel = 'C01H6RB99E2'; //'C01DBP67MSQ';
+const debugChannel = 'C01H6RB99E2'; //'C01DBP67MSQ';
 const scanChannel = 'CUUAH7Z7G';
+const bot_name = 'cagov Slackbot';
 
 const fileToCheck = "https://covid19.ca.gov/commit-info.json";
 
@@ -22,8 +23,6 @@ const responseOk = async response => {
   const GitHubPosts = history.messages.filter(x=>x.bot_profile&&x.bot_profile.name==='GitHub');
 
   for (let commit of commitinfo) {
-    console.log(`commit${JSON.stringify(commit)}`);
-
     const matches = GitHubPosts.filter(p=>p.attachments.some(a=> a.text&&a.text.includes(commit.url)));
     for(let m of matches) {
       //mark all matches deployed
@@ -31,15 +30,14 @@ const responseOk = async response => {
 
         if(m.latest_reply) {
           const replies = await (await slackBotChannelReplies(scanChannel,m.ts)).json();
-          const p=1;
+
+          if(!replies.messages.some(r=>r.bot_profile&&r.bot_profile.name===bot_name)) {
+            //If the reply isn't there...add it
+            await slackBotReplyPost(scanChannel,m.ts,'Deployment Confirmed');
+          }
         }
-
-      
-
-
-    };
-
-  };
+    }
+  }
 
   return commitinfo;
 };

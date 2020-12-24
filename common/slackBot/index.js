@@ -54,6 +54,17 @@ const slackBotChatPost = async (channel,text,attachments) => {
   return await fetch(slackApiChatPost,slackApiPost(payload));
 };
 
+const slackBotReplyPost = async (channel,thread_ts,text,attachments) => {
+  const payload = {
+    channel,
+    text,
+    thread_ts,
+    attachments
+  };
+
+  return await fetch(slackApiChatPost,slackApiPost(payload));
+};
+
 const slackBotDelayedChatPost = async (channel,text,post_at) => {
   const payload = {
     channel,
@@ -84,6 +95,7 @@ const slackBotReportError = async (channel,title,errorObject,request,data) => {
 
 module.exports = {
   slackBotChatPost,
+  slackBotReplyPost,
   slackBotDelayedChatPost,
   slackBotReportError,
   slackBotChannelHistory,
