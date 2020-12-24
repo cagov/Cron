@@ -39,7 +39,7 @@ const responseOk = async response => {
         if (!hasReplies) {
           //If the reply isn't there...add it
           console.log('Marking a reply deployed');
-          await slackBotReplyPost(scanChannel,m.ts,'*Deployment Confirmed*');
+          await slackBotReplyPost(scanChannel,m.ts,`*Deployment Confirmed*\n${commit.message}`);
         }
       }
     }
