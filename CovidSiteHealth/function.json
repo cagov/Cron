@@ -1,10 +1,10 @@
 {
   "bindings": [
     {
-      "name": "CovidStateDashboard",
+      "name": "CovidSiteHealth",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 45 18 * * *"
+      "schedule": "0 0/5 * * * *"
     }
   ]
 }
