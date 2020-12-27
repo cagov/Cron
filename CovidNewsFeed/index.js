@@ -78,6 +78,7 @@ module.exports = async function (context, myTimer) {
     }
   );
 } catch (e) {
-  await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
+  //supressing errors until cdph site is fixed
+  //await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
 }
 };
