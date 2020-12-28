@@ -104,7 +104,20 @@ const slackBotReportError = async (channel,title,errorObject,request,data) => {
     slackText += `\n\n*Data*\n\`\`\`${JSON.stringify(data,null,2)}\`\`\``;
   }
 
-  return slackBotChatPost(channel,slackText);
+  const historyResponse = await slackBotChannelHistory(channel);
+  const history = await historyResponse.json();
+  const lastHourHistory = history.messages.filter(c=> 
+    c.text.startsWith(`${title}\n`) 
+    && (new Date - new Date(1000*Number(c.latest_reply || c.ts)))/1000/60/60 < 1); //last hour
+  //check to see if the last post was the same title, if so make this a reply
+
+  if(lastHourHistory && lastHourHistory.length) {
+    //add to error thread
+    return slackBotReplyPost(channel,lastHourHistory[0].ts,slackText);
+  } else {
+    //new error
+    return slackBotChatPost(channel,slackText);
+  }
 };
 
 module.exports = {
