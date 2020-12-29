@@ -24,6 +24,14 @@
       "args": ["6:doHealthCheck"],
       "cwd": "${workspaceRoot}/sandbox"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DIRECT CovidEquityDataV2",
+      "program": "index",
+      "args": ["7:CovidEquityDataV2"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
   ],
   "inputs": [
     {
@@ -35,7 +43,8 @@
         "3:doTranslationPrUpdate",
         "4:doWeeklyUpdatePrs",
         "5:CovidNewsFeed",
-        "6:doHealthCheck"
+        "6:doHealthCheck",
+        "7:CovidEquityDataV2"
       ],
       "description": "Select code to debug"
     }

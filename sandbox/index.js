@@ -6,6 +6,7 @@ const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker');
 const { doHealthCheck } = require('../CovidSiteHealth/worker');
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
+const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 //const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 //const { gitHubSetConfig,gitHubPrRequestReview,gitHubBranchCreate,gitHubBranchMerge,gitHubFileAdd } = require('../common/gitHub');
 const CovidEquityData = require('../CovidEquityData');
@@ -50,6 +51,10 @@ const doWork = async opt => {
     case '6':
         console.log("Running doHealthCheck");
         await doHealthCheck();
+        break;
+    case '7':
+        console.log("Running doCovidStateDashboarV2");
+        await doCovidStateDashboarV2();
         break;
     case 'q':
         console.log("Buh bye!");
