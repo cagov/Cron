@@ -11,7 +11,7 @@ const committer = {
 };
 const masterBranch = 'master';
 const commitMessage = 'update Stats';
-const branchPrefix = 'carter-auto-stats-update';
+const branchPrefix = 'auto-stats-update';
 const useSampleData = false;
 
 //Check to see if we need stats update PRs, make them if we do.
@@ -34,11 +34,9 @@ const doCovidStateDashboarV2 = async () => {
         branch = Pr.head.ref;    
     }
 
-    const sqlResults = useSampleData ? sampleData : await getData();
-    const content = Buffer.from(JSON.stringify(sqlResults,null,2)).toString('base64');
-    const targetfile = (await gitRepo.getContents(branch,`${targetPath}${targetFileName}`,false)).data;
-    const targetcontent = targetfile.content.replace(/\n/g,'');
-    if(content===targetcontent) {
+    const dataOutput = useSampleData ? sampleData : await getData();
+    const targetcontent = (await gitRepo.getContents(branch,`${targetPath}${targetFileName}`,true)).data;
+    if(JSON.stringify(dataOutput)===JSON.stringify(targetcontent)) {
         console.log('data matched - no need to update');
     } else {
         if(!Pr) {
@@ -47,7 +45,7 @@ const doCovidStateDashboarV2 = async () => {
             await gitRepo.createBranch(masterBranch,branch);
         }
 
-        await gitRepo.writeFile(branch, targetfile.path, content, commitMessage, {committer,encode:false});
+        await gitRepo.writeFile(branch, `${targetPath}${targetFileName}`, JSON.stringify(dataOutput,null,2), commitMessage, {committer,encode:true});
 
         if(!Pr) {
             //new Pr
