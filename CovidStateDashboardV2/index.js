@@ -7,9 +7,10 @@ const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   try {
-    await slackBotChatPost(debugChannel,`${appName} ran 10:45am`);
+    await slackBotChatPost(debugChannel,`${appName} ran 10:30am`);
 
-    const PrResult = await doCovidStateDashboarV2();
+    //turning the whole thing off until it's fixed
+    const PrResult = null; //await doCovidStateDashboarV2();
 
     await slackBotChatPost(debugChannel,`${appName} finished`);
 
