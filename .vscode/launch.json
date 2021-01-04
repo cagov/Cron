@@ -32,6 +32,14 @@
       "args": ["7:CovidEquityDataV2"],
       "cwd": "${workspaceRoot}/sandbox"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DIRECT CovidEquityData",
+      "program": "index",
+      "args": ["1:CovidEquityData"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
   ],
   "inputs": [
     {
