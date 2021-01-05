@@ -18,8 +18,10 @@ module.exports =  (success, failure) => {
     allNews.forEach( news => {
       let content = news.textContent;
       if(content.toLowerCase().indexOf('covid') > -1 || content.toLowerCase().indexOf('corona') > -1) {
+        // console.log("matched item");
         let parsedItem = parseItem(news);
         if(parsedItem) {
+          // console.log("PARSED");
           newStuff.push(parsedItem);
         }
       }
@@ -48,13 +50,15 @@ function parseItem(news) {
     let desc = news.textContent; //all the text
     //remove all the anchor link text from the desc
     Array.from(news.querySelectorAll('a')).forEach(t => desc = desc.replace(t.textContent,'') );
-    let delimiter = ', 2020'; //This will need to be changed next month.
+    let delimiter = ', 2021'; // This will need to be changed in 12 months or sooner.  
     if(desc.indexOf(delimiter) > -1) {
       let pieces = desc.split(delimiter);
       let parsedDate = new Date(pieces[0]
         .replace(/\u200B/g,'') //also remove char 8203 (Unicode Character 'ZERO WIDTH SPACE' (U+200B).)
         .trim()+delimiter);
-      if(parsedDate && parsedDate.getTime() > 1577865600000 && parsedDate.getTime() < 1609401600000) {
+        // if(parsedDate && parsedDate.getTime() > 1577865600000 && parsedDate.getTime() < 1609401600000) {
+        // aaron really? :-)
+        if(parsedDate && parsedDate.getTime() > 1609459200000 && parsedDate.getTime() < 1641024000000) {
         newsObject.date = parsedDate.toISOString();
       } else {
         console.error(`date fail - ${pieces}`);
