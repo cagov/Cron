@@ -3,7 +3,9 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
 module.exports =  (success, failure) => {
-  let url = 'https://www.cdph.ca.gov/Programs/OPA/Pages/New-Release-2020.aspx';
+  // old url https://www.cdph.ca.gov/Programs/OPA/Pages/New-Release-2020.aspx
+  // new url https://www.cdph.ca.gov/Programs/OPA/Pages/News-Releases-2021.aspx
+  let url = 'https://www.cdph.ca.gov/Programs/OPA/Pages/News-Releases-2021.aspx';
   let newStuff = [];
 
   console.log(`fetching ${url}`);
