@@ -27,9 +27,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DIRECT CovidEquityDataV2",
+      "name": "Debug DIRECT doCovidStateDashboarV2",
       "program": "index",
-      "args": ["7:CovidEquityDataV2"],
+      "args": ["7:doCovidStateDashboarV2"],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -52,7 +52,7 @@
         "4:doWeeklyUpdatePrs",
         "5:CovidNewsFeed",
         "6:doHealthCheck",
-        "7:CovidEquityDataV2"
+        "7:doCovidStateDashboarV2"
       ],
       "description": "Select code to debug"
     }

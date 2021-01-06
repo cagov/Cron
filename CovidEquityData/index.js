@@ -30,15 +30,34 @@ module.exports = async function (context, functionInput) {
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
 
 
+const branchResult = await gitRepo.getBranch('carter-tree-test');
 
-const baseSha = (await gitRepo.getTree('carter-tree-test')).data.sha;
+const baseShaResult = await gitRepo.getTree('carter-tree-test');
+
+const baseSha = baseShaResult.data.sha;
+
+//const refResult = await gitRepo.getRef(baseSha);
 
 const testTree = [
-
+{
+    path: 'TreeFile.txt',
+    content: 'My Content',
+    mode: '100644',
+    type: 'blob'
+},
+{
+    path: 'TreeFile2.txt',
+    content: 'My Content 2',
+    mode: '100644',
+    type: 'blob'
+}
 
 ];
 
-const r = await gitRepo.createTree(testTree,baseSha);
+const result = await gitRepo.createTree(testTree,baseSha);
+const commitResult = await gitRepo.commit(baseSha,result.data.sha,'tree commit',committer);
+const commitSha = commitResult.data.sha;
+const updateRefResult = await gitRepo.updateHead('heads/carter-tree-test',commitSha);
 
 
     const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
