@@ -1,6 +1,6 @@
 const snowflake = require('snowflake-sdk');
 const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
-const githubBranch = "master";
+const githubBranch = 'carter-tree-test'; // "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'carter-data-';
@@ -19,46 +19,11 @@ const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
 const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
-const {
-    gitHubBlobPredictSha
-} = require('../common/gitHub');
-
 module.exports = async function (context, functionInput) {
-    //await slackBotChatPost(slackBotDebugChannel,`${appName} started`);
+    await slackBotChatPost(slackBotDebugChannel,`${appName} started`);
 
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
-
-
-const branchResult = await gitRepo.getBranch('carter-tree-test');
-
-const baseShaResult = await gitRepo.getTree('carter-tree-test');
-
-const baseSha = baseShaResult.data.sha;
-
-//const refResult = await gitRepo.getRef(baseSha);
-
-const testTree = [
-{
-    path: 'TreeFile.txt',
-    content: 'My Content',
-    mode: '100644',
-    type: 'blob'
-},
-{
-    path: 'TreeFile2.txt',
-    content: 'My Content 2',
-    mode: '100644',
-    type: 'blob'
-}
-
-];
-
-const result = await gitRepo.createTree(testTree,baseSha);
-const commitResult = await gitRepo.commit(baseSha,result.data.sha,'tree commit',committer);
-const commitSha = commitResult.data.sha;
-const updateRefResult = await gitRepo.updateHead('heads/carter-tree-test',commitSha);
-
 
     const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
     const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
@@ -292,22 +257,43 @@ const updateRefResult = await gitRepo.updateHead('heads/carter-tree-test',commit
         });
         allFilesMap.set(statewideMapKey,statewidePopData);
 
-        const branchDataResult = await gitRepo.getTree(`${githubBranch}?recursive=1`);
-        const stagingSubtreeSha = branchDataResult.data.tree.filter(x=>x.path===`data/reviewed/equitydash`)[0].sha;
-        const stagingSubtree = await gitRepo.getTree(stagingSubtreeSha);
-
-        //const basetree = await gitRepo.getTree(branchData.data.commit.sha);
-
+        const stagingTree = [];
+        const prodTree = [];
 
         for(const [key,value] of allFilesMap) {
             const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
-            const treeItem = stagingSubtree.data.tree.find(x=>x.path===newFileName);
+            const content = JSON.stringify(value,null,2);
+            
+            const stagingRow = 
+                {
+                    path: `${stagingFileLoc}${newFileName}`,
+                    content,
+                    mode: '100644',
+                    type: 'blob'
+                };
+            const prodRow = 
+                {
+                    path: `${productionFileLoc}${newFileName}`,
+                    content,
+                    mode: '100644',
+                    type: 'blob'
+                };
 
-            const newHash = gitHubBlobPredictSha(value);
-
-            const newFilePath = `${stagingFileLoc}${newFileName}`;
-
+            stagingTree.push(stagingRow);
+            prodTree.push(prodRow);
         }
+
+        const refResult = await gitRepo.getRef(`heads/${githubBranch}`);
+        const baseSha = refResult.data.object.sha;
+
+        const result = await gitRepo.createTree(stagingTree,baseSha);
+        const commitResult = await gitRepo.commit(baseSha,result.data.sha,'staging tree commit',committer);
+        const commitSha = commitResult.data.sha;
+        const updateRefResult = await gitRepo.updateHead(`heads/${githubBranch}`,commitSha);
+
+
+        const vekjrnfjk=1;
+        /*
         // this fails unless it runs one at a time
         const iterator1 = allFilesMap.keys();
         // eslint-disable-next-line no-inner-declarations
@@ -347,47 +333,8 @@ const updateRefResult = await gitRepo.updateHead('heads/carter-tree-test',commit
             }
         }
         getNext();
+        */
     } catch (e) {
         await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
 };
-/*
-// reusable file write function
-async function putFile(value,key,targetBranchName,fileLoc) {
-    const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
-    const newFilePath = `${fileLoc}${newFileName}`;
-    const targetfile = await gitHubFileGet(newFilePath,targetBranchName);
-    const contentRaw = JSON.stringify(value,null,2);
-    const shaResult = gitHubBlobPredictSha(contentRaw);
-//Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
-
-    const content = Buffer.from(contentRaw).toString('base64');
-    let resultMessage = "";
-
-    if(targetfile&&targetfile.sha) {
-        //UPDATE                
-        if(content!==(targetfile.content || '').replace(/\n/g,'')) {
-            //Update file
-            
-            let message = `Update page - ${targetfile.name}`;
-            await gitHubFileUpdate(content,targetfile.url,targetfile.sha,message,targetBranchName)
-                .then(r => {
-                    console.log(`UPDATE Success: ${newFileName}`);
-                    return r;
-                });
-            // await gitHubBranchMerge(branch, mergetarget);
-            resultMessage = message;
-        } else {
-            resultMessage = `File compare matched: ${newFileName}`;
-        }
-    } else {
-        let message = `Add page - ${newFileName}`;
-                
-        const addResult = await gitHubFileAdd(content,newFilePath,message,targetBranchName)
-            .then(r => {console.log(`ADD Success: ${newFileName}`);return r;});   
-            
-        resultMessage = addResult;
-    }
-    return resultMessage;
-}
-*/
