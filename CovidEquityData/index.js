@@ -4,29 +4,46 @@ const githubBranch = "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'carter-data-';
-const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-//const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
-//const slackBotCompletedWorkChannel = 'C01DBP67MSQ'; //Carter debug
+const GitHub = require('github-api');
+const githubUser = 'cagov';
+const githubRepo = 'covid-static';
+const committer = {
+  name: process.env["GITHUB_NAME"],
+  email: process.env["GITHUB_EMAIL"]
+};
+
+//const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
 //const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
-const slackBotDebugChannel = 'C01H6RB99E2'; //#Carter debug
+//const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
+const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
+const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
 const {
-    gitHubSetConfig,
-    gitHubBranchExists,
-    gitHubBranchCreate,
-    gitHubBranchMerge,
-    gitHubFileAdd,
-    gitHubFileUpdate,
-    gitHubFileGet,
-    gitHubPrRequestReview,
-    gitHubPrGetByBranchName
-} = require('./gitHub.js');
+    gitHubBlobPredictSha
+} = require('../common/gitHub');
 
 module.exports = async function (context, functionInput) {
-    await slackBotChatPost(slackBotDebugChannel,`${appName} started`);
+    //await slackBotChatPost(slackBotDebugChannel,`${appName} started`);
 
-    gitHubSetConfig('cagov','covid-static',process.env["GITHUB_TOKEN"],process.env["GITHUB_NAME"],process.env["GITHUB_EMAIL"]);
+    const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
+    const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
+
+
+
+const baseSha = (await gitRepo.getTree('carter-tree-test')).data.sha;
+
+const testTree = [
+
+
+];
+
+const r = await gitRepo.createTree(testTree,baseSha);
+
+
+    const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
+    const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
+
 
     try {
         let attrs = {
@@ -141,20 +158,9 @@ module.exports = async function (context, functionInput) {
         });
 
         const allData = await executeSql(DbSqlWork);
-        const today = getTodayPacificTime().replace(/\//g,'-');
-        let reviewBranchName = `${branchPrefix}${today}-equitydash-2-review`;
-        let reviewCompletedBranchName = `${branchPrefix}${today}-equitydash-review-complete`;
-        
-        if(!await gitHubBranchExists(reviewBranchName)) {
-            await gitHubBranchCreate(reviewBranchName, githubBranch);
-        }
-        if(!await gitHubBranchExists(reviewCompletedBranchName)) {
-            await gitHubBranchCreate(reviewCompletedBranchName, githubBranch);
-        }
-
-
-        let writtenFileCount = 0;
-
+        let reviewBranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash-2-review`;
+        let reviewCompletedBranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash-review-complete`;
+    
         let allFilesMap = new Map();
 
         allFilesMap.set('equityTopBoxDataV2',
@@ -163,7 +169,6 @@ module.exports = async function (context, functionInput) {
                 Demographics : allData.casesAndDeathsByDemographic
             }
         );
-
 
         // this is combining cases, testing and deaths metrics
         allData.missingnessData.forEach(item => {
@@ -268,6 +273,22 @@ module.exports = async function (context, functionInput) {
         });
         allFilesMap.set(statewideMapKey,statewidePopData);
 
+        const branchDataResult = await gitRepo.getTree(`${githubBranch}?recursive=1`);
+        const stagingSubtreeSha = branchDataResult.data.tree.filter(x=>x.path===`data/reviewed/equitydash`)[0].sha;
+        const stagingSubtree = await gitRepo.getTree(stagingSubtreeSha);
+
+        //const basetree = await gitRepo.getTree(branchData.data.commit.sha);
+
+
+        for(const [key,value] of allFilesMap) {
+            const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
+            const treeItem = stagingSubtree.data.tree.find(x=>x.path===newFileName);
+
+            const newHash = gitHubBlobPredictSha(value);
+
+            const newFilePath = `${stagingFileLoc}${newFileName}`;
+
+        }
         // this fails unless it runs one at a time
         const iterator1 = allFilesMap.keys();
         // eslint-disable-next-line no-inner-declarations
@@ -275,79 +296,79 @@ module.exports = async function (context, functionInput) {
             let nextVal = iterator1.next().value;
             if(nextVal) {
                 console.log(`getting ${nextVal}`);
-                let fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewBranchName,stagingFileLoc);
-                fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewCompletedBranchName,productionFileLoc);
+                //let fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewBranchName,stagingFileLoc);
+                //fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewCompletedBranchName,productionFileLoc);
                 console.log(fileResult);
                 getNext();
             } else {
                 console.log('done');
                 // the to-review branch will merge to the /to-review location and delete its merge PR
-                await gitHubBranchMerge(reviewBranchName, githubBranch);
+                //await gitHubBranchMerge(reviewBranchName, githubBranch);
                 // the reviewedComplete branch should stay open
-                let Pr = await gitHubPrGetByBranchName(githubBranch,reviewCompletedBranchName);
+                let Pr = null; //await gitHubPrGetByBranchName(githubBranch,reviewCompletedBranchName);
                 if (!Pr) {
-                    Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false,`
-Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/
-
-After reviewing, if all looks well, approve and merge this Pull Request.
-
-If there are issues with the data:
-
-- Note concerns or issues here by commenting on this PR
-
-- Work with Triston directly to resolve data issues
-
-- Alert the COVID19 site team in Slack (in the Equity page channel)`);
-                    await gitHubPrRequestReview(Pr,['vargoCDPH','sindhuravuri']);
+                    const prMessage = `
+                    Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/
+                    
+                    After reviewing, if all looks well, approve and merge this Pull Request.
+                    
+                    If there are issues with the data:
+                    
+                    - Note concerns or issues here by commenting on this PR
+                    
+                    - Work with Triston directly to resolve data issues
+                    
+                    - Alert the COVID19 site team in Slack (in the Equity page channel)`;
+                    //Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false,prMessage);
+                    //await gitHubPrRequestReview(Pr,['vargoCDPH','sindhuravuri']);
                 }
-                await slackBotChatPost(slackBotDebugChannel,`${appName} finished`);
-                let postTime = (new Date().getTime() + 1000 * 300) / 1000;
-                await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
+                //await slackBotChatPost(slackBotDebugChannel,`${appName} finished`);
+                //let postTime = (new Date().getTime() + 1000 * 300) / 1000;
+                //await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
             }
         }
         getNext();
-
-        // reusable file write function
-        // eslint-disable-next-line no-inner-declarations
-        async function putFile(value,key,targetBranchName,fileLoc) {
-            const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
-            const newFilePath = `${fileLoc}${newFileName}`;
-            const targetfile = await gitHubFileGet(newFilePath,targetBranchName);
-            const content = Buffer.from(JSON.stringify(value,null,2)).toString('base64');
-            let resultMessage = "";
-
-            if(targetfile&&targetfile.sha) {
-                //UPDATE                
-                if(content!==(targetfile.content || '').replace(/\n/g,'')) {
-                    //Update file
-                    let message = `Update page - ${targetfile.name}`;
-                    await gitHubFileUpdate(content,targetfile.url,targetfile.sha,message,targetBranchName)
-                        .then(r => {
-                            console.log(`UPDATE Success: ${newFileName}`);
-                            return r;
-                        });
-                    // await gitHubBranchMerge(branch, mergetarget);
-                    resultMessage = message;
-                } else {
-                    resultMessage = `File compare matched: ${newFileName}`;
-                }
-            } else {
-                let message = `Add page - ${newFileName}`;
-                        
-                const addResult = await gitHubFileAdd(content,newFilePath,message,targetBranchName)
-                    .then(r => {console.log(`ADD Success: ${newFileName}`);return r;});   
-                    
-                resultMessage = addResult;
-            }
-            return resultMessage;
-        }
-
-        allData.writtenFileCount = writtenFileCount;
-
     } catch (e) {
         await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
 };
+/*
+// reusable file write function
+async function putFile(value,key,targetBranchName,fileLoc) {
+    const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
+    const newFilePath = `${fileLoc}${newFileName}`;
+    const targetfile = await gitHubFileGet(newFilePath,targetBranchName);
+    const contentRaw = JSON.stringify(value,null,2);
+    const shaResult = gitHubBlobPredictSha(contentRaw);
+//Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
 
-const getTodayPacificTime = () =>
-    new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"});
+    const content = Buffer.from(contentRaw).toString('base64');
+    let resultMessage = "";
+
+    if(targetfile&&targetfile.sha) {
+        //UPDATE                
+        if(content!==(targetfile.content || '').replace(/\n/g,'')) {
+            //Update file
+            
+            let message = `Update page - ${targetfile.name}`;
+            await gitHubFileUpdate(content,targetfile.url,targetfile.sha,message,targetBranchName)
+                .then(r => {
+                    console.log(`UPDATE Success: ${newFileName}`);
+                    return r;
+                });
+            // await gitHubBranchMerge(branch, mergetarget);
+            resultMessage = message;
+        } else {
+            resultMessage = `File compare matched: ${newFileName}`;
+        }
+    } else {
+        let message = `Add page - ${newFileName}`;
+                
+        const addResult = await gitHubFileAdd(content,newFilePath,message,targetBranchName)
+            .then(r => {console.log(`ADD Success: ${newFileName}`);return r;});   
+            
+        resultMessage = addResult;
+    }
+    return resultMessage;
+}
+*/

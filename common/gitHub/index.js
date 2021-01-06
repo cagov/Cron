@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const sha1 = require('sha1');
 const { fetchJSON } = require('../fetchJSON');
 
 let committer = {};
@@ -20,14 +21,14 @@ const gitHubSetConfig = (user, repo, token, committer_name, committer_email) => 
         name:committer_name, 
         email:committer_email
     };
-}
+};
 
 const errorIfNull = (value,message) => {
     if(value)
-        return value
+        return value;
     else
         throw new Error(message);
-}
+};
 const gitHubUser = () => errorIfNull(_gitHubConfig.user,'GitHub user not defined. Use gitHubSetConfig().');
 const gitHubRepo = () => errorIfNull(_gitHubConfig.repo,'GitHub repo not defined. Use gitHubSetConfig().');
 const gitHubToken = () => errorIfNull(_gitHubConfig.token,'GitHub token not defined. Use gitHubSetConfig().');
@@ -67,7 +68,7 @@ const gitHubBranchCreate = async (branch,mergetarget) => {
 
   await fetchJSON(`${githubApiUrl()}git/refs`, branchCreateBody)
       .then(() => {console.log(`BRANCH CREATE Success: ${branch}`); });
-}
+};
 
 //requests a review for a Pr
 //usage...await gitHubPrRequestReview(pr,['aaronhans']);
@@ -87,7 +88,7 @@ const gitHubPrRequestReview = async (Pr, reviewers) => {
 
     await fetchJSON(targetUrl, body)
         .then(() => {console.log(`Pr Review Requested: ${reviewers}`); });
-}
+};
 
 //using the default github api path and get options, run a path
 const gitHubGet = async path => 
@@ -101,7 +102,7 @@ const gitHubPrGetByBranchName = async (base, branch) => {
 
     const results = await gitHubGet(url);
     return results.length ? results[0] : null;
-}
+};
 
 const gitHubPrs = async base => 
     //xample...
@@ -135,7 +136,7 @@ const gitHubBranchDelete = async branch => {
   } else {
       console.log(`BRANCH DELETE N/A: ${branch}`);
   }
-}
+};
 
 //merge and delete branch
 const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels, ApprovePr) => {
@@ -209,7 +210,7 @@ const gitHubBranchMerge = async (branch, mergetarget, bPrMode, PrTitle, PrLabels
 
       return PrResult;
   }
-}
+};
 
 const gitHubMergePr = async pr => {
     //https://developer.github.com/v3/pulls/#merge-a-pull-request
@@ -236,7 +237,7 @@ const gitHubMergePr = async pr => {
         });
 
     await gitHubBranchDelete(pr.head.ref);
-}
+};
 
 const gitHubFileDelete = async (url, sha, message, branch) => 
     await fetchJSON(url, {
@@ -276,6 +277,10 @@ const gitHubFileRefresh = async gitHubFile =>
 const gitHubFileGetBlob = async sha => 
     await gitHubGet(`git/blobs/${sha}`);
 
+//Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
+const gitHubBlobPredictSha = content => 
+    sha1(`blob ${content.length}\0${content}`);
+
 module.exports = {
   gitHubSetConfig,
   gitHubMessage,
@@ -293,5 +298,6 @@ module.exports = {
   gitHubPrs,
   gitHubPrGetByBranchName,
   gitHubPrRequestReview,
-  gitHubGet
-}
+  gitHubGet,
+  gitHubBlobPredictSha
+};
