@@ -259,23 +259,24 @@ module.exports = async function (context, functionInput) {
         const stagingTree = [];
         const prodTree = [];
 
-        for(const [key,value] of allFilesMap) {
+        for (const [key,value] of allFilesMap) {
+            //Tree parts...
+            //https://docs.github.com/en/free-pro-team@latest/rest/reference/git#create-a-tree
+            const mode = '100644'; //code for tree blob
+            const type = 'blob';
+
             const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
             const content = JSON.stringify(value,null,2);
             
             const stagingRow = 
                 {
                     path: `${stagingFileLoc}${newFileName}`,
-                    content,
-                    mode: '100644',
-                    type: 'blob'
+                    content, mode, type
                 };
             const prodRow = 
                 {
                     path: `${productionFileLoc}${newFileName}`,
-                    content,
-                    mode: '100644',
-                    type: 'blob'
+                    content, mode, type
                 };
 
             stagingTree.push(stagingRow);
