@@ -142,8 +142,7 @@ module.exports = async function (context, functionInput) {
         });
 
         const allData = await executeSql(DbSqlWork);
-        let reviewBranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash-2-review`;
-        let reviewCompletedBranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash-review-complete`;
+
     
         let allFilesMap = new Map();
 
@@ -283,11 +282,14 @@ module.exports = async function (context, functionInput) {
             prodTree.push(prodRow);
         }
 
+        const reviewBranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash-2-review`;
+        const reviewCompletedBranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash-review-complete`;
+
         const refResult = await gitRepo.getRef(`heads/${githubBranch}`);
         const baseSha = refResult.data.object.sha;
 
-        const result = await gitRepo.createTree(stagingTree,baseSha);
-        const commitResult = await gitRepo.commit(baseSha,result.data.sha,'staging tree commit',committer);
+        const createTreeResult = await gitRepo.createTree(stagingTree,baseSha);
+        const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,'staging tree commit',committer);
         const commitSha = commitResult.data.sha;
         const updateRefResult = await gitRepo.updateHead(`heads/${githubBranch}`,commitSha);
 
