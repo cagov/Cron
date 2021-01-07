@@ -39,17 +39,14 @@ module.exports = async function (context, functionInput) {
         const productionPrTitle = `${todayDateString} equity dashboard chart data update`;
 
         const productionPrMessage = `
-        Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/
-        
-        After reviewing, if all looks well, approve and merge this Pull Request.
-        
-        If there are issues with the data:
-        
-        - Note concerns or issues here by commenting on this PR
-        
-        - Work with Triston directly to resolve data issues
-        
-        - Alert the COVID19 site team in Slack (in the Equity page channel)`;
+Equity dashboard stats updates in this PR may be reviewed on staging - [here](https://staging.covid19.ca.gov/equity/).
+
+After reviewing, if all looks well, approve and merge this Pull Request.
+
+If there are issues with the data:
+- Note concerns or issues here by commenting on this PR
+- Work with Triston directly to resolve data issues
+- Alert the COVID19 site team in Slack (in the [Equity page channel](https://cadotgov.slack.com/archives/C01BMCQK0F6))`;
 
         let attrs = {
             account: 'cdt.west-us-2.azure',
