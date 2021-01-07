@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const sha1 = require('sha1');
+//const sha1 = require('sha1');
 const { fetchJSON } = require('../fetchJSON');
 
 let committer = {};
@@ -278,8 +278,7 @@ const gitHubFileGetBlob = async sha =>
     await gitHubGet(`git/blobs/${sha}`);
 
 //Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
-const gitHubBlobPredictSha = content => 
-    sha1(`blob ${content.length}\0${content}`);
+//const gitHubBlobPredictSha = content => sha1(`blob ${content.length}\0${content}`);
 
 module.exports = {
   gitHubSetConfig,
@@ -298,6 +297,5 @@ module.exports = {
   gitHubPrs,
   gitHubPrGetByBranchName,
   gitHubPrRequestReview,
-  gitHubGet,
-  gitHubBlobPredictSha
+  gitHubGet
 };
