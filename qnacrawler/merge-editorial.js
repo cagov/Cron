@@ -31,7 +31,7 @@ async function writeFile() {
 
   function addItem(s){
     if(scrapeMap.get(s.Question)) {
-      console.log('found dup');
+      console.log('found dup',s.Question);
       s.duplicate = scrapeMap.get(s.Question)
       dups.push(s)
     } else {
