@@ -1,9 +1,9 @@
 const snowflake = require('snowflake-sdk');
 const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
-const masterBranch = 'carter-tree-test'; // "master";
+const masterBranch = 'master';
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
-const branchPrefix = 'carter-data-';
+const branchPrefix = 'data-';
 const GitHub = require('github-api');
 const githubUser = 'cagov';
 const githubRepo = 'covid-static';
@@ -12,12 +12,13 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const PrLabels = ['Automatic Deployment'];
+const PrReviewers = ['vargoCDPH','sindhuravuri'];
 
-//const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-//const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
+const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 //const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
-const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
-const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
+//const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
+//const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
 module.exports = async function (context, functionInput) {
@@ -29,7 +30,7 @@ module.exports = async function (context, functionInput) {
 
     const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
     const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
-
+    const branchPrefixFull = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash`;
 
     try {
         let attrs = {
@@ -308,7 +309,6 @@ module.exports = async function (context, functionInput) {
             }
         };
 
-        const branchPrefixFull = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash`;
         const stagingBranchName = `${branchPrefixFull}-2-review`;
         const productionBranchName = `${branchPrefixFull}-review-complete`;
 
@@ -359,13 +359,18 @@ module.exports = async function (context, functionInput) {
             }))
             .data;
 
+            //label pr
             await gitIssues.editIssue(Pr.number,{
                 labels: PrLabels
             });
 
+            //Request reviewers
             //https://docs.github.com/en/free-pro-team@latest/rest/reference/pulls#request-reviewers-for-a-pull-request
-            await gitRepo._request('POST', `/repos/${  gitRepo.__fullname  }/pulls/${Pr.number}/requested_reviewers`,{reviewers:['vargoCDPH','sindhuravuri']});
+            await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/pulls/${Pr.number}/requested_reviewers`,{reviewers:PrReviewers});
+
             await slackBotChatPost(slackBotDebugChannel,`${appName} finished`);
+
+            //Delay post to main channel to allow for build time.
             let postTime = (new Date().getTime() + 1000 * 300) / 1000;
             await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
         }
