@@ -10,7 +10,7 @@ module.exports = async function (context, myTimer) {
     await slackBotChatPost(debugChannel,`${appName} ran 10:30am`);
 
     //turning the whole thing off until it's fixed
-    const PrResult = null; //await doCovidStateDashboarV2();
+    const PrResult = await doCovidStateDashboarV2();
 
     await slackBotChatPost(debugChannel,`${appName} finished`);
 
