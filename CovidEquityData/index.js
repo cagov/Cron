@@ -22,7 +22,6 @@ const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 const appName = 'CovidEquityData';
 
 module.exports = async function (context, functionInput) {
-
     try {
         await slackBotChatPost(slackBotDebugChannel,`${appName} started`);
         const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
@@ -63,7 +62,7 @@ module.exports = async function (context, functionInput) {
         // Try to connect to Snowflake, and check whether the connection was successful.
         connection.connect(err => {
             if (err) {
-                    console.error(`Unable to connect: ${err.message}`);
+                console.error(`Unable to connect: ${err.message}`);
             } else {
                 console.log('Successfully connected to Snowflake.');
             }
@@ -295,14 +294,14 @@ module.exports = async function (context, functionInput) {
                     path: `${stagingFileLoc}${newFileName}`,
                     content, mode, type
                 };
-            const prodRow = 
+            const productionRow = 
                 {
                     path: `${productionFileLoc}${newFileName}`,
                     content, mode, type
                 };
 
             stagingTree.push(stagingRow);
-            productionTree.push(prodRow);
+            productionTree.push(productionRow);
         }
 
         //function to return a new branch if the tree has changes
@@ -315,6 +314,7 @@ module.exports = async function (context, functionInput) {
             const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,commitName,committer);
             const commitSha = commitResult.data.sha;
     
+            //Compare the proposed commit with the trunk (master) branch
             const compare = await gitRepo.compareBranches(baseSha,commitSha);
             if (compare.data.files.length) {
                 console.log(`${compare.data.files.length} changes.`);
@@ -367,14 +367,14 @@ module.exports = async function (context, functionInput) {
                 labels: PrLabels
             });
 
-            //Request reviewers
+            //Request reviewers for Pr
             //https://docs.github.com/en/free-pro-team@latest/rest/reference/pulls#request-reviewers-for-a-pull-request
             await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/pulls/${Pr.number}/requested_reviewers`,{reviewers:PrReviewers});
 
             await slackBotChatPost(slackBotDebugChannel,`${appName} finished`);
 
             //Delay post to main channel to allow for build time.
-            let postTime = (new Date().getTime() + 1000 * 300) / 1000;
+            const postTime = (new Date().getTime() + 1000 * 300) / 1000;
             await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
         }
     } catch (e) {
