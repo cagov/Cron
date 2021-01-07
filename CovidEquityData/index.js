@@ -1,6 +1,6 @@
 const snowflake = require('snowflake-sdk');
 const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
-const githubBranch = 'carter-tree-test'; // "master";
+const masterBranch = 'carter-tree-test'; // "master";
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'carter-data-';
@@ -11,6 +11,7 @@ const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
+const PrLabels = ['Automatic Deployment'];
 
 //const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
 //const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
@@ -24,8 +25,9 @@ module.exports = async function (context, functionInput) {
 
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
+    const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
-    const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
+    const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
     const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
 
 
@@ -221,7 +223,6 @@ module.exports = async function (context, functionInput) {
             countyInfo.push(item);
             allFilesMap.set(mapKey,countyInfo);
         });
-        allFilesMap.set('temp-test-file',`file contents ${new Date().getTime()}`);
 
         // healthequity data
         allData.healthEquityData.forEach(item => {
@@ -256,6 +257,9 @@ module.exports = async function (context, functionInput) {
         });
         allFilesMap.set(statewideMapKey,statewidePopData);
 
+        //Remove this later
+        allFilesMap.set('temp-test-file',`file contents ${new Date().getTime()}`);
+
         const stagingTree = [];
         const prodTree = [];
 
@@ -283,60 +287,88 @@ module.exports = async function (context, functionInput) {
             prodTree.push(prodRow);
         }
 
-        const reviewBranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash-2-review`;
-        const reviewCompletedBranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash-review-complete`;
-
-        const refResult = await gitRepo.getRef(`heads/${githubBranch}`);
-        const baseSha = refResult.data.object.sha;
-
-        const createTreeResult = await gitRepo.createTree(stagingTree,baseSha);
-        const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,'staging tree commit',committer);
-        const commitSha = commitResult.data.sha;
-        const updateRefResult = await gitRepo.updateHead(`heads/${githubBranch}`,commitSha);
-
-
-        const vekjrnfjk=1;
-        /*
-        // this fails unless it runs one at a time
-        const iterator1 = allFilesMap.keys();
-        // eslint-disable-next-line no-inner-declarations
-        async function getNext() {
-            let nextVal = iterator1.next().value;
-            if(nextVal) {
-                console.log(`getting ${nextVal}`);
-                //let fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewBranchName,stagingFileLoc);
-                //fileResult = await putFile(allFilesMap.get(nextVal),nextVal,reviewCompletedBranchName,productionFileLoc);
-                console.log(fileResult);
-                getNext();
+        const branchIfChanged = async (tree, branch, commitName) => {
+            const refResult = await gitRepo.getRef(`heads/${masterBranch}`);
+            const baseSha = refResult.data.object.sha;
+    
+            console.log(`Creating tree for ${commitName}`);
+            const createTreeResult = await gitRepo.createTree(tree,baseSha);
+            const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,commitName,committer);
+            const commitSha = commitResult.data.sha;
+    
+            const compare = await gitRepo.compareBranches(baseSha,commitSha);
+            if (!compare.data.files.length) {
+                //nothing changed
+                console.log('no change');
+                return null;
             } else {
-                console.log('done');
-                // the to-review branch will merge to the /to-review location and delete its merge PR
-                //await gitHubBranchMerge(reviewBranchName, githubBranch);
-                // the reviewedComplete branch should stay open
-                let Pr = null; //await gitHubPrGetByBranchName(githubBranch,reviewCompletedBranchName);
-                if (!Pr) {
-                    const prMessage = `
-                    Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/
-                    
-                    After reviewing, if all looks well, approve and merge this Pull Request.
-                    
-                    If there are issues with the data:
-                    
-                    - Note concerns or issues here by commenting on this PR
-                    
-                    - Work with Triston directly to resolve data issues
-                    
-                    - Alert the COVID19 site team in Slack (in the Equity page channel)`;
-                    //Pr = await gitHubBranchMerge(reviewCompletedBranchName,githubBranch,true,`${getTodayPacificTime().replace(/\//g,'-')} equity dashboard chart data update`,['Automatic Deployment'],false,prMessage);
-                    //await gitHubPrRequestReview(Pr,['vargoCDPH','sindhuravuri']);
-                }
-                //await slackBotChatPost(slackBotDebugChannel,`${appName} finished`);
-                //let postTime = (new Date().getTime() + 1000 * 300) / 1000;
-                //await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
+                console.log(`${compare.data.files.length} changes.`);
+                await gitRepo.createBranch(masterBranch,branch);
+                return await gitRepo.updateHead(`heads/${branch}`,commitSha);
             }
+        };
+
+        const branchPrefixFull = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash`;
+        const stagingBranchName = `${branchPrefixFull}-2-review`;
+        const productionBranchName = `${branchPrefixFull}-review-complete`;
+
+        const branchProduction = await branchIfChanged(prodTree,productionBranchName,'Prod Tree Commit');
+
+        if(branchProduction) {
+            const Pr = (await gitRepo.createPullRequest({
+                title:`${todayDateString} equity dashboard chart data update`,
+                head: productionBranchName,
+                base: masterBranch
+            }))
+            .data;
+
+            //Label the Pr
+            await gitIssues.editIssue(Pr.number,{
+                labels: PrLabels
+            });
+
+            //Approve Pr
+            await gitRepo.mergePullRequest(Pr.number,{
+                merge_method: 'squash'
+            });
+    
+            //Delete Branch
+            await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
         }
-        getNext();
-        */
+
+        const branchStaging = await branchIfChanged(stagingTree,stagingBranchName,'Staging Tree Commit');
+        if(branchStaging) {
+            const prMessage = `
+            Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/
+            
+            After reviewing, if all looks well, approve and merge this Pull Request.
+            
+            If there are issues with the data:
+            
+            - Note concerns or issues here by commenting on this PR
+            
+            - Work with Triston directly to resolve data issues
+            
+            - Alert the COVID19 site team in Slack (in the Equity page channel)`;
+
+            const Pr = (await gitRepo.createPullRequest({
+                title:`${todayDateString} equity dashboard chart data update`,
+                head: stagingBranchName,
+                base: masterBranch,
+                body: prMessage
+            }))
+            .data;
+
+            await gitIssues.editIssue(Pr.number,{
+                labels: PrLabels
+            });
+
+            //https://docs.github.com/en/free-pro-team@latest/rest/reference/pulls#request-reviewers-for-a-pull-request
+            await gitRepo._request('POST', `/repos/${  gitRepo.__fullname  }/pulls/${Pr.number}/requested_reviewers`,{reviewers:['vargoCDPH','sindhuravuri']});
+            await slackBotChatPost(slackBotDebugChannel,`${appName} finished`);
+            let postTime = (new Date().getTime() + 1000 * 300) / 1000;
+            await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
+        }
     } catch (e) {
         await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
