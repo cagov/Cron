@@ -278,7 +278,7 @@ const gitHubFileGetBlob = async sha =>
     await gitHubGet(`git/blobs/${sha}`);
 
 //Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
-//const gitHubBlobPredictSha = content => sha1(`blob ${content.length}\0${content}`);
+//const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}\0${content}`);
 
 module.exports = {
   gitHubSetConfig,
