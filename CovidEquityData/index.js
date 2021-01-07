@@ -22,17 +22,36 @@ const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 const appName = 'CovidEquityData';
 
 module.exports = async function (context, functionInput) {
-    await slackBotChatPost(slackBotDebugChannel,`${appName} started`);
-
-    const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
-    const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
-    const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
-
-    const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
-    const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
-    const branchPrefixFull = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash`;
 
     try {
+        await slackBotChatPost(slackBotDebugChannel,`${appName} started`);
+        const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
+        const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
+        const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
+
+        const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
+        const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
+        const branchPrefixFull = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash`;
+        const stagingBranchName = `${branchPrefixFull}-2-review`;
+        const productionBranchName = `${branchPrefixFull}-review-complete`;
+        const stagingCommitText = 'Staging Equity Data';
+        const productionCommitText = 'Prod Equity Data';
+        const stagingPrTitle = `${todayDateString} equity dashboard chart data update (Staging)`;
+        const productionPrTitle = `${todayDateString} equity dashboard chart data update`;
+
+        const productionPrMessage = `
+        Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/
+        
+        After reviewing, if all looks well, approve and merge this Pull Request.
+        
+        If there are issues with the data:
+        
+        - Note concerns or issues here by commenting on this PR
+        
+        - Work with Triston directly to resolve data issues
+        
+        - Alert the COVID19 site team in Slack (in the Equity page channel)`;
+
         let attrs = {
             account: 'cdt.west-us-2.azure',
             username: process.env["SNOWFLAKE_USER"],
@@ -146,7 +165,6 @@ module.exports = async function (context, functionInput) {
 
         const allData = await executeSql(DbSqlWork);
 
-    
         let allFilesMap = new Map();
 
         allFilesMap.set('equityTopBoxDataV2',
@@ -187,7 +205,6 @@ module.exports = async function (context, functionInput) {
             countyInfo[item.SOGI_CATEGORY][item.METRIC].REPORT_DATE = item.REPORT_DATE;
             allFilesMap.set(mapKey,countyInfo);
         });
-
 
         // for cumulative go through all, add each county to map with cumulative key, all records for that county should be in that one file
         allData.cumulativeData.forEach(item => {
@@ -258,12 +275,12 @@ module.exports = async function (context, functionInput) {
         });
         allFilesMap.set(statewideMapKey,statewidePopData);
 
-        //Remove this later
+        //Creates a new file every time, Remove this later
         allFilesMap.set('temp-test-file',`file contents ${new Date().getTime()}`);
 
+        //Create two trees for Production/Staging
         const stagingTree = [];
-        const prodTree = [];
-
+        const productionTree = [];
         for (const [key,value] of allFilesMap) {
             //Tree parts...
             //https://docs.github.com/en/free-pro-team@latest/rest/reference/git#create-a-tree
@@ -285,9 +302,10 @@ module.exports = async function (context, functionInput) {
                 };
 
             stagingTree.push(stagingRow);
-            prodTree.push(prodRow);
+            productionTree.push(prodRow);
         }
 
+        //function to return a new branch if the tree has changes
         const branchIfChanged = async (tree, branch, commitName) => {
             const refResult = await gitRepo.getRef(`heads/${masterBranch}`);
             const baseSha = refResult.data.object.sha;
@@ -298,25 +316,22 @@ module.exports = async function (context, functionInput) {
             const commitSha = commitResult.data.sha;
     
             const compare = await gitRepo.compareBranches(baseSha,commitSha);
-            if (!compare.data.files.length) {
-                //nothing changed
-                console.log('no change');
-                return null;
-            } else {
+            if (compare.data.files.length) {
                 console.log(`${compare.data.files.length} changes.`);
+                //Create a new branch and assign this commit to it, return the new branch.
                 await gitRepo.createBranch(masterBranch,branch);
                 return await gitRepo.updateHead(`heads/${branch}`,commitSha);
+            } else {
+                console.log('no changes');
+                return null;
             }
         };
 
-        const stagingBranchName = `${branchPrefixFull}-2-review`;
-        const productionBranchName = `${branchPrefixFull}-review-complete`;
-
-
-        const branchStaging = await branchIfChanged(stagingTree,stagingBranchName,'Staging Equity Data');
+        //Push files directly to the "staging" area for immediate viewing
+        const branchStaging = await branchIfChanged(stagingTree,stagingBranchName,stagingCommitText);
         if(branchStaging) {
             const Pr = (await gitRepo.createPullRequest({
-                title:`${todayDateString} equity dashboard chart data update (Staging)`,
+                title: stagingPrTitle,
                 head: stagingBranchName,
                 base: masterBranch
             }))
@@ -336,26 +351,14 @@ module.exports = async function (context, functionInput) {
             await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
         }
 
-        const branchProduction = await branchIfChanged(prodTree,productionBranchName,'Prod Equity Data');
+        //Push files to a review ready PR, that will move to the production section when approved.
+        const branchProduction = await branchIfChanged(productionTree,productionBranchName,productionCommitText);
         if(branchProduction) {
-            const prMessage = `
-            Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/
-            
-            After reviewing, if all looks well, approve and merge this Pull Request.
-            
-            If there are issues with the data:
-            
-            - Note concerns or issues here by commenting on this PR
-            
-            - Work with Triston directly to resolve data issues
-            
-            - Alert the COVID19 site team in Slack (in the Equity page channel)`;
-
             const Pr = (await gitRepo.createPullRequest({
-                title:`${todayDateString} equity dashboard chart data update`,
+                title: productionPrTitle,
                 head: productionBranchName,
                 base: masterBranch,
-                body: prMessage
+                body: productionPrMessage
             }))
             .data;
 
