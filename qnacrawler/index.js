@@ -48,6 +48,7 @@ let urls = [
   "https://covid19.ca.gov/testing-and-treatment/",
   "https://covid19.ca.gov/telehealth/",
   "https://covid19.ca.gov/translate/",
+  "https://covid19.ca.gov/travel/",
   "https://covid19.ca.gov/treatment-for-covid-19/",
   "https://covid19.ca.gov/vaccines/",
   "https://covid19.ca.gov/workers/",
