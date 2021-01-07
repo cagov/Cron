@@ -23,7 +23,7 @@ const appName = 'CovidEquityData';
 
 module.exports = async function (context, functionInput) {
     try {
-        await slackBotChatPost(slackBotDebugChannel,`${appName} started`);
+        await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
         const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
         const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
         const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
