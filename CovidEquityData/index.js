@@ -312,12 +312,12 @@ module.exports = async function (context, functionInput) {
         const stagingBranchName = `${branchPrefixFull}-2-review`;
         const productionBranchName = `${branchPrefixFull}-review-complete`;
 
-        const branchProduction = await branchIfChanged(prodTree,productionBranchName,'Prod Tree Commit');
 
-        if(branchProduction) {
+        const branchStaging = await branchIfChanged(stagingTree,stagingBranchName,'Staging Equity Data');
+        if(branchStaging) {
             const Pr = (await gitRepo.createPullRequest({
-                title:`${todayDateString} equity dashboard chart data update`,
-                head: productionBranchName,
+                title:`${todayDateString} equity dashboard chart data update (Staging)`,
+                head: stagingBranchName,
                 base: masterBranch
             }))
             .data;
@@ -336,8 +336,8 @@ module.exports = async function (context, functionInput) {
             await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
         }
 
-        const branchStaging = await branchIfChanged(stagingTree,stagingBranchName,'Staging Tree Commit');
-        if(branchStaging) {
+        const branchProduction = await branchIfChanged(prodTree,productionBranchName,'Prod Equity Data');
+        if(branchProduction) {
             const prMessage = `
             Equity dashboard stats updates in this PR may be reviewed on staging: https://staging.covid19.ca.gov/equity/
             
@@ -353,7 +353,7 @@ module.exports = async function (context, functionInput) {
 
             const Pr = (await gitRepo.createPullRequest({
                 title:`${todayDateString} equity dashboard chart data update`,
-                head: stagingBranchName,
+                head: productionBranchName,
                 base: masterBranch,
                 body: prMessage
             }))
