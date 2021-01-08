@@ -45,7 +45,6 @@ let urls = [
   "https://covid19.ca.gov/stay-home-except-for-essential-needs/",
   "https://covid19.ca.gov/symptoms-and-risks/",
   "https://covid19.ca.gov/taxes/",
-  "https://covid19.ca.gov/testing-and-treatment/",
   "https://covid19.ca.gov/telehealth/",
   "https://covid19.ca.gov/translate/",
   "https://covid19.ca.gov/travel/",
