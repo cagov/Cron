@@ -3,7 +3,6 @@ const snowflake = require('snowflake-sdk');
 
 const queryDataset = async (sql, connection) => {
     connection = connection || getDatabaseConnection();
-    if(!connection) return;
 
     const dataPromise = new Promise((resolve, reject) => {
         connection.execute({
