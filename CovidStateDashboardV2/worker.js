@@ -39,6 +39,7 @@ const doCovidStateDashboarV2 = async () => {
     if(JSON.stringify(dataOutput)===JSON.stringify(targetcontent)) {
         console.log('data matched - no need to update');
     } else {
+        console.log('data changed - updating');
         if(!Pr) {
             //new branch
             branch = `${branchPrefix}-${todayDateString}-${todayTimeString}`;
@@ -91,7 +92,7 @@ const getData = async () => {
             SUM(LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS),
             SUM(LATEST_CONFIDENT_INCREASE_POSITIVITY_RATE_7_DAYS)
         from
-        COVID.PRODUCTION.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS  
+        COVID.DEVELOPMENT.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS  
         where area='California';
     `;
 
