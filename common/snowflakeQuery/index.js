@@ -1,17 +1,17 @@
 const snowflake = require('snowflake-sdk');
+//https://docs.snowflake.com/en/user-guide/nodejs-driver.html
 
 const queryDataset = async (sql, connection) => {
     connection = connection || getDatabaseConnection();
-    if(!connection) return;
 
     const dataPromise = new Promise((resolve, reject) => {
         connection.execute({
             sqlText : sql,
             complete: function(err, stmt, rows) {
                 if (err) {
-                    throw new Error(err.message);
+                    reject(err);
                 } else {
-                    console.log('Successfully executed statement: ' + stmt.getSqlText());
+                    console.log(`Successfully executed statement: ${stmt.getSqlText()}`);
                     resolve(rows);
                 }
             }
@@ -26,7 +26,7 @@ const queryDataset = async (sql, connection) => {
         });
 
     return result;
-}
+};
 
 const getDatabaseConnection = () => {
     const attrs = {
@@ -34,7 +34,7 @@ const getDatabaseConnection = () => {
         username: process.env["SNOWFLAKE_USER"],
         password: process.env["SNOWFLAKE_PASS"],
         warehouse: 'COVID_CDPH_VWH'
-    }
+    };
 
     if (!attrs.username || !attrs.password) {
         //developers that don't set the creds can still use the rest of the code
@@ -44,19 +44,19 @@ const getDatabaseConnection = () => {
 
     const connection = snowflake.createConnection(attrs);
 
-	// Try to connect to Snowflake, and check whether the connection was successful.
-	connection.connect(function(err, conn) {
-		if (err) {
-            throw new Error('Unable to connect: ' + err.message);
-		} else {
+    // Try to connect to Snowflake, and check whether the connection was successful.
+    connection.connect(err => {
+        if (err) {
+            console.error(err);
+        } else {
             console.log('Successfully connected to Snowflake.');
-		}
+        }
     });
 
     return connection;
-}
+};
 
 module.exports = {
     getDatabaseConnection,
     queryDataset
-}
+};
