@@ -10,9 +10,8 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
-const branchPrefix = 'auto-stats-update';
 const commitMessage = 'update Stats';
-
+const branchPrefix = 'auto-stats-update';
 
 const roundNumber = (number, fractionDigits=3) => {
     const roundscale = Math.pow(10,fractionDigits);
