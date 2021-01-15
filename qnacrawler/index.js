@@ -20,7 +20,7 @@ async function goTo(url, page) {
     let data = {};
     data.title = document.title.replace(" - Coronavirus COVID-19 Response", "");
     data.accordions = [];
-    let accordions = document.querySelectorAll(`cwds-accordion`);
+    let accordions = document.querySelectorAll(`cagov-accordion`);
     accordions.forEach((acc) => {
       let acObj = {};
       if (!acc.querySelector(".js-qa-exclude")) {
