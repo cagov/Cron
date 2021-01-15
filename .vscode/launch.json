@@ -40,6 +40,14 @@
       "args": ["1:CovidEquityData"],
       "cwd": "${workspaceRoot}/sandbox"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DIRECT CovidNewsFeed",
+      "program": "index",
+      "args": ["5:CovidNewsFeed"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
   ],
   "inputs": [
     {

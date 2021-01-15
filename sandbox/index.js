@@ -88,4 +88,8 @@ const doWork = async opt => {
 })()
 .catch(e=>{
     console.error(e);
+})
+.then(() => {
+    console.log("Debug Finished.");
+    process.exit(0);
 });
