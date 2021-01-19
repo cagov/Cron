@@ -8,7 +8,6 @@ const { doHealthCheck } = require('../CovidSiteHealth/worker');
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 //const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
-//const { gitHubSetConfig,gitHubPrRequestReview,gitHubBranchCreate,gitHubBranchMerge,gitHubFileAdd } = require('../common/gitHub');
 const CovidEquityData = require('../CovidEquityData');
 const CovidNewsFeed = require('../CovidNewsFeed');
 
