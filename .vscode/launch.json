@@ -43,6 +43,14 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Debug DIRECT doTranslationPrUpdate",
+      "program": "index",
+      "args": ["3:doTranslationPrUpdate"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Debug DIRECT CovidNewsFeed",
       "program": "index",
       "args": ["5:CovidNewsFeed"],
