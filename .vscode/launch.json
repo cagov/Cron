@@ -51,6 +51,14 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Debug DIRECT doWeeklyUpdatePrs",
+      "program": "index",
+      "args": ["4:doWeeklyUpdatePrs"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Debug DIRECT CovidNewsFeed",
       "program": "index",
       "args": ["5:CovidNewsFeed"],
