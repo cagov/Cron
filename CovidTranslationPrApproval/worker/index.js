@@ -36,7 +36,7 @@ const doTranslationPrUpdate = async masterbranch => {
         const compare = (await gitRepo.compareBranches(masterbranch,pr.head.sha)).data;
 
         //limit file access to a single folder with 'modified' status only.
-        const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/') && x.status==='modified');
+        const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
 
         if (pass && fileaccessok) {
             //Approve the PR
