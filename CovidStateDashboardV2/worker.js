@@ -1,4 +1,4 @@
-const { queryDataset } = require('../common/snowflakeQueryV2');
+const { queryDataset,getDatabaseConnection } = require('../common/snowflakeQueryV2');
 const targetFileName = 'daily-stats-v2.json';
 const targetPath = "data/";
 
@@ -75,7 +75,9 @@ const doCovidStateDashboarV2 = async () => {
 };
 
 const getData = async () => {
-    const sql1 = `
+    const sqlWork_CDT_COVID = {
+    metrics:
+    `
         select top 1
             MAX(DATE),
             SUM(LATEST_TOTAL_CONFIRMED_CASES),
@@ -99,9 +101,8 @@ const getData = async () => {
         from
         COVID.DEVELOPMENT.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS  
         where area='California';
-    `;
-
-    const sql2 = `
+    `,
+    hospitalizations : `
     WITH HOSPITALIZATIONS as (
         select TO_DATE(SF_LOAD_TIMESTAMP) as SF_LOAD_TIMESTAMP
           , SUM(HOSPITALIZED_COVID_CONFIRMED_PATIENTS) AS HOSPITALIZED_COVID_CONFIRMED_PATIENTS
@@ -165,13 +166,14 @@ const getData = async () => {
         , TOTAL_PATIENTS
     FROM CHANGES
     ORDER BY SF_LOAD_TIMESTAMP DESC
-    `;
+    `};
 
-    const sqlResults1 = await queryDataset(sql1);
-    const row = sqlResults1[0][0][0];
+    const connStats = getDatabaseConnection(JSON.parse(process.env["SNOWFLAKE_CDT_COVID"]));
 
-    const sqlResults2 = await queryDataset(sql2);
-    const rowHospitals = sqlResults2[0][0][0];
+    const sqlResults = await queryDataset(sqlWork_CDT_COVID,connStats);
+    const row = sqlResults.metrics[0];
+
+    const rowHospitals = sqlResults.hospitalizations[0];
 
     const mappedResults = {
         data: {
