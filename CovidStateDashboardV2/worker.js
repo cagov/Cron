@@ -1,4 +1,4 @@
-const { queryDataset } = require('../common/snowflakeQuery');
+const { queryDataset,getDatabaseConnection } = require('../common/snowflakeQueryV2');
 const targetFileName = 'daily-stats-v2.json';
 const targetPath = "data/";
 
@@ -75,7 +75,8 @@ const doCovidStateDashboarV2 = async () => {
 };
 
 const getData = async () => {
-    const sql1 = `
+    const sqlWork_CDT_COVID = {
+    metrics: `
         select top 1
             MAX(DATE),
             SUM(LATEST_TOTAL_CONFIRMED_CASES),
@@ -99,9 +100,8 @@ const getData = async () => {
         from
         COVID.DEVELOPMENT.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS  
         where area='California';
-    `;
-
-    const sql2 = `
+    `,
+    hospitalizations : `
     WITH HOSPITALIZATIONS as (
         select TO_DATE(SF_LOAD_TIMESTAMP) as SF_LOAD_TIMESTAMP
           , SUM(HOSPITALIZED_COVID_CONFIRMED_PATIENTS) AS HOSPITALIZED_COVID_CONFIRMED_PATIENTS
@@ -165,13 +165,41 @@ const getData = async () => {
         , TOTAL_PATIENTS
     FROM CHANGES
     ORDER BY SF_LOAD_TIMESTAMP DESC
+    `};
+
+    const sqlVaccines = `
+        select TOP 2
+            "Administered Data Date" as administered_date
+            ,doses_administered
+            ,cummulative_daily_doses_administered
+            ,div0(
+            (cummulative_daily_doses_administered - lag(cummulative_daily_doses_administered,1,0) over (order by "Administered Data Date" ASC))
+            ,lag(cummulative_daily_doses_administered,1,0) over (order by "Administered Data Date" ASC)
+            ) increase_from_prior_day 
+        from (
+            select 
+                "Administered Data Date"
+                ,count(distinct ("Total Pfizer Doses Administered")) + count(distinct ("Total Moderna Doses Administered")) doses_administered
+                ,sum(count(distinct ("Total Pfizer Doses Administered")) + count(distinct ("Total Moderna Doses Administered"))) over (order by "Administered Data Date" ASC) cummulative_daily_doses_administered
+            from 
+                CA_VACCINE.CA_VACCINE.VW_TAB_VAX_ADMINISTERED_ALT
+            where
+                "Administered Data Date" < to_date(getdate())
+            group by
+                "Administered Data Date"
+        ) a 
+        order by
+            "Administered Data Date" desc
     `;
 
-    const sqlResults1 = await queryDataset(sql1);
-    const row = sqlResults1[0][0][0];
-
-    const sqlResults2 = await queryDataset(sql2);
-    const rowHospitals = sqlResults2[0][0][0];
+    const connStats = getDatabaseConnection("SNOWFLAKE_CDT_COVID");
+    const statResults = await queryDataset(sqlWork_CDT_COVID,connStats);
+    const connVaccines = getDatabaseConnection("SNOWFLAKE_CDTCDPH_VACCINE");
+    const resultsVaccines = await queryDataset(sqlVaccines,connVaccines);
+    
+    const row = statResults.metrics[0];
+    const rowHospitals = statResults.hospitalizations[0];
+    const rowVaccines = resultsVaccines[1];
 
     const mappedResults = {
         data: {
@@ -224,11 +252,11 @@ const getData = async () => {
                 ICU_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG : roundNumber(100.0*rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG,6),
                 ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS : rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS
             },
-            vaccinations : {
-                DATE : '2021-01-18',
-                DOSES_ADMINISTERED : 43863,
-                CUMMULATIVE_DAILY_DOSES_ADMINISTERED : 1525697,
-                PCT_INCREASE_FROM_PRIOR_DAY : 2.96
+            vaccinations: {
+                DATE : rowVaccines.ADMINISTERED_DATE,
+                DOSES_ADMINISTERED : rowVaccines.DOSES_ADMINISTERED,
+                CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMMULATIVE_DAILY_DOSES_ADMINISTERED,
+                PCT_INCREASE_FROM_PRIOR_DAY : roundNumber(100.0*rowVaccines.INCREASE_FROM_PRIOR_DAY,6)
             }
         }
     };
