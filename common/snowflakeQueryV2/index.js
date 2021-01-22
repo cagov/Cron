@@ -4,8 +4,7 @@ const snowflake = require('snowflake-sdk');
 //runs a name/SQL object and returns a matching object with name/Results 
 const queryDataset = async (sqlWork, connection) => {
     if(!connection) {
-        console.error('connection is required : use getDatabaseConnection.');
-        return;
+        throw new Error('connection is required : use getDatabaseConnection.');
     }
 
     const singleResult = typeof sqlWork === 'string';
@@ -36,8 +35,8 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
         sqlText,
         complete: function(err, stmt, rows) {
             if (err) {
-                console.error(`Failed to execute statement due to the following error: ${err.message}`);
-                reject(`Failed to execute statement due to the following error: ${err.message}`);
+                console.error(`Failed to execute statement: ${stmt.getSqlText()}`);
+                reject(err);
             } else {
                 console.log(`Successfully executed statement: ${stmt.getSqlText()}`);
                 const result = {};
@@ -48,11 +47,21 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
     });
 });
 
-const getDatabaseConnection = ConnectionOptions => {
-    if (!ConnectionOptions.username || !ConnectionOptions.password || !ConnectionOptions.account  | !ConnectionOptions.warehouse) {
-        //developers that don't set the creds can still use the rest of the code
-        console.error('You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features');
-        return;
+const getDatabaseConnection = ConnectionOptions_OR_EnvironmentVariable => {
+    const errMessage = 'You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features';
+    let ConnectionOptions = {};
+    if (typeof ConnectionOptions_OR_EnvironmentVariable === "string") {
+        const varData = process.env[ConnectionOptions_OR_EnvironmentVariable];
+        if(!varData) {
+            throw new Error(errMessage);
+        }
+        ConnectionOptions = JSON.parse(varData);
+    } else {
+        ConnectionOptions = ConnectionOptions_OR_EnvironmentVariable;
+    }
+
+    if (!ConnectionOptions.username || !ConnectionOptions.password || !ConnectionOptions.account | !ConnectionOptions.warehouse) {
+        throw new Error(errMessage);
     }
 
     const connection = snowflake.createConnection(ConnectionOptions);
@@ -62,7 +71,7 @@ const getDatabaseConnection = ConnectionOptions => {
         if (err) {
             console.error(err);
         } else {
-            console.log('Successfully connected to Snowflake.');
+            console.log(`Successfully connected to Snowflake (${ConnectionOptions.account}-${ConnectionOptions.warehouse}).`);
         }
     });
 
