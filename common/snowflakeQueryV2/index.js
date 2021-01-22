@@ -2,6 +2,13 @@ const snowflake = require('snowflake-sdk');
 //https://docs.snowflake.com/en/user-guide/nodejs-driver.html
 
 //runs a name/SQL object and returns a matching object with name/Results 
+//Sample sqlWork
+/*
+    const sqlWork = {
+        myFirstDataset: `select * from data`,
+        mySecondDataset: `select * from otherdata`
+    }
+*/
 const queryDataset = async (sqlWork, connection) => {
     if(!connection) {
         throw new Error('connection is required : use getDatabaseConnection.');

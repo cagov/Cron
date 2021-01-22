@@ -76,8 +76,7 @@ const doCovidStateDashboarV2 = async () => {
 
 const getData = async () => {
     const sqlWork_CDT_COVID = {
-    metrics:
-    `
+    metrics: `
         select top 1
             MAX(DATE),
             SUM(LATEST_TOTAL_CONFIRMED_CASES),
