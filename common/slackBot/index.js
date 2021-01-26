@@ -35,18 +35,35 @@ const slackApiGet = () =>
       headers: slackApiHeaders
   });
 
-    //https://api.slack.com/methods/conversations.history
+/**
+ * List the post history for a channel
+ * 
+ * (See https://api.slack.com/methods/conversations.history)
+ * @param {string} channel - Slack channel to search in
+ */
 const slackBotChannelHistory = async channel => 
   fetch(`${slackApiChannelHistory}?channel=${channel}`,slackApiGet());
 
-
-    //https://api.slack.com/methods/conversations.replies
+/**
+ * Get a list of replies for a post
+ *
+ * (See https://api.slack.com/methods/conversations.replies)
+ * @param {string} channel - Slack channel to search in
+ * @param {string} ts - Timestamp (TS) for root Slack post
+ */
 const slackBotChannelReplies = async (channel,ts) => 
    fetch(`${slackApiChannelReplies}?channel=${channel}&ts=${ts}`,slackApiGet());
 
-
-   //https://api.slack.com/methods/chat.postMessage
-   //https://api.slack.com/docs/messages/builder
+/**
+* Add a Slack post
+*
+* (See https://api.slack.com/methods/chat.postMessage)
+*
+* (Also https://api.slack.com/docs/messages/builder)
+* @param {string} channel - Slack channel to post in
+* @param {string} text - Post text
+* @param {string} [attachments] - Optional Post attachments
+*/
 const slackBotChatPost = async (channel,text,attachments) => {
   const payload = {
     channel,
@@ -56,7 +73,13 @@ const slackBotChatPost = async (channel,text,attachments) => {
 
   return fetch(slackApiChatPost,slackApiPost(payload));
 };
-
+/**
+ * Add a reply to a Slack post.
+ * @param {string} channel - Slack channel to post in
+ * @param {string} thread_ts - Timestamp (TS) for Slack post
+ * @param {string} text - Post text
+ * @param {string} [attachments] - Optional Post attachments
+ */
 const slackBotReplyPost = async (channel,thread_ts,text,attachments) => {
   const payload = {
     channel,
@@ -68,7 +91,14 @@ const slackBotReplyPost = async (channel,thread_ts,text,attachments) => {
   return fetch(slackApiChatPost,slackApiPost(payload));
 };
 
-//https://api.slack.com/methods/reactions.add
+/**
+ * Add a reaction to a Slack post.<br>
+ *
+ * (see https://api.slack.com/methods/reactions.add)
+ * @param {string} channel - Slack channel to post in
+ * @param {string} timestamp - Timestamp (TS) for Slack post
+ * @param {string} name - emoji name
+ */
 const slackBotReactionAdd = async (channel,timestamp,name) => {
   const payload = {
     channel,
@@ -91,7 +121,16 @@ const slackBotDelayedChatPost = async (channel,text,post_at) => {
   return postInfo;
 };
 
-//request/data is optional
+
+/**
+* Report an error to a slack channel.
+* @param {string} channel - Slack channel to post in
+* @param {string} title - the post title
+* @param {*} errorObject - the error object to display
+* @param {*} errorObject.stack
+* @param {*} [request] - optional request object to display
+* @param {*} [data] - optional data object to display
+*/
 const slackBotReportError = async (channel,title,errorObject,request,data) => {
   console.error(errorObject);
 
