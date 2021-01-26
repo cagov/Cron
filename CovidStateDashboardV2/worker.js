@@ -238,7 +238,7 @@ const getData = async () => {
                 DATE : rowVaccines.REPORT_DATE,
                 DOSES_ADMINISTERED : rowVaccines.DAILY_CHANGE,
                 CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMULATIVE_TOTAL,
-                PCT_INCREASE_FROM_PRIOR_DAY : roundNumber(100.0*rowVaccines.PERCENT_DAILY,6)
+                PCT_INCREASE_FROM_PRIOR_DAY : rowVaccines.PERCENT_DAILY
             }
         }
     };
