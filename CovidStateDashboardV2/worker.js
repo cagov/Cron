@@ -168,28 +168,10 @@ const getData = async () => {
     `};
 
     const sqlVaccines = `
-        select TOP 2
-            "Administered Data Date" as administered_date
-            ,doses_administered
-            ,cummulative_daily_doses_administered
-            ,div0(
-            (cummulative_daily_doses_administered - lag(cummulative_daily_doses_administered,1,0) over (order by "Administered Data Date" ASC))
-            ,lag(cummulative_daily_doses_administered,1,0) over (order by "Administered Data Date" ASC)
-            ) increase_from_prior_day 
-        from (
-            select 
-                "Administered Data Date"
-                ,count(distinct ("Total Pfizer Doses Administered")) + count(distinct ("Total Moderna Doses Administered")) doses_administered
-                ,sum(count(distinct ("Total Pfizer Doses Administered")) + count(distinct ("Total Moderna Doses Administered"))) over (order by "Administered Data Date" ASC) cummulative_daily_doses_administered
-            from 
-                CA_VACCINE.CA_VACCINE.VW_TAB_VAX_ADMINISTERED_ALT
-            where
-                "Administered Data Date" < to_date(getdate())
-            group by
-                "Administered Data Date"
-        ) a 
-        order by
-            "Administered Data Date" desc
+        select
+            VACCINE_KPI_JSON
+        from
+            CA_VACCINE.CA_VACCINE.Vw_Website_kpi_Vaccines
     `;
 
     const connStats = getDatabaseConnection("SNOWFLAKE_CDT_COVID");
@@ -199,7 +181,7 @@ const getData = async () => {
     
     const row = statResults.metrics[0];
     const rowHospitals = statResults.hospitalizations[0];
-    const rowVaccines = resultsVaccines[1];
+    const rowVaccines = resultsVaccines[0].VACCINE_KPI_JSON;
 
     const mappedResults = {
         data: {
@@ -253,10 +235,10 @@ const getData = async () => {
                 ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS : rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS
             },
             vaccinations: {
-                DATE : rowVaccines.ADMINISTERED_DATE,
-                DOSES_ADMINISTERED : rowVaccines.DOSES_ADMINISTERED,
-                CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMMULATIVE_DAILY_DOSES_ADMINISTERED,
-                PCT_INCREASE_FROM_PRIOR_DAY : roundNumber(100.0*rowVaccines.INCREASE_FROM_PRIOR_DAY,6)
+                DATE : rowVaccines.REPORT_DATE,
+                DOSES_ADMINISTERED : rowVaccines.DAILY_CHANGE,
+                CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMULATIVE_TOTAL,
+                PCT_INCREASE_FROM_PRIOR_DAY : rowVaccines.PERCENT_DAILY
             }
         }
     };
