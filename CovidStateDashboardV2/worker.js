@@ -174,9 +174,9 @@ const getData = async () => {
             CA_VACCINE.CA_VACCINE.Vw_Website_kpi_Vaccines
     `;
 
-    const connStats = getDatabaseConnection("SNOWFLAKE_CDT_COVID");
+    const connStats = getDatabaseConnection(JSON.parse(process.env["SNOWFLAKE_CDT_COVID"]));
     const statResults = await queryDataset(sqlWork_CDT_COVID,connStats);
-    const connVaccines = getDatabaseConnection("SNOWFLAKE_CDTCDPH_VACCINE");
+    const connVaccines = getDatabaseConnection(JSON.parse(process.env["SNOWFLAKE_CDTCDPH_VACCINE"]));
     const resultsVaccines = await queryDataset(sqlVaccines,connVaccines);
     
     const row = statResults.metrics[0];

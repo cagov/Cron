@@ -1,14 +1,16 @@
 const snowflake = require('snowflake-sdk');
 //https://docs.snowflake.com/en/user-guide/nodejs-driver.html
 
-//runs a name/SQL object and returns a matching object with name/Results 
-//Sample sqlWork
-/*
-    const sqlWork = {
-        myFirstDataset: `select * from data`,
-        mySecondDataset: `select * from otherdata`
-    }
-*/
+/**
+ * Runs a name/SQL object and returns a matching object with name/Results.
+ * @example
+ * const sqlWork = {
+ *     myFirstDataset: `select * from data`,
+ *     mySecondDataset: `select * from otherdata`
+ * }
+ * @param {(string|{})} sqlWork single SQL statement string OR name/sql attributes.
+ * @param {snowflake.Connection} connection active snowflake.Connection.
+ */
 const queryDataset = async (sqlWork, connection) => {
     if(!connection) {
         throw new Error('connection is required : use getDatabaseConnection.');
@@ -36,7 +38,12 @@ const queryDataset = async (sqlWork, connection) => {
     return singleResult ? result.RESULT1 : result;
 };
 
-//creates a new Snowflake Db Promise witht the result set name
+/**
+ * creates a new Snowflake Db Promise with the result set name.
+ * @param {snowflake.Connection} connection Active snowflake.Connection.
+ * @param {string} name Result set name to return
+ * @param {string} sqlText Query to execute
+ */
 const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject) => {
     connection.execute({
         sqlText,
@@ -54,21 +61,16 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
     });
 });
 
-const getDatabaseConnection = ConnectionOptions_OR_EnvironmentVariable => {
-    const errMessage = 'You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features';
-    let ConnectionOptions = {};
-    if (typeof ConnectionOptions_OR_EnvironmentVariable === "string") {
-        const varData = process.env[ConnectionOptions_OR_EnvironmentVariable];
-        if(!varData) {
-            throw new Error(errMessage);
-        }
-        ConnectionOptions = JSON.parse(varData);
-    } else {
-        ConnectionOptions = ConnectionOptions_OR_EnvironmentVariable;
-    }
-
+/**
+ * Returns a configured snowflake.Connection
+ * @param {snowflake.ConnectionOptions} ConnectionOptions an object with connection info
+ * @example let conn = getDatabaseConnection(JSON.parse(process.env["MY_CONNECTION_STRING"]));
+ * @example 
+ * let conn = getDatabaseConnection({account:"MYACCOUNT", warehouse:"MYWAREHOUSE", username:"MYUSER", password:"12345"});
+ */
+const getDatabaseConnection = ConnectionOptions => {
     if (!ConnectionOptions.username || !ConnectionOptions.password || !ConnectionOptions.account | !ConnectionOptions.warehouse) {
-        throw new Error(errMessage);
+        throw new Error('You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features');
     }
 
     const connection = snowflake.createConnection(ConnectionOptions);
@@ -87,5 +89,6 @@ const getDatabaseConnection = ConnectionOptions_OR_EnvironmentVariable => {
 
 module.exports = {
     getDatabaseConnection,
-    queryDataset
+    queryDataset,
+    getDbPromise
 };
