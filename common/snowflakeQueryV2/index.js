@@ -63,26 +63,14 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
 
 /**
  * Returns a configured snowflake.Connection
- * @param {(string|{})} ConnectionOptions_OR_EnvironmentVariable an object with connection info or an enviornment var ref for the JSON connection string
- * @example let conn = getDatabaseConnection("MY_DATA_CONNECTION");
+ * @param {snowflake.ConnectionOptions} ConnectionOptions an object with connection info
+ * @example let conn = getDatabaseConnection(JSON.parse(process.env["MY_CONNECTION_STRING"]));
  * @example 
  * let conn = getDatabaseConnection({account:"MYACCOUNT", warehouse:"MYWAREHOUSE", username:"MYUSER", password:"12345"});
  */
-const getDatabaseConnection = ConnectionOptions_OR_EnvironmentVariable => {
-    const errMessage = 'You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features';
-    let ConnectionOptions = {};
-    if (typeof ConnectionOptions_OR_EnvironmentVariable === "string") {
-        const varData = process.env[ConnectionOptions_OR_EnvironmentVariable];
-        if(!varData) {
-            throw new Error(errMessage);
-        }
-        ConnectionOptions = JSON.parse(varData);
-    } else {
-        ConnectionOptions = ConnectionOptions_OR_EnvironmentVariable;
-    }
-
+const getDatabaseConnection = ConnectionOptions => {
     if (!ConnectionOptions.username || !ConnectionOptions.password || !ConnectionOptions.account | !ConnectionOptions.warehouse) {
-        throw new Error(errMessage);
+        throw new Error('You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features');
     }
 
     const connection = snowflake.createConnection(ConnectionOptions);
