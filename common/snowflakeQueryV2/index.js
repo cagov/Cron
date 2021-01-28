@@ -1,14 +1,16 @@
 const snowflake = require('snowflake-sdk');
 //https://docs.snowflake.com/en/user-guide/nodejs-driver.html
 
-//runs a name/SQL object and returns a matching object with name/Results 
-//Sample sqlWork
-/*
-    const sqlWork = {
-        myFirstDataset: `select * from data`,
-        mySecondDataset: `select * from otherdata`
-    }
-*/
+/**
+ * Runs a name/SQL object and returns a matching object with name/Results.
+ * @example
+ * const sqlWork = {
+ *     myFirstDataset: `select * from data`,
+ *     mySecondDataset: `select * from otherdata`
+ * }
+ * @param {(string|{})} sqlWork single SQL statement string OR name/sql attributes.
+ * @param {snowflake.Connection} connection active snowflake.Connection.
+ */
 const queryDataset = async (sqlWork, connection) => {
     if(!connection) {
         throw new Error('connection is required : use getDatabaseConnection.');
@@ -36,7 +38,12 @@ const queryDataset = async (sqlWork, connection) => {
     return singleResult ? result.RESULT1 : result;
 };
 
-//creates a new Snowflake Db Promise witht the result set name
+/**
+ * creates a new Snowflake Db Promise with the result set name.
+ * @param {snowflake.Connection} connection Active snowflake.Connection.
+ * @param {string} name Result set name to return
+ * @param {string} sqlText Query to execute
+ */
 const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject) => {
     connection.execute({
         sqlText,
@@ -54,6 +61,13 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
     });
 });
 
+/**
+ * Returns a configured snowflake.Connection
+ * @param {(string|{})} ConnectionOptions_OR_EnvironmentVariable an object with connection info or an enviornment var ref for the JSON connection string
+ * @example let conn = getDatabaseConnection("MY_DATA_CONNECTION");
+ * @example 
+ * let conn = getDatabaseConnection({account:"MYACCOUNT", warehouse:"MYWAREHOUSE", username:"MYUSER", password:"12345"});
+ */
 const getDatabaseConnection = ConnectionOptions_OR_EnvironmentVariable => {
     const errMessage = 'You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features';
     let ConnectionOptions = {};
@@ -87,5 +101,6 @@ const getDatabaseConnection = ConnectionOptions_OR_EnvironmentVariable => {
 
 module.exports = {
     getDatabaseConnection,
-    queryDataset
+    queryDataset,
+    getDbPromise
 };
