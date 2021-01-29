@@ -76,7 +76,7 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
 
 /**
  * Returns a configured snowflake.Connection
- * @param {string|snowflake.ConnectionOptions} ConnectionOptions a connection string OR an object with connection info
+ * @param {string|snowflake.ConnectionOptions|snowflake.Connection} ConnectionOptions a connection string OR an object with connection info
  * @example let conn = getDatabaseConnection(JSON.parse(process.env["MY_CONNECTION_STRING"]));
  * @example 
  * let conn = getDatabaseConnection({account:"MYACCOUNT", warehouse:"MYWAREHOUSE", username:"MYUSER", password:"12345"});
