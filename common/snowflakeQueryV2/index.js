@@ -20,19 +20,21 @@ const getSQL = path =>
  *     mySecondDataset: `select * from otherdata`
  * }
  * @param {(string|{})} sqlWork single SQL statement string OR name/sql attributes.
- * @param {snowflake.Connection} connection active snowflake.Connection.
+ * @param {string|snowflake.Connection} connection connection string OR active snowflake.Connection.
  */
 const queryDataset = async (sqlWork, connection) => {
     if(!connection) {
         throw new Error('connection is required : use getDatabaseConnection.');
     }
 
+    const activeConnection = getDatabaseConnection(connection); //Will return the same connection if it is already one
+
     const singleResult = typeof sqlWork === 'string';
     const queries = singleResult ? {RESULT1 : sqlWork} : sqlWork;
 
     const dataPromises = [];
     for(let name of Object.keys(queries)) {
-        dataPromises.push(getDbPromise(connection,name,queries[name]));
+        dataPromises.push(getDbPromise(activeConnection,name,queries[name]));
     }
 
     const resultDatasets = await Promise.all(dataPromises);
@@ -81,6 +83,9 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
  */
 const getDatabaseConnection = ConnectionOptions => {
     const ConnectionOptionsObj = typeof ConnectionOptions === 'string' ? JSON.parse(ConnectionOptions) : ConnectionOptions;
+    if(ConnectionOptionsObj.connect) { //already a connection
+        return ConnectionOptionsObj;
+    }
 
     if (!ConnectionOptionsObj.username || !ConnectionOptionsObj.password || !ConnectionOptionsObj.account | !ConnectionOptionsObj.warehouse) {
         throw new Error('You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features');

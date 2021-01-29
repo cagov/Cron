@@ -1,4 +1,4 @@
-const { queryDataset,getDatabaseConnection,getSQL } = require('../common/snowflakeQueryV2');
+const { queryDataset,getSQL } = require('../common/snowflakeQueryV2');
 const targetFileName = 'daily-stats-v2.json';
 const targetPath = "data/";
 
@@ -75,15 +75,17 @@ const doCovidStateDashboarV2 = async () => {
 };
 
 const getData = async () => {
-    const connStats = getDatabaseConnection(process.env["SNOWFLAKE_CDT_COVID"]);
     const statResults = await queryDataset(
         {
             metrics: getSQL('CDT_COVID/Metrics'),
             hospitalizations : getSQL('CDT_COVID/Hospitalizations')
         }
-        ,connStats);
-    const connVaccines = getDatabaseConnection(process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
-    const resultsVaccines = await queryDataset(getSQL('CDTCDPH_VACCINE/Vaccines'),connVaccines);
+        ,process.env["SNOWFLAKE_CDT_COVID"]
+    );
+    const resultsVaccines = await queryDataset(
+        getSQL('CDTCDPH_VACCINE/Vaccines'),
+        process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
+    );
     
     const row = statResults.metrics[0];
     const rowHospitals = statResults.hospitalizations[0];
