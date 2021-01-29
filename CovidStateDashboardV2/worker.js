@@ -76,36 +76,13 @@ const doCovidStateDashboarV2 = async () => {
 };
 
 const getData = async () => {
-    const sqlWork_CDT_COVID = {
-    metrics: `
-        select top 1
-            MAX(DATE),
-            SUM(LATEST_TOTAL_CONFIRMED_CASES),
-            SUM(NEWLY_REPORTED_CASES),
-            SUM(LATEST_PCT_CH_CASES_REPORTED_1_DAY),
-            SUM(LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS),
-            SUM(NEWLY_REPORTED_CASES_LAST_7_DAYS),
-            SUM(LATEST_TOTAL_CONFIRMED_DEATHS),
-            SUM(NEWLY_REPORTED_DEATHS),
-            SUM(LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS),      
-            SUM(LATEST_PCT_CH_DEATHS_REPORTED_1_DAY),
-            SUM(LATEST_TOTAL_TESTS_PERFORMED),
-            SUM(NEWLY_REPORTED_TESTS),
-            SUM(LATEST_PCT_CH_TOTAL_TESTS_REPORTED_1_DAY),
-            SUM(LATEST_CONFIDENT_AVG_TOTAL_TESTS_7_DAYS),
-            SUM(NEWLY_REPORTED_TESTS_LAST_7_DAYS),
-            SUM(LATEST_CONFIDENT_POSITIVITY_RATE_7_DAYS),
-            SUM(LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS),
-            SUM(LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS),
-            SUM(LATEST_CONFIDENT_INCREASE_POSITIVITY_RATE_7_DAYS)
-        from
-        COVID.DEVELOPMENT.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS  
-        where area='California';
-    `,
-    hospitalizations : snowflakeSqlQueries.CDT_COVID.Hospitalizations};
-
     const connStats = getDatabaseConnection(JSON.parse(process.env["SNOWFLAKE_CDT_COVID"]));
-    const statResults = await queryDataset(sqlWork_CDT_COVID,connStats);
+    const statResults = await queryDataset(
+        {
+            metrics: snowflakeSqlQueries.CDT_COVID.Metrics,
+            hospitalizations : snowflakeSqlQueries.CDT_COVID.Hospitalizations
+        }
+        ,connStats);
     const connVaccines = getDatabaseConnection(JSON.parse(process.env["SNOWFLAKE_CDTCDPH_VACCINE"]));
     const resultsVaccines = await queryDataset(snowflakeSqlQueries.CDTCDPH_VACCINE.Vaccines,connVaccines);
     
