@@ -4,14 +4,13 @@ const snowflake = require('snowflake-sdk');
 
 /**
  * Pull a SQL string out of the snowflakeSqlQueries folder
- * @param {string} group - Parent folder for file 
- * @param {string} name - filename (without sql extention)
+ * @param {string} path - relative filename (without sql extention)
  * @example
- * const sql = getSQL('CDT_COVID','Metrics');
+ * const sql = getSQL('CDT_COVID/Metrics');
  * 
  */
-const getSQL = (group, name) =>
-  fs.readFileSync(`${__dirname}/SQL/${group}/${name}.sql`).toString();
+const getSQL = path =>
+  fs.readFileSync(`${__dirname}/SQL/${path}.sql`).toString();
 
 /**
  * Runs a name/SQL object and returns a matching object with name/Results.

@@ -78,12 +78,12 @@ const getData = async () => {
     const connStats = getDatabaseConnection(JSON.parse(process.env["SNOWFLAKE_CDT_COVID"]));
     const statResults = await queryDataset(
         {
-            metrics: getSQL('CDT_COVID','Metrics'),
-            hospitalizations : getSQL('CDT_COVID','Hospitalizations')
+            metrics: getSQL('CDT_COVID/Metrics'),
+            hospitalizations : getSQL('CDT_COVID/Hospitalizations')
         }
         ,connStats);
     const connVaccines = getDatabaseConnection(JSON.parse(process.env["SNOWFLAKE_CDTCDPH_VACCINE"]));
-    const resultsVaccines = await queryDataset(getSQL('CDTCDPH_VACCINE','Vaccines'),connVaccines);
+    const resultsVaccines = await queryDataset(getSQL('CDTCDPH_VACCINE/Vaccines'),connVaccines);
     
     const row = statResults.metrics[0];
     const rowHospitals = statResults.hospitalizations[0];
