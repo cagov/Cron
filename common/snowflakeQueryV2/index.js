@@ -74,24 +74,26 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
 
 /**
  * Returns a configured snowflake.Connection
- * @param {snowflake.ConnectionOptions} ConnectionOptions an object with connection info
+ * @param {string|snowflake.ConnectionOptions} ConnectionOptions a connection string OR an object with connection info
  * @example let conn = getDatabaseConnection(JSON.parse(process.env["MY_CONNECTION_STRING"]));
  * @example 
  * let conn = getDatabaseConnection({account:"MYACCOUNT", warehouse:"MYWAREHOUSE", username:"MYUSER", password:"12345"});
  */
 const getDatabaseConnection = ConnectionOptions => {
-    if (!ConnectionOptions.username || !ConnectionOptions.password || !ConnectionOptions.account | !ConnectionOptions.warehouse) {
+    const ConnectionOptionsObj = typeof ConnectionOptions === 'string' ? JSON.parse(ConnectionOptions) : ConnectionOptions;
+
+    if (!ConnectionOptionsObj.username || !ConnectionOptionsObj.password || !ConnectionOptionsObj.account | !ConnectionOptionsObj.warehouse) {
         throw new Error('You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features');
     }
 
-    const connection = snowflake.createConnection(ConnectionOptions);
+    const connection = snowflake.createConnection(ConnectionOptionsObj);
 
     // Try to connect to Snowflake, and check whether the connection was successful.
     connection.connect(err => {
         if (err) {
             console.error(err);
         } else {
-            console.log(`Successfully connected to Snowflake (${ConnectionOptions.account}-${ConnectionOptions.warehouse}).`);
+            console.log(`Successfully connected to Snowflake (${ConnectionOptionsObj.account}-${ConnectionOptionsObj.warehouse}).`);
         }
     });
 

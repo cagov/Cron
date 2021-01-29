@@ -75,14 +75,14 @@ const doCovidStateDashboarV2 = async () => {
 };
 
 const getData = async () => {
-    const connStats = getDatabaseConnection(JSON.parse(process.env["SNOWFLAKE_CDT_COVID"]));
+    const connStats = getDatabaseConnection(process.env["SNOWFLAKE_CDT_COVID"]);
     const statResults = await queryDataset(
         {
             metrics: getSQL('CDT_COVID/Metrics'),
             hospitalizations : getSQL('CDT_COVID/Hospitalizations')
         }
         ,connStats);
-    const connVaccines = getDatabaseConnection(JSON.parse(process.env["SNOWFLAKE_CDTCDPH_VACCINE"]));
+    const connVaccines = getDatabaseConnection(process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
     const resultsVaccines = await queryDataset(getSQL('CDTCDPH_VACCINE/Vaccines'),connVaccines);
     
     const row = statResults.metrics[0];
