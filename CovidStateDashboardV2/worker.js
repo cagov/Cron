@@ -1,4 +1,4 @@
-const { queryDataset,getSQL } = require('../common/snowflakeQueryV2');
+const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const targetFileName = 'daily-stats-v2.json';
 const targetPath = "data/";
 

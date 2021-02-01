@@ -1,4 +1,4 @@
-const { queryDataset,getSQL } = require('../../common/snowflakeQueryV2');
+const { queryDataset,getSQL } = require('../../common/snowflakeQuery');
 const statsFileName = 'tableauCovidMetrics.json';
 
 const GitHub = require('github-api');

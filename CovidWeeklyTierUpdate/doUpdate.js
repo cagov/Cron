@@ -5,17 +5,16 @@ const committer = {
     name: process.env["GITHUB_NAME"],
     email: process.env["GITHUB_EMAIL"]
 };
-const { queryDataset } = require('../common/snowflakeQuery');
+const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const targetFileName = 'countystatus.json';
 const targetPath = `src/js/roadmap/`;
 const PrPrefix = 'Auto Tier Update';
 const branchPrefix = 'auto-tier-update';
 const commitMessage = 'update Tiers';
 const PrLabels = ['Automatic Deployment'];
-const sql = `select COUNTY, CURRENT_TIER from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA where date = (select max(DATE) from COVID.PRODUCTION.VW_CDPH_COUNTY_TIER_DATA)`;
  
 const getData = async () => {
-    const sqlResults = (await queryDataset(sql))[0][0];
+    const sqlResults = await queryDataset(getSQL('CDT_COVID/TierUpdate'),process.env["SNOWFLAKE_CDT_COVID"]);
 
     //flip the data so high is low and low is high
     const flipped = sqlResults.map(item => 
