@@ -12,10 +12,9 @@ const PrPrefix = 'Auto Tier Update';
 const branchPrefix = 'auto-tier-update';
 const commitMessage = 'update Tiers';
 const PrLabels = ['Automatic Deployment'];
-const sql = getSQL('CDT_COVID/TierUpdate');
  
 const getData = async () => {
-    const sqlResults = await queryDataset(sql,process.env["SNOWFLAKE_CDT_COVID"]);
+    const sqlResults = await queryDataset(getSQL('CDT_COVID/TierUpdate'),process.env["SNOWFLAKE_CDT_COVID"]);
 
     //flip the data so high is low and low is high
     const flipped = sqlResults.map(item => 
