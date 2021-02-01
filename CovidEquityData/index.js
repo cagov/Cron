@@ -1,4 +1,4 @@
-const snowflake = require('snowflake-sdk');
+const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
 const masterBranch = 'master';
 const stagingFileLoc = 'data/to-review/equitydash/';
@@ -14,11 +14,11 @@ const committer = {
 const PrLabels = ['Automatic Deployment'];
 const PrReviewers = ['vargoCDPH','sindhuravuri'];
 
-const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
+//const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+//const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 //const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
-//const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
-//const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
+const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
+const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
 module.exports = async function (context, functionInput) {
@@ -47,23 +47,6 @@ If there are issues with the data:
 - Note concerns or issues here by commenting on this PR
 - Work with Triston directly to resolve data issues
 - Alert the COVID19 site team in Slack (in the [Equity page channel](https://cadotgov.slack.com/archives/C01BMCQK0F6))`;
-
-        let attrs = {
-            account: 'cdt.west-us-2.azure',
-            username: process.env["SNOWFLAKE_USER"],
-            password: process.env["SNOWFLAKE_PASS"],
-            warehouse: 'COVID_CDPH_VWH',
-            database: 'COVID'
-        };
-        const connection = snowflake.createConnection(attrs);
-        // Try to connect to Snowflake, and check whether the connection was successful.
-        connection.connect(err => {
-            if (err) {
-                console.error(`Unable to connect: ${err.message}`);
-            } else {
-                console.log('Successfully connected to Snowflake.');
-            }
-        });
         
         const DbSqlWork = {
             casesAndDeathsByDemographic :
@@ -119,47 +102,7 @@ If there are issues with the data:
             healthEquityData :          `select COUNTY, DATE, METRIC, METRIC_VALUE, METRIC_VALUE_30_DAYS_AGO, METRIC_VALUE_DIFF from COVID.PRODUCTION.VW_EQUITY_METRIC_POS_30_DAY_BY_CNT`,
         };
 
-        //runs a name/SQL object and returns a matching object with name/Results 
-        const executeSql = async sqlWork => {
-            const promises = [];
-
-            for(let name of Object.keys(sqlWork)) {
-                promises.push(getDbPromise(name,sqlWork[name]));
-            }
-
-            const resultDatasets = await Promise.all(promises);
-
-            const result = {};
-
-            //flatten results
-            for(let promiseResult of resultDatasets) {
-                for(let name of Object.keys(promiseResult)) {
-                    result[name] = promiseResult[name];
-                }
-            }
-
-            return result;
-        };
-
-        //creates a new Snowflake Db Promise witht the result set name
-        const getDbPromise = (name, sqlText) => new Promise((resolve, reject) => {
-            connection.execute({
-                sqlText,
-                complete: function(err, stmt, rows) {
-                    if (err) {
-                        console.error(`Failed to execute statement due to the following error: ${err.message}`);
-                        reject(`Failed to execute statement due to the following error: ${err.message}`);
-                    } else {
-                        console.log(`Successfully executed statement: ${stmt.getSqlText()}`);
-                        const result = {};
-                        result[name] = rows;
-                        resolve(result);
-                    }
-                }
-            });
-        });
-
-        const allData = await executeSql(DbSqlWork);
+        const allData = await queryDataset(DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
 
         let allFilesMap = new Map();
 
