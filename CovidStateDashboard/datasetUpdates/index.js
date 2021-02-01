@@ -1,4 +1,4 @@
-const { queryDataset } = require('../../common/snowflakeQuery');
+const { queryDataset,getSQL } = require('../../common/snowflakeQueryV2');
 const statsFileName = 'tableauCovidMetrics.json';
 
 const GitHub = require('github-api');
@@ -18,7 +18,7 @@ const doDailyStatsPr = async mergetargets => {
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
-    const sql = `SELECT TOP 1 * from COVID.PRODUCTION.VW_TABLEAU_COVID_METRICS_STATEWIDE ORDER BY DATE DESC`;
+
     let sqlResults = null;
     let masterPr = null;
     const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
@@ -37,10 +37,10 @@ const doDailyStatsPr = async mergetargets => {
         if(Pr) { //reuse the PR if it is still open
             branch = Pr.head.ref;
         } else {
-            await gitRepo.createBranch(mergetarget,branch);        
+            await gitRepo.createBranch(mergetarget,branch);
         }
 
-        sqlResults = sqlResults || (await queryDataset(sql))[0][0]; //only run the query if needed
+        sqlResults = sqlResults || await queryDataset(getSQL('CDT_COVID/Oldstats'),process.env["SNOWFLAKE_CDT_COVID"]); //only run the query if needed
 
         const content = Buffer.from(JSON.stringify(sqlResults,null,2)).toString('base64');
         const targetfile = (await gitRepo.getContents(branch,`pages/_data/${statsFileName}`,false)).data; //reload the meta so we update the latest
