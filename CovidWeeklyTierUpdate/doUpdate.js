@@ -5,7 +5,7 @@ const committer = {
     name: process.env["GITHUB_NAME"],
     email: process.env["GITHUB_EMAIL"]
 };
-const { queryDataset,getSQL } = require('../common/snowflakeQueryV2');
+const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const targetFileName = 'countystatus.json';
 const targetPath = `src/js/roadmap/`;
 const PrPrefix = 'Auto Tier Update';
