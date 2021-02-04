@@ -1,7 +1,7 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const SnowFlakeSqlPath = 'CDT_COVID/Equity/';
 const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
-const masterBranch = 'carter-testing-eq';
+const masterBranch = 'master';
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'data-';
@@ -15,16 +15,16 @@ const committer = {
 const PrLabels = ['Automatic Deployment'];
 const PrReviewers = ['vargoCDPH','sindhuravuri'];
 
-//const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-//const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
+const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 //const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
-const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
-const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
+//const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
+//const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
 module.exports = async function (context, functionInput) {
     try {
-        //await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
+        await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
         const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
         const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
         const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
@@ -263,7 +263,7 @@ If there are issues with the data:
 
             //Delay post to main channel to allow for build time.
             const postTime = (new Date().getTime() + 1000 * 300) / 1000;
-            //await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
+            await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
         }
     } catch (e) {
         await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
