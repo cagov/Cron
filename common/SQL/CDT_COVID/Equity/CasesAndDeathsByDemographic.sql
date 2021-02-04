@@ -1,3 +1,7 @@
+-- Case rate of Latino, black + NHPI
+-- 7 Rows
+-- by RACE_ETHNICITY (African American,American Indian,etc.)
+
 select
     *,
     CASES/POPULATION*100000 as CASE_RATE,

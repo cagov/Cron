@@ -1,3 +1,9 @@
+-- Race/ethnicity of total cases, deaths, testing by county
+-- 1,593 rows
+-- by METRIC (deaths,cases,tests)
+--   by COUNTY 
+--   by DEMOGRAPHIC_SET_CATEGORY (White, Latino, American Indian, etc.)
+
 select
   COUNTY,
   DEMOGRAPHIC_SET,

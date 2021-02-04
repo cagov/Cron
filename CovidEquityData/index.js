@@ -177,9 +177,6 @@ If there are issues with the data:
         });
         allFilesMap.set(statewideMapKey,statewidePopData);
 
-        //Creates a new file every time, Remove this later
-        allFilesMap.set('temp-test-file',`file contents ${new Date().getTime()}`);
-
         //Create two trees for Production/Staging
         const stagingTree = [];
         const productionTree = [];

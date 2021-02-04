@@ -1,3 +1,8 @@
+-- 56 rows
+-- by AGE_GROUP (ex "18-49")
+--   by GENDER (Male, Female)
+--   by RACE_ETHNICITY (ex "African American")
+
 select
   AGE_GROUP,
   GENDER,

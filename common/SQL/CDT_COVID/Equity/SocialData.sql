@@ -1,3 +1,9 @@
+-- Latest Case rates for Median income, Crowded housing, Health insurance access
+-- 24 rows
+-- by DATE (latest only)
+--   by SOCIAL_DET (income,crowding,insurance,income_cumulative 
+--   by SOCIAL_TIER (ex "above $120K")
+
 select
   DATE,
   SOCIAL_DET,

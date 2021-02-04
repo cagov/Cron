@@ -1,3 +1,7 @@
+-- Total cases, deaths
+-- 3 rows
+-- by METRIC (cases,deaths,tests)
+
 select
   COUNTY,
   DEMOGRAPHIC_SET,

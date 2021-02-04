@@ -1,3 +1,6 @@
+-- CURRENT_TIER (1,2,3,4) for each COUNTY
+-- 58 rows
+
 select
   COUNTY,
   CURRENT_TIER
