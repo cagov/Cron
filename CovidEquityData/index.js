@@ -1,7 +1,7 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const SnowFlakeSqlPath = 'CDT_COVID/Equity/';
 const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
-const masterBranch = 'master';
+const masterBranch = 'carter-testing-eq';
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'data-';
@@ -15,16 +15,16 @@ const committer = {
 const PrLabels = ['Automatic Deployment'];
 const PrReviewers = ['vargoCDPH','sindhuravuri'];
 
-const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
+//const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+//const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 //const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
-//const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
-//const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
+const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
+const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
 module.exports = async function (context, functionInput) {
     try {
-        await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
+        //await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
         const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
         const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
         const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
@@ -79,42 +79,36 @@ If there are issues with the data:
         // this is combining cases, testing and deaths metrics
         allData.missingnessData.forEach(item => {
             let mapKey = `missingness-${item.COUNTY}`;
-            let countyInfo = allFilesMap.get(mapKey);
-            if(!countyInfo) {
-                countyInfo = {};
-                countyInfo.race_ethnicity = {};
-            }
+            let countyInfo = allFilesMap.get(mapKey) || {race_ethnicity:{}};
+
             countyInfo.race_ethnicity[item.METRIC] = item;
             allFilesMap.set(mapKey,countyInfo);
         });
         // combining sogi missingness with regular missingness so I can write less files
         allData.missingnessSOGIData.forEach(item => {
             let mapKey = `missingness-${item.COUNTY}`;
-            let countyInfo = allFilesMap.get(mapKey);
-            if(!countyInfo) {
-                countyInfo = {};
-            }
+            let countyInfo = allFilesMap.get(mapKey) || {};
+
             if(!countyInfo[item.SOGI_CATEGORY]) {
                 countyInfo[item.SOGI_CATEGORY] = {};
             }
-            countyInfo[item.SOGI_CATEGORY][item.METRIC] = {};
-            countyInfo[item.SOGI_CATEGORY][item.METRIC].METRIC = item.METRIC;
-            countyInfo[item.SOGI_CATEGORY][item.METRIC].MISSING = item.MISSING;
-            countyInfo[item.SOGI_CATEGORY][item.METRIC].NOT_MISSING = item.NOT_MISSING;
-            countyInfo[item.SOGI_CATEGORY][item.METRIC].TOTAL = item.TOTAL;
-            countyInfo[item.SOGI_CATEGORY][item.METRIC].PERCENT_COMPLETE = item.PERCENT_COMPLETE;
-            countyInfo[item.SOGI_CATEGORY][item.METRIC].PERCENT_COMPLETE_30_DAYS_DIFF = item.DIFF_30_DAY;
-            countyInfo[item.SOGI_CATEGORY][item.METRIC].REPORT_DATE = item.REPORT_DATE;
+            countyInfo[item.SOGI_CATEGORY][item.METRIC] = {
+                METRIC : item.METRIC,
+                MISSING : item.MISSING,
+                NOT_MISSING : item.NOT_MISSING,
+                TOTAL : item.TOTAL,
+                PERCENT_COMPLETE : item.PERCENT_COMPLETE,
+                PERCENT_COMPLETE_30_DAYS_DIFF : item.DIFF_30_DAY,
+                REPORT_DATE : item.REPORT_DATE
+            };
             allFilesMap.set(mapKey,countyInfo);
         });
 
         // for cumulative go through all, add each county to map with cumulative key, all records for that county should be in that one file
         allData.cumulativeData.forEach(item => {
             let mapKey = `cumulative-${item.COUNTY}`;
-            let countyInfo = allFilesMap.get(mapKey);
-            if(!countyInfo) {
-                countyInfo = [];
-            }
+            let countyInfo = allFilesMap.get(mapKey) || [];
+
             item.SORT_METRIC = item.METRIC_TOTAL_PERCENTAGE / item.POPULATION_PERCENTAGE;
             item.METRIC_TOTAL_DELTA = 100 - item.METRIC_TOTAL_PERCENTAGE;
             item.POPULATION_PERCENTAGE_DELTA = 100 - item.POPULATION_PERCENTAGE;
@@ -123,11 +117,11 @@ If there are issues with the data:
             item.WORST_VALUE_DELTA = item.WORST_VALUE - item.METRIC_VALUE_PER_100K;
             let nonNulls = allMetricItemsInCounty.filter(f => f["METRIC_VALUE_PER_100K"] != null);
             if(nonNulls.length == 0) {
-            item.LOWEST_VALUE = null;
-            item.PCT_FROM_LOWEST_VALUE = null;  
+                item.LOWEST_VALUE = null;
+                item.PCT_FROM_LOWEST_VALUE = null;  
             } else {
-            item.LOWEST_VALUE = nonNulls.reduce((a, e) => e["METRIC_VALUE_PER_100K"] < a["METRIC_VALUE_PER_100K"] ? e : a).METRIC_VALUE_PER_100K;
-            item.PCT_FROM_LOWEST_VALUE = item.METRIC_VALUE_PER_100K / item.LOWEST_VALUE;  
+                item.LOWEST_VALUE = nonNulls.reduce((a, e) => e["METRIC_VALUE_PER_100K"] < a["METRIC_VALUE_PER_100K"] ? e : a).METRIC_VALUE_PER_100K;
+                item.PCT_FROM_LOWEST_VALUE = item.METRIC_VALUE_PER_100K / item.LOWEST_VALUE;  
             }
             countyInfo.push(item);
             allFilesMap.set(mapKey,countyInfo);
@@ -136,10 +130,8 @@ If there are issues with the data:
         // social data should all go in one file
         allData.socialData.forEach(item => {
             let mapKey = `social-data-${item.SOCIAL_DET}`;
-            let countyInfo = allFilesMap.get(mapKey);
-            if(!countyInfo) {
-                countyInfo = [];
-            }
+            let countyInfo = allFilesMap.get(mapKey) || [];
+
             countyInfo.push(item);
             allFilesMap.set(mapKey,countyInfo);
         });
@@ -147,10 +139,8 @@ If there are issues with the data:
         // healthequity data
         allData.healthEquityData.forEach(item => {
             let mapKey = `healthequity-${item.COUNTY}`;
-            let countyInfo = allFilesMap.get(mapKey);
-            if(!countyInfo) {
-                countyInfo = {}; // ts:Date.now() insures file uniqueness
-            }
+            let countyInfo = allFilesMap.get(mapKey) || {}; // ts:Date.now() insures file uniqueness
+
             if(!countyInfo[item.METRIC]) {
                 countyInfo[item.METRIC] = [];
             }
@@ -159,10 +149,8 @@ If there are issues with the data:
         });
 
         allData.cumulativeStatewideData.forEach(item => {
-            let info = allFilesMap.get('cumulative-combined');
-            if(!info) {
-                info = {};
-            }
+            let info = allFilesMap.get('cumulative-combined') || {};
+
             if(!info[item.METRIC]) {
                 info[item.METRIC] = item; // just one row for cases, deaths, tests in this query
             }
@@ -275,7 +263,7 @@ If there are issues with the data:
 
             //Delay post to main channel to allow for build time.
             const postTime = (new Date().getTime() + 1000 * 300) / 1000;
-            await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
+            //await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
         }
     } catch (e) {
         await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
