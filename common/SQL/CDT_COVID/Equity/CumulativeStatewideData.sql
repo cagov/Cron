@@ -1,3 +1,6 @@
+-- Total cases, deaths
+-- 3 rows, one for each cumulative metric (cases,deaths,tests)
+
 select
   COUNTY,
   DEMOGRAPHIC_SET,

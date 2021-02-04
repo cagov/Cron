@@ -1,3 +1,6 @@
+-- Race/ethnicity of total cases, deaths, testing by county
+-- (METRIC by COUNTY by DEMOGRAPHIC_SET_CATEGORY)
+
 select
   COUNTY,
   DEMOGRAPHIC_SET,

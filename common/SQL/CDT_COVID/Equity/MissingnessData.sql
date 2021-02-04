@@ -1,3 +1,5 @@
+-- Unknown data for Case, Deaths, and Testing
+
 select
   COUNTY,
   METRIC,
