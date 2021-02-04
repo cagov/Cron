@@ -1,3 +1,7 @@
+-- Test positivity rate, Lowest 25% healthy HE index
+-- 3,540+ Rows
+-- County by DATE by METRIC (county_positivity_all_nopris,county_positivity_low_hpi)
+
 select
   COUNTY,
   DATE,
