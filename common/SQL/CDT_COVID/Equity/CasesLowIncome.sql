@@ -1,3 +1,5 @@
+-- Case rate of median income <40K
+
 select top 1
     DATE,
     STATE_CASE_RATE_PER_100K,
