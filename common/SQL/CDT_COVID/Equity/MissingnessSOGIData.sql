@@ -1,6 +1,6 @@
 -- Unknown data for Cases and Deaths for SO and GI
 -- 236 Rows
--- SOGI_CATEGORY (gender_identity,sexual_orientation)  by
+-- by SOGI_CATEGORY (gender_identity,sexual_orientation)
 --   by METRIC (cases,deaths)
 --   by COUNTY
 

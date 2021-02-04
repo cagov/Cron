@@ -1,5 +1,7 @@
 -- Unknown data for Case, Deaths, and Testing
-
+-- 177 rows
+-- by COUNTY
+--   by METRIC (cases,deaths,tests)
 select
   COUNTY,
   METRIC,
