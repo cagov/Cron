@@ -38,7 +38,7 @@ const doTranslationPrUpdate = async masterbranch => {
         //limit file access to a single folder with 'modified' status only.
         const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
 
-        if (pass && fileaccessok) {
+        if (pass && fileaccessok && compare.status !== 'diverged') {
             //Approve the PR
             await gitRepo.mergePullRequest(pr.number,{
                 merge_method: 'squash'
