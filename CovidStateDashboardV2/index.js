@@ -7,7 +7,7 @@ const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   try {
-    await slackBotChatPost(debugChannel,`${appName} ran 10:30am`);
+    await slackBotChatPost(debugChannel,`${appName} (Every 30 mins from 10am to 1:30pm)`);
 
     //turning the whole thing off until it's fixed
     const PrResult = await doCovidStateDashboarV2();
