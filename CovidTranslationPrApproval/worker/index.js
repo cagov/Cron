@@ -27,7 +27,7 @@ const doTranslationPrUpdate = async masterbranch => {
     for (const pr of Prs) {
         //Grab all the checks running on this PR
         const checks = (await gitRepo._request('GET',`/repos/${gitRepo.__fullname}/commits/${pr.head.sha}/check-runs`)).data;
-        const pass = checks.check_runs.every(x=>x.status==='completed'&&x.conclusion==='success');
+        const pass = checks.check_runs.every(x=>x && x.status==='completed' && x.conclusion==='success');
 
         //compare docs...
         //https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#compare-two-commits
@@ -38,7 +38,7 @@ const doTranslationPrUpdate = async masterbranch => {
         //limit file access to a single folder with 'modified' status only.
         const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
 
-        if (pass && fileaccessok && compare.status !== 'diverged') {
+        if (pass && fileaccessok && compare && compare.status !== 'diverged') {
             //Approve the PR
             await gitRepo.mergePullRequest(pr.number,{
                 merge_method: 'squash'
