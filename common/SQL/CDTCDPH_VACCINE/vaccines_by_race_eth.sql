@@ -6,7 +6,7 @@ with
 GB as (
   select
       RECIP_ADDRESS_COUNTY,
-      RECIP_SEX AS "CATEGORY",
+      RACE_ETH AS "CATEGORY",
       count(distinct RECIP_ID) AS "ADMIN_COUNT"
   from
       CA_VACCINE.VW_TAB_INT_ALL

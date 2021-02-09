@@ -3,13 +3,27 @@
   --   by county(REGION)
   --   by gender(CATEGORY) (Female,Male,Unknown/undifferentiated)
 with 
+ranges as (
+    select
+        '0-17' as "NAME",
+        0 as "RMIN",
+        17 as "RMAX"
+  union select '18-49',18,49
+  union select '50-64',50,64
+  union select '65+',65,999
+),
 GB as (
   select
       RECIP_ADDRESS_COUNTY,
-      RECIP_SEX AS "CATEGORY",
+      ranges.NAME AS "CATEGORY",
       count(distinct RECIP_ID) AS "ADMIN_COUNT"
   from
       CA_VACCINE.VW_TAB_INT_ALL
+  left outer join
+    ranges
+    on RMIN<=DATEDIFF('yyyy',DATE(RECIP_DOB),GETDATE())
+    and RMAX>=DATEDIFF('yyyy',DATE(RECIP_DOB),GETDATE())
+  
   where
       RECIP_ID IS NOT NULL
   group by
