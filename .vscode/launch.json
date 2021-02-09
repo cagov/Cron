@@ -64,6 +64,14 @@
       "args": ["5:CovidNewsFeed"],
       "cwd": "${workspaceRoot}/sandbox"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DIRECT CovidVaccineEquity",
+      "program": "index",
+      "args": ["8:doCovidVaccineEquity"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
   ],
   "inputs": [
     {
@@ -76,7 +84,8 @@
         "4:doWeeklyUpdatePrs",
         "5:CovidNewsFeed",
         "6:doHealthCheck",
-        "7:doCovidStateDashboarV2"
+        "7:doCovidStateDashboarV2",
+        "8:doCovidVaccineEquity"
       ],
       "description": "Select code to debug"
     }

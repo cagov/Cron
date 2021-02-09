@@ -1,7 +1,4 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
-const targetFileName = 'daily-stats-v2.json';
-const targetPath = "data/";
-
 const GitHub = require('github-api');
 const githubUser = 'cagov';
 const githubRepo = 'covid-static';
@@ -10,13 +7,8 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
-const commitMessage = 'update Stats';
-const branchPrefix = 'auto-stats-update';
+const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/';
 
-const roundNumber = (number, fractionDigits=3) => {
-    const roundscale = Math.pow(10,fractionDigits);
-    return Math.round(Number.parseFloat(number)*roundscale)/roundscale;
-};
 
 //Check to see if we need stats update PRs, make them if we do.
 const doCovidVaccineEquity = async () => {
@@ -26,134 +18,111 @@ const doCovidVaccineEquity = async () => {
     const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
     const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
 
-    const title = `${todayDateString} Stats Update`;
-    let branch = masterBranch;
+    const BranchName = 'carter-test-vaccine-eq';
+    const CommitText = 'Commit carter-test-vaccine-eq';
 
-    const prs = await gitRepo.listPullRequests({
-        base:masterBranch
-    });
-    let Pr = prs.data.filter(x=>x.title===title)[0];
+    const DbSqlWork = {
+        vaccines_by_age : getSQL(`${SnowFlakeSqlPath}vaccines_by_age`),
+        vaccines_by_gender : getSQL(`${SnowFlakeSqlPath}vaccines_by_gender`),
+        vaccines_by_race_eth: getSQL(`${SnowFlakeSqlPath}vaccines_by_race_eth`)
+    };
 
-    if(Pr) { //reuse the PR if it is still open
-        branch = Pr.head.ref;    
-    }
+    const allData = await queryDataset(DbSqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
+    const newTree = [];
 
-    const dataOutput = await getData();
-    const targetcontent = (await gitRepo.getContents(branch,`${targetPath}${targetFileName}`,true)).data;
-    if(JSON.stringify(dataOutput)===JSON.stringify(targetcontent)) {
-        console.log('data matched - no need to update');
-    } else {
-        console.log('data changed - updating');
-        if(!Pr) {
-            //new branch
-            branch = `${branchPrefix}-${todayDateString}-${todayTimeString}`;
-            await gitRepo.createBranch(masterBranch,branch);
-        }
+    const getTreeValue = (path,value) => {
+        return {
+             mode : '100644', //code for tree blob
+             type : 'blob',
+             path,
+             content : JSON.stringify(value,null,2)
+        };
+    };
 
-        await gitRepo.writeFile(branch, `${targetPath}${targetFileName}`, JSON.stringify(dataOutput,null,2), commitMessage, {committer,encode:true});
+    const customAddDatsetToTree = (dataset, path_prefix, tree) => {
+        const regions = dataset
+            .map(x=>x.REGION)
+            .filter((value, index, self) => 
+                self.indexOf(value) === index);
+            
+        regions.forEach(r =>
+            {
+                const rows = dataset.filter(d=>d.REGION===r);
+                const REGION = (r==='_CALIFORNIA'?"california":r);
+                const LATEST_ADMIN_DATE = "02-09-2021";
 
-        if(!Pr) {
-            //new Pr
-            Pr = (await gitRepo.createPullRequest({
-                title,
-                head: branch,
-                base: masterBranch
-            }))
-            .data;
-        }
-    }
+                const path = `${path_prefix+r.toLowerCase()}.json`;
+                const data = rows.map(x=>({
+                    CATEGORY:x.CATEGORY,
+                    METRIC_VALUE:x.METRIC_VALUE
+                }));
+                const result = {
+                    meta: {
+                        REGION,
+                        LATEST_ADMIN_DATE
+                    },
+                    data
+                };
 
-    //Approve the PR
-    if(Pr) {
-        await gitRepo.mergePullRequest(Pr.number,{
-            merge_method: 'squash'
-        });
-
-        await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
-    }
-    return Pr;
-};
-
-const getData = async () => {
-    const statResults = await queryDataset(
-        {
-            metrics: getSQL('CDT_COVID/Metrics'),
-            hospitalizations : getSQL('CDT_COVID/Hospitalizations')
-        }
-        ,process.env["SNOWFLAKE_CDT_COVID"]
-    );
-    const resultsVaccines = await queryDataset(
-        getSQL('CDTCDPH_VACCINE/Vaccines'),
-        process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
-    );
-    
-    const row = statResults.metrics[0];
-    const rowHospitals = statResults.hospitalizations[0];
-    const rowVaccines = resultsVaccines[0].VACCINE_KPI_JSON;
-
-    const mappedResults = {
-        data: {
-            cases: {
-                DATE : row['MAX(DATE)'],
-                LATEST_TOTAL_CONFIRMED_CASES : row['SUM(LATEST_TOTAL_CONFIRMED_CASES)'],
-                NEWLY_REPORTED_CASES : row['SUM(NEWLY_REPORTED_CASES)'],
-                LATEST_PCT_CH_CASES_REPORTED_1_DAY : roundNumber(100.0*row['SUM(LATEST_PCT_CH_CASES_REPORTED_1_DAY)'],6),
-                LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS : row['SUM(LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS)'],
-                LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS : row['SUM(LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS)'],
-                NEWLY_REPORTED_CASES_LAST_7_DAYS : row['SUM(NEWLY_REPORTED_CASES_LAST_7_DAYS)']
-            },
-            deaths : {
-                DATE : row['MAX(DATE)'],
-                LATEST_TOTAL_CONFIRMED_DEATHS : row['SUM(LATEST_TOTAL_CONFIRMED_DEATHS)'],
-                NEWLY_REPORTED_DEATHS : row['SUM(NEWLY_REPORTED_DEATHS)'],
-                LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS : row['SUM(LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS)'],
-                LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS : row['SUM(LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS)'],
-                LATEST_PCT_CH_DEATHS_REPORTED_1_DAY : roundNumber(100.0*row['SUM(LATEST_PCT_CH_DEATHS_REPORTED_1_DAY)'],6)
-            },
-            tests : {
-                DATE : row['MAX(DATE)'],
-                LATEST_TOTAL_TESTS_PERFORMED : row['SUM(LATEST_TOTAL_TESTS_PERFORMED)'],
-                LATEST_PCT_CH_TOTAL_TESTS_REPORTED_1_DAY : roundNumber(100.0*row['SUM(LATEST_PCT_CH_TOTAL_TESTS_REPORTED_1_DAY)'],6),
-                LATEST_CONFIDENT_AVG_TOTAL_TESTS_7_DAYS : row['SUM(LATEST_CONFIDENT_AVG_TOTAL_TESTS_7_DAYS)'],
-                NEWLY_REPORTED_TESTS : row['SUM(NEWLY_REPORTED_TESTS)'],
-                NEWLY_REPORTED_TESTS_LAST_7_DAYS : row['SUM(NEWLY_REPORTED_TESTS_LAST_7_DAYS)'],
-                LATEST_CONFIDENT_POSITIVITY_RATE_7_DAYS : row['SUM(LATEST_CONFIDENT_POSITIVITY_RATE_7_DAYS)'],
-                LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS : row['SUM(LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS)'], //moved to cases
-                LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS : row['SUM(LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS)'], //mode to deaths
-                LATEST_CONFIDENT_INCREASE_POSITIVITY_RATE_7_DAYS : row['SUM(LATEST_CONFIDENT_INCREASE_POSITIVITY_RATE_7_DAYS)']
-            },
-            hospitalizations : {
-                DATE : rowHospitals.SF_LOAD_TIMESTAMP,
-                HOSPITALIZED_COVID_CONFIRMED_PATIENTS : rowHospitals.HOSPITALIZED_COVID_CONFIRMED_PATIENTS,
-                HOSPITALIZED_COVID_CONFIRMED_PATIENTS_DAILY : rowHospitals.HOSPITALIZED_COVID_CONFIRMED_PATIENTS_DAILY,
-                HOSPITALIZED_COVID_CONFIRMED_PATIENTS_DAILYPCTCHG : roundNumber(100.0*rowHospitals.HOSPITALIZED_COVID_CONFIRMED_PATIENTS_DAILYPCTCHG,6),
-                HOSPITALIZED_COVID_CONFIRMED_PATIENTS_LAST14DAYS : rowHospitals.HOSPITALIZED_COVID_CONFIRMED_PATIENTS_LAST14DAYS,
-                HOSPITALIZED_SUSPECTED_COVID_PATIENTS : rowHospitals.HOSPITALIZED_SUSPECTED_COVID_PATIENTS,
-                HOSPITALIZED_SUSPECTED_COVID_PATIENTS_DAILY : rowHospitals.HOSPITALIZED_SUSPECTED_COVID_PATIENTS_DAILY,
-                HOSPITALIZED_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG : roundNumber(100.0*rowHospitals.HOSPITALIZED_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG,6),
-                HOSPITALIZED_SUSPECTED_COVID_PATIENTS_LAST14DAYS : rowHospitals.HOSPITALIZED_SUSPECTED_COVID_PATIENTS_LAST14DAYS
-            },
-            icu : {
-                DATE : rowHospitals.SF_LOAD_TIMESTAMP,
-                ICU_COVID_CONFIRMED_PATIENTS : rowHospitals.ICU_COVID_CONFIRMED_PATIENTS,
-                ICU_COVID_CONFIRMED_PATIENTS_DAILY : rowHospitals.ICU_COVID_CONFIRMED_PATIENTS_DAILY,
-                ICU_COVID_CONFIRMED_PATIENTS_DAILYPCTCHG : roundNumber(100.0*rowHospitals.ICU_COVID_CONFIRMED_PATIENTS_DAILYPCTCHG,6),
-                ICU_COVID_CONFIRMED_PATIENTS_LAST14DAYS : rowHospitals.ICU_COVID_CONFIRMED_PATIENTS_LAST14DAYS,
-                ICU_SUSPECTED_COVID_PATIENTS : rowHospitals.ICU_SUSPECTED_COVID_PATIENTS,
-                ICU_SUSPECTED_COVID_PATIENTS_DAILY : rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_DAILY,
-                ICU_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG : roundNumber(100.0*rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG,6),
-                ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS : rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS
-            },
-            vaccinations: {
-                DATE : rowVaccines.REPORT_DATE,
-                DOSES_ADMINISTERED : rowVaccines.DAILY_CHANGE,
-                CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMULATIVE_TOTAL,
-                PCT_INCREASE_FROM_PRIOR_DAY : rowVaccines.PERCENT_DAILY
+                tree.push(getTreeValue(path,result));
             }
+            );
+    };
+
+    customAddDatsetToTree(allData.vaccines_by_age,'age/vaccines_by_age_',newTree);
+    customAddDatsetToTree(allData.vaccines_by_gender,'gender/vaccines_by_gender_',newTree);
+    customAddDatsetToTree(allData.vaccines_by_race_eth,'race-ethnicity/vaccines_by_race_ethnicity_',newTree);
+
+    //function to return a new branch if the tree has changes
+    const branchIfChanged = async (tree, branch, commitName) => {
+        const refResult = await gitRepo.getRef(`heads/${masterBranch}`);
+        const baseSha = refResult.data.object.sha;
+
+        console.log(`Creating tree for ${commitName}`);
+        const createTreeResult = await gitRepo.createTree(tree,baseSha);
+        const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,commitName,committer);
+        const commitSha = commitResult.data.sha;
+
+        //Compare the proposed commit with the trunk (master) branch
+        const compare = await gitRepo.compareBranches(baseSha,commitSha);
+        if (compare.data.files.length) {
+            console.log(`${compare.data.files.length} changes.`);
+            //Create a new branch and assign this commit to it, return the new branch.
+            await gitRepo.createBranch(masterBranch,branch);
+            return await gitRepo.updateHead(`heads/${branch}`,commitSha);
+        } else {
+            console.log('no changes');
+            return null;
         }
     };
 
-    return mappedResults;
+    //Push files directly to the "staging" area for immediate viewing
+    const branchMade = await branchIfChanged(newTree,BranchName,CommitText);
+    if(branchMade) {
+        const Pr = (await gitRepo.createPullRequest({
+            title: CommitText,
+            head: BranchName,
+            base: masterBranch
+        }))
+        .data;
+
+        //Label the Pr
+       // await gitIssues.editIssue(Pr.number,{
+       //     labels: PrLabels
+       // });
+
+        //Approve Pr
+       // await gitRepo.mergePullRequest(Pr.number,{
+       //     merge_method: 'squash'
+       // });
+
+        //Delete Branch
+       // await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
+       return Pr;
+    }
+
+
+    return null;
 };
 
 module.exports = {
