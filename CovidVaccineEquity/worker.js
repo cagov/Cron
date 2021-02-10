@@ -8,6 +8,7 @@ const committer = {
 };
 const masterBranch = 'master';
 const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/';
+const targetPath = 'data/vaccine-equity/';
 
 //Check to see if we need stats update PRs, make them if we do.
 const doCovidVaccineEquity = async () => {
@@ -50,7 +51,7 @@ const doCovidVaccineEquity = async () => {
             {
                 const rows = dataset.filter(d=>d.REGION===r);
                 const REGION = r==='_CALIFORNIA'?"California":r;
-                const LATEST_ADMIN_DATE = "02-09-2021";
+                const LATEST_ADMIN_DATE = todayDateString; //TODO: Pull this from data
 
                 const path = `${path_prefix+REGION.toLowerCase().replace(/ /g,'_')}.json`;
                 const data = rows.map(x=>({
@@ -67,6 +68,7 @@ const doCovidVaccineEquity = async () => {
                         x.CATEGORY = sortMap[sortMapA.indexOf(x.CATEGORY)].CATEGORY;
                     });
                 }
+
                 const result = {
                     meta: {
                         REGION,
@@ -136,9 +138,9 @@ const doCovidVaccineEquity = async () => {
         }
     ];
 
-    customAddDatsetToTree(allData.vaccines_by_age,'data/vaccine-equity/age/vaccines_by_age_',newTree,sortmap_Age);
-    customAddDatsetToTree(allData.vaccines_by_gender,'data/vaccine-equity/gender/vaccines_by_gender_',newTree);
-    customAddDatsetToTree(allData.vaccines_by_race_eth,'data/vaccine-equity/race-ethnicity/vaccines_by_race_ethnicity_',newTree,sortMap_Race);
+    customAddDatsetToTree(allData.vaccines_by_age,`${targetPath}age/vaccines_by_age_`,newTree,sortmap_Age);
+    customAddDatsetToTree(allData.vaccines_by_gender,`${targetPath}gender/vaccines_by_gender_`,newTree);
+    customAddDatsetToTree(allData.vaccines_by_race_eth,`${targetPath}race-ethnicity/vaccines_by_race_ethnicity_`,newTree,sortMap_Race);
 
     //function to return a new branch if the tree has changes
     const branchIfChanged = async (tree, branch, commitName) => {
@@ -163,9 +165,8 @@ const doCovidVaccineEquity = async () => {
         }
     };
 
-    //Push files directly to the "staging" area for immediate viewing
-    const branchMade = await branchIfChanged(newTree,BranchName,CommitText);
-    if(branchMade) {
+    //Create a PR from a new branch if changes exist
+    if(await branchIfChanged(newTree,BranchName,CommitText)) {
         const Pr = (await gitRepo.createPullRequest({
             title: PrTitle,
             head: BranchName,
