@@ -3,32 +3,17 @@
   --   by county(REGION)
   --   by race(CATEGORY) (White/Latino/Asian/etc)
 with
-GoodCounties as (
-    select
-        DISTINCT REPLACE(ADMIN_ADDRESS_COUNTY, ' County','') "COUNTY"
-    from
-        CA_VACCINE.VW_TAB_INT_ALL
-    where
-        ADMIN_ADDRESS_COUNTY is not null
-        and ADMIN_ADDRESS_COUNTY not like 'Unknown%'
-    order by
-        COUNTY
-),
-GB as ( --Master list of corrected data by category
+GB as ( --Master list of corrected data grouped by region/category
   select
     RACE_ETH "CATEGORY",
-    coalesce(gc.COUNTY,'Unknown') "REGION",
-    count(distinct RECIP_ID) "ADMIN_COUNT",
+    MIXED_COUNTY "REGION",
+    --count(distinct vax_event_id) "ADMIN_COUNT", --For total doses
+    count(distinct recip_id) "ADMIN_COUNT", --For total people
     MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
-      CA_VACCINE.VW_TAB_INT_ALL
-  left outer join --For validating CA counties and replacing with 'Unknown'
-    GoodCounties GC
-    on RECIP_ADDRESS_STATE='CA'
-    and GC.COUNTY = RECIP_ADDRESS_COUNTY 
+    CA_VACCINE.tab_int_test
   where
-      RECIP_ID IS NOT NULL
-      and DATE(ADMIN_DATE)>=DATE('2020-12-15')
+    RECIP_ID IS NOT NULL
   group by
       REGION,
       CATEGORY
