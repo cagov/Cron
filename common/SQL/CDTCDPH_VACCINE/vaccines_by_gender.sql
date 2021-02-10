@@ -1,7 +1,7 @@
-   -- Current vaccine administrations by gender (distinct people)
-  -- 160 rows
-  --   by county(REGION)
-  --   by gender(CATEGORY) (Female,Male,Unknown/undifferentiated)
+-- Current vaccine administrations by gender (distinct people)
+-- 171 rows
+--   by county(REGION) + 'California'
+--   by gender(CATEGORY) (Female,Male,Unknown/undifferentiated)
 with 
 GB as (
   select

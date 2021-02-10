@@ -1,7 +1,7 @@
-  -- Current vaccine administrations by gender (distinct people)
-  -- 160 rows
+  -- Current vaccine administrations by race (distinct people)
+  -- 535 rows
   --   by county(REGION)
-  --   by gender(CATEGORY) (Female,Male,Unknown/undifferentiated)
+  --   by race(CATEGORY) (White/Latino/Asian/etc)
 with 
 GB as (
   select
