@@ -5,35 +5,34 @@
 with 
 GB as (
   select
-      RECIP_ADDRESS_COUNTY,
-      RECIP_SEX AS "CATEGORY",
-      count(distinct RECIP_ID) AS "ADMIN_COUNT"
+    RECIP_SEX AS "CATEGORY",
+    RECIP_ADDRESS_COUNTY AS "REGION",
+    count(distinct RECIP_ID) AS "ADMIN_COUNT"
   from
       CA_VACCINE.VW_TAB_INT_ALL
   where
       RECIP_ID IS NOT NULL
   group by
-      RECIP_ADDRESS_COUNTY,
+      REGION,
       CATEGORY
 ),
 TA as (
   select
-    RECIP_ADDRESS_COUNTY,
-    count(distinct RECIP_ID) AS "REGION_TOTAL"
+    REGION,
+    SUM(ADMIN_COUNT) AS "REGION_TOTAL"
   from
-      CA_VACCINE.VW_TAB_INT_ALL
-  where
-      RECIP_ID IS NOT NULL
+      GB
   group by
-      RECIP_ADDRESS_COUNTY
+      REGION
 )
+
 
 select
     UNI.*,
     ADMIN_COUNT/REGION_TOTAL AS "METRIC_VALUE"
 from (
   select 
-      GB.RECIP_ADDRESS_COUNTY AS "REGION",
+      GB.REGION,
       GB.CATEGORY,
       GB.ADMIN_COUNT,
       TA.REGION_TOTAL
@@ -41,11 +40,11 @@ from (
       GB
   join
       TA
-      on TA.RECIP_ADDRESS_COUNTY = GB.RECIP_ADDRESS_COUNTY
+      on TA.REGION = GB.REGION
 
   union
   select 
-      '_CALIFORNIA',
+      'California',
       GB.CATEGORY,
       SUM(GB.ADMIN_COUNT),
       SUM(TA.REGION_TOTAL)
@@ -53,7 +52,7 @@ from (
       GB
   join
       TA
-      on TA.RECIP_ADDRESS_COUNTY = GB.RECIP_ADDRESS_COUNTY
+      on TA.REGION = GB.REGION
   group by
       GB.CATEGORY
 ) UNI
