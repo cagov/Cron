@@ -9,17 +9,18 @@ const committer = {
 const masterBranch = 'master';
 const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/';
 
-
 //Check to see if we need stats update PRs, make them if we do.
 const doCovidVaccineEquity = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
 
-    const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
+    const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
     const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
 
-    const BranchName = 'carter-test-vaccine-eq';
-    const CommitText = 'Commit carter-test-vaccine-eq';
+    const branchPrefix = 'data-';
+    const BranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-vaccineequity`;
+    const CommitText = 'Update Vaccine Equity Data';
+    const PrTitle = `${todayDateString} Vaccine Equity`;
 
     const DbSqlWork = {
         vaccines_by_age : getSQL(`${SnowFlakeSqlPath}vaccines_by_age`),
@@ -39,7 +40,7 @@ const doCovidVaccineEquity = async () => {
         };
     };
 
-    const customAddDatsetToTree = (dataset, path_prefix, tree) => {
+    const customAddDatsetToTree = (dataset, path_prefix, tree, sortMap) => {
         const regions = dataset
             .map(x=>x.REGION)
             .filter((value, index, self) => 
@@ -48,14 +49,24 @@ const doCovidVaccineEquity = async () => {
         regions.forEach(r =>
             {
                 const rows = dataset.filter(d=>d.REGION===r);
-                const REGION = (r==='_CALIFORNIA'?"california":r);
+                const REGION = r==='_CALIFORNIA'?"California":r;
                 const LATEST_ADMIN_DATE = "02-09-2021";
 
-                const path = `${path_prefix+r.toLowerCase()}.json`;
+                const path = `${path_prefix+REGION.toLowerCase().replace(/ /g,'_')}.json`;
                 const data = rows.map(x=>({
                     CATEGORY:x.CATEGORY,
                     METRIC_VALUE:x.METRIC_VALUE
                 }));
+
+                if(sortMap) {
+                    const sortMapA = sortMap.map(x=>x.FROM||x.CATEGORY);
+                    const sortFunction = (a,b) => sortMapA.indexOf(a.CATEGORY)-sortMapA.indexOf(b.CATEGORY);
+                    data.sort(sortFunction);
+
+                    data.forEach(x=>{
+                        x.CATEGORY = sortMap[sortMapA.indexOf(x.CATEGORY)].CATEGORY;
+                    });
+                }
                 const result = {
                     meta: {
                         REGION,
@@ -69,9 +80,65 @@ const doCovidVaccineEquity = async () => {
             );
     };
 
-    customAddDatsetToTree(allData.vaccines_by_age,'age/vaccines_by_age_',newTree);
-    customAddDatsetToTree(allData.vaccines_by_gender,'gender/vaccines_by_gender_',newTree);
-    customAddDatsetToTree(allData.vaccines_by_race_eth,'race-ethnicity/vaccines_by_race_ethnicity_',newTree);
+    //fix race data
+    const sortMap_Race = [
+        {
+            CATEGORY: "American Indian or Alaska Native (AI/AN)",
+            FROM: "American Indian or Alaska Native"
+        },
+        {
+            CATEGORY: "Asian American",
+            FROM: "Asian"
+        },
+        {
+            CATEGORY: "Black",
+            FROM: "Black or African American"
+        },
+        {
+            CATEGORY: "Latino"
+        },
+        {
+            CATEGORY: "Multi-race",
+            FROM: "Multiracial"
+        },
+        {
+            CATEGORY: "Native Hawaiian or Other Pacific Islander (NHPI)",
+            FROM: "Native Hawaiian or Other Pacific Islander"
+        },
+        {
+            CATEGORY: "White"
+        },
+        {
+            CATEGORY: "Other",
+            FROM: "Other Race"
+        },
+        {
+            CATEGORY: "Unknown"
+        }
+    ];
+
+    //fix race data
+    const sortmap_Age = [
+        {
+            CATEGORY: "0-17"
+        },
+        {
+            CATEGORY: "18-49"
+        },
+        {
+            CATEGORY: "50-64"
+        },
+        {
+            CATEGORY: "65+"
+        },
+        {
+            CATEGORY: "Unknown"
+        }
+    ];
+
+    customAddDatsetToTree(allData.vaccines_by_age,'data/vaccine-equity/age/vaccines_by_age_',newTree,sortmap_Age);
+    customAddDatsetToTree(allData.vaccines_by_gender,'data/vaccine-equity/gender/vaccines_by_gender_',newTree);
+    customAddDatsetToTree(allData.vaccines_by_race_eth,'data/vaccine-equity/race-ethnicity/vaccines_by_race_ethnicity_',newTree,sortMap_Race);
 
     //function to return a new branch if the tree has changes
     const branchIfChanged = async (tree, branch, commitName) => {
@@ -100,7 +167,7 @@ const doCovidVaccineEquity = async () => {
     const branchMade = await branchIfChanged(newTree,BranchName,CommitText);
     if(branchMade) {
         const Pr = (await gitRepo.createPullRequest({
-            title: CommitText,
+            title: PrTitle,
             head: BranchName,
             base: masterBranch
         }))
@@ -120,7 +187,6 @@ const doCovidVaccineEquity = async () => {
        // await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
        return Pr;
     }
-
 
     return null;
 };
