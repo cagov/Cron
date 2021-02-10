@@ -10,7 +10,6 @@ const masterBranch = 'master';
 const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/';
 const targetPath = 'data/vaccine-equity/';
 
-//Check to see if we need stats update PRs, make them if we do.
 const doCovidVaccineEquity = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
@@ -89,6 +88,8 @@ const doCovidVaccineEquity = async () => {
             }
             );
     };
+
+    //sortMaps ensure the results match a set sort and changes column values
 
     const sortMap_Race = [
         {
