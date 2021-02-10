@@ -61,6 +61,14 @@ const doCovidVaccineEquity = async () => {
 
                 if(sortMap) {
                     const sortMapA = sortMap.map(x=>x.FROM||x.CATEGORY);
+
+                    //Add 0s for missing mapped values
+                    sortMapA
+                        .filter(a=>!data.some(s=>s.CATEGORY===a))
+                        .forEach(CATEGORY=>{
+                            data.push({CATEGORY,METRIC_VALUE:0});
+                        });
+
                     const sortFunction = (a,b) => sortMapA.indexOf(a.CATEGORY)-sortMapA.indexOf(b.CATEGORY);
                     data.sort(sortFunction);
 
@@ -82,7 +90,6 @@ const doCovidVaccineEquity = async () => {
             );
     };
 
-    //fix race data
     const sortMap_Race = [
         {
             CATEGORY: "American Indian or Alaska Native (AI/AN)",
@@ -119,7 +126,6 @@ const doCovidVaccineEquity = async () => {
         }
     ];
 
-    //fix race data
     const sortmap_Age = [
         {
             CATEGORY: "0-17"
@@ -138,8 +144,20 @@ const doCovidVaccineEquity = async () => {
         }
     ];
 
+    const sortmap_Gender = [
+        {
+            CATEGORY: "Female"
+        },
+        {
+            CATEGORY: "Male"
+        },
+        {
+            CATEGORY: "Unknown/undifferentiated"
+        }
+    ];
+
     customAddDatsetToTree(allData.vaccines_by_age,`${targetPath}age/vaccines_by_age_`,newTree,sortmap_Age);
-    customAddDatsetToTree(allData.vaccines_by_gender,`${targetPath}gender/vaccines_by_gender_`,newTree);
+    customAddDatsetToTree(allData.vaccines_by_gender,`${targetPath}gender/vaccines_by_gender_`,newTree,sortmap_Gender);
     customAddDatsetToTree(allData.vaccines_by_race_eth,`${targetPath}race-ethnicity/vaccines_by_race_ethnicity_`,newTree,sortMap_Race);
 
     //function to return a new branch if the tree has changes
