@@ -14,17 +14,18 @@ GoodCounties as (
     order by
         COUNTY
 ),
-GB as (
+GB as ( --Master list of corrected data by category
   select
     RECIP_SEX "CATEGORY",
-    coalesce(gc.COUNTY,REPLACE(ADMIN_ADDRESS_COUNTY, ' County','')) "REGION",
+    coalesce(gc.COUNTY,'Unknown') "REGION",
     count(distinct RECIP_ID) "ADMIN_COUNT",
     MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
       CA_VACCINE.VW_TAB_INT_ALL
-  left outer join
+  left outer join --For validating CA counties and replacing with 'Unknown'
     GoodCounties GC
-    on GC.COUNTY = RECIP_ADDRESS_COUNTY
+    on RECIP_ADDRESS_STATE='CA'
+    and GC.COUNTY = RECIP_ADDRESS_COUNTY 
   where
       RECIP_ID IS NOT NULL
       and DATE(ADMIN_DATE)>=DATE('2020-12-15')
@@ -32,7 +33,7 @@ GB as (
       REGION,
       CATEGORY
 ),
-TA as (
+TA as ( -- Region Totals
   select
     REGION,
     SUM(ADMIN_COUNT) "REGION_TOTAL",
@@ -42,7 +43,7 @@ TA as (
   group by
       REGION
 ),
-BD as (
+BD as ( -- Region Totals added to category data
   select
       TA.LATEST_ADMIN_DATE,
       TA.REGION_TOTAL,
