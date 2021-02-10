@@ -193,18 +193,18 @@ const doCovidVaccineEquity = async () => {
         .data;
 
         //Label the Pr
-       // await gitIssues.editIssue(Pr.number,{
-       //     labels: PrLabels
-       // });
+        // await gitIssues.editIssue(Pr.number,{
+        //     labels: PrLabels
+        // });
 
         //Approve Pr
-       // await gitRepo.mergePullRequest(Pr.number,{
-       //     merge_method: 'squash'
-       // });
+        await gitRepo.mergePullRequest(Pr.number,{
+            merge_method: 'squash'
+        });
 
         //Delete Branch
-       // await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
-       return Pr;
+        await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
+        return Pr;
     }
 
     return null;
