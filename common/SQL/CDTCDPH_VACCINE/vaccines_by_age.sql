@@ -14,63 +14,63 @@ ranges as (
 ),
 GB as (
   select
-      RECIP_ADDRESS_COUNTY,
-      ranges.NAME AS "CATEGORY",
-      count(distinct RECIP_ID) AS "ADMIN_COUNT"
+    ranges.NAME "CATEGORY",
+    ADMIN_ADDRESS_COUNTY "REGION",
+    count(distinct RECIP_ID) "ADMIN_COUNT"
   from
       CA_VACCINE.VW_TAB_INT_ALL
   left outer join
     ranges
     on RMIN<=DATEDIFF('yyyy',DATE(RECIP_DOB),GETDATE())
     and RMAX>=DATEDIFF('yyyy',DATE(RECIP_DOB),GETDATE())
-  
   where
       RECIP_ID IS NOT NULL
   group by
-      RECIP_ADDRESS_COUNTY,
+      REGION,
       CATEGORY
 ),
 TA as (
   select
-    RECIP_ADDRESS_COUNTY,
-    count(distinct RECIP_ID) AS "REGION_TOTAL"
+    REGION,
+    SUM(ADMIN_COUNT) "REGION_TOTAL"
   from
-      CA_VACCINE.VW_TAB_INT_ALL
-  where
-      RECIP_ID IS NOT NULL
+      GB
   group by
-      RECIP_ADDRESS_COUNTY
+      REGION
+),
+BD as (
+  select 
+      GB.REGION,
+      CATEGORY,
+      ADMIN_COUNT,
+      REGION_TOTAL
+  from
+      GB
+  join
+      TA
+      on TA.REGION = GB.REGION
 )
 
 select
-    UNI.*,
-    ADMIN_COUNT/REGION_TOTAL AS "METRIC_VALUE"
+    *,
+    ADMIN_COUNT/REGION_TOTAL "METRIC_VALUE"
 from (
   select 
-      GB.RECIP_ADDRESS_COUNTY AS "REGION",
-      GB.CATEGORY,
-      GB.ADMIN_COUNT,
-      TA.REGION_TOTAL
+      *
   from
-      GB
-  join
-      TA
-      on TA.RECIP_ADDRESS_COUNTY = GB.RECIP_ADDRESS_COUNTY
+      BD
 
   union
   select 
-      '_CALIFORNIA',
-      GB.CATEGORY,
-      SUM(GB.ADMIN_COUNT),
-      SUM(TA.REGION_TOTAL)
+      'California',
+      BD.CATEGORY,
+      SUM(BD.ADMIN_COUNT),
+      SUM(BD.REGION_TOTAL)
   from
-      GB
-  join
-      TA
-      on TA.RECIP_ADDRESS_COUNTY = GB.RECIP_ADDRESS_COUNTY
+      BD
   group by
-      GB.CATEGORY
-) UNI
+      BD.CATEGORY
+)
 order by
     REGION,
-    METRIC_VALUE desc
+    ADMIN_COUNT desc

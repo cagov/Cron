@@ -50,7 +50,7 @@ const doCovidVaccineEquity = async () => {
         regions.forEach(r =>
             {
                 const rows = dataset.filter(d=>d.REGION===r);
-                const REGION = r==='_CALIFORNIA'?"California":r;
+                const REGION = r.replace(/ County/,'');
                 const LATEST_ADMIN_DATE = todayDateString; //TODO: Pull this from data
 
                 const path = `${path_prefix+REGION.toLowerCase().replace(/ /g,'_')}.json`;
