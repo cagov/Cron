@@ -51,7 +51,7 @@ const doCovidVaccineEquity = async () => {
             {
                 const rows = dataset.filter(d=>d.REGION===r);
                 const REGION = r.replace(/ County/,'');
-                const LATEST_ADMIN_DATE = "02-09-2021"; //todayDateString; //TODO: Pull this from data
+                const LATEST_ADMIN_DATE = rows.length ? rows[0].LATEST_ADMIN_DATE : null;
 
                 const path = `${path_prefix+REGION.toLowerCase().replace(/ /g,'')}.json`;
                 const data = rows.map(x=>({

@@ -7,7 +7,8 @@ GB as (
   select
     RECIP_SEX "CATEGORY",
     ADMIN_ADDRESS_COUNTY "REGION",
-    count(distinct RECIP_ID) "ADMIN_COUNT"
+    count(distinct RECIP_ID) "ADMIN_COUNT",
+    MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
       CA_VACCINE.VW_TAB_INT_ALL
   where
@@ -19,18 +20,20 @@ GB as (
 TA as (
   select
     REGION,
-    SUM(ADMIN_COUNT) "REGION_TOTAL"
+    SUM(ADMIN_COUNT) "REGION_TOTAL",
+    MAX(LATEST_ADMIN_DATE) "LATEST_ADMIN_DATE"
   from
       GB
   group by
       REGION
 ),
 BD as (
-  select 
+  select
+      TA.LATEST_ADMIN_DATE,
+      TA.REGION_TOTAL,
       GB.REGION,
-      CATEGORY,
-      ADMIN_COUNT,
-      REGION_TOTAL
+      GB.CATEGORY,
+      GB.ADMIN_COUNT
   from
       GB
   join
@@ -39,7 +42,9 @@ BD as (
 )
 
 select
-    *,
+    LATEST_ADMIN_DATE,
+    REGION,
+    CATEGORY,
     ADMIN_COUNT/REGION_TOTAL "METRIC_VALUE"
 from (
   select 
@@ -48,11 +53,12 @@ from (
       BD
 
   union
-  select 
+  select
+      MAX(BD.LATEST_ADMIN_DATE),
+      SUM(BD.REGION_TOTAL),
       'California',
       BD.CATEGORY,
-      SUM(BD.ADMIN_COUNT),
-      SUM(BD.REGION_TOTAL)
+      SUM(BD.ADMIN_COUNT)
   from
       BD
   group by
