@@ -3,14 +3,13 @@
 --   by county(REGION) + 'California'
 --   by age(CATEGORY) (0-17,18-49,50-64/65+)
 with
-ranges as (
-    select
-        '0-17' as "NAME",
-        0 as "RMIN",
-        17 as "RMAX"
-  union select '18-49',18,49
-  union select '50-64',50,64
-  union select '65+',65,999
+ranges as (select * from 
+  (values 
+   ('0-17', 0,  17), 
+   ('18-49',18, 49),
+   ('50-64',50, 64),
+   ('65+',  65, 999)
+  ) as foo (NAME, RMIN, RMAX)
 ),
 GB as ( --Master list of corrected data grouped by region/category
   select
