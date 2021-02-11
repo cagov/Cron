@@ -16,7 +16,7 @@ const doTranslationPrUpdate = async masterbranch => {
     const Prs = (await gitRepo.listPullRequests(
         {
             base : masterbranch,
-            direction : 'asc'
+            direction : 'desc' //Newest ones first
         }
         ))
         .data
@@ -38,16 +38,13 @@ const doTranslationPrUpdate = async masterbranch => {
         //limit file access to a single folder with 'modified' status only.
         const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
 
-        if (pass && fileaccessok && compare && compare.status !== 'diverged') {
+        if (pass && fileaccessok) {
             //Approve the PR
             await gitRepo.mergePullRequest(pr.number,{
                 merge_method: 'squash'
             });
 
             await gitRepo.deleteRef(`heads/${pr.head.ref}`);
-        } else {
-            //If the oldest PR does not pass, halt processing.
-            return;
         }
     }
 };
