@@ -145,10 +145,10 @@ const getData = async () => {
                 ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS : rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS
             },
             vaccinations: {
-                DATE : rowVaccines.REPORT_DATE,
-                DOSES_ADMINISTERED : rowVaccines.DAILY_CHANGE,
-                CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMULATIVE_TOTAL,
-                PCT_INCREASE_FROM_PRIOR_DAY : rowVaccines.PERCENT_DAILY
+                DATE : rowHospitals.SF_LOAD_TIMESTAMP,
+                DOSES_ADMINISTERED : rowVaccines.DOSES_ADMINISTERED,
+                CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMMULATIVE_DAILY_DOSES_ADMINISTERED,
+                PCT_INCREASE_FROM_PRIOR_DAY : rowVaccines.PCT_INCREASE_FROM_PRIOR_DAY
             }
         }
     };
