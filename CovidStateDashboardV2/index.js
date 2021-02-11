@@ -9,14 +9,15 @@ module.exports = async function (context, myTimer) {
   try {
     await slackBotChatPost(debugChannel,`${appName} (Every 30 mins from 10am to 1:30pm)`);
 
-    //turning the whole thing off until it's fixed
     const PrResult = await doCovidStateDashboarV2();
 
-    await slackBotChatPost(debugChannel,`${appName} finished`);
-
     if(PrResult) {
-      await slackBotChatPost(notifyChannel,`Daily stats deployed\n${PrResult.html_url}`);
+      const prMessage = `Daily stats deployed\n${PrResult.html_url}`;
+      await slackBotChatPost(debugChannel,prMessage);
+      await slackBotChatPost(notifyChannel,prMessage);
     }
+
+    await slackBotChatPost(debugChannel,`${appName} finished`);
   } catch (e) {
     await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
   }
