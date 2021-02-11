@@ -24,27 +24,31 @@ const doTranslationPrUpdate = async masterbranch => {
             !p.draft //ignore drafts
             &&p.labels.some(s=>s.name===labelFilter) //require the 'Translated Content' label
         );
-    for (const pr of Prs) {
-        //Grab all the checks running on this PR
-        const checks = (await gitRepo._request('GET',`/repos/${gitRepo.__fullname}/commits/${pr.head.sha}/check-runs`)).data;
-        const pass = checks.check_runs.every(x=>x && x.status==='completed' && x.conclusion==='success');
+    for (const prlist of Prs) {
+        //get the full pr detail
+        const pr = (await gitRepo.getPullRequest(prlist.number)).data;
+        if (pr.mergeable) {
+            //Grab all the checks running on this PR
+            const checks = (await gitRepo._request('GET',`/repos/${gitRepo.__fullname}/commits/${pr.head.sha}/check-runs`)).data;
+            const pass = checks.check_runs.every(x=>x && x.status==='completed' && x.conclusion==='success');
 
-        //compare docs...
-        //https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#compare-two-commits
-        //example
-        //https://api.github.com/repos/cagov/covid19/compare/master...avantpage_translation_symptoms-and-risks_98289254
-        const compare = (await gitRepo.compareBranches(masterbranch,pr.head.sha)).data;
+            //compare docs...
+            //https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#compare-two-commits
+            //example
+            //https://api.github.com/repos/cagov/covid19/compare/master...avantpage_translation_symptoms-and-risks_98289254
+            const compare = (await gitRepo.compareBranches(masterbranch,pr.head.sha)).data;
 
-        //limit file access to a single folder with 'modified' status only.
-        const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
+            //limit file access to a single folder with 'modified' status only.
+            const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
 
-        if (pass && fileaccessok) {
-            //Approve the PR
-            await gitRepo.mergePullRequest(pr.number,{
-                merge_method: 'squash'
-            });
+            if (pass && fileaccessok) {
+                //Approve the PR
+                await gitRepo.mergePullRequest(pr.number,{
+                    merge_method: 'squash'
+                });
 
-            await gitRepo.deleteRef(`heads/${pr.head.ref}`);
+                await gitRepo.deleteRef(`heads/${pr.head.ref}`);
+            }
         }
     }
 };
