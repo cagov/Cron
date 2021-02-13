@@ -75,11 +75,11 @@ const doCovidStateDashboarV2 = async () => {
 };
 
 /**
- * Throws an exception if any of the objects keys are null
+ * Throws an exception if any of the objects keys are null or undefined
  * @param {{}} targetObject
  */
 const noNulls = targetObject => {
-    const nullObjectKey = Object.keys(targetObject).find(k=>targetObject[k]===null);
+    const nullObjectKey = Object.keys(targetObject).find(k=>targetObject[k] === null || targetObject[k] === undefined);
     if (nullObjectKey) {
         throw new Error(`Object attribute is null -> ${nullObjectKey}`);
     }
