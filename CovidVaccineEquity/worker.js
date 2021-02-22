@@ -41,6 +41,14 @@ const doCovidVaccineEquity = async () => {
     };
 
     const customAddDatsetToTree = (dataset, path_prefix, tree, sortMap) => {
+        const sortMapStrings = sortMap.map(x=>x.FROM||x.CATEGORY);
+
+        //Make sure at least some of the data has the expected CATEGORIES
+        const missingCat = sortMapStrings.find(s=>!dataset.some(m=>m.CATEGORY===s));
+        if(missingCat) {
+            throw new Error(`missing expected sortmap CATEGORY - "${missingCat}". Dataset - ${path_prefix}`);
+        }
+
         const regions = dataset
             .map(x=>x.REGION)
             .filter((value, index, self) => 
@@ -58,29 +66,25 @@ const doCovidVaccineEquity = async () => {
                     METRIC_VALUE:x.METRIC_VALUE
                 }));
 
-                if(sortMap) {
-                    const sortMapA = sortMap.map(x=>x.FROM||x.CATEGORY);
-
-                    //Add 0s for missing mapped values
-                    sortMapA
-                        .filter(a=>!data.some(s=>s.CATEGORY===a))
-                        .forEach(CATEGORY=>{
-                            data.push({CATEGORY,METRIC_VALUE:0});
-                        });
-
-                    const sortFunction = (a,b) => sortMapA.indexOf(a.CATEGORY)-sortMapA.indexOf(b.CATEGORY);
-                    data.sort(sortFunction);
-
-                    data.forEach(x=>{
-                        const replacementIndex = sortMapA.indexOf(x.CATEGORY);
-
-                        if (replacementIndex===-1) {
-                            console.error(`missing sortmap CATEGORY - "${x.CATEGORY}".\nFile - ${path_prefix}`);
-                        } else {
-                            x.CATEGORY = sortMap[replacementIndex].CATEGORY;
-                        }
+                //Add 0s for missing mapped values
+                sortMapStrings
+                    .filter(a=>!data.some(s=>s.CATEGORY===a))
+                    .forEach(CATEGORY=>{
+                        data.push({CATEGORY,METRIC_VALUE:0});
                     });
-                }
+
+                const sortFunction = (a,b) => sortMapStrings.indexOf(a.CATEGORY)-sortMapStrings.indexOf(b.CATEGORY);
+                data.sort(sortFunction);
+
+                data.forEach(x=>{
+                    const replacementIndex = sortMapStrings.indexOf(x.CATEGORY);
+
+                    if (replacementIndex===-1) {
+                        throw new Error(`unexpected sortmap CATEGORY - "${x.CATEGORY}". File - ${path}`);
+                    } else {
+                        x.CATEGORY = sortMap[replacementIndex].CATEGORY;
+                    }
+                });
 
                 const result = {
                     meta: {
@@ -90,7 +94,7 @@ const doCovidVaccineEquity = async () => {
                     data
                 };
 
-                tree.push(getTreeValue(path,result));
+                tree.push(getTreeValue(`${targetPath}${path}`,result));
             }
             );
     };
@@ -166,9 +170,9 @@ const doCovidVaccineEquity = async () => {
         }
     ];
 
-    customAddDatsetToTree(allData.vaccines_by_age,`${targetPath}age/vaccines_by_age_`,newTree,sortmap_Age);
-    customAddDatsetToTree(allData.vaccines_by_gender,`${targetPath}gender/vaccines_by_gender_`,newTree,sortmap_Gender);
-    customAddDatsetToTree(allData.vaccines_by_race_eth,`${targetPath}race-ethnicity/vaccines_by_race_ethnicity_`,newTree,sortMap_Race);
+    customAddDatsetToTree(allData.vaccines_by_age,`age/vaccines_by_age_`,newTree,sortmap_Age);
+    customAddDatsetToTree(allData.vaccines_by_gender,`gender/vaccines_by_gender_`,newTree,sortmap_Gender);
+    customAddDatsetToTree(allData.vaccines_by_race_eth,`race-ethnicity/vaccines_by_race_ethnicity_`,newTree,sortMap_Race);
 
     //function to return a new branch if the tree has changes
     const branchIfChanged = async (tree, branch, commitName) => {
