@@ -72,7 +72,13 @@ const doCovidVaccineEquity = async () => {
                     data.sort(sortFunction);
 
                     data.forEach(x=>{
-                        x.CATEGORY = sortMap[sortMapA.indexOf(x.CATEGORY)].CATEGORY;
+                        const replacementIndex = sortMapA.indexOf(x.CATEGORY);
+
+                        if (replacementIndex===-1) {
+                            console.error(`missing sortmap CATEGORY - "${x.CATEGORY}".\nFile - ${path_prefix}`);
+                        } else {
+                            x.CATEGORY = sortMap[replacementIndex].CATEGORY;
+                        }
                     });
                 }
 
@@ -121,6 +127,9 @@ const doCovidVaccineEquity = async () => {
         {
             CATEGORY: "Other",
             FROM: "Other Race"
+        },
+        {
+            CATEGORY: "Unable to report due to policy/law"
         },
         {
             CATEGORY: "Unknown"
