@@ -1,0 +1,136 @@
+with groupings as (select * from 
+  (values 
+   (1, 'RACE_ETHNICITY', 'PERCENT_CA_POPULATION'), 
+   (2, 'RACE_ETHNICITY', 'CASE_PERCENTAGE'),
+   (3, 'RACE_ETHNICITY', 'DEATH_PERCENTAGE'),
+   (4, 'GENDER', 'PERCENT_CA_POPULATION'), 
+   (5, 'GENDER', 'CASE_PERCENTAGE'),
+   (6, 'GENDER', 'DEATH_PERCENTAGE'),
+   (7, 'AGE', 'PERCENT_CA_POPULATION'),
+   (8, 'AGE', 'CASE_PERCENTAGE'),
+   (9, 'AGE', 'DEATH_PERCENTAGE')
+  ) as foo (QUERY_ID, DATASET, SUBJECT)
+)
+
+select 
+    u.DATE,
+    g.SUBJECT,
+    g.DATASET,
+    u.CATEGORY,
+    u.METRIC_VALUE
+from (
+select
+    1 "QUERY_ID",
+    RACE_ETHNICITY "CATEGORY",
+    PERCENT_CA_POPULATION "METRIC_VALUE",
+    DATE
+from
+    COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL
+where
+    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL)
+
+union
+
+select
+    2,
+    RACE_ETHNICITY,
+    CASE_PERCENTAGE,
+    DATE
+from
+    COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL
+where
+    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL)
+    
+union
+    
+select
+    3,
+    RACE_ETHNICITY,
+    DEATH_PERCENTAGE,
+    DATE
+from
+    COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL
+where
+    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL)
+    
+union
+
+select
+    4,
+    SEX,
+    CA_PERCENT,
+    DATE
+from
+    COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL
+where
+    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL)
+    
+union
+
+select
+    5,
+    SEX,
+    CASE_PERCENT,
+    DATE
+from
+    COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL
+where
+    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL)
+    
+union
+
+select
+    6,
+    SEX,
+    DEATHS_PERCENT,
+    DATE
+from
+    COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL
+where
+    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL)
+    
+union
+    
+select
+    7,
+    AGE_GROUP,
+    CA_PERCENT,
+    DATE
+from
+    COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL
+where
+    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL)
+    
+union
+    
+select
+    8,
+    AGE_GROUP,
+    CASE_PERCENT,
+    DATE
+from
+    COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL
+where
+    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL)
+    
+union
+    
+select
+    9,
+    AGE_GROUP,
+    DEATHS_PERCENT,
+    DATE
+from
+    COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL
+where
+    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL)
+    
+) u
+join
+    groupings g
+    on g.QUERY_ID = u.QUERY_ID
+order by
+    u.DATE,
+    g.SUBJECT,
+    g.DATASET,
+    u.CATEGORY

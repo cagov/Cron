@@ -89,7 +89,8 @@ const getData = async () => {
     const statResults = await queryDataset(
         {
             metrics: getSQL('CDT_COVID/Metrics'),
-            hospitalizations : getSQL('CDT_COVID/Hospitalizations')
+            hospitalizations : getSQL('CDT_COVID/Hospitalizations'),
+            infections_by_group : getSQL('CDT_COVID/v2-state-dashboard-infections-by-group')
         }
         ,process.env["SNOWFLAKE_CDT_COVID"]
     );
@@ -101,6 +102,12 @@ const getData = async () => {
     const row = statResults.metrics[0];
     const rowHospitals = statResults.hospitalizations[0];
     const rowVaccines = resultsVaccines[0].VACCINE_KPI_JSON;
+
+
+    const arrayResultMap = m => ({CATEGORY:m.CATEGORY,METRIC_VALUE:m.METRIC_VALUE});
+    const byGender = statResults.infections_by_group.filter(x=>x.DATASET==='GENDER');
+    const byAge = statResults.infections_by_group.filter(x=>x.DATASET==='AGE');
+    const byRaceAndEthnicity = statResults.infections_by_group.filter(x=>x.DATASET==='RACE_ETHNICITY');
 
     const mappedResults = {
         data: {
@@ -160,6 +167,21 @@ const getData = async () => {
                 DOSES_ADMINISTERED : rowVaccines.DOSES_ADMINISTERED,
                 CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMMULATIVE_DAILY_DOSES_ADMINISTERED,
                 PCT_INCREASE_FROM_PRIOR_DAY : rowVaccines.PCT_INCREASE_FROM_PRIOR_DAY
+            },
+            by_race_and_ethnicity: {
+                cases: byRaceAndEthnicity.filter(x=>x.SUBJECT==='CASE_PERCENTAGE').map(arrayResultMap),
+                deaths: byRaceAndEthnicity.filter(x=>x.SUBJECT==='DEATH_PERCENTAGE').map(arrayResultMap),
+                population: byRaceAndEthnicity.filter(x=>x.SUBJECT==='PERCENT_CA_POPULATION').map(arrayResultMap)
+            },
+            by_gender: {
+                cases: byGender.filter(x=>x.SUBJECT==='CASE_PERCENTAGE').map(arrayResultMap),
+                deaths: byGender.filter(x=>x.SUBJECT==='DEATH_PERCENTAGE').map(arrayResultMap),
+                population: byGender.filter(x=>x.SUBJECT==='PERCENT_CA_POPULATION').map(arrayResultMap)
+            },
+            by_age: {
+                cases: byAge.filter(x=>x.SUBJECT==='CASE_PERCENTAGE').map(arrayResultMap),
+                deaths: byAge.filter(x=>x.SUBJECT==='DEATH_PERCENTAGE').map(arrayResultMap),
+                population: byAge.filter(x=>x.SUBJECT==='PERCENT_CA_POPULATION').map(arrayResultMap)
             }
         }
     };
