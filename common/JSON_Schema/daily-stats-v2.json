@@ -1,0 +1,84 @@
+{
+  "definitions": {
+    "category_metric_value_array": {
+      "id": "#category_metric_value_array",
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "additionalProperties": false,
+        "required": [
+          "CATEGORY",
+          "METRIC_VALUE"
+        ],
+        "properties": {
+          "CATEGORY": {
+            "type": "string",
+            "enum": [
+              "American Indian or Alaska Native",
+              "Asian",
+              "Black",
+              "Latino",
+              "Multi-Race",
+              "Native Hawaiian and other Pacific Islander",
+              "Other",
+              "White",
+              "Female",
+              "Male",
+              "Unknown",
+              "0-17",
+              "18-49",
+              "50-64",
+              "65+",
+              "Missing"
+            ]
+          },
+          "METRIC_VALUE": {
+            "type": "number",
+            "maximum": 100,
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "cases-deaths-pop": {
+      "id": "#cases-deaths-pop",
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "required": true,
+          "$ref": "#category_metric_value_array"
+        },
+        "deaths": {
+          "required": true,
+          "$ref": "#category_metric_value_array"
+        },
+        "population": {
+          "required": true,
+          "$ref": "#category_metric_value_array"
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "required": true,
+      "additionalProperties": true,
+      "properties": {
+        "by_gender": {
+          "required": true,
+          "$ref": "#cases-deaths-pop"
+        },
+        "by_age": {
+          "required": true,
+          "$ref": "#cases-deaths-pop"
+        },
+        "by_race_and_ethnicity": {
+          "required": true,
+          "$ref": "#cases-deaths-pop"
+        }
+      }
+    }
+  }
+}

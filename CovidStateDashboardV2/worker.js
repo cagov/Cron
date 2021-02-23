@@ -1,6 +1,11 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const targetFileName = 'daily-stats-v2.json';
 const targetPath = "data/";
+const Validator = require('jsonschema').Validator;
+const outputSchema = require('../common/JSON_Schema/daily-stats-v2.json');
+
+//https://json-schema.org/understanding-json-schema/
+//https://www.jsonschemavalidator.net/
 
 const GitHub = require('github-api');
 const githubUser = 'cagov';
@@ -192,6 +197,9 @@ const getData = async () => {
     noNulls(mappedResults.data.hospitalizations);
     noNulls(mappedResults.data.icu);
     noNulls(mappedResults.data.vaccinations);
+
+    const v = new Validator();
+    v.validate(mappedResults, outputSchema, {throwError:true});
 
     return mappedResults;
 };
