@@ -15,7 +15,7 @@
           },
           "METRIC_VALUE": {
             "type": "number",
-            "maximum": 50,
+            "maximum": 100,
             "minimum": 0
           }
         }
