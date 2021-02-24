@@ -197,12 +197,15 @@ const getData = async () => {
     noNulls(mappedResults.data.icu);
     noNulls(mappedResults.data.vaccinations);
 
+    const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
+    const schemaJSON = require(schemaFileName);
+    const v = new Validator();
+    const v2result = v.validate(mappedResults,schemaJSON,{nestedErrors: true});
 
-    const validator = require('is-my-json-valid/require');
-    const validate = validator(schemaFileName,{verbose:true});
+    if (v2result.errors.length) {
+        const err = v2result.errors[0];
 
-    if(!validate(mappedResults)) {
-        throw new Error({ errors: validate.errors });
+        throw new Error(`Bad JSON - '${err.instance}' ${err.message}. Location - ${err.path.toString()}`);
     }
 
     return mappedResults;
