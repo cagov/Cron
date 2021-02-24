@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
+
 
 /**
  * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
@@ -15,7 +15,8 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
     fs.readdirSync(`${__dirname}/${path}`)
       .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}));
 
-  const v = new Validator();
+      const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
+      const v = new Validator();
 
   const schemaJSON = require(schemafilePath);
 

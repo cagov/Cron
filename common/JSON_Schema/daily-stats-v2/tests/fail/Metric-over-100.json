@@ -264,12 +264,12 @@
           "METRIC_VALUE": 18.4
         },
         {
-          "CATEGORY": "66+",
+          "CATEGORY": "65+",
           "METRIC_VALUE": 15.6
         },
         {
           "CATEGORY": "Missing",
-          "METRIC_VALUE": 0
+          "METRIC_VALUE": 9999
         }
       ]
     }
