@@ -200,7 +200,7 @@ const getData = async () => {
     const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
     const schemaJSON = require(schemaFileName);
     const v = new Validator();
-    const v2result = v.validate(mappedResults,schemaJSON,{nestedErrors: true});
+    const v2result = v.validate(mappedResults,schemaJSON);
 
     if (v2result.errors.length) {
         const err = v2result.errors[0];
