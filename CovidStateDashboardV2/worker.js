@@ -1,10 +1,10 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
+const { validateJSON } = require('../common/schemaTester');
 const targetFileName = 'daily-stats-v2.json';
 const targetPath = "data/";
-const schemaFileName = "../common/JSON_Schema/daily-stats-v2-schema.json";
-const schemaTestGoodFilePath = "../common/JSON_Schema/daily-stats-v2-test-good.json";
-const schemaTestBadFilePath = "../common/JSON_Schema/daily-stats-v2-test-bad.json";
-
+const schemaFileName = "../JSON_Schema/daily-stats-v2/schema.json";
+const schemaTestGoodFilePath = "../JSON_Schema/daily-stats-v2/tests/pass/";
+const schemaTestBadFilePath = "../JSON_Schema/daily-stats-v2/tests/fail/";
 
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
@@ -27,6 +27,9 @@ const roundNumber = (number, fractionDigits=3) => {
 
 //Check to see if we need stats update PRs, make them if we do.
 const doCovidStateDashboarV2 = async () => {
+    validateJSON('daily-stats-v2.json failed validation', null,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
+
+
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
 
@@ -210,41 +213,3 @@ throw new Error('still working on it...');
 module.exports = {
     doCovidStateDashboarV2
 };
-
-
-const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFilePath, testBadFilePath) => {
-    const validateJSON_getMessage = err => `'${err.instance}' ${err.message}. Location - ${err.path.toString()}`;
-    
-    const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
-    const v = new Validator();
-
-    const schemaJSON = require(schemafilePath);
-
-    if(testGoodFilePath) {
-        const testGoodJson = require(testGoodFilePath);
-
-        const r = v.validate(testGoodJson,schemaJSON);
-
-        if (!r.valid) {
-            throw new Error(`Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${testGoodFilePath}`);
-        }
-    }
-
-    if(testBadFilePath) {
-        const testBadJson = require(testBadFilePath);
-
-        const r = v.validate(testBadJson,schemaJSON);
-
-        if (r.valid) {
-            throw new Error(`Bad JSON test is not 'Bad' - ${testBadFilePath}`);
-        }
-    }
-
-    const primaryResult = v.validate(targetJSON,schemaJSON);
-
-    if (!primaryResult.valid) {
-        throw new Error(`${errorMessagePrefix} - ${validateJSON_getMessage(primaryResult.errors[0])}`);
-    }
-};
-
-
