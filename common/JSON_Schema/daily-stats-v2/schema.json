@@ -3,8 +3,11 @@
     "category_metric_value_array": {
       "type": "array",
       "uniqueItems": true,
+      "minItems": 3,
+      "maxItems": 8,
       "items": {
         "additionalProperties": false,
+
         "required": [
           "CATEGORY",
           "METRIC_VALUE"
@@ -40,21 +43,6 @@
           }
         }
       }
-    },
-    "gender-list": {
-      "$ref": "#/definitions/category_metric_value_array",
-      "minItems": 3,
-      "maxItems": 3
-    },
-    "age-list": {
-      "$ref": "#/definitions/category_metric_value_array",
-      "minItems": 5,
-      "maxItems": 5
-    },
-    "race_and_ethnicity-list": {
-      "$ref": "#/definitions/category_metric_value_array",
-      "minItems": 1,
-      "maxItems": 8
     }
   },
   "additionalProperties": false,
@@ -76,13 +64,13 @@
           ],
           "properties": {
             "cases": {
-              "$ref": "#/definitions/gender-list"
+              "$ref": "#/definitions/category_metric_value_array"
             },
             "deaths": {
-              "$ref": "#/definitions/gender-list"
+              "$ref": "#/definitions/category_metric_value_array"
             },
             "population": {
-              "$ref": "#/definitions/gender-list"
+              "$ref": "#/definitions/category_metric_value_array"
             }
           }
         },
@@ -95,13 +83,13 @@
           ],
           "properties": {
             "cases": {
-              "$ref": "#/definitions/age-list"
+              "$ref": "#/definitions/category_metric_value_array"
             },
             "deaths": {
-              "$ref": "#/definitions/age-list"
+              "$ref": "#/definitions/category_metric_value_array"
             },
             "population": {
-              "$ref": "#/definitions/age-list"
+              "$ref": "#/definitions/category_metric_value_array"
             }
           }
         },
@@ -114,13 +102,13 @@
           ],
           "properties": {
             "cases": {
-              "$ref": "#/definitions/race_and_ethnicity-list"
+              "$ref": "#/definitions/category_metric_value_array"
             },
             "deaths": {
-              "$ref": "#/definitions/race_and_ethnicity-list"
+              "$ref": "#/definitions/category_metric_value_array"
             },
             "population": {
-              "$ref": "#/definitions/race_and_ethnicity-list"
+              "$ref": "#/definitions/category_metric_value_array"
             }
           }
         }
