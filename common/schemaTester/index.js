@@ -1,5 +1,7 @@
 const fs = require('fs');
 
+//https://json-schema.org/understanding-json-schema/
+//https://www.jsonschemavalidator.net/
 
 /**
  * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.

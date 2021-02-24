@@ -6,9 +6,6 @@ const schemaFileName = "../JSON_Schema/daily-stats-v2/schema.json";
 const schemaTestGoodFilePath = "../JSON_Schema/daily-stats-v2/tests/pass/";
 const schemaTestBadFilePath = "../JSON_Schema/daily-stats-v2/tests/fail/";
 
-//https://json-schema.org/understanding-json-schema/
-//https://www.jsonschemavalidator.net/
-
 const GitHub = require('github-api');
 const githubUser = 'cagov';
 const githubRepo = 'covid-static';
