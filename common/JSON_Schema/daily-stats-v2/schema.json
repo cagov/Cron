@@ -7,7 +7,6 @@
       "maxItems": 8,
       "items": {
         "additionalProperties": false,
-
         "required": [
           "CATEGORY",
           "METRIC_VALUE"
@@ -25,7 +24,7 @@
               "50-64",
               "65+",
               "Missing",
-
+              
               "American Indian or Alaska Native",
               "Asian",
               "Black",
@@ -43,6 +42,25 @@
           }
         }
       }
+    },
+    "cases_deaths_population": {
+      "additionalProperties": false,
+      "required": [
+        "cases",
+        "deaths",
+        "population"
+      ],
+      "properties": {
+        "cases": {
+          "$ref": "#/definitions/category_metric_value_array"
+        },
+        "deaths": {
+          "$ref": "#/definitions/category_metric_value_array"
+        },
+        "population": {
+          "$ref": "#/definitions/category_metric_value_array"
+        }
+      }
     }
   },
   "additionalProperties": false,
@@ -56,61 +74,13 @@
       "additionalProperties": true,
       "properties": {
         "by_gender": {
-          "additionalProperties": false,
-          "required": [
-            "cases",
-            "deaths",
-            "population"
-          ],
-          "properties": {
-            "cases": {
-              "$ref": "#/definitions/category_metric_value_array"
-            },
-            "deaths": {
-              "$ref": "#/definitions/category_metric_value_array"
-            },
-            "population": {
-              "$ref": "#/definitions/category_metric_value_array"
-            }
-          }
+          "$ref": "#/definitions/cases_deaths_population"
         },
         "by_age": {
-          "additionalProperties": false,
-          "required": [
-            "cases",
-            "deaths",
-            "population"
-          ],
-          "properties": {
-            "cases": {
-              "$ref": "#/definitions/category_metric_value_array"
-            },
-            "deaths": {
-              "$ref": "#/definitions/category_metric_value_array"
-            },
-            "population": {
-              "$ref": "#/definitions/category_metric_value_array"
-            }
-          }
+          "$ref": "#/definitions/cases_deaths_population"
         },
         "by_race_and_ethnicity": {
-          "additionalProperties": false,
-          "required": [
-            "cases",
-            "deaths",
-            "population"
-          ],
-          "properties": {
-            "cases": {
-              "$ref": "#/definitions/category_metric_value_array"
-            },
-            "deaths": {
-              "$ref": "#/definitions/category_metric_value_array"
-            },
-            "population": {
-              "$ref": "#/definitions/category_metric_value_array"
-            }
-          }
+          "$ref": "#/definitions/cases_deaths_population"
         }
       }
     }
