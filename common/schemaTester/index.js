@@ -10,7 +10,8 @@ const fs = require('fs');
  * @param {string} [testBadFilePath] Optional test data file that should fail 
  */
 const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFilePath, testBadFilePath) => {
-  const validateJSON_getMessage = err => `'${err.instance}' ${err.message}. Location - ${err.path.toString()}`;
+  const validateJSON_getMessage = err => 
+  `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
   const validateJSON_getJsonFiles = path => 
     fs.readdirSync(`${__dirname}/${path}`)
       .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}));

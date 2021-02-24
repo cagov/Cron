@@ -11,7 +11,27 @@
         ],
         "properties": {
           "CATEGORY": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "Female",
+              "Male",
+              "Unknown",
+
+              "0-17",
+              "18-49",
+              "50-64",
+              "65+",
+              "Missing",
+
+              "American Indian or Alaska Native",
+              "Asian",
+              "Black",
+              "Latino",
+              "Multi-Race",
+              "Native Hawaiian and other Pacific Islander",
+              "Other",
+              "White"
+            ]
           },
           "METRIC_VALUE": {
             "type": "number",
@@ -24,57 +44,17 @@
     "gender-list": {
       "$ref": "#/definitions/category_metric_value_array",
       "minItems": 3,
-      "maxItems": 3,
-      "items": {
-        "properties": {
-          "CATEGORY": {
-            "enum": [
-              "Female",
-              "Male",
-              "Unknown"
-            ]
-          }
-        }
-      }
+      "maxItems": 3
     },
     "age-list": {
       "$ref": "#/definitions/category_metric_value_array",
       "minItems": 5,
-      "maxItems": 5,
-      "items": {
-        "properties": {
-          "CATEGORY": {
-            "enum": [
-              "0-17",
-              "18-49",
-              "50-64",
-              "65+",
-              "xMissing"
-            ]
-          }
-        }
-      }
+      "maxItems": 5
     },
     "race_and_ethnicity-list": {
       "$ref": "#/definitions/category_metric_value_array",
-      "minItems": 8,
-      "maxItems": 8,
-      "items": {
-        "properties": {
-          "CATEGORY": {
-            "enum": [
-              "American Indian or Alaska Native",
-              "Asian",
-              "Black",
-              "Latino",
-              "Multi-Race",
-              "Native Hawaiian and other Pacific Islander",
-              "Other",
-              "White"
-            ]
-          }
-        }
-      }
+      "minItems": 1,
+      "maxItems": 8
     }
   },
   "additionalProperties": false,
