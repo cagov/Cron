@@ -1,8 +1,6 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const targetFileName = 'daily-stats-v2.json';
 const targetPath = "data/";
-const Validator = require('jsonschema').Validator;
-const outputSchema = require('../common/JSON_Schema/daily-stats-v2.json');
 
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
@@ -198,9 +196,13 @@ const getData = async () => {
     noNulls(mappedResults.data.icu);
     noNulls(mappedResults.data.vaccinations);
 
-    const v = new Validator();
-    v.validate(mappedResults, outputSchema, {throwError:true});
 
+    const validator = require('is-my-json-valid/require');
+const validate = validator('../common/JSON_Schema/daily-stats-v2.json',{verbose:true});
+//const validate = validator('../common/JSON_Schema/daily-stats-v2.json');
+
+const d = validate(mappedResults);
+console.log(validate.errors);
     return mappedResults;
 };
 

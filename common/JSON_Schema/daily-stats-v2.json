@@ -1,9 +1,7 @@
 {
   "definitions": {
     "category_metric_value_array": {
-      "id": "#category_metric_value_array",
       "type": "array",
-      "minItems": 3,
       "uniqueItems": true,
       "items": {
         "additionalProperties": false,
@@ -13,25 +11,7 @@
         ],
         "properties": {
           "CATEGORY": {
-            "type": "string",
-            "enum": [
-              "American Indian or Alaska Native",
-              "Asian",
-              "Black",
-              "Latino",
-              "Multi-Race",
-              "Native Hawaiian and other Pacific Islander",
-              "Other",
-              "White",
-              "Female",
-              "Male",
-              "Unknown",
-              "0-17",
-              "18-49",
-              "50-64",
-              "65+",
-              "Missing"
-            ]
+            "type": "string"
           },
           "METRIC_VALUE": {
             "type": "number",
@@ -41,21 +21,58 @@
         }
       }
     },
-    "cases-deaths-pop": {
-      "id": "#cases-deaths-pop",
-      "additionalProperties": false,
-      "properties": {
-        "cases": {
-          "required": true,
-          "$ref": "#category_metric_value_array"
-        },
-        "deaths": {
-          "required": true,
-          "$ref": "#category_metric_value_array"
-        },
-        "population": {
-          "required": true,
-          "$ref": "#category_metric_value_array"
+    "gender-list": {
+      "$ref": "#/definitions/category_metric_value_array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "properties": {
+          "CATEGORY": {
+            "enum": [
+              "Female",
+              "Male",
+              "Unknown"
+            ]
+          }
+        }
+      }
+    },
+    "age-list": {
+      "$ref": "#/definitions/category_metric_value_array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "properties": {
+          "CATEGORY": {
+            "enum": [
+              "0-17",
+              "18-49",
+              "50-64",
+              "65+",
+              "Missing"
+            ]
+          }
+        }
+      }
+    },
+    "race_and_ethnicity-list": {
+      "$ref": "#/definitions/category_metric_value_array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "properties": {
+          "CATEGORY": {
+            "enum": [
+              "American Indian or Alaska Native",
+              "Asian",
+              "Black",
+              "Latino",
+              "Multi-Race",
+              "Native Hawaiian and other Pacific Islander",
+              "Other",
+              "White"
+            ]
+          }
         }
       }
     }
@@ -63,20 +80,69 @@
   "additionalProperties": false,
   "properties": {
     "data": {
-      "required": true,
+      "required": [
+        "by_age",
+        "by_gender",
+        "by_race_and_ethnicity"
+      ],
       "additionalProperties": true,
       "properties": {
         "by_gender": {
-          "required": true,
-          "$ref": "#cases-deaths-pop"
+          "additionalProperties": false,
+          "required": [
+            "cases",
+            "deaths",
+            "population"
+          ],
+          "properties": {
+            "cases": {
+              "$ref": "#/definitions/gender-list"
+            },
+            "deaths": {
+              "$ref": "#/definitions/gender-list"
+            },
+            "population": {
+              "$ref": "#/definitions/gender-list"
+            }
+          }
         },
         "by_age": {
-          "required": true,
-          "$ref": "#cases-deaths-pop"
+          "additionalProperties": false,
+          "required": [
+            "cases",
+            "deaths",
+            "population"
+          ],
+          "properties": {
+            "cases": {
+              "$ref": "#/definitions/age-list"
+            },
+            "deaths": {
+              "$ref": "#/definitions/age-list"
+            },
+            "population": {
+              "$ref": "#/definitions/age-list"
+            }
+          }
         },
         "by_race_and_ethnicity": {
-          "required": true,
-          "$ref": "#cases-deaths-pop"
+          "additionalProperties": false,
+          "required": [
+            "cases",
+            "deaths",
+            "population"
+          ],
+          "properties": {
+            "cases": {
+              "$ref": "#/definitions/race_and_ethnicity-list"
+            },
+            "deaths": {
+              "$ref": "#/definitions/race_and_ethnicity-list"
+            },
+            "population": {
+              "$ref": "#/definitions/race_and_ethnicity-list"
+            }
+          }
         }
       }
     }
