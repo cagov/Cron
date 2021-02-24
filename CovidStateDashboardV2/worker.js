@@ -1,6 +1,7 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const targetFileName = 'daily-stats-v2.json';
 const targetPath = "data/";
+const schemaFileName = "../common/JSON_Schema/daily-stats-v2-schema.json";
 
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
@@ -198,11 +199,12 @@ const getData = async () => {
 
 
     const validator = require('is-my-json-valid/require');
-const validate = validator('../common/JSON_Schema/daily-stats-v2.json',{verbose:true});
-//const validate = validator('../common/JSON_Schema/daily-stats-v2.json');
+    const validate = validator(schemaFileName,{verbose:true});
 
-const d = validate(mappedResults);
-console.log(validate.errors);
+    if(!validate(mappedResults)) {
+        throw new Error({ errors: validate.errors });
+    }
+
     return mappedResults;
 };
 
