@@ -6,6 +6,7 @@ with
 GB as ( --Master list of corrected data grouped by region/category
   select
     case RACE_ETH when 'Unable to report due to policy/law' then 'Unknown' else coalesce(RACE_ETH,'Unknown') end "CATEGORY",
+    --coalesce(RACE_ETH,'Unknown') "CATEGORY",
     case when MIXED_COUNTY in
         ('Alameda','Alpine','Amador','Butte','Calaveras','Colusa','Contra Costa','Del Norte','El Dorado','Fresno','Glenn','Humboldt','Imperial','Inyo','Kern','Kings','Lake','Lassen','Los Angeles','Madera','Marin','Mariposa','Mendocino','Merced','Modoc','Mono','Monterey','Napa','Nevada','Orange','Placer','Plumas','Riverside','Sacramento','San Benito','San Bernardino','San Diego','San Francisco','San Joaquin','San Luis Obispo','San Mateo','Santa Barbara','Santa Clara','Santa Cruz','Shasta','Sierra','Siskiyou','Solano','Sonoma','Stanislaus','Sutter','Tehama','Trinity','Tulare','Tuolumne','Ventura','Yolo','Yuba')
     then MIXED_COUNTY else 'Unknown' end "REGION",
@@ -13,7 +14,19 @@ GB as ( --Master list of corrected data grouped by region/category
     count(distinct recip_id) "ADMIN_COUNT", --For total people
     MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
-    CA_VACCINE.tab_int_test
+    (select 
+     *,
+        replace( 
+            iff(RECIP_ADDRESS_STATE = 'CA',
+                iff(RECIP_ADDRESS_COUNTY ='Unknown' , 
+                   iff(ADMIN_ADDRESS_COUNTY is null,
+                       'Unknown'
+                   ,ADMIN_ADDRESS_COUNTY)
+               ,RECIP_ADDRESS_COUNTY)
+            ,'Outside California')
+        ,' County') 
+       AS Mixed_county
+    from CA_VACCINE_UAT.VW_TAB_INT_ALL) foo
   where
     RECIP_ID IS NOT NULL
   group by
