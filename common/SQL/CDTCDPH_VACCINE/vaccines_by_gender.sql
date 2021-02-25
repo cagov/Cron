@@ -13,7 +13,19 @@ GB as ( --Master list of corrected data grouped by region/category
     count(distinct recip_id) "ADMIN_COUNT", --For total people
     MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
-    CA_VACCINE.tab_int_test
+    (select 
+     *,
+        replace( 
+            iff(RECIP_ADDRESS_STATE = 'CA',
+                iff(RECIP_ADDRESS_COUNTY ='Unknown' , 
+                   iff(ADMIN_ADDRESS_COUNTY is null,
+                       'Unknown'
+                   ,ADMIN_ADDRESS_COUNTY)
+               ,RECIP_ADDRESS_COUNTY)
+            ,'Outside California')
+        ,' County') 
+       AS Mixed_county
+    from CA_VACCINE.VW_TAB_INT_ALL) foo
   where
     RECIP_ID IS NOT NULL
   group by
