@@ -133,9 +133,6 @@ const doCovidVaccineEquity = async () => {
             FROM: "Other Race"
         },
         {
-            CATEGORY: "Unable to report due to policy/law"
-        },
-        {
             CATEGORY: "Unknown"
         }
     ];
