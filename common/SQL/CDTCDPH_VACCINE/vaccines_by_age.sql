@@ -33,7 +33,7 @@ GB as ( --Master list of corrected data grouped by region/category
             ,'Outside California')
         ,' County') 
        AS Mixed_county
-    from CA_VACCINE_UAT.VW_TAB_INT_ALL) foo
+    from CA_VACCINE.VW_TAB_INT_ALL) foo
   left outer join
     ranges
     on RMIN<=DATEDIFF('yyyy',DATE(RECIP_DOB),GETDATE())
