@@ -61,18 +61,116 @@
           "$ref": "#/definitions/category_metric_value_array"
         }
       }
+    },
+    "date-YYYY-MM-DD":{
+      "type":"string",
+      "pattern":"^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "number-new-people":{
+      "type": "number",
+      "minimum": 0,
+      "maximum": 99999999
     }
   },
   "additionalProperties": false,
   "properties": {
     "data": {
       "required": [
+        "cases",
+        "deaths",
+        "tests",
+        "hospitalizations",
+        "icu",
+        "vaccinations",
         "by_age",
         "by_gender",
         "by_race_and_ethnicity"
       ],
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
+        "cases": {
+          "required": [
+            "DATE",
+            "LATEST_TOTAL_CONFIRMED_CASES",
+            "NEWLY_REPORTED_CASES",
+            "LATEST_PCT_CH_CASES_REPORTED_1_DAY",
+            "LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS",
+            "LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS",
+            "NEWLY_REPORTED_CASES_LAST_7_DAYS"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "LATEST_TOTAL_CONFIRMED_CASES":{
+              "type": "number",
+              "minimum": 999999,
+              "maximum": 99999999
+            },
+            "NEWLY_REPORTED_CASES":{
+              "type": "number",
+              "minimum": 0,
+              "maximum": 99999999
+            },
+            "LATEST_PCT_CH_CASES_REPORTED_1_DAY":{
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS":{
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS":{
+              "type":"number"
+            },
+            "NEWLY_REPORTED_CASES_LAST_7_DAYS":{
+              "$ref": "#/definitions/number-new-people"
+            }
+          }
+        },
+        "deaths": {
+          "required": [
+            "DATE",
+            "LATEST_TOTAL_CONFIRMED_DEATHS",
+            "NEWLY_REPORTED_DEATHS",
+            "LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS",
+            "LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS",
+            "LATEST_PCT_CH_DEATHS_REPORTED_1_DAY"
+          ],
+          "properties": {
+            "DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "LATEST_TOTAL_CONFIRMED_DEATHS":{
+              "type": "number",
+              "minimum": 9999,
+              "maximum": 99999999
+            },
+            "NEWLY_REPORTED_DEATHS":{
+              "$ref": "#/definitions/number-new-people"
+            },
+            "LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS":{
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS":{
+              "type": "number"
+            },
+            "LATEST_PCT_CH_DEATHS_REPORTED_1_DAY":{
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          }
+        },
+        "tests": {},
+        "hospitalizations": {},
+        "icu": {},
+        "vaccinations": {},
         "by_gender": {
           "$ref": "#/definitions/cases_deaths_population"
         },
