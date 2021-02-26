@@ -1,0 +1,267 @@
+{
+  "definitions": {
+    "date-YYYY-MM-DD":{
+      "type":"string",
+      "pattern":"^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "integer-zero-to-everyone":{
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 99999999
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "required": [
+        "cases",
+        "deaths",
+        "tests",
+        "hospitalizations",
+        "icu",
+        "vaccinations"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "required": [
+            "DATE",
+            "LATEST_TOTAL_CONFIRMED_CASES",
+            "NEWLY_REPORTED_CASES",
+            "LATEST_PCT_CH_CASES_REPORTED_1_DAY",
+            "LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS",
+            "LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS",
+            "NEWLY_REPORTED_CASES_LAST_7_DAYS"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "LATEST_TOTAL_CONFIRMED_CASES":{
+              "type": "integer",
+              "minimum": 999999,
+              "maximum": 99999999
+            },
+            "NEWLY_REPORTED_CASES":{
+              "$ref": "#/definitions/integer-zero-to-everyone"
+            },
+            "LATEST_PCT_CH_CASES_REPORTED_1_DAY":{
+              "type": "number"
+            },
+            "LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS":{
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS":{
+              "type":"number"
+            },
+            "NEWLY_REPORTED_CASES_LAST_7_DAYS":{
+              "$ref": "#/definitions/integer-zero-to-everyone"
+            }
+          }
+        },
+        "deaths": {
+          "required": [
+            "DATE",
+            "LATEST_TOTAL_CONFIRMED_DEATHS",
+            "NEWLY_REPORTED_DEATHS",
+            "LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS",
+            "LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS",
+            "LATEST_PCT_CH_DEATHS_REPORTED_1_DAY"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "LATEST_TOTAL_CONFIRMED_DEATHS":{
+              "type": "integer",
+              "minimum": 9999,
+              "maximum": 99999999
+            },
+            "NEWLY_REPORTED_DEATHS":{
+              "$ref": "#/definitions/integer-zero-to-everyone"
+            },
+            "LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS":{
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS":{
+              "type": "number"
+            },
+            "LATEST_PCT_CH_DEATHS_REPORTED_1_DAY":{
+              "type": "number"
+            }
+          }
+        },
+        "tests": {
+          "required":[
+            "DATE",
+            "LATEST_TOTAL_TESTS_PERFORMED",
+            "LATEST_PCT_CH_TOTAL_TESTS_REPORTED_1_DAY",
+            "LATEST_CONFIDENT_AVG_TOTAL_TESTS_7_DAYS",
+            "NEWLY_REPORTED_TESTS",
+            "NEWLY_REPORTED_TESTS_LAST_7_DAYS",
+            "LATEST_CONFIDENT_POSITIVITY_RATE_7_DAYS",
+            "LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS",
+            "LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS",
+            "LATEST_CONFIDENT_INCREASE_POSITIVITY_RATE_7_DAYS"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "LATEST_TOTAL_TESTS_PERFORMED":{
+              "type": "integer",
+              "minimum": 9999,
+              "maximum": 99999999
+            },
+            "LATEST_PCT_CH_TOTAL_TESTS_REPORTED_1_DAY":{
+              "type": "number"
+            },
+            "LATEST_CONFIDENT_AVG_TOTAL_TESTS_7_DAYS":{
+              "type": "number",
+              "minimum": 0,
+              "maximum": 99999999
+            },
+            "NEWLY_REPORTED_TESTS":{
+              "$ref": "#/definitions/integer-zero-to-everyone"
+            },
+            "NEWLY_REPORTED_TESTS_LAST_7_DAYS":{
+              "$ref": "#/definitions/integer-zero-to-everyone"
+            },
+            "LATEST_CONFIDENT_POSITIVITY_RATE_7_DAYS":{
+              "type": "number"
+            },
+            "LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS":{
+              "type": "number"
+            },
+            "LATEST_CONFIDENT_INCREASE_DEATH_RATE_PER_100K_7_DAYS":{
+              "type": "number"
+            },
+            "LATEST_CONFIDENT_INCREASE_POSITIVITY_RATE_7_DAYS":{
+              "type": "number"
+            }
+          }
+        },
+        "hospitalizations": {
+          "required":[
+            "DATE",
+            "HOSPITALIZED_COVID_CONFIRMED_PATIENTS",
+            "HOSPITALIZED_COVID_CONFIRMED_PATIENTS_DAILY",
+            "HOSPITALIZED_COVID_CONFIRMED_PATIENTS_DAILYPCTCHG",
+            "HOSPITALIZED_COVID_CONFIRMED_PATIENTS_LAST14DAYS",
+            "HOSPITALIZED_SUSPECTED_COVID_PATIENTS",
+            "HOSPITALIZED_SUSPECTED_COVID_PATIENTS_DAILY",
+            "HOSPITALIZED_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG",
+            "HOSPITALIZED_SUSPECTED_COVID_PATIENTS_LAST14DAYS"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "HOSPITALIZED_COVID_CONFIRMED_PATIENTS":{
+              "$ref": "#/definitions/integer-zero-to-everyone"
+            },
+            "HOSPITALIZED_COVID_CONFIRMED_PATIENTS_DAILY":{
+              "type":"integer"
+            },
+            "HOSPITALIZED_COVID_CONFIRMED_PATIENTS_DAILYPCTCHG":{
+              "type":"number"
+            },
+            "HOSPITALIZED_COVID_CONFIRMED_PATIENTS_LAST14DAYS":{
+              "type":"integer"
+            },
+            "HOSPITALIZED_SUSPECTED_COVID_PATIENTS":{
+              "$ref": "#/definitions/integer-zero-to-everyone"
+            },
+            "HOSPITALIZED_SUSPECTED_COVID_PATIENTS_DAILY":{
+              "type":"integer"
+            },
+            "HOSPITALIZED_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG":{
+              "type":"number"
+            },
+            "HOSPITALIZED_SUSPECTED_COVID_PATIENTS_LAST14DAYS":{
+              "type":"integer"
+            }
+          }
+        },
+        "icu": {
+          "required":[
+            "DATE",
+            "ICU_COVID_CONFIRMED_PATIENTS",
+            "ICU_COVID_CONFIRMED_PATIENTS_DAILY",
+            "ICU_COVID_CONFIRMED_PATIENTS_DAILYPCTCHG",
+            "ICU_COVID_CONFIRMED_PATIENTS_LAST14DAYS",
+            "ICU_SUSPECTED_COVID_PATIENTS",
+            "ICU_SUSPECTED_COVID_PATIENTS_DAILY",
+            "ICU_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG",
+            "ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "ICU_COVID_CONFIRMED_PATIENTS":{
+              "$ref": "#/definitions/integer-zero-to-everyone"
+            },
+            "ICU_COVID_CONFIRMED_PATIENTS_DAILY":{
+              "type":"integer"
+            },
+            "ICU_COVID_CONFIRMED_PATIENTS_DAILYPCTCHG":{
+              "type":"number"
+            },
+            "ICU_COVID_CONFIRMED_PATIENTS_LAST14DAYS":{
+              "type":"integer"
+            },
+            "ICU_SUSPECTED_COVID_PATIENTS":{
+              "$ref": "#/definitions/integer-zero-to-everyone"
+            },
+            "ICU_SUSPECTED_COVID_PATIENTS_DAILY":{
+              "type":"integer"
+            },
+            "ICU_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG":{
+              "type":"number"
+            },
+            "ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS":{
+              "type":"integer"
+            }
+          }
+        },
+        "vaccinations": {
+          "required":[
+            "DATE",
+            "DOSES_ADMINISTERED",
+            "CUMMULATIVE_DAILY_DOSES_ADMINISTERED",
+            "PCT_INCREASE_FROM_PRIOR_DAY"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "DOSES_ADMINISTERED":{
+              "type": "integer",
+              "minimum": 9999,
+              "maximum": 999999999
+            },
+            "CUMMULATIVE_DAILY_DOSES_ADMINISTERED":{
+              "type": "integer",
+              "minimum": 9999,
+              "maximum": 99999999
+            },
+            "PCT_INCREASE_FROM_PRIOR_DAY":{
+              "type":"number"
+            }
+          }
+        }
+      }
+    }
+  }
+}
