@@ -82,17 +82,6 @@ const doCovidStateDashboarV2 = async () => {
     return Pr;
 };
 
-/**
- * Throws an exception if any of the objects keys are null or undefined
- * @param {{}} targetObject
- */
-const noNulls = targetObject => {
-    const nullObjectKey = Object.keys(targetObject).find(k=>targetObject[k] === null || targetObject[k] === undefined);
-    if (nullObjectKey) {
-        throw new Error(`Object attribute is null -> ${nullObjectKey}`);
-    }
-};
-
 const getData = async () => {
     const statResults = await queryDataset(
         {
@@ -193,13 +182,6 @@ const getData = async () => {
             }
         }
     };
-
-    noNulls(mappedResults.data.cases);
-    noNulls(mappedResults.data.deaths);
-    noNulls(mappedResults.data.tests);
-    noNulls(mappedResults.data.hospitalizations);
-    noNulls(mappedResults.data.icu);
-    noNulls(mappedResults.data.vaccinations);
 
     validateJSON('daily-stats-v2.json failed validation', mappedResults,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
