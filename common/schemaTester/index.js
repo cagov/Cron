@@ -42,7 +42,8 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
     );
 
   if(targetJSON) {
-    const primaryResult = v.validate(targetJSON,schemaJSON);
+    //Reparse to simplify any Javascript objects like dates
+    const primaryResult = v.validate(JSON.parse(JSON.stringify(targetJSON)),schemaJSON);
 
     if (!primaryResult.valid) {
       logAndError(`${errorMessagePrefix} - ${validateJSON_getMessage(primaryResult.errors[0])}`);
