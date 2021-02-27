@@ -18,11 +18,19 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
     fs.readdirSync(`${__dirname}/${path}`)
       .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}));
 
-      const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
-      const v = new Validator();
+  const mergeJSON = (target,stub) => {
+    Object.keys(stub).forEach(k=>{
+      target[k] = typeof target[k] === 'object' ? mergeJSON(target[k],stub[k]) : stub[k];
+    });
+    return target;
+  };
+
+  const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
+  const v = new Validator();
 
   const schemaJSON = require(schemafilePath);
 
+  let latestGoodData = {};
   validateJSON_getJsonFiles(testGoodFilePath)
     .forEach(({name,json})=> {
       const r = v.validate(json,schemaJSON);
@@ -30,14 +38,20 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
       if (!r.valid) {
         logAndError(`Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
       }
+
+      latestGoodData = json;
     }
   );
 
   validateJSON_getJsonFiles(testBadFilePath)
     .forEach(({name,json})=> {
-          if (v.validate(json,schemaJSON).valid) {
-            logAndError(`Bad JSON test is not 'Bad' - ${name}`);
-          }
+
+        //const merged = mergeJSON(JSON.parse(JSON.stringify(latestGoodData)),json);
+        const merged = mergeJSON(JSON.parse(JSON.stringify(latestGoodData)),json);
+
+        if (v.validate(merged,schemaJSON).valid) {
+          logAndError(`Bad JSON test is not 'Bad' - ${name}`);
+        }
       }
     );
 

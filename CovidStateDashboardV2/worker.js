@@ -25,7 +25,7 @@ const roundNumber = (number, fractionDigits=3) => {
 //Check to see if we need stats update PRs, make them if we do.
 const doCovidStateDashboarV2 = async () => {
     //uncomment this if you want to test the schema before running the query (schema dev mode)
-    //validateJSON('daily-stats-v2.json failed validation',null,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);    throw new Error('validation pass');
+    validateJSON('daily-stats-v2.json failed validation',null,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);    throw new Error('validation pass');
 
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
