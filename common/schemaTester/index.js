@@ -3,6 +3,24 @@ const fs = require('fs');
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
 
+const validateJSON_getMessage = err => `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
+
+const validateJSON_getJsonFiles = path => 
+  fs.readdirSync(`${__dirname}/${path}`)
+    .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}));
+
+const mergeJSON = (target,stub) => {
+  if(stub === null || stub === undefined || typeof stub !== 'object' ) {
+    return stub;
+  }
+
+  const targetCopy = {...target}; //deep copy
+  Object.keys(stub).forEach(k=>{
+    targetCopy[k] = mergeJSON(targetCopy[k],stub[k]);
+  });
+  return targetCopy;
+};
+
 /**
  * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
  * @param {string} errorMessagePrefix Will display in front of error messages
@@ -12,17 +30,12 @@ const fs = require('fs');
  * @param {string} [testBadFilePath] Optional test data file that should fail 
  */
 const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFilePath, testBadFilePath) => {
-  const validateJSON_getMessage = err => 
-  `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
-  const validateJSON_getJsonFiles = path => 
-    fs.readdirSync(`${__dirname}/${path}`)
-      .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}));
-
-      const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
-      const v = new Validator();
+  const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
+  const v = new Validator();
 
   const schemaJSON = require(schemafilePath);
 
+  let latestGoodData = {};
   validateJSON_getJsonFiles(testGoodFilePath)
     .forEach(({name,json})=> {
       const r = v.validate(json,schemaJSON);
@@ -30,14 +43,18 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
       if (!r.valid) {
         logAndError(`Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
       }
+
+      latestGoodData = json;
     }
   );
 
   validateJSON_getJsonFiles(testBadFilePath)
     .forEach(({name,json})=> {
-          if (v.validate(json,schemaJSON).valid) {
-            logAndError(`Bad JSON test is not 'Bad' - ${name}`);
-          }
+        const merged = mergeJSON(latestGoodData,json);
+
+        if (v.validate(merged,schemaJSON).valid) {
+          logAndError(`Bad JSON test is not 'Bad' - ${name}`);
+        }
       }
     );
 
