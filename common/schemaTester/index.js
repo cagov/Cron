@@ -14,10 +14,11 @@ const mergeJSON = (target,stub) => {
     return stub;
   }
 
+  const targetCopy = JSON.parse(JSON.stringify(target));
   Object.keys(stub).forEach(k=>{
-    target[k] = mergeJSON(target[k],stub[k]);
+    targetCopy[k] = mergeJSON(targetCopy[k],stub[k]);
   });
-  return target;
+  return targetCopy;
 };
 
 /**
@@ -49,9 +50,7 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
 
   validateJSON_getJsonFiles(testBadFilePath)
     .forEach(({name,json})=> {
-
-        //const merged = mergeJSON(JSON.parse(JSON.stringify(latestGoodData)),json);
-        const merged = mergeJSON(JSON.parse(JSON.stringify(latestGoodData)),json);
+        const merged = mergeJSON(latestGoodData,json);
 
         if (v.validate(merged,schemaJSON).valid) {
           logAndError(`Bad JSON test is not 'Bad' - ${name}`);
