@@ -3,6 +3,19 @@ const fs = require('fs');
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
 
+const validateJSON_getMessage = err => `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
+
+const validateJSON_getJsonFiles = path => 
+  fs.readdirSync(`${__dirname}/${path}`)
+    .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}));
+
+const mergeJSON = (target,stub) => {
+  Object.keys(stub).forEach(k=>{
+    target[k] = typeof target[k] === 'object' ? mergeJSON(target[k],stub[k]) : stub[k];
+  });
+  return target;
+};
+
 /**
  * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
  * @param {string} errorMessagePrefix Will display in front of error messages
@@ -12,19 +25,6 @@ const fs = require('fs');
  * @param {string} [testBadFilePath] Optional test data file that should fail 
  */
 const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFilePath, testBadFilePath) => {
-  const validateJSON_getMessage = err => 
-  `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
-  const validateJSON_getJsonFiles = path => 
-    fs.readdirSync(`${__dirname}/${path}`)
-      .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}));
-
-  const mergeJSON = (target,stub) => {
-    Object.keys(stub).forEach(k=>{
-      target[k] = typeof target[k] === 'object' ? mergeJSON(target[k],stub[k]) : stub[k];
-    });
-    return target;
-  };
-
   const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
   const v = new Validator();
 
