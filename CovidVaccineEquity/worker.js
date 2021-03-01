@@ -149,18 +149,24 @@ const doCovidVaccineEquity = async () => {
         },
         {
             CATEGORY: "65+"
+        },
+        {
+            CATEGORY: "Unknown"
         }
     ];
 
     const sortmap_Gender = [
         {
-            CATEGORY: "Female"
+            CATEGORY: "Female",
+            FROM: "F"
         },
         {
-            CATEGORY: "Male"
+            CATEGORY: "Male",
+            FROM: "M"
         },
         {
-            CATEGORY: "Unknown/undifferentiated"
+            CATEGORY: "Unknown/undifferentiated",
+            FROM: "U"
         }
     ];
 
