@@ -10,8 +10,12 @@ const validateJSON_getJsonFiles = path =>
     .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}));
 
 const mergeJSON = (target,stub) => {
+  if(stub === null || stub === undefined || typeof stub !== 'object' ) {
+    return stub;
+  }
+
   Object.keys(stub).forEach(k=>{
-    target[k] = typeof target[k] === 'object' ? mergeJSON(target[k],stub[k]) : stub[k];
+    target[k] = mergeJSON(target[k],stub[k]);
   });
   return target;
 };

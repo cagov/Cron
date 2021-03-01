@@ -13,6 +13,7 @@
   "additionalProperties": false,
   "properties": {
     "data": {
+      "type":"object",
       "required": [
         "cases",
         "deaths",
@@ -24,6 +25,7 @@
       "additionalProperties": false,
       "properties": {
         "cases": {
+          "type":"object",
           "required": [
             "DATE",
             "LATEST_TOTAL_CONFIRMED_CASES",
@@ -63,6 +65,7 @@
           }
         },
         "deaths": {
+          "type":"object",
           "required": [
             "DATE",
             "LATEST_TOTAL_CONFIRMED_DEATHS",
@@ -98,6 +101,7 @@
           }
         },
         "tests": {
+          "type":"object",
           "required":[
             "DATE",
             "LATEST_TOTAL_TESTS_PERFORMED",
@@ -149,6 +153,7 @@
           }
         },
         "hospitalizations": {
+          "type":"object",
           "required":[
             "DATE",
             "HOSPITALIZED_COVID_CONFIRMED_PATIENTS",
@@ -192,6 +197,7 @@
           }
         },
         "icu": {
+          "type":"object",
           "required":[
             "DATE",
             "ICU_COVID_CONFIRMED_PATIENTS",
@@ -235,6 +241,7 @@
           }
         },
         "vaccinations": {
+          "type":"object",
           "required":[
             "DATE",
             "DOSES_ADMINISTERED",
