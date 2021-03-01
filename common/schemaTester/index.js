@@ -14,7 +14,7 @@ const mergeJSON = (target,stub) => {
     return stub;
   }
 
-  const targetCopy = JSON.parse(JSON.stringify(target));
+  const targetCopy = {...target}; //deep copy
   Object.keys(stub).forEach(k=>{
     targetCopy[k] = mergeJSON(targetCopy[k],stub[k]);
   });
