@@ -20,10 +20,10 @@
           "HPIQUARTILE",
           "AGE16_POPULATION",
           "FIRST_DOSE",
-          "SECOND_DOSE",
+          "COMPLETED_DOSE",
           "COMBINED_DOSES",
           "FIRST_DOSE_RATIO",
-          "SECOND_DOSE_RATIO",
+          "COMPLETED_DOSE_RATIO",
           "COMBINED_DOSES_RATIO"
         ],
         "additionalProperties": false,
@@ -46,7 +46,7 @@
             "minimum": 1,
             "maximum": 99999999
           },
-          "SECOND_DOSE": {
+          "COMPLETED_DOSE": {
             "type": "integer",
             "minimum": 1,
             "maximum": 99999999
@@ -61,7 +61,7 @@
             "minimum": 0,
             "maximum": 1
           },
-          "SECOND_DOSE_RATIO": {
+          "COMPLETED_DOSE_RATIO": {
             "type": "number",
             "minimum": 0,
             "maximum": 1
