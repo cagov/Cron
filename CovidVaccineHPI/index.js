@@ -6,7 +6,7 @@ const debugChannel = 'C01DBP67MSQ'; // testingbot
 module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   try {
-    await slackBotChatPost(debugChannel,`${appName} (Every 30 mins from 10:15am to 1:45pm)`);
+    await slackBotChatPost(debugChannel,`${appName} (Thursdays, Every 30 mins from 10:15am to 1:45pm)`);
 
     const PrResult = await doCovidVaccineHPI();
 
