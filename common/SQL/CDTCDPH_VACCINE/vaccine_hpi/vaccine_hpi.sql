@@ -13,7 +13,7 @@ from
         select 
             MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE",
             HPIQUARTILE,
-            SUM(case DOSE_NUM when '2' then 0 else 1 end) "FIRST_DOSE",
+            SUM(case ifnull(DOSE_NUM,'2') when '2' then 0 else 1 end) "FIRST_DOSE",
             SUM(case DOSE_NUM when '2' then 1 else 0 end) "COMPLETED_DOSE",
             SUM(AGE16_POPULATION) "AGE16_POPULATION"
         from
