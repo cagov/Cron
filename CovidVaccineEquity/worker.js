@@ -157,16 +157,13 @@ const doCovidVaccineEquity = async () => {
 
     const sortmap_Gender = [
         {
-            CATEGORY: "Female",
-            FROM: "F"
+            CATEGORY: "Female"
         },
         {
-            CATEGORY: "Male",
-            FROM: "M"
+            CATEGORY: "Male"
         },
         {
-            CATEGORY: "Unknown/undifferentiated",
-            FROM: "U"
+            CATEGORY: "Unknown/undifferentiated"
         }
     ];
 
