@@ -73,14 +73,30 @@ const doCovidVaccineHPI = async () => {
 
 
 const getData = async () => {
-    const mappedResults = await queryDataset(
+    const sqlResults = await queryDataset(
         {
             data: getSQL(`${SnowFlakeSqlPath}vaccine_hpi`)
         }
         ,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
     );
 
-    validateJSON('vaccine-hpi.json failed validation', mappedResults,schemaFileName,goodSampleFileName);
+    validateJSON('vaccine-hpi.json failed validation', sqlResults,schemaFileName,goodSampleFileName);
+
+    let maxDate = new Date("1900-01-01");
+    sqlResults.data.forEach(r=>{
+        if(maxDate<r.LATEST_ADMIN_DATE) {
+            maxDate = r.LATEST_ADMIN_DATE;
+        }
+
+        delete r.LATEST_ADMIN_DATE;
+    });
+
+    const mappedResults = { 
+        meta : {
+            date : maxDate
+        },
+        data: sqlResults.data
+    };
 
     return mappedResults;
 };
