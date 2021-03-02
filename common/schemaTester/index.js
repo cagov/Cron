@@ -6,9 +6,13 @@ const fs = require('fs');
 const validateJSON_getMessage = err => `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
 
 const validateJSON_getJsonFiles = path => 
-  fs.lstatSync(`${__dirname}/${path}`).isDirectory()
-  ? fs.readdirSync(`${__dirname}/${path}`).map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}))
-  : [{name:path, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}`))}];
+  (
+    fullpath => 
+      fs.lstatSync(fullpath).isDirectory()
+      ? fs.readdirSync(fullpath)
+        .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${fullpath}/${f}`))}))
+      : [{name:path, json:JSON.parse(fs.readFileSync(fullpath))}]
+  )(`${__dirname}/${path}`);
 
 const mergeJSON = (target,stub) => {
   if(stub === null || stub === undefined || typeof stub !== 'object' ) {
