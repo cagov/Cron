@@ -253,15 +253,15 @@
             "DATE":{
               "$ref": "#/definitions/date-YYYY-MM-DD"
             },
-            "DOSES_ADMINISTERED":{
+            "DOSES_ADMINISTERED": {
               "type": "integer",
-              "minimum": 9999,
+              "minimum": 0,
               "maximum": 999999999
             },
-            "CUMMULATIVE_DAILY_DOSES_ADMINISTERED":{
+            "CUMMULATIVE_DAILY_DOSES_ADMINISTERED": {
               "type": "integer",
-              "minimum": 9999,
-              "maximum": 99999999
+              "minimum": 199999,
+              "maximum": 999999999
             },
             "PCT_INCREASE_FROM_PRIOR_DAY":{
               "type":"number"

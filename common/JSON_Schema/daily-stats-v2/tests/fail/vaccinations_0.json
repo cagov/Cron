@@ -1,7 +1,7 @@
 {
   "data": {
     "vaccinations": {
-      "DOSES_ADMINISTERED": 0
+      "CUMMULATIVE_DAILY_DOSES_ADMINISTERED": 0
     }
   }
 }
