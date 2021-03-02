@@ -26,6 +26,7 @@ const roundNumber = (number, fractionDigits=3) => {
 const doCovidStateDashboarV2 = async () => {
     //uncomment this if you want to test the schema before running the query (schema dev mode)
     //validateJSON('daily-stats-v2.json failed validation',null,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);    throw new Error('validation pass');
+    //validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', null,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json'); throw new Error('validation pass');
 
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
@@ -93,6 +94,8 @@ const getData = async () => {
         getSQL('CDTCDPH_VACCINE/Vaccines'),
         process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
     );
+
+    validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
     
     const row = statResults.metrics[0];
     const rowHospitals = statResults.hospitalizations[0];

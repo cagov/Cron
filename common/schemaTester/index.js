@@ -6,8 +6,9 @@ const fs = require('fs');
 const validateJSON_getMessage = err => `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
 
 const validateJSON_getJsonFiles = path => 
-  fs.readdirSync(`${__dirname}/${path}`)
-    .map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}));
+  fs.lstatSync(`${__dirname}/${path}`).isDirectory()
+  ? fs.readdirSync(`${__dirname}/${path}`).map(f=>({name:f, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}/${f}`))}))
+  : [{name:path, json:JSON.parse(fs.readFileSync(`${__dirname}/${path}`))}];
 
 const mergeJSON = (target,stub) => {
   if(stub === null || stub === undefined || typeof stub !== 'object' ) {
@@ -35,28 +36,33 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
 
   const schemaJSON = require(schemafilePath);
 
-  let latestGoodData = {};
-  validateJSON_getJsonFiles(testGoodFilePath)
-    .forEach(({name,json})=> {
-      const r = v.validate(json,schemaJSON);
-
-      if (!r.valid) {
-        logAndError(`Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
-      }
-
-      latestGoodData = json;
-    }
-  );
-
-  validateJSON_getJsonFiles(testBadFilePath)
-    .forEach(({name,json})=> {
-        const merged = mergeJSON(latestGoodData,json);
-
-        if (v.validate(merged,schemaJSON).valid) {
-          logAndError(`Bad JSON test is not 'Bad' - ${name}`);
+  if (testGoodFilePath) {
+    let latestGoodData = {};
+    validateJSON_getJsonFiles(testGoodFilePath)
+      .forEach(({name,json})=> {
+        const r = v.validate(json,schemaJSON);
+  
+        if (!r.valid) {
+          logAndError(`Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
         }
+  
+        latestGoodData = json;
       }
     );
+  
+    if(testBadFilePath){
+      validateJSON_getJsonFiles(testBadFilePath)
+      .forEach(({name,json})=> {
+          const merged = mergeJSON(latestGoodData,json);
+  
+          if (v.validate(merged,schemaJSON).valid) {
+            logAndError(`Bad JSON test is not 'Bad' - ${name}`);
+          }
+        }
+      );
+    }
+  }
+
 
   if(targetJSON) {
     //Reparse to simplify any Javascript objects like dates
