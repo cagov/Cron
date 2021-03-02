@@ -8,6 +8,7 @@ const { doHealthCheck } = require('../CovidSiteHealth/worker');
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
+const { doCovidVaccineHPI } = require('../CovidVaccineHPI/worker');
 //
 //const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 const CovidEquityData = require('../CovidEquityData');
@@ -60,6 +61,10 @@ const doWork = async opt => {
     case '8':
         console.log("Running doCovidVaccineEquity");
         await doCovidVaccineEquity();
+        break;
+    case '9':
+        console.log("Running doCovidVaccineHPI");
+        await doCovidVaccineHPI();
         break;
     case 'q':
         console.log("Buh bye!");
