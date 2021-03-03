@@ -11,8 +11,7 @@ const masterBranch = 'master';
 const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/vaccine_hpi/';
 const targetPath = 'data/vaccine-hpi/';
 const targetFileName = 'vaccine-hpi.json';
-const schemaFileName = `../SQL/${SnowFlakeSqlPath}vaccine_hpi.sql.schema.json`;
-const goodSampleFileName = `../SQL/${SnowFlakeSqlPath}vaccine_hpi.sql.sample.json`;
+const schemaPath = `../SQL/${SnowFlakeSqlPath}schema/`;
 
 const doCovidVaccineHPI = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
@@ -80,7 +79,7 @@ const getData = async () => {
         ,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
     );
 
-    validateJSON('vaccine-hpi.json failed validation', sqlResults,schemaFileName,goodSampleFileName);
+    validateJSON('vaccine-hpi.json failed validation', sqlResults.data,`${schemaPath}input/schema.json`,`${schemaPath}input/pass/`);
 
     let maxDate = new Date("1900-01-01");
     sqlResults.data.forEach(r=>{
@@ -97,6 +96,8 @@ const getData = async () => {
         },
         data: sqlResults.data
     };
+
+    validateJSON('vaccine-hpi.json failed validation', mappedResults,`${schemaPath}output/schema.json`,`${schemaPath}output/pass/`);
 
     return mappedResults;
 };

@@ -7,7 +7,23 @@
   },
   "type": "object",
   "additionalProperties": false,
+  "required": [
+    "meta",
+    "data"
+  ],
   "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "date"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        }
+      }
+    },
     "data": {
       "type": "array",
       "uniqueItems": true,
@@ -16,7 +32,6 @@
       "items": {
         "type": "object",
         "required": [
-          "LATEST_ADMIN_DATE",
           "HPIQUARTILE",
           "AGE16_POPULATION",
           "FIRST_DOSE",
@@ -28,9 +43,6 @@
         ],
         "additionalProperties": false,
         "properties": {
-          "LATEST_ADMIN_DATE": {
-            "$ref": "#/definitions/date-YYYY-MM-DD"
-          },
           "HPIQUARTILE": {
             "type": "integer",
             "minimum": 1,
