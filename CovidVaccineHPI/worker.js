@@ -17,8 +17,10 @@ const doCovidVaccineHPI = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
 
-    const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
-    const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
+    const nowPacTime = options => new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles", ...options});
+
+    const todayDateString = `${nowPacTime({year: 'numeric'})}-${nowPacTime({month: '2-digit'})}-${nowPacTime({day: '2-digit'})}`.replace(/\//g,'-');
+    const todayTimeString = nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
 
     const branchPrefix = 'data-vaccine-hpi-';
     const commitMessage = 'Update Vaccine HPI Data';
@@ -40,6 +42,10 @@ const doCovidVaccineHPI = async () => {
         console.log('data matched - no need to update');
     } else {
         console.log('data changed - updating');
+
+        //add a date stamp
+        dataOutput.meta.PUBLISHED_DATE = todayDateString;
+
         if(!Pr) {
             //new branch
             branch = `${branchPrefix}-${todayDateString}-${todayTimeString}`;
@@ -81,10 +87,10 @@ const getData = async () => {
 
     validateJSON('vaccine-hpi.json failed validation', sqlResults.data,`${schemaPath}input/schema.json`,`${schemaPath}input/pass/`);
 
-    let maxDate = new Date("1900-01-01");
+    let LATEST_ADMINISTERED_DATE = new Date("1900-01-01");
     sqlResults.data.forEach(r=>{
-        if(maxDate<r.LATEST_ADMIN_DATE) {
-            maxDate = r.LATEST_ADMIN_DATE;
+        if(LATEST_ADMINISTERED_DATE<r.LATEST_ADMIN_DATE) {
+            LATEST_ADMINISTERED_DATE = r.LATEST_ADMIN_DATE;
         }
 
         delete r.LATEST_ADMIN_DATE;
@@ -92,7 +98,7 @@ const getData = async () => {
 
     const mappedResults = { 
         meta : {
-            date : maxDate
+            LATEST_ADMINISTERED_DATE
         },
         data: sqlResults.data
     };
