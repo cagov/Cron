@@ -15,11 +15,15 @@
     "meta": {
       "type": "object",
       "required": [
-        "LATEST_ADMINISTERED_DATE"
+        "LATEST_ADMINISTERED_DATE",
+        "PUBLISHED_DATE"
       ],
       "additionalProperties": true,
       "properties": {
         "LATEST_ADMINISTERED_DATE": {
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        },
+        "PUBLISHED_DATE": {
           "$ref": "#/definitions/date-YYYY-MM-DD"
         }
       }

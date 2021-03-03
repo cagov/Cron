@@ -13,18 +13,17 @@ const targetPath = 'data/vaccine-hpi/';
 const targetFileName = 'vaccine-hpi.json';
 const schemaPath = `../SQL/${SnowFlakeSqlPath}schema/`;
 
+const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
+const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
+const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
+
 const doCovidVaccineHPI = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
 
-    const nowPacTime = options => new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles", ...options});
-
-    const todayDateString = `${nowPacTime({year: 'numeric'})}-${nowPacTime({month: '2-digit'})}-${nowPacTime({day: '2-digit'})}`.replace(/\//g,'-');
-    const todayTimeString = nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-
     const branchPrefix = 'data-vaccine-hpi-';
     const commitMessage = 'Update Vaccine HPI Data';
-    const PrTitle = `${todayDateString} Vaccine HPI`;
+    const PrTitle = `${todayDateString()} Vaccine HPI`;
     let branch = masterBranch;
 
     const prs = await gitRepo.listPullRequests({
@@ -43,12 +42,9 @@ const doCovidVaccineHPI = async () => {
     } else {
         console.log('data changed - updating');
 
-        //add a date stamp
-        dataOutput.meta.PUBLISHED_DATE = todayDateString;
-
         if(!Pr) {
             //new branch
-            branch = `${branchPrefix}-${todayDateString}-${todayTimeString}`;
+            branch = `${branchPrefix}-${todayDateString()}-${todayTimeString()}`;
             await gitRepo.createBranch(masterBranch,branch);
         }
 
@@ -98,7 +94,8 @@ const getData = async () => {
 
     const mappedResults = { 
         meta : {
-            LATEST_ADMINISTERED_DATE
+            LATEST_ADMINISTERED_DATE,
+            PUBLISHED_DATE : todayDateString()
         },
         data: sqlResults.data
     };
