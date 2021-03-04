@@ -11,7 +11,7 @@ select
 from 
     (
         select
-            MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE",
+            MAX(DATE(ADMIN_DATE)) "LATEST_ADMIN_DATE",
             HPIQUARTILE,
             count(distinct case when ifnull(dose_num,'2')='2' or VAX_LABEL='J&J' then null else recip_id end) "FIRST_DOSE",
             count(distinct case when ifnull(dose_num,'2')='2' or VAX_LABEL='J&J' then recip_id else null end) "COMPLETED_DOSE",
@@ -20,6 +20,7 @@ from
             CA_VACCINE.VW_TAB_INT_ALL
         where
             HPIQUARTILE is not null
+            and (ADMIN_DATE is null or DATE(ADMIN_DATE) < CURRENT_DATE())
         group by 
             HPIQUARTILE
     ) foo
