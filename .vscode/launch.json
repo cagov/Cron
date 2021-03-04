@@ -72,6 +72,14 @@
       "args": ["8:doCovidVaccineEquity"],
       "cwd": "${workspaceRoot}/sandbox"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DIRECT CovidVaccineHPI",
+      "program": "index",
+      "args": ["9:doCovidVaccineHPI"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
   ],
   "inputs": [
     {
@@ -85,7 +93,8 @@
         "5:CovidNewsFeed",
         "6:doHealthCheck",
         "7:doCovidStateDashboarV2",
-        "8:doCovidVaccineEquity"
+        "8:doCovidVaccineEquity",
+        "9:doCovidVaccineHPI"
       ],
       "description": "Select code to debug"
     }

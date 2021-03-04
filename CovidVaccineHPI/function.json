@@ -1,7 +1,7 @@
 {
   "bindings": [
     {
-      "name": "CovidVaccineEquity",
+      "name": "CovidVaccineHPI",
       "type": "timerTrigger",
       "direction": "in",
       "schedule": "0 15/30 18-21 Thursday * *"

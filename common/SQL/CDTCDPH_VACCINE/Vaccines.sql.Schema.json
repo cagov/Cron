@@ -1,0 +1,39 @@
+{
+  "type": "array",
+  "uniqueItems": true,
+  "minItems": 1,
+  "maxItems": 1,
+  "items": {
+    "type": "object",
+    "required": [
+      "VACCINE_KPI_JSON"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "VACCINE_KPI_JSON": {
+        "type": "object",
+        "required": [
+          "DOSES_ADMINISTERED",
+          "CUMMULATIVE_DAILY_DOSES_ADMINISTERED",
+          "PCT_INCREASE_FROM_PRIOR_DAY"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "DOSES_ADMINISTERED": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 999999999
+          },
+          "CUMMULATIVE_DAILY_DOSES_ADMINISTERED": {
+            "type": "integer",
+            "minimum": 199999,
+            "maximum": 999999999
+          },
+          "PCT_INCREASE_FROM_PRIOR_DAY": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

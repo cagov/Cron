@@ -149,6 +149,9 @@ const doCovidVaccineEquity = async () => {
         },
         {
             CATEGORY: "65+"
+        },
+        {
+            CATEGORY: "Unknown"
         }
     ];
 
