@@ -16,7 +16,7 @@ const validateJSON_getJsonFiles = path =>
 )(`${__dirname}/${path}`);
 
 const mergeJSON = (target,stub) => {
-  if(stub === null || stub === undefined || typeof stub !== 'object' ) {
+  if(stub === null || stub === undefined || typeof stub !== 'object' || Array.isArray(stub) ) {
     return stub;
   }
 
@@ -61,8 +61,9 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
         .forEach(({name,json})=> {
           //console.log({name,json});
           const merged = mergeJSON(latestGoodData,json);
-  
-          if (v.validate(merged,schemaJSON).valid) {
+          const r = v.validate(merged,schemaJSON);
+
+          if (r.valid) {
             logAndError(`Bad JSON test is not 'Bad' - ${name}`);
           }
         }
