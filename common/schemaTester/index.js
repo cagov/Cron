@@ -16,15 +16,23 @@ const validateJSON_getJsonFiles = path =>
 )(`${__dirname}/${path}`);
 
 const mergeJSON = (target,stub) => {
-  if(stub === null || stub === undefined || typeof stub !== 'object' ) {
+  if(stub === null || stub === undefined || typeof stub !== 'object') {
     return stub;
   }
 
-  const targetCopy = {...target}; //deep copy
-  Object.keys(stub).forEach(k=>{
-    targetCopy[k] = mergeJSON(targetCopy[k],stub[k]);
-  });
-  return targetCopy;
+  if(Array.isArray(stub)) {
+    const targetCopy = [...target]; //deep copy
+    stub.forEach((a,i)=>{
+      targetCopy[i] = mergeJSON(targetCopy[i],stub[i]);
+    });
+    return targetCopy;
+  } else {
+    const targetCopy = {...target}; //deep copy
+    Object.keys(stub).forEach(k=>{
+      targetCopy[k] = mergeJSON(targetCopy[k],stub[k]);
+    });
+    return targetCopy;
+  }
 };
 
 /**
@@ -61,8 +69,9 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
         .forEach(({name,json})=> {
           //console.log({name,json});
           const merged = mergeJSON(latestGoodData,json);
-  
-          if (v.validate(merged,schemaJSON).valid) {
+          const r = v.validate(merged,schemaJSON);
+
+          if (r.valid) {
             logAndError(`Bad JSON test is not 'Bad' - ${name}`);
           }
         }
