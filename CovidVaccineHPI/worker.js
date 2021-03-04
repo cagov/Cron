@@ -37,7 +37,7 @@ const doCovidVaccineHPI = async () => {
 
     const dataOutput = await getData();
     const targetcontent = (await gitRepo.getContents(branch,`${targetPath}${targetFileName}`,true)).data;
-    if(JSON.stringify(dataOutput)===JSON.stringify(targetcontent)) {
+    if(JSON.stringify(dataOutput.data)===JSON.stringify(targetcontent.data)) {
         console.log('data matched - no need to update');
     } else {
         console.log('data changed - updating');
