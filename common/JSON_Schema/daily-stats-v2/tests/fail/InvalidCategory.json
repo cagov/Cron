@@ -3,22 +3,6 @@
     "by_age": {
       "population": [
         {
-          "CATEGORY": "0-17",
-          "METRIC_VALUE": 22.5
-        },
-        {
-          "CATEGORY": "18-49",
-          "METRIC_VALUE": 43.5
-        },
-        {
-          "CATEGORY": "50-64",
-          "METRIC_VALUE": 18.4
-        },
-        {
-          "CATEGORY": "65+",
-          "METRIC_VALUE": 15.6
-        },
-        {
           "CATEGORY": "JENNY",
           "METRIC_VALUE": 0
         }
