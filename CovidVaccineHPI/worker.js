@@ -62,13 +62,13 @@ const doCovidVaccineHPI = async () => {
     }
 
     //Approve the PR
-    if(Pr) {
-        await gitRepo.mergePullRequest(Pr.number,{
-            merge_method: 'squash'
-        });
+    // if(Pr) {
+    //     await gitRepo.mergePullRequest(Pr.number,{
+    //         merge_method: 'squash'
+    //     });
 
-        await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
-    }
+    //     await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
+    // }
     return Pr;
 };
 
@@ -95,11 +95,12 @@ const getData = async () => {
     const mappedResults = { 
         meta : {
             LATEST_ADMINISTERED_DATE,
-            PUBLISHED_DATE : todayDateString()
+            PUBLISHED_DATE : new Date(todayDateString()).toISOString().split('T')[0]
         },
         data: sqlResults.data
     };
 
+    console.log(mappedResults)
     validateJSON('vaccine-hpi.json failed validation', mappedResults,`${schemaPath}output/schema.json`,`${schemaPath}output/pass/`);
 
     return mappedResults;

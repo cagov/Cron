@@ -16,6 +16,7 @@
       "HPIQUARTILE",
       "AGE16_POPULATION",
       "FIRST_DOSE",
+      "FIRST_DOSE_ONLY",
       "COMPLETED_DOSE",
       "COMBINED_DOSES",
       "FIRST_DOSE_RATIO",
@@ -38,6 +39,11 @@
         "maximum": 99999999
       },
       "FIRST_DOSE": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 99999999
+      },
+      "FIRST_DOSE_ONLY": {
         "type": "integer",
         "minimum": 1,
         "maximum": 99999999
