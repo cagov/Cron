@@ -95,7 +95,7 @@ const getData = async () => {
     const mappedResults = { 
         meta : {
             LATEST_ADMINISTERED_DATE,
-            PUBLISHED_DATE : new Date(todayDateString()).toISOString().split('T')[0]
+            PUBLISHED_DATE : todayDateString()
         },
         data: sqlResults.data
     };
