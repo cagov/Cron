@@ -21,19 +21,7 @@ GB as ( --Master list of corrected data grouped by region/category
     count(distinct recip_id) "ADMIN_COUNT", --For total people
     MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
-    (select 
-     *,
-        replace( 
-            iff(RECIP_ADDRESS_STATE = 'CA',
-                iff(RECIP_ADDRESS_COUNTY ='Unknown' , 
-                   iff(ADMIN_ADDRESS_COUNTY is null,
-                       'Unknown'
-                   ,ADMIN_ADDRESS_COUNTY)
-               ,RECIP_ADDRESS_COUNTY)
-            ,'Outside California')
-        ,' County') 
-       AS Mixed_county
-    from CA_VACCINE.VW_TAB_INT_ALL) foo
+    CA_VACCINE.VW_TAB_INT_ALL
   left outer join
     ranges
     on RMIN<=DATEDIFF('yyyy',DATE(RECIP_DOB),GETDATE())
