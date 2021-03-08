@@ -62,13 +62,13 @@ const doCovidVaccineHPI = async () => {
     }
 
     //Approve the PR
-    // if(Pr) {
-    //     await gitRepo.mergePullRequest(Pr.number,{
-    //         merge_method: 'squash'
-    //     });
+    if(Pr) {
+        await gitRepo.mergePullRequest(Pr.number,{
+            merge_method: 'squash'
+        });
 
-    //     await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
-    // }
+        await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
+    }
     return Pr;
 };
 
@@ -100,7 +100,6 @@ const getData = async () => {
         data: sqlResults.data
     };
 
-    console.log(mappedResults)
     validateJSON('vaccine-hpi.json failed validation', mappedResults,`${schemaPath}output/schema.json`,`${schemaPath}output/pass/`);
 
     return mappedResults;
