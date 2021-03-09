@@ -2,6 +2,7 @@ const { getData_daily_stats_v2 } = require('./daily-stats-v2');
 const { getData_infections_by_group } = require('./infections-by-group');
 
 const GitHub = require('github-api');
+const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static';
 const committer = {
@@ -9,7 +10,6 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
-const branchPrefix = 'auto-stats-update';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
@@ -19,28 +19,34 @@ const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute
 const doCovidStateDashboarV2 = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
+    const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
     const prTitle = `${todayDateString()} V2 Stats Update`;
-    const branchName = `${branchPrefix}-${todayDateString()}-${todayTimeString()}`;
 
     const datasets = [await getData_daily_stats_v2(),await getData_infections_by_group()];
 
-    const Pr = await processFilesForPr(datasets,gitRepo,branchName,prTitle);
+    const Pr = await processFilesForPr(datasets,gitRepo,prTitle);
 
-    PrApprove(gitRepo,Pr);
+    //Label the Pr
+    await gitIssues.editIssue(Pr.number,{
+        labels: PrLabels
+    });
+
+    await PrApprove(gitRepo,Pr);
 };
 
-const processFilesForPr = async (fileData, gitRepo, branchName, prTitle) => {
+const processFilesForPr = async (fileData, gitRepo, prTitle) => {
     let Pr = null;
 
     for(let dataOutput of fileData) {
-        Pr = await createPrForChange(gitRepo,Pr,dataOutput.path,dataOutput.json,branchName,prTitle);
+        Pr = await createPrForChange(gitRepo,Pr,dataOutput.path,dataOutput.json,prTitle);
     }
 
     return Pr;
 };
 
-const createPrForChange = async (gitRepo, Pr, path, json, branchName, prTitle) => {
+const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
+    const branchName = `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
     const targetcontent = (await gitRepo.getContents(Pr ? branchName : masterBranch,path,true)).data;
     if(JSON.stringify(json.data)===JSON.stringify(targetcontent.data)) {
         console.log('data matched - no need to update');
