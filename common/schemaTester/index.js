@@ -21,7 +21,7 @@ const mergeJSON = (target,stub) => {
   }
 
   if(Array.isArray(stub)) {
-    const targetCopy = [...target]; //deep copy
+    const targetCopy = target === undefined || target === null ? [] : [...target]; //deep copy
     stub.forEach((a,i)=>{
       targetCopy[i] = mergeJSON(targetCopy[i],stub[i]);
     });

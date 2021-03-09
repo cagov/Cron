@@ -39,7 +39,7 @@ const doCovidStateDashboarV2 = async () => {
 
     const dataOutput = await getData_daily_stats_v2();
     const targetcontent = (await gitRepo.getContents(branch,targetFileNameStats,true)).data;
-    if(JSON.stringify(dataOutput)===JSON.stringify(targetcontent)) {
+    if(JSON.stringify(dataOutput.json.data)===JSON.stringify(targetcontent.data)) {
         console.log('data matched - no need to update');
     } else {
         console.log('data changed - updating');
