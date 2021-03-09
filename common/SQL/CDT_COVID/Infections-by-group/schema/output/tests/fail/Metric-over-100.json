@@ -1,0 +1,12 @@
+{
+  "data": {
+    "by_age": {
+      "population": [
+        {
+          "CATEGORY": "0-17",
+          "METRIC_VALUE": 99999
+        }
+      ]
+    }
+  }
+}
