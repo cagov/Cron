@@ -1,7 +1,7 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
-const targetFileName = 'daily-stats-v2.json';
-const targetPath = "data/";
+const targetFileNameStats = 'data/daily-stats-v2.json';
+//const targetFileNameInfectionsByGroup = 'data/infections-by-group/infections-by-group-california.json';
 const schemaFileName = "../JSON_Schema/daily-stats-v2/schema.json";
 const schemaTestGoodFilePath = "../JSON_Schema/daily-stats-v2/tests/pass/";
 const schemaTestBadFilePath = "../JSON_Schema/daily-stats-v2/tests/fail/";
@@ -47,7 +47,7 @@ const doCovidStateDashboarV2 = async () => {
     }
 
     const dataOutput = await getData();
-    const targetcontent = (await gitRepo.getContents(branch,`${targetPath}${targetFileName}`,true)).data;
+    const targetcontent = (await gitRepo.getContents(branch,targetFileNameStats,true)).data;
     if(JSON.stringify(dataOutput)===JSON.stringify(targetcontent)) {
         console.log('data matched - no need to update');
     } else {
@@ -58,7 +58,7 @@ const doCovidStateDashboarV2 = async () => {
             await gitRepo.createBranch(masterBranch,branch);
         }
 
-        await gitRepo.writeFile(branch, `${targetPath}${targetFileName}`, JSON.stringify(dataOutput,null,2), commitMessage, {committer,encode:true});
+        await gitRepo.writeFile(branch, targetFileNameStats, JSON.stringify(dataOutput,null,2), commitMessage, {committer,encode:true});
 
         if(!Pr) {
             //new Pr
