@@ -1,6 +1,5 @@
 const { getData_daily_stats_v2 } = require('./daily-stats-v2');
 const { getData_infections_by_group } = require('./infections-by-group');
-const targetFileNameStats = 'data/daily-stats-v2.json';
 
 const GitHub = require('github-api');
 const githubUser = 'cagov';
@@ -10,7 +9,6 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
-const commitMessage = 'update Stats';
 const branchPrefix = 'auto-stats-update';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
@@ -22,62 +20,50 @@ const doCovidStateDashboarV2 = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
 
-    const title = `${todayDateString()} Stats Update`;
+    const prTitle = `${todayDateString()} V2 Stats Update`;
+    const branchName = `${branchPrefix}-${todayDateString()}-${todayTimeString()}`;
 
-    const dataOutput = await getData_daily_stats_v2();
-    const targetcontent = (await gitRepo.getContents(masterBranch,targetFileNameStats,true)).data;
-    if(JSON.stringify(dataOutput.json.data)===JSON.stringify(targetcontent.data)) {
-        console.log('data matched - no need to update');
-    } else {
-        console.log('data changed - updating');
+    const datasets = [await getData_daily_stats_v2(),await getData_infections_by_group()];
 
-        const branch = `${branchPrefix}-${todayDateString()}-${todayTimeString()}`;
-        await gitRepo.createBranch(masterBranch,branch);
-        
-        await gitRepo.writeFile(branch, targetFileNameStats, JSON.stringify(dataOutput,null,2), commitMessage, {committer,encode:true});
+    const Pr = await processFilesForPr(datasets,gitRepo,branchName,prTitle);
 
-        //Create PR
-        const Pr = (await gitRepo.createPullRequest({
-            title,
-            head: branch,
-            base: masterBranch
-        }))
-        .data;
-        
-        //Approve the PR
-        await gitRepo.mergePullRequest(Pr.number,{
-            merge_method: 'squash'
-        });
-        //Delete PR branch
-        await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
-        
-        return Pr;
-    }
+    PrApprove(gitRepo,Pr);
 };
 
-const createPrForChange = async (gitRepo, Pr, contentArray) => {
-    for (const dataOutput of contentArray) {
+const processFilesForPr = async (fileData, gitRepo, branchName, prTitle) => {
+    let Pr = null;
 
+    for(let dataOutput of fileData) {
+        Pr = await createPrForChange(gitRepo,Pr,dataOutput.path,dataOutput.json,branchName,prTitle);
     }
 
+    return Pr;
+};
 
-
-    const targetcontent = (await gitRepo.getContents(masterBranch,targetFileNameStats,true)).data;
-    if(JSON.stringify(dataOutput.json.data)===JSON.stringify(targetcontent.data)) {
+const createPrForChange = async (gitRepo, Pr, path, json, branchName, prTitle) => {
+    const targetcontent = (await gitRepo.getContents(Pr ? branchName : masterBranch,path,true)).data;
+    if(JSON.stringify(json.data)===JSON.stringify(targetcontent.data)) {
         console.log('data matched - no need to update');
     } else {
         console.log('data changed - updating');
 
-        const branch = `${branchPrefix}-${todayDateString()}-${todayTimeString()}`;
-        await gitRepo.createBranch(masterBranch,branch);
-        
-        await gitRepo.writeFile(branch, targetFileNameStats, JSON.stringify(dataOutput,null,2), commitMessage, {committer,encode:true});
+        //Add publishedDate
+        if(!json.meta) {
+            json.meta = {};
+        }
+        json.meta.PUBLISHED_DATE = todayDateString();
+
+        if(!Pr) {
+            await gitRepo.createBranch(masterBranch,branchName);
+        }
+        const commitMessage = `Update ${path.split("/").pop()}`;
+        await gitRepo.writeFile(branchName, path, JSON.stringify(json,null,2), commitMessage, {committer,encode:true});
 
         if(!Pr) {
             //Create PR
             Pr = (await gitRepo.createPullRequest({
-                title,
-                head: branch,
+                title: prTitle,
+                head: branchName,
                 base: masterBranch
             }))
             .data;

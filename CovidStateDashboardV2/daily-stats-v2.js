@@ -5,7 +5,7 @@ const roundNumber = (number, fractionDigits=3) => {
   return Math.round(Number.parseFloat(number)*roundscale)/roundscale;
 };
 
-const targetFilePath = 'data/daily-stats-v2.json';
+const path = 'data/daily-stats-v2.json';
 const schemaFileName = "../SQL/CDT_COVID/Daily-stats-v2/schema/schema.json";
 const schemaTestGoodFilePath = "../SQL/CDT_COVID/Daily-stats-v2/schema/tests/output/pass/";
 const schemaTestBadFilePath = "../SQL/CDT_COVID/Daily-stats-v2/schema/tests/output/fail/";
@@ -91,9 +91,9 @@ const getData_daily_stats_v2 = async () => {
       }
   };
 
-  validateJSON(`${targetFilePath} failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
+  validateJSON(`${path} failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
-  return {targetFilePath, json};
+  return {path, json};
 };
 
 module.exports = {

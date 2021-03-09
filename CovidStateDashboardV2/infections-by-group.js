@@ -1,15 +1,16 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 
-const targetFilePath = 'data/infections-by-group-california.json';
-const schemaFileName = "../JSON_Schema/daily-stats-v2/schema.json";
-const schemaTestGoodFilePath = "../JSON_Schema/daily-stats-v2/tests/pass/";
-const schemaTestBadFilePath = "../JSON_Schema/daily-stats-v2/tests/fail/";
+const path = 'data/infections-by-group/infections-by-group-california.json';
+const schemaPath = "../SQL/CDT_COVID/Infections-by-group/schema/";
+const schemaFileName = `${schemaPath}output/schema.json`;
+const schemaTestGoodFilePath = `${schemaPath}output/tests/pass`;
+const schemaTestBadFilePath = `${schemaPath}output/tests/fail`;
 
 const getData_infections_by_group = async () => {
   const statResults = await queryDataset(
       {
-          infections_by_group : getSQL('CDT_COVID/v2-state-dashboard-infections-by-group')
+          infections_by_group : getSQL('CDT_COVID/Infections-by-group/infections-by-group')
       }
       ,process.env["SNOWFLAKE_CDT_COVID"]
   );
@@ -20,6 +21,13 @@ const getData_infections_by_group = async () => {
   const byRaceAndEthnicity = statResults.infections_by_group.filter(x=>x.DATASET==='RACE_ETHNICITY');
 
   const json = {
+      meta: {
+        PUBLISHED_DATE : "1900-01-01",
+        METRIC_VALUE_VALID_RANGE : {
+          MINIMUM:0, 
+          MAXIMUM:100  
+        }
+      },
       data: {
           by_race_and_ethnicity: {
               cases: byRaceAndEthnicity.filter(x=>x.SUBJECT==='CASE_PERCENTAGE').map(arrayResultMap),
@@ -39,9 +47,9 @@ const getData_infections_by_group = async () => {
       }
   };
 
-  validateJSON(`${targetFilePath} failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
+  validateJSON(`${path} failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
-  return {targetFilePath, json};
+  return {path, json};
 };
 
 module.exports = {
