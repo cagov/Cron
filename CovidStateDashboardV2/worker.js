@@ -15,7 +15,9 @@ const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "Ame
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
 
-//Check to see if we need stats update PRs, make them if we do.
+/**
+ * Check to see if we need stats update PRs, make them if we do.
+ */
 const doCovidStateDashboarV2 = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
@@ -33,8 +35,16 @@ const doCovidStateDashboarV2 = async () => {
     });
 
     await PrApprove(gitRepo,Pr);
-};
 
+    return Pr;
+};
+/**
+ * 
+ * @param {Array} fileData 
+ * @param {*} gitRepo 
+ * @param {string} prTitle 
+ * @returns
+ */
 const processFilesForPr = async (fileData, gitRepo, prTitle) => {
     let Pr = null;
 
@@ -45,6 +55,15 @@ const processFilesForPr = async (fileData, gitRepo, prTitle) => {
     return Pr;
 };
 
+/**
+ * 
+ * @param {*} gitRepo 
+ * @param {{}} [Pr] 
+ * @param {string} path 
+ * @param {{data:{}}} json 
+ * @param {string} prTitle 
+ * @returns 
+ */
 const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
     const branchName = `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
     const targetcontent = (await gitRepo.getContents(Pr ? branchName : masterBranch,path,true)).data;
@@ -79,6 +98,11 @@ const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
     return Pr;
 };
 
+/**
+ * 
+ * @param {*} gitRepo 
+ * @param {{number:number,head:{ref:string}}} Pr 
+ */
 const PrApprove = async (gitRepo, Pr) => {
     //Approve the PR
     await gitRepo.mergePullRequest(Pr.number,{
