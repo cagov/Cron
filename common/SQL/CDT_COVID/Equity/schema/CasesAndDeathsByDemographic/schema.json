@@ -1,0 +1,67 @@
+{
+  "definitions": {
+    "date-YYYY-MM-DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "integer-one-to-everyone": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 99999999
+    },
+    "rate-per-100k": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 100000
+    }
+  },
+  "type": "array",
+  "uniqueItems": true,
+  "minItems": 7,
+  "maxItems": 7,
+  "items": {
+    "type": "object",
+    "required": [
+      "RACE_ETHNICITY",
+      "CASES",
+      "DEATHS",
+      "POPULATION",
+      "REPORT_DATE",
+      "CASE_RATE",
+      "DEATH_RATE"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "RACE_ETHNICITY": {
+        "type": "string",
+        "enum": [
+          "African American",
+          "American Indian",
+          "Asian",
+          "Latino",
+          "Multi-Race",
+          "Native Hawaiian and other Pacific Islander",
+          "White"
+        ]
+      },
+      "CASES": {
+        "$ref": "#/definitions/integer-one-to-everyone"
+      },
+      "DEATHS": {
+        "$ref": "#/definitions/integer-one-to-everyone"
+      },
+      "POPULATION": {
+        "$ref": "#/definitions/integer-one-to-everyone"
+      },
+      "REPORT_DATE": {
+        "$ref": "#/definitions/date-YYYY-MM-DD"
+      },
+      "CASE_RATE": {
+        "$ref": "#/definitions/rate-per-100k"
+      },
+      "DEATH_RATE": {
+        "$ref": "#/definitions/rate-per-100k"
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const SnowFlakeSqlPath = 'CDT_COVID/Equity/';
 const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
+const { validateJSON } = require('../common/schemaTester');
 const masterBranch = 'master';
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
@@ -14,6 +15,7 @@ const committer = {
 };
 const PrLabels = ['Automatic Deployment'];
 const PrReviewers = ['vargoCDPH','sindhuravuri'];
+//const PrReviewers = [];
 
 const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
 const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
@@ -22,7 +24,15 @@ const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 //const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
+
+const schemaPath = "../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/";
+const schemaFileName = `${schemaPath}schema.json`;
+const schemaTestGoodFilePath = `${schemaPath}sample.json`;
+const schemaTestBadFilePath = `${schemaPath}fail`;
+
 module.exports = async function (context, functionInput) {
+    //validateJSON(`xxx failed validation`, require('../common/SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/sample.json'),schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);throw new Error('All good');
+    
     try {
         await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
         const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
@@ -66,6 +76,8 @@ If there are issues with the data:
         };
 
         const allData = await queryDataset(DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
+
+        validateJSON(`CasesAndDeathsByDemographic failed validation`, allData.CasesAndDeathsByDemographic,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
         let allFilesMap = new Map();
 
