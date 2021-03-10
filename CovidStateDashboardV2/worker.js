@@ -17,6 +17,7 @@ const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute
 
 /**
  * Check to see if we need stats update PRs, make them if we do.
+ * @returns The PR created if changes were made
  */
 const doCovidStateDashboarV2 = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
@@ -38,12 +39,13 @@ const doCovidStateDashboarV2 = async () => {
 
     return Pr;
 };
+
 /**
- * 
- * @param {Array} fileData 
+ * Loop through the filedata and put all the changes in one PR
+ * @param {Array<{path:string,json:{data:{}}}>} fileData 
  * @param {*} gitRepo 
  * @param {string} prTitle 
- * @returns
+ * @returns The PR created if changes were made
  */
 const processFilesForPr = async (fileData, gitRepo, prTitle) => {
     let Pr = null;
@@ -58,11 +60,11 @@ const processFilesForPr = async (fileData, gitRepo, prTitle) => {
 /**
  * 
  * @param {*} gitRepo 
- * @param {{}} [Pr] 
- * @param {string} path 
- * @param {{data:{}}} json 
- * @param {string} prTitle 
- * @returns 
+ * @param {{}} [Pr] The PR from previous runs
+ * @param {string} path path of the file to update
+ * @param {{data:{}}} json data to send
+ * @param {string} prTitle title for PR if created
+ * @returns {Promise<{html_url:string}>} The PR created if a change was made
  */
 const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
     const branchName = `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
@@ -99,7 +101,7 @@ const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
 };
 
 /**
- * 
+ * Squash a PR and delete the branch
  * @param {*} gitRepo 
  * @param {{number:number,head:{ref:string}}} Pr 
  */
