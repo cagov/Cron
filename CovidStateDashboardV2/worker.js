@@ -15,7 +15,10 @@ const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "Ame
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
 
-//Check to see if we need stats update PRs, make them if we do.
+/**
+ * Check to see if we need stats update PRs, make them if we do.
+ * @returns The PR created if changes were made
+ */
 const doCovidStateDashboarV2 = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
@@ -26,17 +29,25 @@ const doCovidStateDashboarV2 = async () => {
     const datasets = [await getData_daily_stats_v2(),await getData_infections_by_group()];
 
     const Pr = await processFilesForPr(datasets,gitRepo,prTitle);
+    if(Pr) {
+        //Label the Pr
+        await gitIssues.editIssue(Pr.number,{
+            labels: PrLabels
+        });
 
-    //Label the Pr
-    await gitIssues.editIssue(Pr.number,{
-        labels: PrLabels
-    });
-
-    await PrApprove(gitRepo,Pr);
+        await PrApprove(gitRepo,Pr);
+    }
 
     return Pr;
 };
 
+/**
+ * Loop through the filedata and put all the changes in one PR
+ * @param {Array<{path:string,json:{data:{}}}>} fileData 
+ * @param {*} gitRepo 
+ * @param {string} prTitle 
+ * @returns The PR created if changes were made
+ */
 const processFilesForPr = async (fileData, gitRepo, prTitle) => {
     let Pr = null;
 
@@ -47,6 +58,15 @@ const processFilesForPr = async (fileData, gitRepo, prTitle) => {
     return Pr;
 };
 
+/**
+ * If changes are detected, create and return a PR, or reuse a PR
+ * @param {*} gitRepo 
+ * @param {{}} [Pr] The PR from previous runs
+ * @param {string} path path of the file to update
+ * @param {{data:{}}} json data to send
+ * @param {string} prTitle title for PR if created
+ * @returns {Promise<{html_url:string}>} The PR created if a change was made
+ */
 const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
     const branchName = `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
     const targetcontent = (await gitRepo.getContents(Pr ? branchName : masterBranch,path,true)).data;
@@ -81,6 +101,11 @@ const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
     return Pr;
 };
 
+/**
+ * Squash a PR and delete the branch
+ * @param {*} gitRepo 
+ * @param {{number:number,head:{ref:string}}} Pr 
+ */
 const PrApprove = async (gitRepo, Pr) => {
     //Approve the PR
     await gitRepo.mergePullRequest(Pr.number,{
