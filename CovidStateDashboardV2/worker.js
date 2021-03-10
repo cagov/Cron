@@ -33,6 +33,8 @@ const doCovidStateDashboarV2 = async () => {
     });
 
     await PrApprove(gitRepo,Pr);
+
+    return Pr;
 };
 
 const processFilesForPr = async (fileData, gitRepo, prTitle) => {
