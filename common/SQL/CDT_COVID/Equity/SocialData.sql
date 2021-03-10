@@ -4,7 +4,7 @@
 --   by SOCIAL_DET (income,crowding,insurance,income_cumulative 
 --   by SOCIAL_TIER (ex "above $120K")
 
-select
+select distinct
   DATE,
   SOCIAL_DET,
   SOCIAL_TIER,
@@ -19,3 +19,6 @@ from
   PRODUCTION.VW_CDPH_CASE_RATE_BY_SOCIAL_DET
 where
   DATE = (select max(DATE) from PRODUCTION.VW_CDPH_CASE_RATE_BY_SOCIAL_DET)
+order by
+  SOCIAL_DET,
+  SORT
