@@ -29,13 +29,14 @@ const doCovidStateDashboarV2 = async () => {
     const datasets = [await getData_daily_stats_v2(),await getData_infections_by_group()];
 
     const Pr = await processFilesForPr(datasets,gitRepo,prTitle);
+    if(Pr) {
+        //Label the Pr
+        await gitIssues.editIssue(Pr.number,{
+            labels: PrLabels
+        });
 
-    //Label the Pr
-    await gitIssues.editIssue(Pr.number,{
-        labels: PrLabels
-    });
-
-    await PrApprove(gitRepo,Pr);
+        await PrApprove(gitRepo,Pr);
+    }
 
     return Pr;
 };
