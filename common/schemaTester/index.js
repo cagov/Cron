@@ -3,6 +3,63 @@ const fs = require('fs');
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
 
+const getSqlWorkAndSchemas_getFileNames = passTestPath => {
+  const passFiles = passTestPath.endsWith('/') ? fs.readdirSync(passTestPath).map(testFile=>passTestPath+testFile) : [passTestPath];
+
+  const result = [];
+
+  passFiles.forEach(testPath=>{
+    if(fs.existsSync(testPath)) {
+      result.push({
+        name:testPath.split('/').pop(),
+        json:JSON.parse(fs.readFileSync(testPath))});
+    }
+  });
+
+  return result;
+};
+
+const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, FailTestPathFormat) => {
+  const sqlFullPath = `${__dirname}/${sqlPath}`;
+  const sqlFiles = fs.readdirSync(sqlFullPath)
+      .filter(f=>f.endsWith('.sql'))
+      .map(filename=>({name: filename.replace(/\.sql$/,''), filename, fullfilename:`${sqlFullPath}/${filename}`}));
+
+  const JsonOutput = {
+    DbSqlWork:{}
+  };
+
+  sqlFiles.forEach(sql=>{
+    JsonOutput.DbSqlWork[sql.name] = fs.readFileSync(sql.fullfilename).toString();
+
+    if(schemaPathFormat) {
+      const schemaPath =  sqlFullPath + schemaPathFormat.replace(/\[file\]/,sql.name);
+      if(fs.existsSync(schemaPath)) {
+        if(!JsonOutput.schema) {
+          JsonOutput.schema = {};
+        }
+
+        const newSchema = {
+          schema : fs.readFileSync(schemaPath).toString()
+        };
+
+        if(PassTestPathFormat) {
+          newSchema.passTests = getSqlWorkAndSchemas_getFileNames(sqlFullPath + PassTestPathFormat.replace(/\[file\]/,sql.name));
+        }
+
+        if(FailTestPathFormat) {
+          newSchema.failTests = getSqlWorkAndSchemas_getFileNames(sqlFullPath + FailTestPathFormat.replace(/\[file\]/,sql.name));
+        }
+
+        JsonOutput.schema[sql.name] = newSchema;
+      }
+    }
+  });
+
+  return JsonOutput;
+};
+
+
 const validateJSON_getMessage = err => `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
 
 const validateJSON_getJsonFiles = path => 
@@ -100,5 +157,6 @@ const logAndError  = message => {
 };
 
 module.exports = {
-  validateJSON
+  validateJSON,
+  getSqlWorkAndSchemas
 };
