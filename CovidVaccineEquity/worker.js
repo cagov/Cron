@@ -10,17 +10,18 @@ const masterBranch = 'master';
 const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/';
 const targetPath = 'data/vaccine-equity/';
 
+const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
+const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
+const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
+
 const doCovidVaccineEquity = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
 
-    const todayDateString = new Date().toLocaleString("en-US", {year: 'numeric', month: '2-digit', day: '2-digit', timeZone: "America/Los_Angeles"}).replace(/\//g,'-');
-    const todayTimeString = new Date().toLocaleString("en-US", {hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: "America/Los_Angeles"}).replace(/:/g,'-');
-
     const branchPrefix = 'data-';
-    const BranchName = `${branchPrefix}${todayDateString}-${todayTimeString}-vaccineequity`;
+    const BranchName = `${branchPrefix}${todayDateString()}-${todayTimeString()}-vaccineequity`;
     const CommitText = 'Update Vaccine Equity Data';
-    const PrTitle = `${todayDateString} Vaccine Equity`;
+    const PrTitle = `${todayDateString()} Vaccine Equity`;
 
     const DbSqlWork = {
         vaccines_by_age : getSQL(`${SnowFlakeSqlPath}vaccines_by_age`),
@@ -89,7 +90,8 @@ const doCovidVaccineEquity = async () => {
                 const result = {
                     meta: {
                         REGION,
-                        LATEST_ADMIN_DATE
+                        LATEST_ADMIN_DATE,
+                        PUBLISHED_DATE:todayDateString()
                     },
                     data
                 };
