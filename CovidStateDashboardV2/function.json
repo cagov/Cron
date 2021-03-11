@@ -6,5 +6,6 @@
       "direction": "in",
       "schedule": "0 21/30 17-19 * * *"
     }
-  ]
+  ],
+  "disabled": true
 }
