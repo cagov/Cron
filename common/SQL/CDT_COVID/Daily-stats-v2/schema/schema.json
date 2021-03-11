@@ -12,6 +12,9 @@
   },
   "additionalProperties": false,
   "properties": {
+    "meta": {
+      "type":"object"
+    },
     "data": {
       "type":"object",
       "required": [
