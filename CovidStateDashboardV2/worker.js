@@ -26,7 +26,10 @@ const doCovidStateDashboarV2 = async () => {
 
     const prTitle = `${todayDateString()} V2 Stats Update`;
 
-    const datasets = [await getData_daily_stats_v2(),await getData_infections_by_group()];
+    const datasets = [
+        await getData_infections_by_group(),
+        await getData_daily_stats_v2()
+    ];
 
     const Pr = await processFilesForPr(datasets,gitRepo,prTitle);
     if(Pr) {
