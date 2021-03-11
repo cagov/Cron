@@ -30,6 +30,9 @@ const getData_daily_stats_v2 = async () => {
   const rowVaccines = resultsVaccines[0].VACCINE_KPI_JSON;
 
   const json = {
+      meta: {
+        PUBLISHED_DATE: "1900-01-01"
+      },
       data: {
           cases: {
               DATE : row['MAX(DATE)'],

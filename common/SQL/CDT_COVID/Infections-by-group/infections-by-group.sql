@@ -1,136 +1,47 @@
-with groupings as (select * from 
-  (values 
-   (1, 'RACE_ETHNICITY', 'PERCENT_CA_POPULATION'), 
-   (2, 'RACE_ETHNICITY', 'CASE_PERCENTAGE'),
-   (3, 'RACE_ETHNICITY', 'DEATH_PERCENTAGE'),
-   (4, 'GENDER', 'PERCENT_CA_POPULATION'), 
-   (5, 'GENDER', 'CASE_PERCENTAGE'),
-   (6, 'GENDER', 'DEATH_PERCENTAGE'),
-   (7, 'AGE', 'PERCENT_CA_POPULATION'),
-   (8, 'AGE', 'CASE_PERCENTAGE'),
-   (9, 'AGE', 'DEATH_PERCENTAGE')
-  ) as foo (QUERY_ID, DATASET, SUBJECT)
+with good_data as
+(select *
+  , REPORT_DATE as DATE
+  , CASE DEMOGRAPHIC_CATEGORY 
+      when 'Age Group' then 'AGE'
+      when 'Sex' then 'GENDER' 
+      when 'Race Ethnicity' then 'RACE_ETHNICITY' 
+    end as DATASET
+  , case lower(DEMOGRAPHIC_VALUE) 
+        when 'missing' then 'Missing' 
+        else DEMOGRAPHIC_VALUE 
+    end as CATEGORY
+  , max(DATE) over (partition by 1) as MAX_DATE
+ from PRODUCTION.CDPH_GOOD_CASES_DEATHS_BY_DEMO_STAGE
+    where DEMOGRAPHIC_VALUE!='Total'
 )
-
-select 
-    u.DATE,
-    g.SUBJECT,
-    g.DATASET,
-    u.CATEGORY,
-    u.METRIC_VALUE
-from (
-select
-    1 "QUERY_ID",
-    RACE_ETHNICITY "CATEGORY",
-    PERCENT_CA_POPULATION "METRIC_VALUE",
+, triple_union as
+(select 
     DATE
-from
-    COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL
-where
-    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL)
-
+    , 'PERCENT_CA_POPULATION' as SUBJECT
+    , DATASET
+    , CATEGORY
+    , PERCENT_OF_CA_POPULATION as METRIC_VALUE
+  from good_data
+    where DATE=MAX_DATE
 union
-
-select
-    2,
-    RACE_ETHNICITY,
-    CASE_PERCENTAGE,
+  select 
     DATE
-from
-    COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL
-where
-    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL)
-    
+    , 'CASE_PERCENTAGE' as SUBJECT
+    , DATASET
+    , CATEGORY
+    , PERCENT_CASES as METRIC_VALUE
+  from good_data
+    where DATE=MAX_DATE
 union
-    
-select
-    3,
-    RACE_ETHNICITY,
-    DEATH_PERCENTAGE,
+  select 
     DATE
-from
-    COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL
-where
-    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_ETHNICITY_TALL)
-    
-union
-
-select
-    4,
-    SEX,
-    CA_PERCENT,
-    DATE
-from
-    COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL
-where
-    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL)
-    
-union
-
-select
-    5,
-    SEX,
-    CASE_PERCENT,
-    DATE
-from
-    COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL
-where
-    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL)
-    
-union
-
-select
-    6,
-    SEX,
-    DEATHS_PERCENT,
-    DATE
-from
-    COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL
-where
-    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHICS_SEX_TALL)
-    
-union
-    
-select
-    7,
-    AGE_GROUP,
-    CA_PERCENT,
-    DATE
-from
-    COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL
-where
-    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL)
-    
-union
-    
-select
-    8,
-    AGE_GROUP,
-    CASE_PERCENT,
-    DATE
-from
-    COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL
-where
-    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL)
-    
-union
-    
-select
-    9,
-    AGE_GROUP,
-    DEATHS_PERCENT,
-    DATE
-from
-    COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL
-where
-    DATE = (select MAX(DATE) from COVID.PUBLIC.CASE_DEMOGRAPHIC_AGEGROUPS_TALL)
-    
-) u
-join
-    groupings g
-    on g.QUERY_ID = u.QUERY_ID
-order by
-    u.DATE,
-    g.SUBJECT,
-    g.DATASET,
-    u.CATEGORY
+    , 'DEATH_PERCENTAGE' as SUBJECT
+    , DATASET
+    , CATEGORY
+    , PERCENT_DEATHS as METRIC_VALUE
+  from good_data
+    where DATE=MAX_DATE
+)
+select *
+from triple_union
+order by subject,dataset,category
