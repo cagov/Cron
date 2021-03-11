@@ -3,21 +3,14 @@ const fs = require('fs');
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
 
-const getSqlWorkAndSchemas_getFileNames = passTestPath => {
-  const passFiles = passTestPath.endsWith('/') ? fs.readdirSync(passTestPath).map(testFile=>passTestPath+testFile) : [passTestPath];
-
-  const result = [];
-
-  passFiles.forEach(testPath=>{
-    if(fs.existsSync(testPath)) {
-      result.push({
+const getSqlWorkAndSchemas_getFileNames = passTestPath =>
+      (passTestPath.endsWith('/') 
+      ? fs.readdirSync(passTestPath).map(testFile=>passTestPath+testFile)
+      : [passTestPath])
+    .filter(f=>fs.existsSync(f))
+    .map (testPath=>({
         name:testPath.split('/').pop(),
-        json:JSON.parse(fs.readFileSync(testPath))});
-    }
-  });
-
-  return result;
-};
+        json:JSON.parse(fs.readFileSync(testPath))}));
 
 const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, FailTestPathFormat) => {
   const sqlFullPath = `${__dirname}/${sqlPath}`;
