@@ -73,16 +73,17 @@ const processFilesForPr = async (fileData, gitRepo, prTitle) => {
 const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
     const branchName = `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
     const targetcontent = (await gitRepo.getContents(Pr ? branchName : masterBranch,path,true)).data;
-    if(JSON.stringify(json.data)===JSON.stringify(targetcontent.data)) {
+
+    //Add publishedDate
+    if(!json.meta) {
+        json.meta = {};
+    }
+    json.meta.PUBLISHED_DATE = todayDateString();
+
+    if(JSON.stringify(json)===JSON.stringify(targetcontent)) {
         console.log('data matched - no need to update');
     } else {
         console.log('data changed - updating');
-
-        //Add publishedDate
-        if(!json.meta) {
-            json.meta = {};
-        }
-        json.meta.PUBLISHED_DATE = todayDateString();
 
         if(!Pr) {
             await gitRepo.createBranch(masterBranch,branchName);
