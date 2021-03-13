@@ -4,7 +4,7 @@
       "name": "CovidStateDashboardV2",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 21/30 17-19 * * *"
+      "schedule": "0 21/30 16-18 * * *"
     }
   ],
   "disabled": true
