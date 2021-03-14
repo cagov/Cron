@@ -4,8 +4,7 @@
       "name": "CovidVaccineEquity",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 15/30 17-21 * * *"
+      "schedule": "0 15/30 16-20 * * *"
     }
-  ],
-  "disabled": true
+  ]
 }

@@ -4,8 +4,7 @@
       "name": "CovidEquityData",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 20 21 * * Tue"
+      "schedule": "0 20 20 * * Tue"
     }
-  ],
-  "disabled": true
+  ]
 }
