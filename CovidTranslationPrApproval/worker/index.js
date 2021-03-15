@@ -2,7 +2,7 @@ const GitHub = require('github-api'); //https://github-tools.github.io/github/do
 const githubUser = 'cagov';
 const githubRepo = 'covid19';
 const labelFilter = 'Translated Content';
-const printableCharsRx = /\p{C}/gu;
+const nonPrintableCharsRx = /\p{C}/gu;
 
 //Check to see if we need stats update PRs, make them if we do.
 const doTranslationPrUpdate = async masterbranch => {
@@ -43,7 +43,7 @@ const doTranslationPrUpdate = async masterbranch => {
             const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
 
             //Do not allow non-printable characters.  New Lines and Arabic number shifts are ok + 8294+8297+65279.
-            const onlyGoodChars = compare.files.every(x=>!printableCharsRx.test(x.patch.replace(/[\n\u200E\u2066\u2069\uFEFF]/gu,'')));
+            const onlyGoodChars = compare.files.every(x=>!nonPrintableCharsRx.test(x.patch.replace(/[\n\u200E\u2066\u2069\uFEFF]/gu,'')));
 
             if (pass && fileaccessok && onlyGoodChars) {
                 //Approve the PR
