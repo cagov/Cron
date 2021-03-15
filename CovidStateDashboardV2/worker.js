@@ -64,7 +64,7 @@ const processFilesForPr = async (fileData, gitRepo, prTitle) => {
 /**
  * If changes are detected, create and return a PR, or reuse a PR
  * @param {*} gitRepo 
- * @param {{}} [Pr] The PR from previous runs
+ * @param {{head:{ref:string}}} [Pr] The PR from previous runs
  * @param {string} path path of the file to update
  * @param {{data:{}}} json data to send
  * @param {string} prTitle title for PR if created
