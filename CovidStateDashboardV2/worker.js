@@ -71,8 +71,8 @@ const processFilesForPr = async (fileData, gitRepo, prTitle) => {
  * @returns {Promise<{html_url:string}>} The PR created if a change was made
  */
 const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
-    const branchName = `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
-    const targetcontent = (await gitRepo.getContents(Pr ? branchName : masterBranch,path,true)).data;
+    const branchName = Pr ? Pr.head.ref : `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
+    const targetcontent = (await gitRepo.getContents(Pr ? Pr.head.ref : masterBranch,path,true)).data;
 
     //Add publishedDate
     if(!json.meta) {
