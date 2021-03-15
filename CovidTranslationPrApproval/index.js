@@ -9,7 +9,8 @@ module.exports = async function (context, myTimer) {
 try {
   //await slackBotChatPost(debugChannel,`${appName} ran`);
 
-  await doTranslationPrUpdate(masterbranch);
+  //Disabled for now
+  //await doTranslationPrUpdate(masterbranch);
 
   //await slackBotChatPost(debugChannel,`${appName} finished`);
 
