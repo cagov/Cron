@@ -2,7 +2,7 @@ const GitHub = require('github-api'); //https://github-tools.github.io/github/do
 const githubUser = 'cagov';
 const githubRepo = 'covid19';
 const labelFilter = 'Translated Content';
-const printableCharsRx = /[\p{C}]/gu;
+const printableCharsRx = /\p{C}/gu;
 
 //Check to see if we need stats update PRs, make them if we do.
 const doTranslationPrUpdate = async masterbranch => {
