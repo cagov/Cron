@@ -33,7 +33,7 @@ const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, Fai
         }
 
         const newSchema = {
-          schema : fs.readFileSync(schemaPath).toString()
+          schema : JSON.parse(fs.readFileSync(schemaPath))
         };
 
         if(PassTestPathFormat) {
@@ -140,6 +140,60 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
   }
 };
 
+
+/**
+ * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
+ * @param {string} errorMessagePrefix Will display in front of error messages
+ * @param {{}} [targetJSON] JSON object to validate, null if just checking tests
+ * @param {{}} schemaJSON JSON schema to use for validation
+ * @param {[]} [testGoodFiles] Optional test data file that should pass
+ * @param {[]} [testBadFiles] Optional test data file that should fail 
+ */
+ const validateJSON2 = (errorMessagePrefix, targetJSON, schemaJSON, testGoodFiles, testBadFiles) => {
+  const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
+  const v = new Validator();
+
+  if (testGoodFiles) {
+    let latestGoodData = {};
+    testGoodFiles
+      .forEach(({name,json})=> {
+        //console.log({name,json});
+        const r = v.validate(json,schemaJSON);
+  
+        if (!r.valid) {
+          logAndError(`Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
+        }
+  
+        latestGoodData = json;
+      }
+    );
+  
+    if(testBadFiles) {
+      testBadFiles
+        .forEach(({name,json})=> {
+          //console.log({name,json});
+          const merged = mergeJSON(latestGoodData,json);
+          const r = v.validate(merged,schemaJSON);
+
+          if (r.valid) {
+            logAndError(`Bad JSON test is not 'Bad' - ${name}`);
+          }
+        }
+      );
+    }
+  }
+
+
+  if(targetJSON) {
+    //Reparse to simplify any Javascript objects like dates
+    const primaryResult = v.validate(JSON.parse(JSON.stringify(targetJSON)),schemaJSON);
+
+    if (!primaryResult.valid) {
+      logAndError(`${errorMessagePrefix} - ${validateJSON_getMessage(primaryResult.errors[0])}`);
+    }
+  }
+};
+
 /**
  * Logs an error message before throwing the message as an Error
  * @param {string} message Error message to display
@@ -151,5 +205,6 @@ const logAndError  = message => {
 
 module.exports = {
   validateJSON,
+  validateJSON2,
   getSqlWorkAndSchemas
 };
