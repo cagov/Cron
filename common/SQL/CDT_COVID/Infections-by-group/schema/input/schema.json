@@ -309,27 +309,17 @@
           "type":"object",
           "required":[
             "DATE",
-            "DOSES_ADMINISTERED",
-            "CUMMULATIVE_DAILY_DOSES_ADMINISTERED",
-            "PCT_INCREASE_FROM_PRIOR_DAY"
+            "CUMMULATIVE_DAILY_DOSES_ADMINISTERED"
           ],
           "additionalProperties": false,
           "properties": {
             "DATE":{
               "$ref": "#/definitions/date-YYYY-MM-DD"
             },
-            "DOSES_ADMINISTERED": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 999999999
-            },
             "CUMMULATIVE_DAILY_DOSES_ADMINISTERED": {
               "type": "integer",
               "minimum": 199999,
               "maximum": 999999999
-            },
-            "PCT_INCREASE_FROM_PRIOR_DAY":{
-              "type":"number"
             }
           }
         },
