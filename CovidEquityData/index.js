@@ -1,6 +1,6 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
-const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
+const { validateJSON, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const masterBranch = 'master';
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
@@ -61,7 +61,7 @@ If there are issues with the data:
         Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
             const schemaObject = sqlWorkAndSchemas.schema[file];
             const targetJSON = allData[file];
-            validateJSON2(`failed validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
+            validateJSON2(`failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
         });
 
         let allFilesMap = new Map();
@@ -73,6 +73,13 @@ If there are issues with the data:
             }
         );
 
+        validateJSON('equityTopBoxDataV2 failed validation', 
+            allFilesMap.get('equityTopBoxDataV2'),
+            `../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/schema.json`,
+            '../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/sample.json',
+            '../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/fail/'
+        );
+  
         // this is combining cases, testing and deaths metrics
         allData.MissingnessData.forEach(item => {
             let mapKey = `missingness-${item.COUNTY}`;
