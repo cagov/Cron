@@ -17,10 +17,49 @@
   },
   "type": "object",
   "required": [
+    "LowIncome",
     "Demographics"
   ],
-  "additionalProperties": true,
+  "additionalProperties": false,
   "properties": {
+    "LowIncome": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "DATE",
+          "STATE_CASE_RATE_PER_100K",
+          "CASE_RATE_PER_100K",
+          "POPULATION",
+          "CASES_7DAYAVG_7DAYSAGO",
+          "RATE_DIFF_30_DAYS"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "DATE": {
+            "$ref": "#/definitions/date-YYYY-MM-DD"
+          },
+          "STATE_CASE_RATE_PER_100K": {
+            "$ref": "#/definitions/rate-per-100k"
+          },
+          "CASE_RATE_PER_100K": {
+            "$ref": "#/definitions/rate-per-100k"
+          },
+          "POPULATION": {
+            "$ref": "#/definitions/integer-one-to-everyone"
+          },
+          "CASES_7DAYAVG_7DAYSAGO": {
+            "$ref": "#/definitions/integer-one-to-everyone"
+          },
+          "RATE_DIFF_30_DAYS": {
+            "type": "number"
+          }
+        }
+      }
+    },
     "Demographics": {
       "type": "array",
       "uniqueItems": true,

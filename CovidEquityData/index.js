@@ -78,13 +78,6 @@ If there are issues with the data:
             '../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/sample.json',
             '../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/fail/'
         );
-
-        validateJSON('equityTopBoxDataV2.CasesLowIncome failed validation', 
-            equityTopBoxDataV2,
-            `../SQL/CDT_COVID/Equity/schema/CasesLowIncome/output/schema.json`,
-            '../SQL/CDT_COVID/Equity/schema/CasesLowIncome/output/sample.json',
-            '../SQL/CDT_COVID/Equity/schema/CasesLowIncome/output/fail/'
-        );
   
         // this is combining cases, testing and deaths metrics
         allData.MissingnessData.forEach(item => {
