@@ -61,23 +61,29 @@ If there are issues with the data:
         Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
             const schemaObject = sqlWorkAndSchemas.schema[file];
             const targetJSON = allData[file];
-            validateJSON2(`failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
+            validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
         });
 
         let allFilesMap = new Map();
+        const equityTopBoxDataV2 = {
+            LowIncome : allData.CasesLowIncome,
+            Demographics : allData.CasesAndDeathsByDemographic
+        };
 
-        allFilesMap.set('equityTopBoxDataV2',
-            {
-                LowIncome : allData.CasesLowIncome,
-                Demographics : allData.CasesAndDeathsByDemographic
-            }
-        );
+        allFilesMap.set('equityTopBoxDataV2',equityTopBoxDataV2);
 
-        validateJSON('equityTopBoxDataV2 failed validation', 
-            allFilesMap.get('equityTopBoxDataV2'),
+        validateJSON('equityTopBoxDataV2.CasesAndDeathsByDemographic failed validation', 
+            equityTopBoxDataV2,
             `../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/schema.json`,
             '../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/sample.json',
             '../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/fail/'
+        );
+
+        validateJSON('equityTopBoxDataV2.CasesLowIncome failed validation', 
+            equityTopBoxDataV2,
+            `../SQL/CDT_COVID/Equity/schema/CasesLowIncome/output/schema.json`,
+            '../SQL/CDT_COVID/Equity/schema/CasesLowIncome/output/sample.json',
+            '../SQL/CDT_COVID/Equity/schema/CasesLowIncome/output/fail/'
         );
   
         // this is combining cases, testing and deaths metrics
@@ -274,6 +280,6 @@ If there are issues with the data:
             await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
         }
     } catch (e) {
-       await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
+       //await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
 };

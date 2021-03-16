@@ -94,50 +94,13 @@ const mergeJSON = (target,stub) => {
  * @param {string} [testBadFilePath] Optional test data file that should fail 
  */
 const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFilePath, testBadFilePath) => {
-  const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
-  const v = new Validator();
-
-  const schemaJSON = require(schemafilePath);
-
-  if (testGoodFilePath) {
-    let latestGoodData = {};
-    validateJSON_getJsonFiles(testGoodFilePath)
-      .forEach(({name,json})=> {
-        //console.log({name,json});
-        const r = v.validate(json,schemaJSON);
-  
-        if (!r.valid) {
-          logAndError(`Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
-        }
-  
-        latestGoodData = json;
-      }
-    );
-  
-    if(testBadFilePath) {
-      validateJSON_getJsonFiles(testBadFilePath)
-        .forEach(({name,json})=> {
-          //console.log({name,json});
-          const merged = mergeJSON(latestGoodData,json);
-          const r = v.validate(merged,schemaJSON);
-
-          if (r.valid) {
-            logAndError(`Bad JSON test is not 'Bad' - ${name}`);
-          }
-        }
+  validateJSON2(
+      errorMessagePrefix,
+      targetJSON,
+      require(schemafilePath),
+      testGoodFilePath ? validateJSON_getJsonFiles(testGoodFilePath) : null,
+      testBadFilePath ? validateJSON_getJsonFiles(testBadFilePath) : null
       );
-    }
-  }
-
-
-  if(targetJSON) {
-    //Reparse to simplify any Javascript objects like dates
-    const primaryResult = v.validate(JSON.parse(JSON.stringify(targetJSON)),schemaJSON);
-
-    if (!primaryResult.valid) {
-      logAndError(`${errorMessagePrefix} - ${validateJSON_getMessage(primaryResult.errors[0])}`);
-    }
-  }
 };
 
 
@@ -161,7 +124,7 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
         const r = v.validate(json,schemaJSON);
   
         if (!r.valid) {
-          logAndError(`Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
+          logAndError(`${errorMessagePrefix} - Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
         }
   
         latestGoodData = json;
@@ -176,7 +139,7 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
           const r = v.validate(merged,schemaJSON);
 
           if (r.valid) {
-            logAndError(`Bad JSON test is not 'Bad' - ${name}`);
+            logAndError(`${errorMessagePrefix} - Bad JSON test is not 'Bad' - ${name}`);
           }
         }
       );
