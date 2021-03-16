@@ -27,7 +27,7 @@ const getData_daily_stats_v2 = async () => {
   
   const row = statResults.metrics[0];
   const rowHospitals = statResults.hospitalizations[0];
-  const rowVaccines = resultsVaccines[0].VACCINE_KPI_JSON;
+  const rowVaccines = resultsVaccines[0];
 
   const json = {
       meta: {
@@ -87,9 +87,7 @@ const getData_daily_stats_v2 = async () => {
           },
           vaccinations: {
               DATE : rowHospitals.SF_LOAD_TIMESTAMP,
-              DOSES_ADMINISTERED : rowVaccines.DOSES_ADMINISTERED,
-              CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMMULATIVE_DAILY_DOSES_ADMINISTERED,
-              PCT_INCREASE_FROM_PRIOR_DAY : rowVaccines.PCT_INCREASE_FROM_PRIOR_DAY
+              CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMMULATIVE_DAILY_DOSES_ADMINISTERED
           }
       }
   };
