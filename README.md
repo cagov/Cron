@@ -45,14 +45,30 @@ Example [`CovidEquityData/index.js`](./CovidEquityData/index.js) publishes to [`
 * `qnacrawler` - Question & Answer scraper that scrapes website and pulls Q&A into a database that is made accessible to Google Search Results.
 * `perfMonitor` - Lighthouse performance monitoring. Publishes reports to Slack.
 
-## SQL query structure
+## SQL queries
 
+We found it was helpful to isolate all our SQL queries so that we can quickly and easily share which data we are ingesting.
+
+## Schema tests
 How our SQL folders are structured:
-
+* `common/SQL/{Database}/{Dataset}/{name}.sql*`
 * `common/SQL/{Database}/{Dataset}/schema/input/schema.json`
 * `common/SQL/{Database}/{Dataset}/schema/output/schema.json`
 * `common/SQL/{Database}/{Dataset}/schema/tests/pass/YYYY-MM-DD.json`
 * `common/SQL/{Database}/{Dataset}/schema/tests/fail/{name}.json`
+
+### General guidelines for structuring datasets
+
+* Keep the datasets *modular*, they may be reused in multiple locations
+* We use **all caps for variable names**, which matches the data used by data providers.
+* We use **lowercase for JSON attributes** wherever possible.
+
+### Time & Dates
+* Our preferred format for dates is `YYYY-MM-DD` 
+* Our preferred format for datetime is `@TBD`
+* Our servers run on GMT.
+* Our dates are set to `@TBD` timezone in `standard` time.
+* We (will) use lowercase attributes for `meta` data that is programatically updated, such as `published_date` - this matches most API implementations.
 
 ## Read more about our technology approach
 * [Data pipelines](https://teamdocs.covid19.ca.gov/teams/engineering/data-pipelines/)
