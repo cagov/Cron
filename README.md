@@ -18,8 +18,10 @@ Example [`CovidEquityData/index.js`](./CovidEquityData/index.js) publishes to [`
     * [Decoder tool](https://crontab.cronhub.io/), Example: `0 22 16 * * *` > "At 04:22 PM"
     * [Ncrobtab interpreter](https://ncrontab.swimburger.net/) 
     
-    Example: `0 21/30 16-18 * * *` > 
-    ```2021-03-17 16:21:00
+    Example: 
+    
+    `0 21/30 16-18 * * *` > 
+`2021-03-17 16:21:00
 2021-03-17 16:51:00
 2021-03-17 17:21:00
 2021-03-17 17:51:00
@@ -28,7 +30,7 @@ Example [`CovidEquityData/index.js`](./CovidEquityData/index.js) publishes to [`
 2021-03-18 16:21:00
 2021-03-18 16:51:00
 2021-03-18 17:21:00
-2021-03-18 17:51:00```
+2021-03-18 17:51:00`
 
 ## Contents of this repository
 
