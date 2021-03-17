@@ -31,7 +31,8 @@ Example [`CovidEquityData/index.js`](./CovidEquityData/index.js) publishes to [`
 2021-03-18 16:21:00
 2021-03-18 16:51:00
 2021-03-18 17:21:00
-2021-03-18 17:51:00```
+2021-03-18 17:51:00
+```
 
 ## Contents of this repository
 
