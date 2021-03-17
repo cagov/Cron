@@ -64,8 +64,8 @@ How our SQL folders are structured:
 * We use **lowercase for JSON attributes** wherever possible.
 
 ### Time & Dates
-* Our preferred format for dates is `YYYY-MM-DD` 
-* Our preferred format for datetime is `@TBD`
+* Our preferred format for dates is `YYYY-MM-DD`. Example `published_date: "2021-03-17`. 
+* We do not have a lot of instances of publishing datetime formatted strings, but our preferred format for datetime is `YYYY-MM-DDTHH:MM:SSZ` which expresses times in GMT, and a use DATETIME in the field name. Example `published_datetime: "2021-03-17T12:47:12Z`.
 * Our servers run on GMT.
 * Our dates are set to `@TBD` timezone in `standard` time.
 * We (will) use lowercase attributes for `meta` data that is programatically updated, such as `published_date` - this matches most API implementations.
