@@ -150,13 +150,14 @@ If there are issues with the data:
         });
 
         // statewide stats for comparison
+        const cumulative_combined_key = 'cumulative-combined';
         allData.CumulativeStatewideData.forEach(item => {
-            let info = allFilesMap.get('cumulative-combined') || {};
+            let info = allFilesMap.get(cumulative_combined_key) || {};
 
             if(!info[item.METRIC]) {
                 info[item.METRIC] = item; // just one row for cases, deaths, tests in this query
             }
-            allFilesMap.set('cumulative-combined',info);
+            allFilesMap.set(cumulative_combined_key,info);
         });
 
         // write one file for statewide data
@@ -169,23 +170,37 @@ If there are issues with the data:
 
         //Validate Results
         for (let [key,value] of allFilesMap) {
-            if(key===equityTopBoxDataV2_key) {
-                //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
-                validateJSON('equityTopBoxDataV2.CasesAndDeathsByDemographic failed validation', 
-                    value,
-                    `${schemaPath}CasesAndDeathsByDemographic/output/schema.json`,
-                    `${schemaPath}CasesAndDeathsByDemographic/output/sample.json`,
-                    `${schemaPath}CasesAndDeathsByDemographic/output/fail/`
-                );
-            } else if(key.startsWith(MissingnessHeader)) {
-                //includes MissingnessSOGIData too
-                validateJSON(`${key} failed validation`, 
-                    value,
-                    `${schemaPath}MissingnessData/output/schema.json`,
-                    `${schemaPath}MissingnessData/output/sample.json`,
-                    `${schemaPath}MissingnessData/output/fail/`
-                );
-            } 
+            switch (key) {
+                case equityTopBoxDataV2_key:
+                    //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
+                    validateJSON(`${key} failed validation`, 
+                        value,
+                        `${schemaPath}CasesAndDeathsByDemographic/output/schema.json`,
+                        `${schemaPath}CasesAndDeathsByDemographic/output/sample.json`,
+                        `${schemaPath}CasesAndDeathsByDemographic/output/fail/`
+                    );
+                    break;
+
+                case cumulative_combined_key:
+                    validateJSON(`${key} failed validation`, 
+                        value,
+                        `${schemaPath}CumulativeStatewideData/output/schema.json`,
+                        `${schemaPath}CumulativeStatewideData/output/sample.json`,
+                        `${schemaPath}CumulativeStatewideData/output/fail/`
+                    );
+                    break;
+
+                default:
+                    if(key.startsWith(MissingnessHeader)) {
+                        //includes MissingnessSOGIData too
+                        validateJSON(`${key} failed validation`, 
+                            value,
+                            `${schemaPath}MissingnessData/output/schema.json`,
+                            `${schemaPath}MissingnessData/output/sample.json`,
+                            `${schemaPath}MissingnessData/output/fail/`
+                        );
+                    }
+            }
         }
 
         //Create two trees for Production/Staging

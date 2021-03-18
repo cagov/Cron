@@ -1,0 +1,96 @@
+{
+  "definitions": {
+    "cases_tests_deaths": {
+      "type": "object",
+      "required": [
+        "COUNTY",
+        "DEMOGRAPHIC_SET",
+        "DEMOGRAPHIC_SET_CATEGORY",
+        "METRIC",
+        "METRIC_VALUE",
+        "METRIC_VALUE_PER_100K",
+        "APPLIED_SUPPRESSION",
+        "POPULATION_PERCENTAGE",
+        "METRIC_TOTAL_PERCENTAGE",
+        "METRIC_VALUE_30_DAYS_AGO",
+        "METRIC_VALUE_PER_100K_30_DAYS_AGO",
+        "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO",
+        "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO",
+        "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "COUNTY": {
+          "const": "California"
+        },
+        "DEMOGRAPHIC_SET": {
+          "const": "Combined"
+        },
+        "DEMOGRAPHIC_SET_CATEGORY": {
+          "const": "Statewide"
+        },
+        "METRIC": {
+          "enum": [
+            "cases",
+            "deaths",
+            "tests"
+          ]
+        },
+        "METRIC_VALUE": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "METRIC_VALUE_PER_100K": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "APPLIED_SUPPRESSION": {
+          "const": "None"
+        },
+        "POPULATION_PERCENTAGE": {
+          "const": 100
+        },
+        "METRIC_TOTAL_PERCENTAGE": {
+          "const": 100
+        },
+        "METRIC_VALUE_30_DAYS_AGO": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "METRIC_VALUE_PER_100K_30_DAYS_AGO": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO": {
+          "type": "number"
+        },
+        "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO": {
+          "const": 100
+        },
+        "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO": {
+          "const": 0
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": [
+    "cases",
+    "deaths",
+    "tests"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "cases": {
+      "$ref": "#/definitions/cases_tests_deaths"
+    },
+    "tests": {
+      "$ref": "#/definitions/cases_tests_deaths"
+    },
+    "deaths": {
+      "$ref": "#/definitions/cases_tests_deaths"
+    }
+  }
+}
