@@ -1,0 +1,94 @@
+{
+  "definitions": {
+    "date-YYYY-MM-DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "meta",
+    "data"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "LATEST_ADMINISTERED_DATE",
+        "PUBLISHED_DATE"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "LATEST_ADMINISTERED_DATE": {
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        },
+        "PUBLISHED_DATE": {
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        }
+      }
+    },
+    "data": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": [
+          "HPIQUARTILE",
+          "AGE16_POPULATION",
+          "VACCINATED",
+          "PARTIALLY_VACCINATED",
+          "FULLY_VACCINATED",
+          "VACCINATED_RATIO",
+          "PARTIALLY_VACCINATED_RATIO",
+          "FULLY_VACCINATED_RATIO"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "HPIQUARTILE": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "AGE16_POPULATION": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 99999999
+          },
+          "VACCINATED": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 99999999
+          },
+          "PARTIALLY_VACCINATED": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 99999999
+          },
+          "FULLY_VACCINATED": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 99999999
+          },
+          "VACCINATED_RATIO": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "PARTIALLY_VACCINATED_RATIO": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "FULLY_VACCINATED_RATIO": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    }
+  }
+}
