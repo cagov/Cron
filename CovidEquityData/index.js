@@ -67,24 +67,17 @@ If there are issues with the data:
         });
 
         let allFilesMap = new Map();
-        const equityTopBoxDataV2 = {
+        const equityTopBoxDataV2_key = 'equityTopBoxDataV2';
+
+        allFilesMap.set(equityTopBoxDataV2_key,{
             LowIncome : allData.CasesLowIncome,
             Demographics : allData.CasesAndDeathsByDemographic
-        };
+        });
 
-        allFilesMap.set('equityTopBoxDataV2',equityTopBoxDataV2);
-
-        //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
-        validateJSON('equityTopBoxDataV2.CasesAndDeathsByDemographic failed validation', 
-            equityTopBoxDataV2,
-            `${schemaPath}CasesAndDeathsByDemographic/output/schema.json`,
-            `${schemaPath}CasesAndDeathsByDemographic/output/sample.json`,
-            `${schemaPath}CasesAndDeathsByDemographic/output/fail/`
-        );
-  
         // this is combining cases, testing and deaths metrics
+        const MissingnessHeader = 'missingness-';
         allData.MissingnessData.forEach(item => {
-            let mapKey = `missingness-${item.COUNTY}`;
+            let mapKey = `${MissingnessHeader}${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey) || {race_ethnicity:{}};
 
             countyInfo.race_ethnicity[item.METRIC] = item;
@@ -95,7 +88,7 @@ If there are issues with the data:
         // combining sogi missingness with regular missingness so I can write less files
         // missingness sexual orientation, gender identity
         allData.MissingnessSOGIData.forEach(item => {
-            let mapKey = `missingness-${item.COUNTY}`;
+            let mapKey = `${MissingnessHeader}${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey) || {};
 
             if(!countyInfo[item.SOGI_CATEGORY]) {
@@ -155,7 +148,7 @@ If there are issues with the data:
             if(!countyInfo[item.METRIC]) {
                 countyInfo[item.METRIC] = [];
             }
-            countyInfo[item.METRIC].push(item);        
+            countyInfo[item.METRIC].push(item);
             allFilesMap.set(mapKey,countyInfo);
         });
 
@@ -176,6 +169,27 @@ If there are issues with the data:
             statewidePopData.push(item);
         });
         allFilesMap.set(statewideMapKey,statewidePopData);
+
+        //Validate Results
+        for (let [key,value] of allFilesMap) {
+            if(key===equityTopBoxDataV2_key) {
+                //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
+                validateJSON('equityTopBoxDataV2.CasesAndDeathsByDemographic failed validation', 
+                    value,
+                    `${schemaPath}CasesAndDeathsByDemographic/output/schema.json`,
+                    `${schemaPath}CasesAndDeathsByDemographic/output/sample.json`,
+                    `${schemaPath}CasesAndDeathsByDemographic/output/fail/`
+                );
+            } else if(key.startsWith(MissingnessHeader)) {
+                //includes MissingnessSOGIData too
+                validateJSON(`${key} failed validation`, 
+                    value,
+                    `${schemaPath}MissingnessData/output/schema.json`,
+                    `${schemaPath}MissingnessData/output/sample.json`,
+                    `${schemaPath}MissingnessData/output/fail/`
+                );
+            } 
+        }
 
         //Create two trees for Production/Staging
         const stagingTree = [];

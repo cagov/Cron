@@ -1,0 +1,229 @@
+{
+  "definitions": {
+    "date_YYYY_MM_DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "county": {
+      "type": "string",
+      "enum": [
+        "California",
+        "Alameda",
+        "Alpine",
+        "Amador",
+        "Butte",
+        "Calaveras",
+        "Colusa",
+        "Contra Costa",
+        "Del Norte",
+        "El Dorado",
+        "Fresno",
+        "Glenn",
+        "Humboldt",
+        "Imperial",
+        "Inyo",
+        "Kern",
+        "Kings",
+        "Lake",
+        "Lassen",
+        "Los Angeles",
+        "Madera",
+        "Marin",
+        "Mariposa",
+        "Mendocino",
+        "Merced",
+        "Modoc",
+        "Mono",
+        "Monterey",
+        "Napa",
+        "Nevada",
+        "Orange",
+        "Placer",
+        "Plumas",
+        "Riverside",
+        "Sacramento",
+        "San Benito",
+        "San Bernardino",
+        "San Diego",
+        "San Francisco",
+        "San Joaquin",
+        "San Luis Obispo",
+        "San Mateo",
+        "Santa Barbara",
+        "Santa Clara",
+        "Santa Cruz",
+        "Shasta",
+        "Sierra",
+        "Siskiyou",
+        "Solano",
+        "Sonoma",
+        "Stanislaus",
+        "Sutter",
+        "Tehama",
+        "Trinity",
+        "Tulare",
+        "Tuolumne",
+        "Ventura",
+        "Yolo",
+        "Yuba"
+      ]
+    },
+    "cases_deaths_tests": {
+      "type": "object",
+      "required": [
+        "METRIC",
+        "MISSING",
+        "NOT_MISSING",
+        "TOTAL",
+        "PERCENT_COMPLETE",
+        "PERCENT_COMPLETE_30_DAYS_DIFF",
+        "REPORT_DATE"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "COUNTY": {
+          "$ref": "#/definitions/county"
+        },
+        "METRIC": {
+          "type": "string",
+          "enum": [
+            "cases",
+            "deaths",
+            "tests"
+          ]
+        },
+        "MISSING": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "NOT_MISSING": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "TOTAL": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PERCENT_COMPLETE": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PERCENT_COMPLETE_30_DAYS_PRIOR": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "PERCENT_COMPLETE_30_DAYS_DIFF": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "REPORT_DATE": {
+          "$ref": "#/definitions/date_YYYY_MM_DD"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": [
+    "race_ethnicity",
+    "gender_identity",
+    "sexual_orientation"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "race_ethnicity": {
+      "type": "object",
+      "required": [
+        "cases",
+        "deaths",
+        "tests"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "$ref": "#/definitions/cases_deaths_tests"
+        },
+        "deaths": {
+          "$ref": "#/definitions/cases_deaths_tests"
+        },
+        "tests": {
+          "$ref": "#/definitions/cases_deaths_tests"
+        }
+      }
+    },
+    "gender_identity": {
+      "type": "object",
+      "required": [
+        "cases",
+        "deaths"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "$ref": "#/definitions/cases_deaths_tests"
+        },
+        "deaths": {
+          "$ref": "#/definitions/cases_deaths_tests"
+        }
+      }
+    },
+    "sexual_orientation": {
+      "type": "object",
+      "required": [
+        "cases",
+        "deaths"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "$ref": "#/definitions/cases_deaths_tests"
+        },
+        "deaths": {
+          "$ref": "#/definitions/cases_deaths_tests"
+        }
+      }
+    }
+  }
+}
