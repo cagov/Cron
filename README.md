@@ -74,8 +74,11 @@ How our SQL folders are structured:
 ## Schema validation prep
 
 * Pull a sample .tsv from Snowflake query and convert to JSON.
-* Use SchemaJSON template to prepare a validation schema.
+* Use [JSON Schema](https://json-schema.org/understanding-json-schema/) to prepare a validation schema.
 * Look up individual fields to determine their type and any allowed data, ranges, etc.
+* [JSON Schema Type reference](https://json-schema.org/understanding-json-schema/reference/type.html)
+* [Validate your schema](https://www.jsonschemavalidator.net/) - use your custom schema & sample JSON dataset to test this out.
+* [RegExR](https://regexr.com/) - tool for building new regex expressions
 
 ### Time & Dates
 * Our preferred format for dates is: `YYYY-MM-DD` 
