@@ -1,0 +1,115 @@
+{
+  "definitions": {
+    "date-YYYY-MM-DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "integer-one-to-everyone": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 99999999
+    },
+    "rate-per-100k": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 100000
+    }
+  },
+  "type": "object",
+  "required": [
+    "LowIncome",
+    "Demographics"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "LowIncome": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "DATE",
+          "STATE_CASE_RATE_PER_100K",
+          "CASE_RATE_PER_100K",
+          "POPULATION",
+          "CASES_7DAYAVG_7DAYSAGO",
+          "RATE_DIFF_30_DAYS"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "DATE": {
+            "$ref": "#/definitions/date-YYYY-MM-DD"
+          },
+          "STATE_CASE_RATE_PER_100K": {
+            "$ref": "#/definitions/rate-per-100k"
+          },
+          "CASE_RATE_PER_100K": {
+            "$ref": "#/definitions/rate-per-100k"
+          },
+          "POPULATION": {
+            "$ref": "#/definitions/integer-one-to-everyone"
+          },
+          "CASES_7DAYAVG_7DAYSAGO": {
+            "$ref": "#/definitions/integer-one-to-everyone"
+          },
+          "RATE_DIFF_30_DAYS": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "Demographics": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": [
+          "RACE_ETHNICITY",
+          "CASES",
+          "DEATHS",
+          "POPULATION",
+          "REPORT_DATE",
+          "CASE_RATE",
+          "DEATH_RATE"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "RACE_ETHNICITY": {
+            "type": "string",
+            "enum": [
+              "African American",
+              "American Indian",
+              "Asian",
+              "Latino",
+              "Multi-Race",
+              "Native Hawaiian and other Pacific Islander",
+              "White"
+            ]
+          },
+          "CASES": {
+            "$ref": "#/definitions/integer-one-to-everyone"
+          },
+          "DEATHS": {
+            "$ref": "#/definitions/integer-one-to-everyone"
+          },
+          "POPULATION": {
+            "$ref": "#/definitions/integer-one-to-everyone"
+          },
+          "REPORT_DATE": {
+            "$ref": "#/definitions/date-YYYY-MM-DD"
+          },
+          "CASE_RATE": {
+            "$ref": "#/definitions/rate-per-100k"
+          },
+          "DEATH_RATE": {
+            "$ref": "#/definitions/rate-per-100k"
+          }
+        }
+      }
+    }
+  }
+}

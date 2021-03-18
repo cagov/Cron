@@ -1,0 +1,65 @@
+[
+  {
+    "RACE_ETHNICITY": "African American",
+    "CASES": 111560,
+    "DEATHS": 3278,
+    "POPULATION": 2393662,
+    "REPORT_DATE": "2021-03-08",
+    "CASE_RATE": 4660.6,
+    "DEATH_RATE": 136.9
+  },
+  {
+    "RACE_ETHNICITY": "American Indian",
+    "CASES": 9040,
+    "DEATHS": 185,
+    "POPULATION": 206186,
+    "REPORT_DATE": "2021-03-08",
+    "CASE_RATE": 4384.4,
+    "DEATH_RATE": 89.7
+  },
+  {
+    "RACE_ETHNICITY": "Asian",
+    "CASES": 187117,
+    "DEATHS": 6143,
+    "POPULATION": 6189673,
+    "REPORT_DATE": "2021-03-08",
+    "CASE_RATE": 3023.1,
+    "DEATH_RATE": 99.2
+  },
+  {
+    "RACE_ETHNICITY": "Latino",
+    "CASES": 1513081,
+    "DEATHS": 24441,
+    "POPULATION": 15624857,
+    "REPORT_DATE": "2021-03-08",
+    "CASE_RATE": 9683.8,
+    "DEATH_RATE": 156.4
+  },
+  {
+    "RACE_ETHNICITY": "Multi-Race",
+    "CASES": 43154,
+    "DEATHS": 702,
+    "POPULATION": 886703,
+    "REPORT_DATE": "2021-03-08",
+    "CASE_RATE": 4866.8,
+    "DEATH_RATE": 79.2
+  },
+  {
+    "RACE_ETHNICITY": "Native Hawaiian and other Pacific Islander",
+    "CASES": 15307,
+    "DEATHS": 323,
+    "POPULATION": 135721,
+    "REPORT_DATE": "2021-03-08",
+    "CASE_RATE": 11278.3,
+    "DEATH_RATE": 238
+  },
+  {
+    "RACE_ETHNICITY": "White",
+    "CASES": 547893,
+    "DEATHS": 16640,
+    "POPULATION": 14692358,
+    "REPORT_DATE": "2021-03-08",
+    "CASE_RATE": 3729.1,
+    "DEATH_RATE": 113.3
+  }
+]

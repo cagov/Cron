@@ -1,6 +1,6 @@
-const { queryDataset,getSQL } = require('../common/snowflakeQuery');
-const SnowFlakeSqlPath = 'CDT_COVID/Equity/';
+const { queryDataset } = require('../common/snowflakeQuery');
 const { slackBotChatPost, slackBotDelayedChatPost, slackBotReportError } = require('../common/slackBot');
+const { validateJSON, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const masterBranch = 'master';
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
@@ -22,6 +22,10 @@ const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 //const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
+const sqlRootPath = "../SQL/CDT_COVID/Equity/";
+const schemaPath = `${sqlRootPath}schema/`;
+
+// eslint-disable-next-line no-unused-vars
 module.exports = async function (context, functionInput) {
     try {
         await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
@@ -49,44 +53,39 @@ If there are issues with the data:
 - Work with Triston directly to resolve data issues
 - Alert the COVID19 site team in Slack (in the [Equity page channel](https://cadotgov.slack.com/archives/C01BMCQK0F6))`;
         
-        const DbSqlWork = {
-            casesAndDeathsByDemographic : getSQL(`${SnowFlakeSqlPath}CasesAndDeathsByDemographic`),
-            casesLowIncome : getSQL(`${SnowFlakeSqlPath}CasesLowIncome`),
-            // cumulative for R/E per 100K, R/E by % pop. there used to be a REPORT_DATE here and we used to have to do where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE); but that has been removed and we expect a single cumulative value here now
-            cumulativeData : getSQL(`${SnowFlakeSqlPath}CumulativeData`),
-            cumulativeStatewideData : getSQL(`${SnowFlakeSqlPath}CumulativeStatewideData`),
-            // statewide stats for comparison
-            statewideData : getSQL(`${SnowFlakeSqlPath}StatewideData`),
-            missingnessData : getSQL(`${SnowFlakeSqlPath}MissingnessData`),
-            // missingness sexual orientation, gender identity
-            missingnessSOGIData : getSQL(`${SnowFlakeSqlPath}MissingnessSOGIData`),
-            socialData : getSQL(`${SnowFlakeSqlPath}SocialData`),
-            // equity metric line chart
-            healthEquityData : getSQL(`${SnowFlakeSqlPath}HealthEquityData`)
-        };
+        const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/[file]/input/schema.json','schema/[file]/input/sample.json','schema/[file]/input/fail/');
 
-        const allData = await queryDataset(DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
+        const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
+
+        Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
+            const schemaObject = sqlWorkAndSchemas.schema[file];
+            const targetJSON = allData[file];
+            validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
+        });
 
         let allFilesMap = new Map();
+        const equityTopBoxDataV2_key = 'equityTopBoxDataV2';
 
-        allFilesMap.set('equityTopBoxDataV2',
-            {
-                LowIncome : allData.casesLowIncome,
-                Demographics : allData.casesAndDeathsByDemographic
-            }
-        );
+        allFilesMap.set(equityTopBoxDataV2_key,{
+            LowIncome : allData.CasesLowIncome,
+            Demographics : allData.CasesAndDeathsByDemographic
+        });
 
         // this is combining cases, testing and deaths metrics
-        allData.missingnessData.forEach(item => {
-            let mapKey = `missingness-${item.COUNTY}`;
+        const MissingnessHeader = 'missingness-';
+        allData.MissingnessData.forEach(item => {
+            let mapKey = `${MissingnessHeader}${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey) || {race_ethnicity:{}};
 
             countyInfo.race_ethnicity[item.METRIC] = item;
             allFilesMap.set(mapKey,countyInfo);
         });
+
+
         // combining sogi missingness with regular missingness so I can write less files
-        allData.missingnessSOGIData.forEach(item => {
-            let mapKey = `missingness-${item.COUNTY}`;
+        // missingness sexual orientation, gender identity
+        allData.MissingnessSOGIData.forEach(item => {
+            let mapKey = `${MissingnessHeader}${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey) || {};
 
             if(!countyInfo[item.SOGI_CATEGORY]) {
@@ -105,14 +104,15 @@ If there are issues with the data:
         });
 
         // for cumulative go through all, add each county to map with cumulative key, all records for that county should be in that one file
-        allData.cumulativeData.forEach(item => {
+        // cumulative for R/E per 100K, R/E by % pop. there used to be a REPORT_DATE here and we used to have to do where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE); but that has been removed and we expect a single cumulative value here now
+        allData.CumulativeData.forEach(item => {
             let mapKey = `cumulative-${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey) || [];
 
             item.SORT_METRIC = item.METRIC_TOTAL_PERCENTAGE / item.POPULATION_PERCENTAGE;
             item.METRIC_TOTAL_DELTA = 100 - item.METRIC_TOTAL_PERCENTAGE;
             item.POPULATION_PERCENTAGE_DELTA = 100 - item.POPULATION_PERCENTAGE;
-            let allMetricItemsInCounty = [...allData.cumulativeData].filter(f => f.COUNTY === item.COUNTY && f.METRIC === item.METRIC);
+            let allMetricItemsInCounty = [...allData.CumulativeData].filter(f => f.COUNTY === item.COUNTY && f.METRIC === item.METRIC);
             item.WORST_VALUE = allMetricItemsInCounty.reduce((a, e) => e["METRIC_VALUE_PER_100K"] > a["METRIC_VALUE_PER_100K"] ? e : a).METRIC_VALUE_PER_100K;
             item.WORST_VALUE_DELTA = item.WORST_VALUE - item.METRIC_VALUE_PER_100K;
             let nonNulls = allMetricItemsInCounty.filter(f => f["METRIC_VALUE_PER_100K"] != null);
@@ -128,7 +128,7 @@ If there are issues with the data:
         });
 
         // social data should all go in one file
-        allData.socialData.forEach(item => {
+        allData.SocialData.forEach(item => {
             let mapKey = `social-data-${item.SOCIAL_DET}`;
             let countyInfo = allFilesMap.get(mapKey) || [];
 
@@ -137,18 +137,20 @@ If there are issues with the data:
         });
 
         // healthequity data
-        allData.healthEquityData.forEach(item => {
+        // equity metric line chart
+        allData.HealthEquityData.forEach(item => {
             let mapKey = `healthequity-${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey) || {}; // ts:Date.now() insures file uniqueness
 
             if(!countyInfo[item.METRIC]) {
                 countyInfo[item.METRIC] = [];
             }
-            countyInfo[item.METRIC].push(item);        
+            countyInfo[item.METRIC].push(item);
             allFilesMap.set(mapKey,countyInfo);
         });
 
-        allData.cumulativeStatewideData.forEach(item => {
+        // statewide stats for comparison
+        allData.CumulativeStatewideData.forEach(item => {
             let info = allFilesMap.get('cumulative-combined') || {};
 
             if(!info[item.METRIC]) {
@@ -160,10 +162,31 @@ If there are issues with the data:
         // write one file for statewide data
         let statewideMapKey = `statewide-data`;
         let statewidePopData = [];
-        allData.statewideData.forEach(item => {
+        allData.StatewideData.forEach(item => {
             statewidePopData.push(item);
         });
         allFilesMap.set(statewideMapKey,statewidePopData);
+
+        //Validate Results
+        for (let [key,value] of allFilesMap) {
+            if(key===equityTopBoxDataV2_key) {
+                //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
+                validateJSON('equityTopBoxDataV2.CasesAndDeathsByDemographic failed validation', 
+                    value,
+                    `${schemaPath}CasesAndDeathsByDemographic/output/schema.json`,
+                    `${schemaPath}CasesAndDeathsByDemographic/output/sample.json`,
+                    `${schemaPath}CasesAndDeathsByDemographic/output/fail/`
+                );
+            } else if(key.startsWith(MissingnessHeader)) {
+                //includes MissingnessSOGIData too
+                validateJSON(`${key} failed validation`, 
+                    value,
+                    `${schemaPath}MissingnessData/output/schema.json`,
+                    `${schemaPath}MissingnessData/output/sample.json`,
+                    `${schemaPath}MissingnessData/output/fail/`
+                );
+            } 
+        }
 
         //Create two trees for Production/Staging
         const stagingTree = [];

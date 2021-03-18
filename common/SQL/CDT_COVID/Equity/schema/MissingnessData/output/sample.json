@@ -1,0 +1,37 @@
+{
+  "race_ethnicity": {
+    "cases": {
+      "COUNTY": "Sacramento",
+      "METRIC": "cases",
+      "MISSING": 720,
+      "NOT_MISSING": 3491,
+      "TOTAL": 4211,
+      "PERCENT_COMPLETE": 0.829019235336025,
+      "PERCENT_COMPLETE_30_DAYS_PRIOR": 0.811005214889408,
+      "PERCENT_COMPLETE_30_DAYS_DIFF": 0.0180140204466163,
+      "REPORT_DATE": "2021-03-16"
+    },
+    "deaths": {
+      "COUNTY": "Sacramento",
+      "METRIC": "deaths",
+      "MISSING": 0,
+      "NOT_MISSING": 66,
+      "TOTAL": 66,
+      "PERCENT_COMPLETE": 1,
+      "PERCENT_COMPLETE_30_DAYS_PRIOR": 1,
+      "PERCENT_COMPLETE_30_DAYS_DIFF": 0,
+      "REPORT_DATE": "2021-03-16"
+    },
+    "tests": {
+      "COUNTY": "Sacramento",
+      "METRIC": "tests",
+      "MISSING": 59526,
+      "NOT_MISSING": 92235,
+      "TOTAL": 151761,
+      "PERCENT_COMPLETE": 0.607764840769368,
+      "PERCENT_COMPLETE_30_DAYS_PRIOR": 0.609995715843589,
+      "PERCENT_COMPLETE_30_DAYS_DIFF": -0.0022308750742216,
+      "REPORT_DATE": "2021-03-16"
+    }
+  }
+}

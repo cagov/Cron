@@ -3,6 +3,62 @@ const fs = require('fs');
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
 
+const getSqlWorkAndSchemas_getFileNames = passTestPath =>
+      (passTestPath.endsWith('/') 
+      ? fs.readdirSync(passTestPath).map(testFile=>passTestPath+testFile)
+      : [passTestPath])
+    .filter(f=>fs.existsSync(f))
+    .map (testPath=>({
+        name:testPath.split('/').pop(),
+        json:JSON.parse(fs.readFileSync(testPath))}));
+
+const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, FailTestPathFormat) => {
+  const sqlFullPath = `${__dirname}/${sqlPath}`;
+  const sqlFiles = fs.readdirSync(sqlFullPath)
+      .filter(f=>f.endsWith('.sql'))
+      .map(filename=>({name: filename.replace(/\.sql$/,''), filename, fullfilename:`${sqlFullPath}/${filename}`}));
+
+  const JsonOutput = {
+    DbSqlWork:{}
+  };
+
+  sqlFiles.forEach(sql=>{
+    JsonOutput.DbSqlWork[sql.name] = fs.readFileSync(sql.fullfilename).toString();
+
+    if(schemaPathFormat) {
+      const schemaPath =  sqlFullPath + schemaPathFormat.replace(/\[file\]/,sql.name);
+      if(fs.existsSync(schemaPath)) {
+        if(!JsonOutput.schema) {
+          JsonOutput.schema = {};
+        }
+
+        const newSchema = {
+          schema : JSON.parse(fs.readFileSync(schemaPath))
+        };
+
+        if(PassTestPathFormat) {
+          let PassTestPath = sqlFullPath + PassTestPathFormat.replace(/\[file\]/,sql.name);
+          if (fs.existsSync(PassTestPath)) {
+            newSchema.passTests = getSqlWorkAndSchemas_getFileNames(PassTestPath);
+          }
+        }
+
+        if(FailTestPathFormat) {
+          let FailTestPath = sqlFullPath + FailTestPathFormat.replace(/\[file\]/,sql.name);
+          if (fs.existsSync(FailTestPath)) {
+            newSchema.failTests = getSqlWorkAndSchemas_getFileNames(FailTestPath);
+          }
+        }
+
+        JsonOutput.schema[sql.name] = newSchema;
+      }
+    }
+  });
+
+  return JsonOutput;
+};
+
+
 const validateJSON_getMessage = err => `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
 
 const validateJSON_getJsonFiles = path => 
@@ -44,35 +100,52 @@ const mergeJSON = (target,stub) => {
  * @param {string} [testBadFilePath] Optional test data file that should fail 
  */
 const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFilePath, testBadFilePath) => {
+  validateJSON2(
+      errorMessagePrefix,
+      targetJSON,
+      require(schemafilePath),
+      testGoodFilePath ? validateJSON_getJsonFiles(testGoodFilePath) : null,
+      testBadFilePath ? validateJSON_getJsonFiles(testBadFilePath) : null
+      );
+};
+
+
+/**
+ * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
+ * @param {string} errorMessagePrefix Will display in front of error messages
+ * @param {{}} [targetJSON] JSON object to validate, null if just checking tests
+ * @param {{}} schemaJSON JSON schema to use for validation
+ * @param {[]} [testGoodFiles] Optional test data file that should pass
+ * @param {[]} [testBadFiles] Optional test data file that should fail 
+ */
+ const validateJSON2 = (errorMessagePrefix, targetJSON, schemaJSON, testGoodFiles, testBadFiles) => {
   const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
   const v = new Validator();
 
-  const schemaJSON = require(schemafilePath);
-
-  if (testGoodFilePath) {
+  if (testGoodFiles) {
     let latestGoodData = {};
-    validateJSON_getJsonFiles(testGoodFilePath)
+    testGoodFiles
       .forEach(({name,json})=> {
         //console.log({name,json});
         const r = v.validate(json,schemaJSON);
   
         if (!r.valid) {
-          logAndError(`Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
+          logAndError(`${errorMessagePrefix} - Good JSON test is not 'Good' - ${validateJSON_getMessage(r.errors[0])} -  ${name}`);
         }
   
         latestGoodData = json;
       }
     );
   
-    if(testBadFilePath) {
-      validateJSON_getJsonFiles(testBadFilePath)
+    if(testBadFiles) {
+      testBadFiles
         .forEach(({name,json})=> {
           //console.log({name,json});
           const merged = mergeJSON(latestGoodData,json);
           const r = v.validate(merged,schemaJSON);
 
           if (r.valid) {
-            logAndError(`Bad JSON test is not 'Bad' - ${name}`);
+            logAndError(`${errorMessagePrefix} - Bad JSON test is not 'Bad' - ${name}`);
           }
         }
       );
@@ -100,5 +173,7 @@ const logAndError  = message => {
 };
 
 module.exports = {
-  validateJSON
+  validateJSON,
+  validateJSON2,
+  getSqlWorkAndSchemas
 };
