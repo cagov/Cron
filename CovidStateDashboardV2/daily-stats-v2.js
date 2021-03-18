@@ -6,7 +6,7 @@ const roundNumber = (number, fractionDigits=3) => {
 };
 
 const path = 'data/daily-stats-v2.json';
-const schemaFileName = "../SQL/CDT_COVID/Daily-stats-v2/schema/schema.json";
+const schemaFileName = "../SQL/CDT_COVID/Daily-stats-v2/schema/output/schema.json";
 const schemaTestGoodFilePath = "../SQL/CDT_COVID/Daily-stats-v2/schema/tests/output/pass/";
 const schemaTestBadFilePath = "../SQL/CDT_COVID/Daily-stats-v2/schema/tests/output/fail/";
 
@@ -23,7 +23,16 @@ const getData_daily_stats_v2 = async () => {
       process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
   );
 
-  validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
+  validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,
+  '../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json',
+  '../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
+
+  validateJSON(
+      'CDTCDPH_VACCINE/Vaccines.sql failed validation', 
+      resultsVaccines, 
+      '../SQL/CDTCDPH_VACCINE/vaccines/schema/output/schema.json',
+      '../SQL/CDTCDPH_VACCINE/vaccines/tests/output/pass/sample.json'
+    );
   
   const row = statResults.metrics[0];
   const rowHospitals = statResults.hospitalizations[0];
