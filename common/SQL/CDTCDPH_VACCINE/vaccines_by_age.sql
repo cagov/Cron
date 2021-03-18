@@ -1,11 +1,11 @@
 -- Current vaccine administrations by age group (distinct people)
--- 228 rows
---   by county(REGION) + 'California'
+-- 247 rows
+--   by county(REGION) + 'California' + 'Outside California'
 --   by age(CATEGORY) (0-17,18-49,50-64/65+)
 with
-ranges as (select * from 
-  (values 
-   ('0-17', 0,  17), 
+ranges as (select * from
+  (values
+   ('0-17', 0,  17),
    ('18-49',18, 49),
    ('50-64',50, 64),
    ('65+',  65, 119)
@@ -13,19 +13,16 @@ ranges as (select * from
 ),
 GB as ( --Master list of corrected data grouped by region/category
   select
-    coalesce(ranges.NAME,'Unknown') "CATEGORY",
-    case when MIXED_COUNTY in
-        ('Alameda','Alpine','Amador','Butte','Calaveras','Colusa','Contra Costa','Del Norte','El Dorado','Fresno','Glenn','Humboldt','Imperial','Inyo','Kern','Kings','Lake','Lassen','Los Angeles','Madera','Marin','Mariposa','Mendocino','Merced','Modoc','Mono','Monterey','Napa','Nevada','Orange','Placer','Plumas','Riverside','Sacramento','San Benito','San Bernardino','San Diego','San Francisco','San Joaquin','San Luis Obispo','San Mateo','Santa Barbara','Santa Clara','Santa Cruz','Shasta','Sierra','Siskiyou','Solano','Sonoma','Stanislaus','Sutter','Tehama','Trinity','Tulare','Tuolumne','Ventura','Yolo','Yuba')
-    then MIXED_COUNTY else 'Unknown' end "REGION",
-    --count(distinct vax_event_id) "ADMIN_COUNT", --For total doses
+  coalesce(ranges.NAME,'Unknown') "CATEGORY",
+  MIXED_COUNTY "REGION",
     count(distinct recip_id) "ADMIN_COUNT", --For total people
-    MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE"
+	MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE_2" -- new view only includes second dose as the latest dose
   from
-    CA_VACCINE.VW_TAB_INT_ALL
+    CA_VACCINE.CA_VACCINE.VW_DERIVED_BASE_RECIPIENTS
   left outer join
     ranges
-    on RMIN<=DATEDIFF('yyyy',DATE(RECIP_DOB),GETDATE())
-    and RMAX>=DATEDIFF('yyyy',DATE(RECIP_DOB),GETDATE())
+    on RMIN<=RECIP_AGE --changed to RECIP_AGE, no longer calculating by current date.
+    and RMAX>=RECIP_AGE --changed to RECIP_AGE, no longer calculating by current date.
   where
     RECIP_ID IS NOT NULL
   group by
@@ -36,7 +33,7 @@ TA as ( -- Region Totals
   select
     REGION,
     SUM(ADMIN_COUNT) "REGION_TOTAL",
-    MAX(LATEST_ADMIN_DATE) "LATEST_ADMIN_DATE"
+    MAX(LATEST_ADMIN_DATE_2) "LATEST_ADMIN_DATE"
   from
       GB
   group by
