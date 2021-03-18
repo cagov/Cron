@@ -1,7 +1,5 @@
 {
-  "race_ethnicity": {
-    "cases": {
-      "COUNTY": "NOT A COUNTY"
-    }
+  "cases": {
+    "COUNTY": "Not california"
   }
 }
