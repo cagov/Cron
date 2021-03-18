@@ -1,139 +1,139 @@
-const fs = require("fs");
+// const fs = require("fs");
 
-const validateJSON_getMessage = (err) =>
-    `'${JSON.stringify(err.instance)}' ${
-    err.message
-  }. Location - ${err.path.toString()}`;
+// const validateJSON_getMessage = (err) =>
+//     `'${JSON.stringify(err.instance)}' ${
+//     err.message
+//   }. Location - ${err.path.toString()}`;
 
-/**
- * Take a JSON path, look in a directory and return a merged JSON object.
- * @param {*} path
- * @returns {object}
- */
-const validateJSON_getJsonFiles = (path) =>
-    ((fullpath) =>
-        (fs.lstatSync(fullpath).isDirectory() ?
-            fs
-            .readdirSync(fullpath)
-            .map((name) => ({
-                name,
-                fullfilename: `${fullpath}/${name}`
-            })) :
-            [{
-                name: path,
-                fullfilename: fullpath
-            }]
-        ).map((f) => ({
-            name: f.name,
-            json: JSON.parse(fs.readFileSync(f.fullfilename)),
-        })))(`${__dirname}/${path}`);
+// /**
+//  * Take a JSON path, look in a directory and return a merged JSON object.
+//  * @param {*} path
+//  * @returns {object}
+//  */
+// const validateJSON_getJsonFiles = (path) =>
+//     ((fullpath) =>
+//         (fs.lstatSync(fullpath).isDirectory() ?
+//             fs
+//             .readdirSync(fullpath)
+//             .map((name) => ({
+//                 name,
+//                 fullfilename: `${fullpath}/${name}`
+//             })) :
+//             [{
+//                 name: path,
+//                 fullfilename: fullpath
+//             }]
+//         ).map((f) => ({
+//             name: f.name,
+//             json: JSON.parse(fs.readFileSync(f.fullfilename)),
+//         })))(`${__dirname}/${path}`);
 
-const mergeJSON = (target, stub) => {
-    if (stub === null || stub === undefined || typeof stub !== "object") {
-        return stub;
-    }
+// const mergeJSON = (target, stub) => {
+//     if (stub === null || stub === undefined || typeof stub !== "object") {
+//         return stub;
+//     }
 
-    if (Array.isArray(stub)) {
-        const targetCopy =
-            target === undefined || target === null ? [] : [...target]; //deep copy
-        stub.forEach((a, i) => {
-            targetCopy[i] = mergeJSON(targetCopy[i], stub[i]);
-        });
-        return targetCopy;
-    } else {
-        const targetCopy = {
-            ...target
-        }; //deep copy
-        Object.keys(stub).forEach((k) => {
-            targetCopy[k] = mergeJSON(targetCopy[k], stub[k]);
-        });
-        return targetCopy;
-    }
-};
+//     if (Array.isArray(stub)) {
+//         const targetCopy =
+//             target === undefined || target === null ? [] : [...target]; //deep copy
+//         stub.forEach((a, i) => {
+//             targetCopy[i] = mergeJSON(targetCopy[i], stub[i]);
+//         });
+//         return targetCopy;
+//     } else {
+//         const targetCopy = {
+//             ...target
+//         }; //deep copy
+//         Object.keys(stub).forEach((k) => {
+//             targetCopy[k] = mergeJSON(targetCopy[k], stub[k]);
+//         });
+//         return targetCopy;
+//     }
+// };
 
-/**
- * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
- * @param {string} errorMessagePrefix Will display in front of error messages
- * @param {{}} [targetJSON] JSON object to validate, null if just checking tests
- * @param {string} schemafilePath JSON schema to use for validation
- * @param {string} [testGoodFilePath] Optional test data file that should pass
- * @param {string} [testBadFilePath] Optional test data file that should fail
- * @returns (nothing) - Console log if "good" or "bad" test. Throws an error if invalid.
- */
-const validateJSON = (
-    errorMessagePrefix,
-    targetJSON,
-    schemafilePath,
-    testGoodFilePath,
-    testBadFilePath
-) => {
-    const Validator = require("jsonschema").Validator; //https://www.npmjs.com/package/jsonschema
-    const v = new Validator();
+// /**
+//  * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
+//  * @param {string} errorMessagePrefix Will display in front of error messages
+//  * @param {{}} [targetJSON] JSON object to validate, null if just checking tests
+//  * @param {string} schemafilePath JSON schema to use for validation
+//  * @param {string} [testGoodFilePath] Optional test data file that should pass
+//  * @param {string} [testBadFilePath] Optional test data file that should fail
+//  * @returns (nothing) - Console log if "good" or "bad" test. Throws an error if invalid.
+//  */
+// const validateJSON = (
+//     errorMessagePrefix,
+//     targetJSON,
+//     schemafilePath,
+//     testGoodFilePath,
+//     testBadFilePath
+// ) => {
+//     const Validator = require("jsonschema").Validator; //https://www.npmjs.com/package/jsonschema
+//     const v = new Validator();
 
-    const schemaJSON = require(schemafilePath);
+//     const schemaJSON = require(schemafilePath);
 
-    if (testGoodFilePath) {
-        let latestGoodData = {};
-        validateJSON_getJsonFiles(testGoodFilePath).forEach(({
-            name,
-            json
-        }) => {
-            //console.log({name,json});
-            const r = v.validate(json, schemaJSON);
+//     if (testGoodFilePath) {
+//         let latestGoodData = {};
+//         validateJSON_getJsonFiles(testGoodFilePath).forEach(({
+//             name,
+//             json
+//         }) => {
+//             //console.log({name,json});
+//             const r = v.validate(json, schemaJSON);
 
-            if (!r.valid) {
-                logAndError(
-                    `Good JSON test is not 'Good' - ${validateJSON_getMessage(
-            r.errors[0]
-          )} -  ${name}`
-                );
-            }
+//             if (!r.valid) {
+//                 logAndError(
+//                     `Good JSON test is not 'Good' - ${validateJSON_getMessage(
+//             r.errors[0]
+//           )} -  ${name}`
+//                 );
+//             }
 
-            latestGoodData = json;
-        });
+//             latestGoodData = json;
+//         });
 
-        if (testBadFilePath) {
-            validateJSON_getJsonFiles(testBadFilePath).forEach(({
-                name,
-                json
-            }) => {
-                //console.log({name,json});
-                const merged = mergeJSON(latestGoodData, json);
-                const r = v.validate(merged, schemaJSON);
+//         if (testBadFilePath) {
+//             validateJSON_getJsonFiles(testBadFilePath).forEach(({
+//                 name,
+//                 json
+//             }) => {
+//                 //console.log({name,json});
+//                 const merged = mergeJSON(latestGoodData, json);
+//                 const r = v.validate(merged, schemaJSON);
 
-                if (r.valid) {
-                    logAndError(`Bad JSON test is not 'Bad' - ${name}`);
-                }
-            });
-        }
-    }
+//                 if (r.valid) {
+//                     logAndError(`Bad JSON test is not 'Bad' - ${name}`);
+//                 }
+//             });
+//         }
+//     }
 
-    if (targetJSON) {
-        //Reparse to simplify any Javascript objects like dates
-        const primaryResult = v.validate(
-            JSON.parse(JSON.stringify(targetJSON)),
-            schemaJSON
-        );
+//     if (targetJSON) {
+//         //Reparse to simplify any Javascript objects like dates
+//         const primaryResult = v.validate(
+//             JSON.parse(JSON.stringify(targetJSON)),
+//             schemaJSON
+//         );
 
-        if (!primaryResult.valid) {
-            logAndError(
-                `${errorMessagePrefix} - ${validateJSON_getMessage(
-          primaryResult.errors[0]
-        )}`
-            );
-        }
-    }
-};
+//         if (!primaryResult.valid) {
+//             logAndError(
+//                 `${errorMessagePrefix} - ${validateJSON_getMessage(
+//           primaryResult.errors[0]
+//         )}`
+//             );
+//         }
+//     }
+// };
 
-/**
- * Logs an error message before throwing the message as an Error
- * @param {string} message Error message to display
- */
-const logAndError = (message) => {
-    console.error(message);
-    throw new Error(message);
-};
+// /**
+//  * Logs an error message before throwing the message as an Error
+//  * @param {string} message Error message to display
+//  */
+// const logAndError = (message) => {
+//     console.error(message);
+//     throw new Error(message);
+// };
 
-module.exports = {
-    getMeta,
-};
+// module.exports = {
+//     getMeta,
+// };
