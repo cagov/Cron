@@ -182,7 +182,6 @@ If there are issues with the data:
                     break;
 
                 case cumulative_combined_key:
-                    //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
                     validateJSON(`${key} failed validation`, 
                         value,
                         `${schemaPath}CumulativeStatewideData/output/schema.json`,
@@ -190,6 +189,7 @@ If there are issues with the data:
                         `${schemaPath}CumulativeStatewideData/output/fail/`
                     );
                     break;
+
                 default:
                     if(key.startsWith(MissingnessHeader)) {
                         //includes MissingnessSOGIData too
