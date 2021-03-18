@@ -199,8 +199,7 @@ If there are issues with the data:
                             `${schemaPath}MissingnessData/output/sample.json`,
                             `${schemaPath}MissingnessData/output/fail/`
                         );
-                    } 
-                        break;
+                    }
             }
         }
 
