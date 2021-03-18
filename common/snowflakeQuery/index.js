@@ -52,10 +52,11 @@ const queryDataset = async (sqlWork, connection) => {
 };
 
 /**
- * creates a new Snowflake Db Promise with the result set name.
+ * Creates a new Snowflake Db Promise with the result set name.
  * @param {snowflake.Connection} connection Active snowflake.Connection.
  * @param {string} name Result set name to return
  * @param {string} sqlText Query to execute
+ * @returns Rejected promise or rows result from Snowflake.
  */
 const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject) => {
     connection.execute({

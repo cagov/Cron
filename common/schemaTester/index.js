@@ -5,6 +5,11 @@ const fs = require('fs');
 
 const validateJSON_getMessage = err => `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
 
+/**
+ * Take a JSON path, look in a directory and return a merged JSON object.
+ * @param {*} path 
+ * @returns {object}
+ */
 const validateJSON_getJsonFiles = path => 
 (
   fullpath => 
@@ -42,6 +47,7 @@ const mergeJSON = (target,stub) => {
  * @param {string} schemafilePath JSON schema to use for validation
  * @param {string} [testGoodFilePath] Optional test data file that should pass
  * @param {string} [testBadFilePath] Optional test data file that should fail 
+ * @returns (nothing) - Console log if "good" or "bad" test. Throws an error if invalid.
  */
 const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFilePath, testBadFilePath) => {
   const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
@@ -79,7 +85,6 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
     }
   }
 
-
   if(targetJSON) {
     //Reparse to simplify any Javascript objects like dates
     const primaryResult = v.validate(JSON.parse(JSON.stringify(targetJSON)),schemaJSON);
@@ -94,7 +99,7 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
  * Logs an error message before throwing the message as an Error
  * @param {string} message Error message to display
  */
-const logAndError  = message => {
+const logAndError = message => {
   console.error(message);
   throw new Error(message);
 };
