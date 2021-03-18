@@ -61,7 +61,7 @@ const doCovidVaccineHPIV2 = async () => {
     }
   }
 
-  Approve the PR
+  // Approve the PR
   if(Pr) {
       await gitRepo.mergePullRequest(Pr.number,{
           merge_method: 'squash'
