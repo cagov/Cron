@@ -1,0 +1,1070 @@
+[
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Alameda",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.580409
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Alameda",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.416619
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Alameda",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.002972
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-15",
+   "REGION": "Alpine",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.517367
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-15",
+   "REGION": "Alpine",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.477148
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-15",
+   "REGION": "Alpine",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.005484
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Amador",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.565117
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Amador",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.433776
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Amador",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.001107
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Butte",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.578922
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Butte",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.42044
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Butte",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000638
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Calaveras",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.556063
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Calaveras",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.438885
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Calaveras",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.005052
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-17",
+   "REGION": "California",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.570668
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-17",
+   "REGION": "California",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.425202
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-17",
+   "REGION": "California",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.004131
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Colusa",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.535018
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Colusa",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.443391
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Colusa",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.02159
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Contra Costa",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.582414
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Contra Costa",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.416686
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Contra Costa",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.0009
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Del Norte",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.544114
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Del Norte",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.454636
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Del Norte",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.00125
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "El Dorado",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.562304
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "El Dorado",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.436593
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "El Dorado",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.001103
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Fresno",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.566124
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Fresno",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.433199
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Fresno",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000676
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Glenn",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.575703
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Glenn",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.423494
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Glenn",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000803
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Humboldt",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.593703
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Humboldt",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.405152
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Humboldt",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.001145
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Imperial",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.558124
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Imperial",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.441466
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Imperial",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.00041
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Inyo",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.540728
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Inyo",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.45864
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Inyo",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000631
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Kern",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.561597
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Kern",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.431629
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Kern",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.006774
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Kings",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.549179
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Kings",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.445735
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Kings",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.005087
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Lake",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.552106
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Lake",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.447234
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Lake",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000661
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Lassen",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.530642
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Lassen",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.468474
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Lassen",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000884
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Los Angeles",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.573409
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Los Angeles",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.425127
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Los Angeles",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.001464
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Madera",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.557875
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Madera",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.441371
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Madera",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000754
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Marin",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.574033
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Marin",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.425247
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Marin",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.00072
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Mariposa",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.550883
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Mariposa",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.446228
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Mariposa",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.002889
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Mendocino",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.545147
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Mendocino",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.445398
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Mendocino",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.009455
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-17",
+   "REGION": "Merced",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.572546
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-17",
+   "REGION": "Merced",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.424175
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-17",
+   "REGION": "Merced",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.003279
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Modoc",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.525227
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Modoc",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.474773
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Mono",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.520317
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Mono",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.479475
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Mono",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000208
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Monterey",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.562342
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Monterey",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.39988
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Monterey",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.037778
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Napa",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.539313
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Napa",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.460099
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Napa",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000589
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Nevada",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.575428
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Nevada",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.423815
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Nevada",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000757
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Orange",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.568888
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Orange",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.419242
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Orange",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.01187
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Placer",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.580807
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Placer",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.418514
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Placer",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000679
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Plumas",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.545739
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Plumas",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.453779
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Plumas",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000481
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Riverside",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.562543
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Riverside",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.436559
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Riverside",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000898
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sacramento",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.581647
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sacramento",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.41633
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sacramento",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.002022
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Benito",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.583689
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Benito",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.412427
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Benito",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.003883
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Bernardino",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.581107
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Bernardino",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.417638
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Bernardino",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.001255
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Diego",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.581403
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Diego",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.4111
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Diego",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.007498
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Francisco",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.542295
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Francisco",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.454617
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Francisco",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.003088
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Joaquin",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.584161
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Joaquin",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.411148
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Joaquin",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.004692
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Luis Obispo",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.57218
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Luis Obispo",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.426991
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Luis Obispo",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000829
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Mateo",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.578521
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Mateo",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.420766
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "San Mateo",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000713
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Santa Barbara",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.58275
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Santa Barbara",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.416396
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Santa Barbara",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000854
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Santa Clara",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.581796
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Santa Clara",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.417535
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Santa Clara",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000669
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Santa Cruz",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.579114
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Santa Cruz",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.416364
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Santa Cruz",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.004522
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Shasta",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.578349
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Shasta",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.420725
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Shasta",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000926
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sierra",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.529814
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sierra",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.470186
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Siskiyou",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.5562
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Siskiyou",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.443489
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Siskiyou",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000311
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Solano",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.583339
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Solano",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.414688
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Solano",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.001973
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sonoma",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.578708
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sonoma",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.420594
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sonoma",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000698
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-17",
+   "REGION": "Stanislaus",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.574594
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-17",
+   "REGION": "Stanislaus",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.422602
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-17",
+   "REGION": "Stanislaus",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.002804
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sutter",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.569956
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sutter",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.424287
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Sutter",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.005757
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Tehama",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.563849
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Tehama",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.435644
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Tehama",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000508
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Trinity",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.506446
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Trinity",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.491713
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Trinity",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.001842
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Tulare",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.555464
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Tulare",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.443993
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Tulare",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000544
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Tuolumne",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.553873
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Tuolumne",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.44524
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Tuolumne",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000887
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Unknown",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.513361
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Unknown",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.468087
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Unknown",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.018552
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Ventura",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.575825
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Ventura",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.423866
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Ventura",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.000308
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Yolo",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.559592
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Yolo",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.396456
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Yolo",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.043952
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Yuba",
+   "CATEGORY": "Female",
+   "METRIC_VALUE": 0.583729
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Yuba",
+   "CATEGORY": "Male",
+   "METRIC_VALUE": 0.413142
+ },
+ {
+   "LATEST_ADMIN_DATE": "2021-03-16",
+   "REGION": "Yuba",
+   "CATEGORY": "Unknown/undifferentiated",
+   "METRIC_VALUE": 0.003129
+ }
+]

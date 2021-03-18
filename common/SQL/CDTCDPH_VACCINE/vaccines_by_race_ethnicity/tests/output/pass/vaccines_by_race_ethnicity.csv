@@ -1,0 +1,538 @@
+﻿LATEST_ADMIN_DATE,REGION,CATEGORY,METRIC_VALUE
+2021-03-16,Alameda,White,0.271586
+2021-03-16,Alameda,Asian,0.214152
+2021-03-16,Alameda,Unknown,0.140695
+2021-03-16,Alameda,Multiracial,0.114141
+2021-03-16,Alameda,Latino,0.105159
+2021-03-16,Alameda,Other Race,0.088548
+2021-03-16,Alameda,Black or African American,0.058038
+2021-03-16,Alameda,Native Hawaiian or Other Pacific Islander,0.005542
+2021-03-16,Alameda,American Indian or Alaska Native,0.002139
+2021-03-15,Alpine,Unknown,0.755027
+2021-03-15,Alpine,White,0.201097
+2021-03-15,Alpine,American Indian or Alaska Native,0.020110
+2021-03-15,Alpine,Other Race,0.009141
+2021-03-15,Alpine,Asian,0.007313
+2021-03-15,Alpine,Latino,0.003656
+2021-03-15,Alpine,Multiracial,0.003656
+2021-03-16,Amador,White,0.667069
+2021-03-16,Amador,Other Race,0.095813
+2021-03-16,Amador,Unknown,0.090982
+2021-03-16,Amador,Latino,0.066324
+2021-03-16,Amador,Multiracial,0.050825
+2021-03-16,Amador,Asian,0.013990
+2021-03-16,Amador,American Indian or Alaska Native,0.009058
+2021-03-16,Amador,Black or African American,0.003523
+2021-03-16,Amador,Native Hawaiian or Other Pacific Islander,0.002415
+2021-03-16,Butte,White,0.572316
+2021-03-16,Butte,Multiracial,0.174535
+2021-03-16,Butte,Other Race,0.079025
+2021-03-16,Butte,Latino,0.072234
+2021-03-16,Butte,Unknown,0.061862
+2021-03-16,Butte,Asian,0.020600
+2021-03-16,Butte,American Indian or Alaska Native,0.011751
+2021-03-16,Butte,Black or African American,0.006750
+2021-03-16,Butte,Native Hawaiian or Other Pacific Islander,0.000926
+2021-03-16,Calaveras,White,0.507384
+2021-03-16,Calaveras,Unknown,0.326759
+2021-03-16,Calaveras,Other Race,0.087932
+2021-03-16,Calaveras,Latino,0.043237
+2021-03-16,Calaveras,Multiracial,0.017586
+2021-03-16,Calaveras,Asian,0.008356
+2021-03-16,Calaveras,Black or African American,0.003984
+2021-03-16,Calaveras,American Indian or Alaska Native,0.003206
+2021-03-16,Calaveras,Native Hawaiian or Other Pacific Islander,0.001555
+2021-03-17,California,White,0.313092
+2021-03-17,California,Latino,0.186349
+2021-03-17,California,Multiracial,0.132192
+2021-03-17,California,Asian,0.121173
+2021-03-17,California,Other Race,0.105645
+2021-03-17,California,Unknown,0.104697
+2021-03-17,California,Black or African American,0.030014
+2021-03-17,California,Native Hawaiian or Other Pacific Islander,0.004025
+2021-03-17,California,American Indian or Alaska Native,0.002816
+2021-03-16,Colusa,White,0.344655
+2021-03-16,Colusa,Unknown,0.259084
+2021-03-16,Colusa,Latino,0.259084
+2021-03-16,Colusa,Multiracial,0.061875
+2021-03-16,Colusa,Other Race,0.052133
+2021-03-16,Colusa,American Indian or Alaska Native,0.011058
+2021-03-16,Colusa,Asian,0.006056
+2021-03-16,Colusa,Black or African American,0.005003
+2021-03-16,Colusa,Native Hawaiian or Other Pacific Islander,0.001053
+2021-03-16,Contra Costa,White,0.364654
+2021-03-16,Contra Costa,Unknown,0.140584
+2021-03-16,Contra Costa,Multiracial,0.127080
+2021-03-16,Contra Costa,Latino,0.119749
+2021-03-16,Contra Costa,Asian,0.113830
+2021-03-16,Contra Costa,Other Race,0.080077
+2021-03-16,Contra Costa,Black or African American,0.046577
+2021-03-16,Contra Costa,Native Hawaiian or Other Pacific Islander,0.005482
+2021-03-16,Contra Costa,American Indian or Alaska Native,0.001968
+2021-03-16,Del Norte,White,0.618345
+2021-03-16,Del Norte,Unknown,0.118970
+2021-03-16,Del Norte,Multiracial,0.086978
+2021-03-16,Del Norte,American Indian or Alaska Native,0.075231
+2021-03-16,Del Norte,Latino,0.051987
+2021-03-16,Del Norte,Other Race,0.022994
+2021-03-16,Del Norte,Asian,0.018495
+2021-03-16,Del Norte,Black or African American,0.005499
+2021-03-16,Del Norte,Native Hawaiian or Other Pacific Islander,0.001500
+2021-03-16,El Dorado,White,0.524070
+2021-03-16,El Dorado,Unknown,0.157852
+2021-03-16,El Dorado,Multiracial,0.150824
+2021-03-16,El Dorado,Other Race,0.080761
+2021-03-16,El Dorado,Latino,0.049267
+2021-03-16,El Dorado,Asian,0.027056
+2021-03-16,El Dorado,Black or African American,0.004965
+2021-03-16,El Dorado,American Indian or Alaska Native,0.002638
+2021-03-16,El Dorado,Native Hawaiian or Other Pacific Islander,0.002567
+2021-03-16,Fresno,Latino,0.316560
+2021-03-16,Fresno,White,0.293853
+2021-03-16,Fresno,Multiracial,0.106932
+2021-03-16,Fresno,Unknown,0.106321
+2021-03-16,Fresno,Other Race,0.077773
+2021-03-16,Fresno,Asian,0.071120
+2021-03-16,Fresno,Black or African American,0.021056
+2021-03-16,Fresno,American Indian or Alaska Native,0.004831
+2021-03-16,Fresno,Native Hawaiian or Other Pacific Islander,0.001555
+2021-03-16,Glenn,White,0.479116
+2021-03-16,Glenn,Latino,0.197390
+2021-03-16,Glenn,Other Race,0.099398
+2021-03-16,Glenn,Unknown,0.093574
+2021-03-16,Glenn,Multiracial,0.092169
+2021-03-16,Glenn,American Indian or Alaska Native,0.024498
+2021-03-16,Glenn,Asian,0.011245
+2021-03-16,Glenn,Black or African American,0.001807
+2021-03-16,Glenn,Native Hawaiian or Other Pacific Islander,0.000803
+2021-03-16,Humboldt,White,0.644973
+2021-03-16,Humboldt,Multiracial,0.153846
+2021-03-16,Humboldt,Unknown,0.058855
+2021-03-16,Humboldt,Latino,0.057281
+2021-03-16,Humboldt,American Indian or Alaska Native,0.034776
+2021-03-16,Humboldt,Other Race,0.029445
+2021-03-16,Humboldt,Asian,0.012415
+2021-03-16,Humboldt,Black or African American,0.006440
+2021-03-16,Humboldt,Native Hawaiian or Other Pacific Islander,0.001968
+2021-03-16,Imperial,Latino,0.710778
+2021-03-16,Imperial,White,0.103477
+2021-03-16,Imperial,Unknown,0.088758
+2021-03-16,Imperial,Other Race,0.055290
+2021-03-16,Imperial,Multiracial,0.027491
+2021-03-16,Imperial,Asian,0.007957
+2021-03-16,Imperial,Black or African American,0.004679
+2021-03-16,Imperial,American Indian or Alaska Native,0.000888
+2021-03-16,Imperial,Native Hawaiian or Other Pacific Islander,0.000683
+2021-03-16,Inyo,White,0.542833
+2021-03-16,Inyo,Multiracial,0.230899
+2021-03-16,Inyo,Latino,0.086719
+2021-03-16,Inyo,Unknown,0.069249
+2021-03-16,Inyo,Other Race,0.048200
+2021-03-16,Inyo,American Indian or Alaska Native,0.011366
+2021-03-16,Inyo,Asian,0.007577
+2021-03-16,Inyo,Black or African American,0.001894
+2021-03-16,Inyo,Native Hawaiian or Other Pacific Islander,0.001263
+2021-03-16,Kern,White,0.303267
+2021-03-16,Kern,Latino,0.299999
+2021-03-16,Kern,Multiracial,0.130032
+2021-03-16,Kern,Other Race,0.108492
+2021-03-16,Kern,Unknown,0.087962
+2021-03-16,Kern,Asian,0.041303
+2021-03-16,Kern,Black or African American,0.023182
+2021-03-16,Kern,American Indian or Alaska Native,0.003391
+2021-03-16,Kern,Native Hawaiian or Other Pacific Islander,0.002373
+2021-03-16,Kings,Latino,0.412451
+2021-03-16,Kings,White,0.278211
+2021-03-16,Kings,Unknown,0.117488
+2021-03-16,Kings,Multiracial,0.078841
+2021-03-16,Kings,Other Race,0.056947
+2021-03-16,Kings,Asian,0.026981
+2021-03-16,Kings,Black or African American,0.018909
+2021-03-16,Kings,American Indian or Alaska Native,0.008625
+2021-03-16,Kings,Native Hawaiian or Other Pacific Islander,0.001548
+2021-03-16,Lake,White,0.579604
+2021-03-16,Lake,Multiracial,0.174979
+2021-03-16,Lake,Latino,0.150867
+2021-03-16,Lake,Unknown,0.036994
+2021-03-16,Lake,Other Race,0.028241
+2021-03-16,Lake,Black or African American,0.011065
+2021-03-16,Lake,Asian,0.010405
+2021-03-16,Lake,American Indian or Alaska Native,0.006358
+2021-03-16,Lake,Native Hawaiian or Other Pacific Islander,0.001486
+2021-03-16,Lassen,White,0.622275
+2021-03-16,Lassen,Unknown,0.159988
+2021-03-16,Lassen,Multiracial,0.091338
+2021-03-16,Lassen,Latino,0.055392
+2021-03-16,Lassen,Other Race,0.039776
+2021-03-16,Lassen,Asian,0.011196
+2021-03-16,Lassen,American Indian or Alaska Native,0.010312
+2021-03-16,Lassen,Black or African American,0.007661
+2021-03-16,Lassen,Native Hawaiian or Other Pacific Islander,0.002062
+2021-03-16,Los Angeles,Latino,0.241099
+2021-03-16,Los Angeles,Multiracial,0.198814
+2021-03-16,Los Angeles,White,0.196499
+2021-03-16,Los Angeles,Other Race,0.136432
+2021-03-16,Los Angeles,Asian,0.126039
+2021-03-16,Los Angeles,Unknown,0.052553
+2021-03-16,Los Angeles,Black or African American,0.043327
+2021-03-16,Los Angeles,Native Hawaiian or Other Pacific Islander,0.003638
+2021-03-16,Los Angeles,American Indian or Alaska Native,0.001599
+2021-03-16,Madera,White,0.365749
+2021-03-16,Madera,Latino,0.326484
+2021-03-16,Madera,Unknown,0.110037
+2021-03-16,Madera,Other Race,0.077094
+2021-03-16,Madera,Multiracial,0.075765
+2021-03-16,Madera,Asian,0.018142
+2021-03-16,Madera,Black or African American,0.014765
+2021-03-16,Madera,American Indian or Alaska Native,0.010274
+2021-03-16,Madera,Native Hawaiian or Other Pacific Islander,0.001688
+2021-03-16,Marin,White,0.535867
+2021-03-16,Marin,Unknown,0.139867
+2021-03-16,Marin,Multiracial,0.128944
+2021-03-16,Marin,Latino,0.076593
+2021-03-16,Marin,Other Race,0.064916
+2021-03-16,Marin,Asian,0.040867
+2021-03-16,Marin,Black or African American,0.010191
+2021-03-16,Marin,Native Hawaiian or Other Pacific Islander,0.001755
+2021-03-16,Marin,American Indian or Alaska Native,0.001001
+2021-03-16,Mariposa,White,0.636918
+2021-03-16,Mariposa,Unknown,0.158266
+2021-03-16,Mariposa,Latino,0.078973
+2021-03-16,Mariposa,Other Race,0.064848
+2021-03-16,Mariposa,Multiracial,0.030177
+2021-03-16,Mariposa,American Indian or Alaska Native,0.018941
+2021-03-16,Mariposa,Asian,0.007384
+2021-03-16,Mariposa,Black or African American,0.002889
+2021-03-16,Mariposa,Native Hawaiian or Other Pacific Islander,0.001605
+2021-03-16,Mendocino,White,0.501367
+2021-03-16,Mendocino,Latino,0.163578
+2021-03-16,Mendocino,Multiracial,0.141214
+2021-03-16,Mendocino,Unknown,0.116153
+2021-03-16,Mendocino,Other Race,0.052324
+2021-03-16,Mendocino,Asian,0.012834
+2021-03-16,Mendocino,American Indian or Alaska Native,0.007898
+2021-03-16,Mendocino,Black or African American,0.002962
+2021-03-16,Mendocino,Native Hawaiian or Other Pacific Islander,0.001671
+2021-03-17,Merced,Latino,0.336368
+2021-03-17,Merced,White,0.290550
+2021-03-17,Merced,Unknown,0.196734
+2021-03-17,Merced,Other Race,0.087922
+2021-03-17,Merced,Asian,0.059440
+2021-03-17,Merced,Black or African American,0.016282
+2021-03-17,Merced,Multiracial,0.006559
+2021-03-17,Merced,American Indian or Alaska Native,0.003302
+2021-03-17,Merced,Native Hawaiian or Other Pacific Islander,0.002844
+2021-03-16,Modoc,White,0.734612
+2021-03-16,Modoc,Unknown,0.078708
+2021-03-16,Modoc,Latino,0.073158
+2021-03-16,Modoc,Multiracial,0.048436
+2021-03-16,Modoc,American Indian or Alaska Native,0.023713
+2021-03-16,Modoc,Asian,0.015641
+2021-03-16,Modoc,Other Race,0.015641
+2021-03-16,Modoc,Black or African American,0.009082
+2021-03-16,Modoc,Native Hawaiian or Other Pacific Islander,0.001009
+2021-03-16,Mono,White,0.605960
+2021-03-16,Mono,Latino,0.217129
+2021-03-16,Mono,Multiracial,0.122109
+2021-03-16,Mono,Unknown,0.023963
+2021-03-16,Mono,Other Race,0.012086
+2021-03-16,Mono,Asian,0.010836
+2021-03-16,Mono,American Indian or Alaska Native,0.004168
+2021-03-16,Mono,Black or African American,0.002084
+2021-03-16,Mono,Native Hawaiian or Other Pacific Islander,0.001667
+2021-03-16,Monterey,Latino,0.336939
+2021-03-16,Monterey,White,0.303604
+2021-03-16,Monterey,Multiracial,0.131578
+2021-03-16,Monterey,Unknown,0.095363
+2021-03-16,Monterey,Other Race,0.065900
+2021-03-16,Monterey,Asian,0.047682
+2021-03-16,Monterey,Black or African American,0.011676
+2021-03-16,Monterey,Native Hawaiian or Other Pacific Islander,0.005226
+2021-03-16,Monterey,American Indian or Alaska Native,0.002033
+2021-03-16,Napa,White,0.445292
+2021-03-16,Napa,Unknown,0.181921
+2021-03-16,Napa,Latino,0.170645
+2021-03-16,Napa,Multiracial,0.079991
+2021-03-16,Napa,Other Race,0.062335
+2021-03-16,Napa,Asian,0.044774
+2021-03-16,Napa,Black or African American,0.009840
+2021-03-16,Napa,Native Hawaiian or Other Pacific Islander,0.003649
+2021-03-16,Napa,American Indian or Alaska Native,0.001554
+2021-03-16,Nevada,White,0.629869
+2021-03-16,Nevada,Multiracial,0.182195
+2021-03-16,Nevada,Unknown,0.063521
+2021-03-16,Nevada,Other Race,0.057423
+2021-03-16,Nevada,Latino,0.050167
+2021-03-16,Nevada,American Indian or Alaska Native,0.007434
+2021-03-16,Nevada,Asian,0.006009
+2021-03-16,Nevada,Black or African American,0.002226
+2021-03-16,Nevada,Native Hawaiian or Other Pacific Islander,0.001157
+2021-03-16,Orange,White,0.321769
+2021-03-16,Orange,Asian,0.189781
+2021-03-16,Orange,Multiracial,0.174685
+2021-03-16,Orange,Latino,0.128562
+2021-03-16,Orange,Other Race,0.094565
+2021-03-16,Orange,Unknown,0.078409
+2021-03-16,Orange,Black or African American,0.008322
+2021-03-16,Orange,Native Hawaiian or Other Pacific Islander,0.002970
+2021-03-16,Orange,American Indian or Alaska Native,0.000938
+2021-03-16,Placer,White,0.479080
+2021-03-16,Placer,Multiracial,0.141292
+2021-03-16,Placer,Unknown,0.131413
+2021-03-16,Placer,Latino,0.096613
+2021-03-16,Placer,Other Race,0.079737
+2021-03-16,Placer,Asian,0.054609
+2021-03-16,Placer,Black or African American,0.008695
+2021-03-16,Placer,American Indian or Alaska Native,0.004569
+2021-03-16,Placer,Native Hawaiian or Other Pacific Islander,0.003993
+2021-03-16,Plumas,White,0.748195
+2021-03-16,Plumas,Unknown,0.117718
+2021-03-16,Plumas,Multiracial,0.063553
+2021-03-16,Plumas,Other Race,0.036110
+2021-03-16,Plumas,Latino,0.017814
+2021-03-16,Plumas,American Indian or Alaska Native,0.007463
+2021-03-16,Plumas,Asian,0.005537
+2021-03-16,Plumas,Black or African American,0.003130
+2021-03-16,Plumas,Native Hawaiian or Other Pacific Islander,0.000481
+2021-03-16,Riverside,White,0.337751
+2021-03-16,Riverside,Latino,0.233749
+2021-03-16,Riverside,Multiracial,0.156001
+2021-03-16,Riverside,Other Race,0.116048
+2021-03-16,Riverside,Unknown,0.058887
+2021-03-16,Riverside,Asian,0.057175
+2021-03-16,Riverside,Black or African American,0.035050
+2021-03-16,Riverside,Native Hawaiian or Other Pacific Islander,0.002836
+2021-03-16,Riverside,American Indian or Alaska Native,0.002503
+2021-03-16,Sacramento,White,0.329183
+2021-03-16,Sacramento,Unknown,0.203291
+2021-03-16,Sacramento,Other Race,0.115917
+2021-03-16,Sacramento,Asian,0.108722
+2021-03-16,Sacramento,Multiracial,0.106579
+2021-03-16,Sacramento,Latino,0.082349
+2021-03-16,Sacramento,Black or African American,0.040802
+2021-03-16,Sacramento,Native Hawaiian or Other Pacific Islander,0.009273
+2021-03-16,Sacramento,American Indian or Alaska Native,0.003884
+2021-03-16,San Benito,Latino,0.303107
+2021-03-16,San Benito,Unknown,0.258058
+2021-03-16,San Benito,White,0.243981
+2021-03-16,San Benito,Other Race,0.105049
+2021-03-16,San Benito,Multiracial,0.055922
+2021-03-16,San Benito,Asian,0.022427
+2021-03-16,San Benito,Black or African American,0.006699
+2021-03-16,San Benito,Native Hawaiian or Other Pacific Islander,0.002816
+2021-03-16,San Benito,American Indian or Alaska Native,0.001942
+2021-03-16,San Bernardino,Latino,0.268547
+2021-03-16,San Bernardino,White,0.264607
+2021-03-16,San Bernardino,Multiracial,0.146879
+2021-03-16,San Bernardino,Other Race,0.111870
+2021-03-16,San Bernardino,Asian,0.091320
+2021-03-16,San Bernardino,Unknown,0.063539
+2021-03-16,San Bernardino,Black or African American,0.047364
+2021-03-16,San Bernardino,Native Hawaiian or Other Pacific Islander,0.003717
+2021-03-16,San Bernardino,American Indian or Alaska Native,0.002156
+2021-03-16,San Diego,White,0.456330
+2021-03-16,San Diego,Latino,0.192306
+2021-03-16,San Diego,Asian,0.113801
+2021-03-16,San Diego,Other Race,0.103144
+2021-03-16,San Diego,Unknown,0.090558
+2021-03-16,San Diego,Black or African American,0.022942
+2021-03-16,San Diego,Multiracial,0.010912
+2021-03-16,San Diego,Native Hawaiian or Other Pacific Islander,0.005619
+2021-03-16,San Diego,American Indian or Alaska Native,0.004389
+2021-03-16,San Francisco,Asian,0.305105
+2021-03-16,San Francisco,White,0.272303
+2021-03-16,San Francisco,Unknown,0.137450
+2021-03-16,San Francisco,Latino,0.105877
+2021-03-16,San Francisco,Multiracial,0.084263
+2021-03-16,San Francisco,Other Race,0.058995
+2021-03-16,San Francisco,Black or African American,0.031479
+2021-03-16,San Francisco,Native Hawaiian or Other Pacific Islander,0.002967
+2021-03-16,San Francisco,American Indian or Alaska Native,0.001561
+2021-03-16,San Joaquin,Unknown,0.273271
+2021-03-16,San Joaquin,White,0.252037
+2021-03-16,San Joaquin,Other Race,0.161187
+2021-03-16,San Joaquin,Latino,0.136589
+2021-03-16,San Joaquin,Asian,0.102545
+2021-03-16,San Joaquin,Black or African American,0.033989
+2021-03-16,San Joaquin,Multiracial,0.028525
+2021-03-16,San Joaquin,Native Hawaiian or Other Pacific Islander,0.008486
+2021-03-16,San Joaquin,American Indian or Alaska Native,0.003372
+2021-03-16,San Luis Obispo,Unknown,0.344607
+2021-03-16,San Luis Obispo,White,0.298422
+2021-03-16,San Luis Obispo,Other Race,0.153499
+2021-03-16,San Luis Obispo,Multiracial,0.130290
+2021-03-16,San Luis Obispo,Latino,0.056060
+2021-03-16,San Luis Obispo,Asian,0.010705
+2021-03-16,San Luis Obispo,Black or African American,0.004007
+2021-03-16,San Luis Obispo,American Indian or Alaska Native,0.001330
+2021-03-16,San Luis Obispo,Native Hawaiian or Other Pacific Islander,0.001080
+2021-03-16,San Mateo,White,0.300786
+2021-03-16,San Mateo,Asian,0.191872
+2021-03-16,San Mateo,Multiracial,0.153735
+2021-03-16,San Mateo,Unknown,0.135743
+2021-03-16,San Mateo,Other Race,0.099881
+2021-03-16,San Mateo,Latino,0.098871
+2021-03-16,San Mateo,Black or African American,0.011925
+2021-03-16,San Mateo,Native Hawaiian or Other Pacific Islander,0.005620
+2021-03-16,San Mateo,American Indian or Alaska Native,0.001567
+2021-03-16,Santa Barbara,White,0.358178
+2021-03-16,Santa Barbara,Multiracial,0.209428
+2021-03-16,Santa Barbara,Latino,0.195673
+2021-03-16,Santa Barbara,Other Race,0.133652
+2021-03-16,Santa Barbara,Unknown,0.065278
+2021-03-16,Santa Barbara,Asian,0.026257
+2021-03-16,Santa Barbara,Black or African American,0.007617
+2021-03-16,Santa Barbara,American Indian or Alaska Native,0.002323
+2021-03-16,Santa Barbara,Native Hawaiian or Other Pacific Islander,0.001594
+2021-03-16,Santa Clara,Asian,0.261351
+2021-03-16,Santa Clara,White,0.257277
+2021-03-16,Santa Clara,Multiracial,0.142622
+2021-03-16,Santa Clara,Unknown,0.123583
+2021-03-16,Santa Clara,Latino,0.115030
+2021-03-16,Santa Clara,Other Race,0.080332
+2021-03-16,Santa Clara,Black or African American,0.014318
+2021-03-16,Santa Clara,Native Hawaiian or Other Pacific Islander,0.004042
+2021-03-16,Santa Clara,American Indian or Alaska Native,0.001445
+2021-03-16,Santa Cruz,White,0.426245
+2021-03-16,Santa Cruz,Latino,0.190861
+2021-03-16,Santa Cruz,Multiracial,0.173482
+2021-03-16,Santa Cruz,Other Race,0.097614
+2021-03-16,Santa Cruz,Unknown,0.085298
+2021-03-16,Santa Cruz,Asian,0.020381
+2021-03-16,Santa Cruz,Black or African American,0.003337
+2021-03-16,Santa Cruz,American Indian or Alaska Native,0.001585
+2021-03-16,Santa Cruz,Native Hawaiian or Other Pacific Islander,0.001198
+2021-03-16,Shasta,White,0.466983
+2021-03-16,Shasta,Multiracial,0.229917
+2021-03-16,Shasta,Unknown,0.127625
+2021-03-16,Shasta,Other Race,0.120996
+2021-03-16,Shasta,Latino,0.030740
+2021-03-16,Shasta,Asian,0.011370
+2021-03-16,Shasta,American Indian or Alaska Native,0.007592
+2021-03-16,Shasta,Black or African American,0.003481
+2021-03-16,Shasta,Native Hawaiian or Other Pacific Islander,0.001296
+2021-03-16,Sierra,White,0.743891
+2021-03-16,Sierra,Multiracial,0.091887
+2021-03-16,Sierra,Latino,0.081134
+2021-03-16,Sierra,Unknown,0.037146
+2021-03-16,Sierra,Other Race,0.031281
+2021-03-16,Sierra,Asian,0.007820
+2021-03-16,Sierra,American Indian or Alaska Native,0.005865
+2021-03-16,Sierra,Black or African American,0.000978
+2021-03-16,Siskiyou,White,0.617943
+2021-03-16,Siskiyou,Unknown,0.160365
+2021-03-16,Siskiyou,Multiracial,0.092407
+2021-03-16,Siskiyou,Latino,0.054284
+2021-03-16,Siskiyou,Other Race,0.043303
+2021-03-16,Siskiyou,American Indian or Alaska Native,0.017922
+2021-03-16,Siskiyou,Asian,0.008598
+2021-03-16,Siskiyou,Black or African American,0.004765
+2021-03-16,Siskiyou,Native Hawaiian or Other Pacific Islander,0.000414
+2021-03-16,Solano,White,0.298590
+2021-03-16,Solano,Unknown,0.210504
+2021-03-16,Solano,Other Race,0.123768
+2021-03-16,Solano,Asian,0.118641
+2021-03-16,Solano,Latino,0.083602
+2021-03-16,Solano,Multiracial,0.081556
+2021-03-16,Solano,Black or African American,0.070551
+2021-03-16,Solano,Native Hawaiian or Other Pacific Islander,0.009580
+2021-03-16,Solano,American Indian or Alaska Native,0.003207
+2021-03-16,Sonoma,White,0.466919
+2021-03-16,Sonoma,Unknown,0.147825
+2021-03-16,Sonoma,Latino,0.132444
+2021-03-16,Sonoma,Multiracial,0.127184
+2021-03-16,Sonoma,Other Race,0.090019
+2021-03-16,Sonoma,Asian,0.021122
+2021-03-16,Sonoma,Black or African American,0.006738
+2021-03-16,Sonoma,American Indian or Alaska Native,0.005657
+2021-03-16,Sonoma,Native Hawaiian or Other Pacific Islander,0.002093
+2021-03-17,Stanislaus,White,0.375845
+2021-03-17,Stanislaus,Unknown,0.226739
+2021-03-17,Stanislaus,Latino,0.216324
+2021-03-17,Stanislaus,Other Race,0.092142
+2021-03-17,Stanislaus,Asian,0.050724
+2021-03-17,Stanislaus,Black or African American,0.016241
+2021-03-17,Stanislaus,Multiracial,0.010920
+2021-03-17,Stanislaus,Native Hawaiian or Other Pacific Islander,0.006574
+2021-03-17,Stanislaus,American Indian or Alaska Native,0.004491
+2021-03-16,Sutter,White,0.420395
+2021-03-16,Sutter,Latino,0.155428
+2021-03-16,Sutter,Multiracial,0.142434
+2021-03-16,Sutter,Asian,0.134320
+2021-03-16,Sutter,Other Race,0.069572
+2021-03-16,Sutter,Unknown,0.058443
+2021-03-16,Sutter,Black or African American,0.010581
+2021-03-16,Sutter,American Indian or Alaska Native,0.006469
+2021-03-16,Sutter,Native Hawaiian or Other Pacific Islander,0.002357
+2021-03-16,Tehama,White,0.514090
+2021-03-16,Tehama,Unknown,0.165778
+2021-03-16,Tehama,Latino,0.105991
+2021-03-16,Tehama,Other Race,0.096725
+2021-03-16,Tehama,Multiracial,0.096217
+2021-03-16,Tehama,American Indian or Alaska Native,0.011678
+2021-03-16,Tehama,Asian,0.006347
+2021-03-16,Tehama,Black or African American,0.001904
+2021-03-16,Tehama,Native Hawaiian or Other Pacific Islander,0.001269
+2021-03-16,Trinity,White,0.662063
+2021-03-16,Trinity,Unknown,0.161142
+2021-03-16,Trinity,Multiracial,0.101289
+2021-03-16,Trinity,Other Race,0.027164
+2021-03-16,Trinity,Latino,0.023481
+2021-03-16,Trinity,American Indian or Alaska Native,0.011971
+2021-03-16,Trinity,Asian,0.007827
+2021-03-16,Trinity,Native Hawaiian or Other Pacific Islander,0.002762
+2021-03-16,Trinity,Black or African American,0.002302
+2021-03-16,Tulare,Latino,0.435711
+2021-03-16,Tulare,White,0.312349
+2021-03-16,Tulare,Unknown,0.085748
+2021-03-16,Tulare,Multiracial,0.071582
+2021-03-16,Tulare,Other Race,0.057132
+2021-03-16,Tulare,Asian,0.026761
+2021-03-16,Tulare,Black or African American,0.006564
+2021-03-16,Tulare,American Indian or Alaska Native,0.002472
+2021-03-16,Tulare,Native Hawaiian or Other Pacific Islander,0.001681
+2021-03-16,Tuolumne,White,0.802100
+2021-03-16,Tuolumne,Other Race,0.064580
+2021-03-16,Tuolumne,Unknown,0.054828
+2021-03-16,Tuolumne,Latino,0.041598
+2021-03-16,Tuolumne,Multiracial,0.013571
+2021-03-16,Tuolumne,Asian,0.012275
+2021-03-16,Tuolumne,Native Hawaiian or Other Pacific Islander,0.004364
+2021-03-16,Tuolumne,American Indian or Alaska Native,0.004228
+2021-03-16,Tuolumne,Black or African American,0.002455
+2021-03-16,Unknown,White,0.279065
+2021-03-16,Unknown,Unknown,0.220989
+2021-03-16,Unknown,Latino,0.149689
+2021-03-16,Unknown,Other Race,0.122106
+2021-03-16,Unknown,Asian,0.088790
+2021-03-16,Unknown,Multiracial,0.070550
+2021-03-16,Unknown,Black or African American,0.061594
+2021-03-16,Unknown,American Indian or Alaska Native,0.004309
+2021-03-16,Unknown,Native Hawaiian or Other Pacific Islander,0.002906
+2021-03-16,Ventura,White,0.346521
+2021-03-16,Ventura,Latino,0.266277
+2021-03-16,Ventura,Multiracial,0.198265
+2021-03-16,Ventura,Other Race,0.096926
+2021-03-16,Ventura,Asian,0.053926
+2021-03-16,Ventura,Unknown,0.025467
+2021-03-16,Ventura,Black or African American,0.008686
+2021-03-16,Ventura,Native Hawaiian or Other Pacific Islander,0.002554
+2021-03-16,Ventura,American Indian or Alaska Native,0.001379
+2021-03-16,Yolo,White,0.334150
+2021-03-16,Yolo,Unknown,0.280304
+2021-03-16,Yolo,Latino,0.127971
+2021-03-16,Yolo,Other Race,0.088739
+2021-03-16,Yolo,Multiracial,0.085961
+2021-03-16,Yolo,Asian,0.064557
+2021-03-16,Yolo,Black or African American,0.010475
+2021-03-16,Yolo,American Indian or Alaska Native,0.004375
+2021-03-16,Yolo,Native Hawaiian or Other Pacific Islander,0.003467
+2021-03-16,Yuba,White,0.517695
+2021-03-16,Yuba,Latino,0.173069
+2021-03-16,Yuba,Multiracial,0.112538
+2021-03-16,Yuba,Unknown,0.072615
+2021-03-16,Yuba,Other Race,0.044454
+2021-03-16,Yuba,Asian,0.042943
+2021-03-16,Yuba,Black or African American,0.020824
+2021-03-16,Yuba,American Indian or Alaska Native,0.012732
+2021-03-16,Yuba,Native Hawaiian or Other Pacific Islander,0.003129

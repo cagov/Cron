@@ -1,0 +1,26 @@
+[
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "White",
+      "METRIC_VALUE": 0.271586
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "Asian",
+      "METRIC_VALUE": 0.214152
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "Unknown",
+      "METRIC_VALUE": 0.140695
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "Multiracial",
+      "METRIC_VALUE": 0.114141
+    }
+]

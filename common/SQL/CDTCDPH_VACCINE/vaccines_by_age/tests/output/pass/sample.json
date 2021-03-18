@@ -1,0 +1,104 @@
+[
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "65+",
+      "METRIC_VALUE": 0.419052
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "18-49",
+      "METRIC_VALUE": 0.376387
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "50-64",
+      "METRIC_VALUE": 0.20315
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "0-17",
+      "METRIC_VALUE": 0.001403
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "Unknown",
+      "METRIC_VALUE": 0.000009
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-15",
+      "REGION": "Alpine",
+      "CATEGORY": "65+",
+      "METRIC_VALUE": 0.404022
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-15",
+      "REGION": "Alpine",
+      "CATEGORY": "50-64",
+      "METRIC_VALUE": 0.301645
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-15",
+      "REGION": "Alpine",
+      "CATEGORY": "18-49",
+      "METRIC_VALUE": 0.292505
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-15",
+      "REGION": "Alpine",
+      "CATEGORY": "0-17",
+      "METRIC_VALUE": 0.001828
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Amador",
+      "CATEGORY": "65+",
+      "METRIC_VALUE": 0.684984
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Amador",
+      "CATEGORY": "50-64",
+      "METRIC_VALUE": 0.168478
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Amador",
+      "CATEGORY": "18-49",
+      "METRIC_VALUE": 0.146236
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Amador",
+      "CATEGORY": "0-17",
+      "METRIC_VALUE": 0.000201
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Amador",
+      "CATEGORY": "Unknown",
+      "METRIC_VALUE": 0.000101
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Butte",
+      "CATEGORY": "65+",
+      "METRIC_VALUE": 0.513953
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Butte",
+      "CATEGORY": "18-49",
+      "METRIC_VALUE": 0.294699
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Butte",
+      "CATEGORY": "50-64",
+      "METRIC_VALUE": 0.19069
+    }
+]

@@ -1,0 +1,56 @@
+[
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "Female",
+      "METRIC_VALUE": 0.580409
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "Male",
+      "METRIC_VALUE": 0.416619
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Alameda",
+      "CATEGORY": "Unknown/undifferentiated",
+      "METRIC_VALUE": 0.002972
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-15",
+      "REGION": "Alpine",
+      "CATEGORY": "Male",
+      "METRIC_VALUE": 0.517367
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-15",
+      "REGION": "Alpine",
+      "CATEGORY": "Female",
+      "METRIC_VALUE": 0.477148
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-15",
+      "REGION": "Alpine",
+      "CATEGORY": "Unknown/undifferentiated",
+      "METRIC_VALUE": 0.005484
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Amador",
+      "CATEGORY": "Female",
+      "METRIC_VALUE": 0.565117
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Amador",
+      "CATEGORY": "Male",
+      "METRIC_VALUE": 0.433776
+    },
+    {
+      "LATEST_ADMIN_DATE": "2021-03-16",
+      "REGION": "Amador",
+      "CATEGORY": "Unknown/undifferentiated",
+      "METRIC_VALUE": 0.001107
+    }
+]

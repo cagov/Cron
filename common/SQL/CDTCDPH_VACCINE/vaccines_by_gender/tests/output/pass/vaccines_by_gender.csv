@@ -1,0 +1,179 @@
+﻿LATEST_ADMIN_DATE,REGION,CATEGORY,METRIC_VALUE
+2021-03-16,Alameda,Female,0.580409
+2021-03-16,Alameda,Male,0.416619
+2021-03-16,Alameda,Unknown/undifferentiated,0.002972
+2021-03-15,Alpine,Male,0.517367
+2021-03-15,Alpine,Female,0.477148
+2021-03-15,Alpine,Unknown/undifferentiated,0.005484
+2021-03-16,Amador,Female,0.565117
+2021-03-16,Amador,Male,0.433776
+2021-03-16,Amador,Unknown/undifferentiated,0.001107
+2021-03-16,Butte,Female,0.578922
+2021-03-16,Butte,Male,0.420440
+2021-03-16,Butte,Unknown/undifferentiated,0.000638
+2021-03-16,Calaveras,Female,0.556063
+2021-03-16,Calaveras,Male,0.438885
+2021-03-16,Calaveras,Unknown/undifferentiated,0.005052
+2021-03-17,California,Female,0.570668
+2021-03-17,California,Male,0.425202
+2021-03-17,California,Unknown/undifferentiated,0.004131
+2021-03-16,Colusa,Female,0.535018
+2021-03-16,Colusa,Male,0.443391
+2021-03-16,Colusa,Unknown/undifferentiated,0.021590
+2021-03-16,Contra Costa,Female,0.582414
+2021-03-16,Contra Costa,Male,0.416686
+2021-03-16,Contra Costa,Unknown/undifferentiated,0.000900
+2021-03-16,Del Norte,Female,0.544114
+2021-03-16,Del Norte,Male,0.454636
+2021-03-16,Del Norte,Unknown/undifferentiated,0.001250
+2021-03-16,El Dorado,Female,0.562304
+2021-03-16,El Dorado,Male,0.436593
+2021-03-16,El Dorado,Unknown/undifferentiated,0.001103
+2021-03-16,Fresno,Female,0.566124
+2021-03-16,Fresno,Male,0.433199
+2021-03-16,Fresno,Unknown/undifferentiated,0.000676
+2021-03-16,Glenn,Female,0.575703
+2021-03-16,Glenn,Male,0.423494
+2021-03-16,Glenn,Unknown/undifferentiated,0.000803
+2021-03-16,Humboldt,Female,0.593703
+2021-03-16,Humboldt,Male,0.405152
+2021-03-16,Humboldt,Unknown/undifferentiated,0.001145
+2021-03-16,Imperial,Female,0.558124
+2021-03-16,Imperial,Male,0.441466
+2021-03-16,Imperial,Unknown/undifferentiated,0.000410
+2021-03-16,Inyo,Female,0.540728
+2021-03-16,Inyo,Male,0.458640
+2021-03-16,Inyo,Unknown/undifferentiated,0.000631
+2021-03-16,Kern,Female,0.561597
+2021-03-16,Kern,Male,0.431629
+2021-03-16,Kern,Unknown/undifferentiated,0.006774
+2021-03-16,Kings,Female,0.549179
+2021-03-16,Kings,Male,0.445735
+2021-03-16,Kings,Unknown/undifferentiated,0.005087
+2021-03-16,Lake,Female,0.552106
+2021-03-16,Lake,Male,0.447234
+2021-03-16,Lake,Unknown/undifferentiated,0.000661
+2021-03-16,Lassen,Female,0.530642
+2021-03-16,Lassen,Male,0.468474
+2021-03-16,Lassen,Unknown/undifferentiated,0.000884
+2021-03-16,Los Angeles,Female,0.573409
+2021-03-16,Los Angeles,Male,0.425127
+2021-03-16,Los Angeles,Unknown/undifferentiated,0.001464
+2021-03-16,Madera,Female,0.557875
+2021-03-16,Madera,Male,0.441371
+2021-03-16,Madera,Unknown/undifferentiated,0.000754
+2021-03-16,Marin,Female,0.574033
+2021-03-16,Marin,Male,0.425247
+2021-03-16,Marin,Unknown/undifferentiated,0.000720
+2021-03-16,Mariposa,Female,0.550883
+2021-03-16,Mariposa,Male,0.446228
+2021-03-16,Mariposa,Unknown/undifferentiated,0.002889
+2021-03-16,Mendocino,Female,0.545147
+2021-03-16,Mendocino,Male,0.445398
+2021-03-16,Mendocino,Unknown/undifferentiated,0.009455
+2021-03-17,Merced,Female,0.572546
+2021-03-17,Merced,Male,0.424175
+2021-03-17,Merced,Unknown/undifferentiated,0.003279
+2021-03-16,Modoc,Female,0.525227
+2021-03-16,Modoc,Male,0.474773
+2021-03-16,Mono,Male,0.520317
+2021-03-16,Mono,Female,0.479475
+2021-03-16,Mono,Unknown/undifferentiated,0.000208
+2021-03-16,Monterey,Female,0.562342
+2021-03-16,Monterey,Male,0.399880
+2021-03-16,Monterey,Unknown/undifferentiated,0.037778
+2021-03-16,Napa,Female,0.539313
+2021-03-16,Napa,Male,0.460099
+2021-03-16,Napa,Unknown/undifferentiated,0.000589
+2021-03-16,Nevada,Female,0.575428
+2021-03-16,Nevada,Male,0.423815
+2021-03-16,Nevada,Unknown/undifferentiated,0.000757
+2021-03-16,Orange,Female,0.568888
+2021-03-16,Orange,Male,0.419242
+2021-03-16,Orange,Unknown/undifferentiated,0.011870
+2021-03-16,Placer,Female,0.580807
+2021-03-16,Placer,Male,0.418514
+2021-03-16,Placer,Unknown/undifferentiated,0.000679
+2021-03-16,Plumas,Female,0.545739
+2021-03-16,Plumas,Male,0.453779
+2021-03-16,Plumas,Unknown/undifferentiated,0.000481
+2021-03-16,Riverside,Female,0.562543
+2021-03-16,Riverside,Male,0.436559
+2021-03-16,Riverside,Unknown/undifferentiated,0.000898
+2021-03-16,Sacramento,Female,0.581647
+2021-03-16,Sacramento,Male,0.416330
+2021-03-16,Sacramento,Unknown/undifferentiated,0.002022
+2021-03-16,San Benito,Female,0.583689
+2021-03-16,San Benito,Male,0.412427
+2021-03-16,San Benito,Unknown/undifferentiated,0.003883
+2021-03-16,San Bernardino,Female,0.581107
+2021-03-16,San Bernardino,Male,0.417638
+2021-03-16,San Bernardino,Unknown/undifferentiated,0.001255
+2021-03-16,San Diego,Female,0.581403
+2021-03-16,San Diego,Male,0.411100
+2021-03-16,San Diego,Unknown/undifferentiated,0.007498
+2021-03-16,San Francisco,Female,0.542295
+2021-03-16,San Francisco,Male,0.454617
+2021-03-16,San Francisco,Unknown/undifferentiated,0.003088
+2021-03-16,San Joaquin,Female,0.584161
+2021-03-16,San Joaquin,Male,0.411148
+2021-03-16,San Joaquin,Unknown/undifferentiated,0.004692
+2021-03-16,San Luis Obispo,Female,0.572180
+2021-03-16,San Luis Obispo,Male,0.426991
+2021-03-16,San Luis Obispo,Unknown/undifferentiated,0.000829
+2021-03-16,San Mateo,Female,0.578521
+2021-03-16,San Mateo,Male,0.420766
+2021-03-16,San Mateo,Unknown/undifferentiated,0.000713
+2021-03-16,Santa Barbara,Female,0.582750
+2021-03-16,Santa Barbara,Male,0.416396
+2021-03-16,Santa Barbara,Unknown/undifferentiated,0.000854
+2021-03-16,Santa Clara,Female,0.581796
+2021-03-16,Santa Clara,Male,0.417535
+2021-03-16,Santa Clara,Unknown/undifferentiated,0.000669
+2021-03-16,Santa Cruz,Female,0.579114
+2021-03-16,Santa Cruz,Male,0.416364
+2021-03-16,Santa Cruz,Unknown/undifferentiated,0.004522
+2021-03-16,Shasta,Female,0.578349
+2021-03-16,Shasta,Male,0.420725
+2021-03-16,Shasta,Unknown/undifferentiated,0.000926
+2021-03-16,Sierra,Female,0.529814
+2021-03-16,Sierra,Male,0.470186
+2021-03-16,Siskiyou,Female,0.556200
+2021-03-16,Siskiyou,Male,0.443489
+2021-03-16,Siskiyou,Unknown/undifferentiated,0.000311
+2021-03-16,Solano,Female,0.583339
+2021-03-16,Solano,Male,0.414688
+2021-03-16,Solano,Unknown/undifferentiated,0.001973
+2021-03-16,Sonoma,Female,0.578708
+2021-03-16,Sonoma,Male,0.420594
+2021-03-16,Sonoma,Unknown/undifferentiated,0.000698
+2021-03-17,Stanislaus,Female,0.574594
+2021-03-17,Stanislaus,Male,0.422602
+2021-03-17,Stanislaus,Unknown/undifferentiated,0.002804
+2021-03-16,Sutter,Female,0.569956
+2021-03-16,Sutter,Male,0.424287
+2021-03-16,Sutter,Unknown/undifferentiated,0.005757
+2021-03-16,Tehama,Female,0.563849
+2021-03-16,Tehama,Male,0.435644
+2021-03-16,Tehama,Unknown/undifferentiated,0.000508
+2021-03-16,Trinity,Female,0.506446
+2021-03-16,Trinity,Male,0.491713
+2021-03-16,Trinity,Unknown/undifferentiated,0.001842
+2021-03-16,Tulare,Female,0.555464
+2021-03-16,Tulare,Male,0.443993
+2021-03-16,Tulare,Unknown/undifferentiated,0.000544
+2021-03-16,Tuolumne,Female,0.553873
+2021-03-16,Tuolumne,Male,0.445240
+2021-03-16,Tuolumne,Unknown/undifferentiated,0.000887
+2021-03-16,Unknown,Male,0.513361
+2021-03-16,Unknown,Female,0.468087
+2021-03-16,Unknown,Unknown/undifferentiated,0.018552
+2021-03-16,Ventura,Female,0.575825
+2021-03-16,Ventura,Male,0.423866
+2021-03-16,Ventura,Unknown/undifferentiated,0.000308
+2021-03-16,Yolo,Female,0.559592
+2021-03-16,Yolo,Male,0.396456
+2021-03-16,Yolo,Unknown/undifferentiated,0.043952
+2021-03-16,Yuba,Female,0.583729
+2021-03-16,Yuba,Male,0.413142
+2021-03-16,Yuba,Unknown/undifferentiated,0.003129
