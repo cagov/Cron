@@ -13,13 +13,13 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const PrLabels = ['Automatic Deployment'];
-const PrReviewers = ['vargoCDPH','sindhuravuri'];
+const PrReviewers = []; //'vargoCDPH','sindhuravuri'];
 
-const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
+//const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+//const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 //const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
-//const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
-//const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
+const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
+const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
 const sqlRootPath = "../SQL/CDT_COVID/Equity/";
@@ -28,7 +28,7 @@ const schemaPath = `${sqlRootPath}schema/`;
 // eslint-disable-next-line no-unused-vars
 module.exports = async function (context, functionInput) {
     try {
-        await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
+        //await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
         const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
         const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
         const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
@@ -150,13 +150,14 @@ If there are issues with the data:
         });
 
         // statewide stats for comparison
+        const cumulative_combined_key = 'cumulative-combined';
         allData.CumulativeStatewideData.forEach(item => {
-            let info = allFilesMap.get('cumulative-combined') || {};
+            let info = allFilesMap.get(cumulative_combined_key) || {};
 
             if(!info[item.METRIC]) {
                 info[item.METRIC] = item; // just one row for cases, deaths, tests in this query
             }
-            allFilesMap.set('cumulative-combined',info);
+            allFilesMap.set(cumulative_combined_key,info);
         });
 
         // write one file for statewide data
@@ -169,23 +170,38 @@ If there are issues with the data:
 
         //Validate Results
         for (let [key,value] of allFilesMap) {
-            if(key===equityTopBoxDataV2_key) {
-                //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
-                validateJSON('equityTopBoxDataV2.CasesAndDeathsByDemographic failed validation', 
-                    value,
-                    `${schemaPath}CasesAndDeathsByDemographic/output/schema.json`,
-                    `${schemaPath}CasesAndDeathsByDemographic/output/sample.json`,
-                    `${schemaPath}CasesAndDeathsByDemographic/output/fail/`
-                );
-            } else if(key.startsWith(MissingnessHeader)) {
-                //includes MissingnessSOGIData too
-                validateJSON(`${key} failed validation`, 
-                    value,
-                    `${schemaPath}MissingnessData/output/schema.json`,
-                    `${schemaPath}MissingnessData/output/sample.json`,
-                    `${schemaPath}MissingnessData/output/fail/`
-                );
-            } 
+            switch (key) {
+                case equityTopBoxDataV2_key:
+                    //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
+                    validateJSON(`${key} failed validation`, 
+                        value,
+                        `${schemaPath}CasesAndDeathsByDemographic/output/schema.json`,
+                        `${schemaPath}CasesAndDeathsByDemographic/output/sample.json`,
+                        `${schemaPath}CasesAndDeathsByDemographic/output/fail/`
+                    );
+                    break;
+
+                case cumulative_combined_key:
+                    //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
+                    validateJSON(`${key} failed validation`, 
+                        value,
+                        `${schemaPath}CumulativeStatewideData/output/schema.json`,
+                        `${schemaPath}CumulativeStatewideData/output/sample.json`,
+                        `${schemaPath}CumulativeStatewideData/output/fail/`
+                    );
+                    break;
+                default:
+                    if(key.startsWith(MissingnessHeader)) {
+                        //includes MissingnessSOGIData too
+                        validateJSON(`${key} failed validation`, 
+                            value,
+                            `${schemaPath}MissingnessData/output/schema.json`,
+                            `${schemaPath}MissingnessData/output/sample.json`,
+                            `${schemaPath}MissingnessData/output/fail/`
+                        );
+                    } 
+                        break;
+            }
         }
 
         //Create two trees for Production/Staging
