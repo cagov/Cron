@@ -14,7 +14,6 @@ const committer = {
 };
 const PrLabels = ['Automatic Deployment'];
 const PrReviewers = ['vargoCDPH','sindhuravuri'];
-//const PrReviewers = [];
 
 const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
 const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
@@ -290,6 +289,6 @@ If there are issues with the data:
             await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
         }
     } catch (e) {
-       await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
+        await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
 };
