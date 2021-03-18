@@ -37,11 +37,17 @@ const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, Fai
         };
 
         if(PassTestPathFormat) {
-          newSchema.passTests = getSqlWorkAndSchemas_getFileNames(sqlFullPath + PassTestPathFormat.replace(/\[file\]/,sql.name));
+          let PassTestPath = sqlFullPath + PassTestPathFormat.replace(/\[file\]/,sql.name);
+          if (fs.existsSync(PassTestPath)) {
+            newSchema.passTests = getSqlWorkAndSchemas_getFileNames(PassTestPath);
+          }
         }
 
         if(FailTestPathFormat) {
-          newSchema.failTests = getSqlWorkAndSchemas_getFileNames(sqlFullPath + FailTestPathFormat.replace(/\[file\]/,sql.name));
+          let FailTestPath = sqlFullPath + FailTestPathFormat.replace(/\[file\]/,sql.name);
+          if (fs.existsSync(FailTestPath)) {
+            newSchema.failTests = getSqlWorkAndSchemas_getFileNames(FailTestPath);
+          }
         }
 
         JsonOutput.schema[sql.name] = newSchema;

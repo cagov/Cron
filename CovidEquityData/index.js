@@ -24,7 +24,9 @@ const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
 const sqlRootPath = "../SQL/CDT_COVID/Equity/";
+const schemaPath = `${sqlRootPath}schema/`;
 
+// eslint-disable-next-line no-unused-vars
 module.exports = async function (context, functionInput) {
     //validateJSON(`xxx failed validation`, require('../common/SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/sample.json'),schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);throw new Error('All good');
     
@@ -72,11 +74,12 @@ If there are issues with the data:
 
         allFilesMap.set('equityTopBoxDataV2',equityTopBoxDataV2);
 
+        //CasesLowIncome is handled with CasesAndDeathsByDemographic output validation
         validateJSON('equityTopBoxDataV2.CasesAndDeathsByDemographic failed validation', 
             equityTopBoxDataV2,
-            `../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/schema.json`,
-            '../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/sample.json',
-            '../SQL/CDT_COVID/Equity/schema/CasesAndDeathsByDemographic/output/fail/'
+            `${schemaPath}CasesAndDeathsByDemographic/output/schema.json`,
+            `${schemaPath}CasesAndDeathsByDemographic/output/sample.json`,
+            `${schemaPath}CasesAndDeathsByDemographic/output/fail/`
         );
   
         // this is combining cases, testing and deaths metrics
@@ -87,6 +90,8 @@ If there are issues with the data:
             countyInfo.race_ethnicity[item.METRIC] = item;
             allFilesMap.set(mapKey,countyInfo);
         });
+
+
         // combining sogi missingness with regular missingness so I can write less files
         // missingness sexual orientation, gender identity
         allData.MissingnessSOGIData.forEach(item => {
@@ -273,6 +278,6 @@ If there are issues with the data:
             await slackBotDelayedChatPost(slackBotCompletedWorkChannel,`Equity stats Update ready for review in https://staging.covid19.ca.gov/equity/ approve the PR here: \n${Pr.html_url}`, postTime);
         }
     } catch (e) {
-       //await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
+       await slackBotReportError(slackBotDebugChannel,`Error running equity stats update`,e,context,functionInput);
     }
 };
