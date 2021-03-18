@@ -64,25 +64,26 @@ const processFilesForPr = async (fileData, gitRepo, prTitle) => {
 /**
  * If changes are detected, create and return a PR, or reuse a PR
  * @param {*} gitRepo 
- * @param {{}} [Pr] The PR from previous runs
+ * @param {{head:{ref:string}}} [Pr] The PR from previous runs
  * @param {string} path path of the file to update
  * @param {{data:{}}} json data to send
  * @param {string} prTitle title for PR if created
  * @returns {Promise<{html_url:string}>} The PR created if a change was made
  */
 const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
-    const branchName = `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
-    const targetcontent = (await gitRepo.getContents(Pr ? branchName : masterBranch,path,true)).data;
-    if(JSON.stringify(json.data)===JSON.stringify(targetcontent.data)) {
+    const branchName = Pr ? Pr.head.ref : `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
+    const targetcontent = (await gitRepo.getContents(Pr ? Pr.head.ref : masterBranch,path,true)).data;
+
+    //Add publishedDate
+    if(!json.meta) {
+        json.meta = {};
+    }
+    json.meta.PUBLISHED_DATE = todayDateString();
+
+    if(JSON.stringify(json)===JSON.stringify(targetcontent)) {
         console.log('data matched - no need to update');
     } else {
         console.log('data changed - updating');
-
-        //Add publishedDate
-        if(!json.meta) {
-            json.meta = {};
-        }
-        json.meta.PUBLISHED_DATE = todayDateString();
 
         if(!Pr) {
             await gitRepo.createBranch(masterBranch,branchName);

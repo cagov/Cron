@@ -4,7 +4,7 @@
       "name": "CovidVaccineHPI",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 20/30 17-19 * * *"
+      "schedule": "0 20/30 16-18 * * *"
     }
   ]
 }

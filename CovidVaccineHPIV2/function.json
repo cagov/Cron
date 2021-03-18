@@ -1,10 +1,10 @@
 {
   "bindings": [
     {
-      "name": "CovidWeeklyTierUpdate",
+      "name": "CovidVaccineHPIV2",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 0 16 * * *"
+      "schedule": "0 20/30 16-18 * * *"
     }
   ]
 }
