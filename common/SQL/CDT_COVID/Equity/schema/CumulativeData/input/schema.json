@@ -219,8 +219,8 @@
   },
   "type": "array",
   "uniqueItems": true,
-  "minItems": 9,
-  "maxItems": 9,
+  "minItems": 1593,
+  "maxItems": 1593,
   "items": {
     "$ref": "#/definitions/cases_tests_deaths"
   }

@@ -57,6 +57,9 @@ If there are issues with the data:
 
         const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
 
+  //      const fs = require('fs');
+//fs.writeFileSync(`../common/SQL/CDT_COVID/Equity/schema/CumulativeData/input/sample.json`,JSON.stringify( allData.CumulativeData,null,2));
+
         Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
             const schemaObject = sqlWorkAndSchemas.schema[file];
             const targetJSON = allData[file];
