@@ -1,20 +1,16 @@
   -- Current vaccine administrations by race (distinct people)
-  -- 535 rows
-  --   by county(REGION)
+  -- 546 rows
+  --   by county(REGION) (County/California/"Outside California")
   --   by race(CATEGORY) (White/Latino/Asian/etc)
 with
 GB as ( --Master list of corrected data grouped by region/category
   select
-    case RACE_ETH when 'Unable to report due to policy/law' then 'Unknown' else coalesce(RACE_ETH,'Unknown') end "CATEGORY",
-    --coalesce(RACE_ETH,'Unknown') "CATEGORY",
-    case when MIXED_COUNTY in
-        ('Alameda','Alpine','Amador','Butte','Calaveras','Colusa','Contra Costa','Del Norte','El Dorado','Fresno','Glenn','Humboldt','Imperial','Inyo','Kern','Kings','Lake','Lassen','Los Angeles','Madera','Marin','Mariposa','Mendocino','Merced','Modoc','Mono','Monterey','Napa','Nevada','Orange','Placer','Plumas','Riverside','Sacramento','San Benito','San Bernardino','San Diego','San Francisco','San Joaquin','San Luis Obispo','San Mateo','Santa Barbara','Santa Clara','Santa Cruz','Shasta','Sierra','Siskiyou','Solano','Sonoma','Stanislaus','Sutter','Tehama','Trinity','Tulare','Tuolumne','Ventura','Yolo','Yuba')
-    then MIXED_COUNTY else 'Unknown' end "REGION",
-    --count(distinct vax_event_id) "ADMIN_COUNT", --For total doses
+    RECIP_RACE_ETH "CATEGORY",
+    MIXED_COUNTY "REGION",
     count(distinct recip_id) "ADMIN_COUNT", --For total people
-    MAX(case when DATE(ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(ADMIN_DATE) end) "LATEST_ADMIN_DATE"
+	MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE_2" -- new view only includes second dose as the latest dose
   from
-    CA_VACCINE.VW_TAB_INT_ALL
+    CA_VACCINE.CA_VACCINE.VW_DERIVED_BASE_RECIPIENTS
   where
     RECIP_ID IS NOT NULL
   group by
@@ -25,7 +21,7 @@ TA as ( -- Region Totals
   select
     REGION,
     SUM(ADMIN_COUNT) "REGION_TOTAL",
-    MAX(LATEST_ADMIN_DATE) "LATEST_ADMIN_DATE"
+    MAX(LATEST_ADMIN_DATE_2) "LATEST_ADMIN_DATE"
   from
       GB
   group by
