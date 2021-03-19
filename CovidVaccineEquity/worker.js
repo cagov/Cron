@@ -1,5 +1,6 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const GitHub = require('github-api');
+const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static';
 const committer = {
@@ -17,6 +18,7 @@ const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute
 const doCovidVaccineEquity = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
+    const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
     const branchPrefix = 'data-';
     const BranchName = `${branchPrefix}${todayDateString()}-${todayTimeString()}-vaccineequity`;
@@ -209,9 +211,9 @@ const doCovidVaccineEquity = async () => {
         .data;
 
         //Label the Pr
-        // await gitIssues.editIssue(Pr.number,{
-        //     labels: PrLabels
-        // });
+         await gitIssues.editIssue(Pr.number,{
+             labels: PrLabels
+         });
 
         //Approve Pr
         await gitRepo.mergePullRequest(Pr.number,{
