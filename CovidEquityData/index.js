@@ -13,13 +13,13 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const PrLabels = ['Automatic Deployment'];
-const PrReviewers = ['vargoCDPH','sindhuravuri'];
+const PrReviewers = [];// ['vargoCDPH','sindhuravuri'];
 
-const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
-const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
+//const slackBotCompletedWorkChannel = 'C01BMCQK0F6'; //main channel
+//const slackBotDebugChannel = 'C01DBP67MSQ'; //#testingbot
 //const slackBotDebugChannel = 'C0112NK978D'; //Aaron debug?
-//const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
-//const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
+const slackBotDebugChannel = 'C01H6RB99E2'; //Carter debug
+const slackBotCompletedWorkChannel = 'C01H6RB99E2'; //Carter debug
 const appName = 'CovidEquityData';
 
 const sqlRootPath = "../SQL/CDT_COVID/Equity/";
@@ -28,7 +28,7 @@ const schemaPath = `${sqlRootPath}schema/`;
 // eslint-disable-next-line no-unused-vars
 module.exports = async function (context, functionInput) {
     try {
-        await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
+        //await slackBotChatPost(slackBotDebugChannel,`${appName} started (planned Tuesdays 1:20pm).`);
         const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
         const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
         const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
