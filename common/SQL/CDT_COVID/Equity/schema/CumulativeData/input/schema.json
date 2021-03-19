@@ -63,158 +63,6 @@
         "Yolo",
         "Yuba"
       ]
-    },
-    "cases_tests_deaths": {
-      "type": "object",
-      "required": [
-        "COUNTY",
-        "DEMOGRAPHIC_SET",
-        "DEMOGRAPHIC_SET_CATEGORY",
-        "METRIC",
-        "METRIC_VALUE",
-        "METRIC_VALUE_PER_100K",
-        "APPLIED_SUPPRESSION",
-        "POPULATION_PERCENTAGE",
-        "METRIC_TOTAL_PERCENTAGE",
-        "METRIC_VALUE_30_DAYS_AGO",
-        "METRIC_VALUE_PER_100K_30_DAYS_AGO",
-        "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO",
-        "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO",
-        "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "COUNTY": {
-          "$ref": "#/definitions/county"
-        },
-        "DEMOGRAPHIC_SET": {
-          "const": "race_ethnicity"
-        },
-        "DEMOGRAPHIC_SET_CATEGORY": {
-          "type": "string",
-          "enum": [
-            "African American",
-            "American Indian",
-            "Asian American",
-            "Latino",
-            "Multi-Race",
-            "Native Hawaiian and other Pacific Islander",
-            "White",
-            "Other",
-            "Unknown"
-          ]
-        },
-        "METRIC": {
-          "enum": [
-            "cases",
-            "deaths",
-            "tests"
-          ]
-        },
-        "METRIC_VALUE": {
-          "oneof": [
-            {
-              "type": "integer",
-              "minimum": 0
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "METRIC_VALUE_PER_100K": {
-          "oneof": [
-            {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 100000
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "APPLIED_SUPPRESSION": {
-          "enum": [
-            "Total",
-            "None",
-            "Population"
-          ]
-        },
-        "POPULATION_PERCENTAGE": {
-          "oneof": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "METRIC_TOTAL_PERCENTAGE": {
-          "oneof": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "METRIC_VALUE_30_DAYS_AGO": {
-          "oneof": [
-            {
-              "type": "integer",
-              "minimum": 0
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "METRIC_VALUE_PER_100K_30_DAYS_AGO": {
-          "oneof": [
-            {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 100000
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO": {
-          "oneof": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO": {
-          "oneof": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO": {
-          "oneof": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      }
     }
   },
   "type": "array",
@@ -222,6 +70,158 @@
   "minItems": 1593,
   "maxItems": 1593,
   "items": {
-    "$ref": "#/definitions/cases_tests_deaths"
+    "type": "object",
+    "required": [
+      "COUNTY",
+      "DEMOGRAPHIC_SET",
+      "DEMOGRAPHIC_SET_CATEGORY",
+      "METRIC",
+      "METRIC_VALUE",
+      "METRIC_VALUE_PER_100K",
+      "APPLIED_SUPPRESSION",
+      "POPULATION_PERCENTAGE",
+      "METRIC_TOTAL_PERCENTAGE",
+      "METRIC_VALUE_30_DAYS_AGO",
+      "METRIC_VALUE_PER_100K_30_DAYS_AGO",
+      "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO",
+      "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO",
+      "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "COUNTY": {
+        "$ref": "#/definitions/county"
+      },
+      "DEMOGRAPHIC_SET": {
+        "const": "race_ethnicity"
+      },
+      "DEMOGRAPHIC_SET_CATEGORY": {
+        "type": "string",
+        "enum": [
+          "African American",
+          "American Indian",
+          "Asian American",
+          "Latino",
+          "Multi-Race",
+          "Native Hawaiian and other Pacific Islander",
+          "White",
+          "Other",
+          "Unknown"
+        ]
+      },
+      "METRIC": {
+        "enum": [
+          "cases",
+          "deaths",
+          "tests"
+        ]
+      },
+      "METRIC_VALUE": {
+        "oneOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PER_100K": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "APPLIED_SUPPRESSION": {
+        "enum": [
+          "Total",
+          "None",
+          "Population"
+        ]
+      },
+      "POPULATION_PERCENTAGE": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_TOTAL_PERCENTAGE": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PER_100K_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
   }
 }

@@ -1,96 +1,287 @@
 {
   "definitions": {
-    "cases_tests_deaths": {
-      "type": "object",
-      "required": [
-        "COUNTY",
-        "DEMOGRAPHIC_SET",
-        "DEMOGRAPHIC_SET_CATEGORY",
-        "METRIC",
-        "METRIC_VALUE",
-        "METRIC_VALUE_PER_100K",
-        "APPLIED_SUPPRESSION",
-        "POPULATION_PERCENTAGE",
-        "METRIC_TOTAL_PERCENTAGE",
-        "METRIC_VALUE_30_DAYS_AGO",
-        "METRIC_VALUE_PER_100K_30_DAYS_AGO",
-        "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO",
-        "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO",
-        "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "COUNTY": {
-          "const": "California"
-        },
-        "DEMOGRAPHIC_SET": {
-          "const": "Combined"
-        },
-        "DEMOGRAPHIC_SET_CATEGORY": {
-          "const": "Statewide"
-        },
-        "METRIC": {
-          "enum": [
-            "cases",
-            "deaths",
-            "tests"
-          ]
-        },
-        "METRIC_VALUE": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "METRIC_VALUE_PER_100K": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 100000
-        },
-        "APPLIED_SUPPRESSION": {
-          "const": "None"
-        },
-        "POPULATION_PERCENTAGE": {
-          "const": 100
-        },
-        "METRIC_TOTAL_PERCENTAGE": {
-          "const": 100
-        },
-        "METRIC_VALUE_30_DAYS_AGO": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "METRIC_VALUE_PER_100K_30_DAYS_AGO": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 100000
-        },
-        "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO": {
-          "type": "number"
-        },
-        "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO": {
-          "const": 100
-        },
-        "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO": {
-          "const": 0
-        }
-      }
+    "county": {
+      "type": "string",
+      "enum": [
+        "California",
+        "Alameda",
+        "Alpine",
+        "Amador",
+        "Butte",
+        "Calaveras",
+        "Colusa",
+        "Contra Costa",
+        "Del Norte",
+        "El Dorado",
+        "Fresno",
+        "Glenn",
+        "Humboldt",
+        "Imperial",
+        "Inyo",
+        "Kern",
+        "Kings",
+        "Lake",
+        "Lassen",
+        "Los Angeles",
+        "Madera",
+        "Marin",
+        "Mariposa",
+        "Mendocino",
+        "Merced",
+        "Modoc",
+        "Mono",
+        "Monterey",
+        "Napa",
+        "Nevada",
+        "Orange",
+        "Placer",
+        "Plumas",
+        "Riverside",
+        "Sacramento",
+        "San Benito",
+        "San Bernardino",
+        "San Diego",
+        "San Francisco",
+        "San Joaquin",
+        "San Luis Obispo",
+        "San Mateo",
+        "Santa Barbara",
+        "Santa Clara",
+        "Santa Cruz",
+        "Shasta",
+        "Sierra",
+        "Siskiyou",
+        "Solano",
+        "Sonoma",
+        "Stanislaus",
+        "Sutter",
+        "Tehama",
+        "Trinity",
+        "Tulare",
+        "Tuolumne",
+        "Ventura",
+        "Yolo",
+        "Yuba"
+      ]
     }
   },
-  "type": "object",
-  "required": [
-    "cases",
-    "deaths",
-    "tests"
-  ],
-  "additionalProperties": false,
-  "properties": {
-    "cases": {
-      "$ref": "#/definitions/cases_tests_deaths"
-    },
-    "tests": {
-      "$ref": "#/definitions/cases_tests_deaths"
-    },
-    "deaths": {
-      "$ref": "#/definitions/cases_tests_deaths"
+  "type": "array",
+  "uniqueItems": true,
+  "minItems": 27,
+  "maxItems": 27,
+  "items": {
+    "type": "object",
+    "required": [
+      "COUNTY",
+      "DEMOGRAPHIC_SET",
+      "DEMOGRAPHIC_SET_CATEGORY",
+      "METRIC",
+      "METRIC_VALUE",
+      "METRIC_VALUE_PER_100K",
+      "APPLIED_SUPPRESSION",
+      "POPULATION_PERCENTAGE",
+      "METRIC_TOTAL_PERCENTAGE",
+      "METRIC_VALUE_30_DAYS_AGO",
+      "METRIC_VALUE_PER_100K_30_DAYS_AGO",
+      "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO",
+      "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO",
+      "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO",
+      "SORT_METRIC",
+      "METRIC_TOTAL_DELTA",
+      "POPULATION_PERCENTAGE_DELTA",
+      "WORST_VALUE",
+      "WORST_VALUE_DELTA",
+      "LOWEST_VALUE",
+      "PCT_FROM_LOWEST_VALUE"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "COUNTY": {
+        "$ref": "#/definitions/county"
+      },
+      "DEMOGRAPHIC_SET": {
+        "const": "race_ethnicity"
+      },
+      "DEMOGRAPHIC_SET_CATEGORY": {
+        "type": "string",
+        "enum": [
+          "African American",
+          "American Indian",
+          "Asian American",
+          "Latino",
+          "Multi-Race",
+          "Native Hawaiian and other Pacific Islander",
+          "White",
+          "Other",
+          "Unknown"
+        ]
+      },
+      "METRIC": {
+        "enum": [
+          "cases",
+          "deaths",
+          "tests"
+        ]
+      },
+      "METRIC_VALUE": {
+        "oneOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PER_100K": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "APPLIED_SUPPRESSION": {
+        "enum": [
+          "Total",
+          "None",
+          "Population"
+        ]
+      },
+      "POPULATION_PERCENTAGE": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_TOTAL_PERCENTAGE": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PER_100K_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "SORT_METRIC": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_TOTAL_DELTA": {
+        "type": "number"
+      },
+      "POPULATION_PERCENTAGE_DELTA": {
+        "type": "number"
+      },
+      "WORST_VALUE": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "WORST_VALUE_DELTA": {
+        "type": "number"
+      },
+      "LOWEST_VALUE": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "PCT_FROM_LOWEST_VALUE": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
     }
   }
 }

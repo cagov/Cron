@@ -57,9 +57,6 @@ If there are issues with the data:
 
         const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
 
-  //      const fs = require('fs');
-//fs.writeFileSync(`../common/SQL/CDT_COVID/Equity/schema/CumulativeData/input/sample.json`,JSON.stringify( allData.CumulativeData,null,2));
-
         Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
             const schemaObject = sqlWorkAndSchemas.schema[file];
             const targetJSON = allData[file];
@@ -108,8 +105,9 @@ If there are issues with the data:
 
         // for cumulative go through all, add each county to map with cumulative key, all records for that county should be in that one file
         // cumulative for R/E per 100K, R/E by % pop. there used to be a REPORT_DATE here and we used to have to do where REPORT_DATE = (select max(REPORT_DATE) from PRODUCTION.VW_CDPH_DEMOGRAPHIC_RATE_CUMULATIVE); but that has been removed and we expect a single cumulative value here now
+        const CumulativeData_Header = 'cumulative-';
         allData.CumulativeData.forEach(item => {
-            let mapKey = `cumulative-${item.COUNTY}`;
+            let mapKey = `${CumulativeData_Header}${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey) || [];
 
             item.SORT_METRIC = item.METRIC_TOTAL_PERCENTAGE / item.POPULATION_PERCENTAGE;
@@ -201,6 +199,14 @@ If there are issues with the data:
                             `${schemaPath}MissingnessData/output/schema.json`,
                             `${schemaPath}MissingnessData/output/sample.json`,
                             `${schemaPath}MissingnessData/output/fail/`
+                        );
+
+                    } else if(key.startsWith(CumulativeData_Header)) {
+                        validateJSON(`${key} failed validation`, 
+                            value,
+                            `${schemaPath}CumulativeData/output/schema.json`,
+                            `${schemaPath}CumulativeData/output/sample.json`,
+                            `${schemaPath}CumulativeData/output/fail/`
                         );
                     }
             }
