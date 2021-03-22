@@ -36,13 +36,28 @@ const slackApiGet = () =>
   });
 
 /**
+ * Converts a Javascript Date into a Slack timestamp
+ * @param {Date} date 
+ * @returns {string}
+ */
+  const slackBotTimeStampFromDate = date =>  date/1000;
+
+/**
+ * Converts a Slack timestamp into a Javascript Date
+ * @param {string} timeStamp 
+ * @returns {Date}
+ */
+const slackBotTimeStampToDate = timeStamp => new Date(timeStamp*1000);
+
+/**
  * List the post history for a channel
  * 
  * (See https://api.slack.com/methods/conversations.history)
  * @param {string} channel - Slack channel to search in
+ * @param {string} [moreoptions] - More options to add to URL
  */
-const slackBotChannelHistory = async channel => 
-  fetch(`${slackApiChannelHistory}?channel=${channel}`,slackApiGet());
+const slackBotChannelHistory = async (channel, moreoptions) => 
+  fetch(`${slackApiChannelHistory}?channel=${channel}${moreoptions ?? ''}`,slackApiGet());
 
 /**
  * Get a list of replies for a post
@@ -166,5 +181,7 @@ module.exports = {
   slackBotReportError,
   slackBotChannelHistory,
   slackBotChannelReplies,
-  slackBotReactionAdd
+  slackBotReactionAdd,
+  slackBotTimeStampFromDate,
+  slackBotTimeStampToDate
 };

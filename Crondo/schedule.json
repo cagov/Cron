@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "description": "Data schedule for Crondo; think WHEN. 15 min increments."
+  },
+  "data": {
+    "functions": [
+      {
+        "name" : "CovidStateDashboard",
+        "enabled": true,
+        "daily_schedule": [
+          {
+            "name" : "CovidStateDashboard",
+            "message" : "CovidStateDashboard (9:00 AM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 9,
+            "minute" : 0
+          }
+        ]
+      },
+      {
+        "name" : "CovidStateDashboardV2",
+        "enabled": true,
+        "daily_schedule": [
+          {
+            "name" : "CovidStateDashboardV2",
+            "message" : "CovidStateDashboardV2 (9:00 AM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 9,
+            "minute" : 0
+          },
+          {
+            "name" : "CovidStateDashboardV2",
+            "message" : "CovidStateDashboardV2 (9:30 AM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 9,
+            "minute" : 30
+          }
+        ]
+      }
+    ]
+  }
+}
