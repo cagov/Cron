@@ -1,24 +1,33 @@
 const { doWeeklyUpdatePrs } = require('./doUpdate');
-const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
-const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
-const notifyChannel = 'C019DS5S6Q2'; // dimmer
-const appName = 'CoivdWeeklyTierUpdate';
-
+const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
+const notifyChannel = 'C019DS5S6Q2'; // #covid19-blueprint
+const debugChannel = 'C01DBP67MSQ'; // #testingbot
 module.exports = async function (context, myTimer) {
-try {
-  await slackBotChatPost(debugChannel,`${appName} ran`);
+  const appName = context.executionContext.functionName;
+  let slackPostTS = null;
+  try {
+    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} ran (9am every day)`)).json()).ts;
 
-  const masterbranch='master', stagingbranch='staging';
-  const mergetargets = [masterbranch,stagingbranch];
+    const masterbranch='master', stagingbranch='staging';
+    const mergetargets = [masterbranch,stagingbranch];
+  
+    const report = await doWeeklyUpdatePrs(mergetargets);
 
-  const report = await doWeeklyUpdatePrs(mergetargets);
+    for (let PrResult of report) {
+      const prMessage = `Tier Update Deployed\n${PrResult.html_url}`;
+      await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
+      await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
+      await slackBotChatPost(notifyChannel, prMessage);
+    }
 
-  for (const val of report) {
-      await slackBotChatPost(notifyChannel,`Tier Update Deployed\n${val.Pr.html_url}`);
+    await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
+    await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
+  } catch (e) {
+    await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
+
+    if(slackPostTS) {
+      await slackBotReplyPost(debugChannel, slackPostTS, `${appName} ERROR!`);
+      await slackBotReactionAdd(debugChannel, slackPostTS, 'x');
+    }
   }
-
-  await slackBotChatPost(debugChannel,`${appName} finished`);
-} catch (e) {
-  await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
-}
 };
