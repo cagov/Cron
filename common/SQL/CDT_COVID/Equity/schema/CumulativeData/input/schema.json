@@ -1,0 +1,227 @@
+{
+  "definitions": {
+    "county": {
+      "type": "string",
+      "enum": [
+        "California",
+        "Alameda",
+        "Alpine",
+        "Amador",
+        "Butte",
+        "Calaveras",
+        "Colusa",
+        "Contra Costa",
+        "Del Norte",
+        "El Dorado",
+        "Fresno",
+        "Glenn",
+        "Humboldt",
+        "Imperial",
+        "Inyo",
+        "Kern",
+        "Kings",
+        "Lake",
+        "Lassen",
+        "Los Angeles",
+        "Madera",
+        "Marin",
+        "Mariposa",
+        "Mendocino",
+        "Merced",
+        "Modoc",
+        "Mono",
+        "Monterey",
+        "Napa",
+        "Nevada",
+        "Orange",
+        "Placer",
+        "Plumas",
+        "Riverside",
+        "Sacramento",
+        "San Benito",
+        "San Bernardino",
+        "San Diego",
+        "San Francisco",
+        "San Joaquin",
+        "San Luis Obispo",
+        "San Mateo",
+        "Santa Barbara",
+        "Santa Clara",
+        "Santa Cruz",
+        "Shasta",
+        "Sierra",
+        "Siskiyou",
+        "Solano",
+        "Sonoma",
+        "Stanislaus",
+        "Sutter",
+        "Tehama",
+        "Trinity",
+        "Tulare",
+        "Tuolumne",
+        "Ventura",
+        "Yolo",
+        "Yuba"
+      ]
+    }
+  },
+  "type": "array",
+  "uniqueItems": true,
+  "minItems": 1593,
+  "maxItems": 1593,
+  "items": {
+    "type": "object",
+    "required": [
+      "COUNTY",
+      "DEMOGRAPHIC_SET",
+      "DEMOGRAPHIC_SET_CATEGORY",
+      "METRIC",
+      "METRIC_VALUE",
+      "METRIC_VALUE_PER_100K",
+      "APPLIED_SUPPRESSION",
+      "POPULATION_PERCENTAGE",
+      "METRIC_TOTAL_PERCENTAGE",
+      "METRIC_VALUE_30_DAYS_AGO",
+      "METRIC_VALUE_PER_100K_30_DAYS_AGO",
+      "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO",
+      "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO",
+      "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "COUNTY": {
+        "$ref": "#/definitions/county"
+      },
+      "DEMOGRAPHIC_SET": {
+        "const": "race_ethnicity"
+      },
+      "DEMOGRAPHIC_SET_CATEGORY": {
+        "type": "string",
+        "enum": [
+          "African American",
+          "American Indian",
+          "Asian American",
+          "Latino",
+          "Multi-Race",
+          "Native Hawaiian and other Pacific Islander",
+          "White",
+          "Other",
+          "Unknown"
+        ]
+      },
+      "METRIC": {
+        "enum": [
+          "cases",
+          "deaths",
+          "tests"
+        ]
+      },
+      "METRIC_VALUE": {
+        "oneOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PER_100K": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "APPLIED_SUPPRESSION": {
+        "enum": [
+          "Total",
+          "None",
+          "Population"
+        ]
+      },
+      "POPULATION_PERCENTAGE": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_TOTAL_PERCENTAGE": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PER_100K_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100000
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PER_100K_DELTA_FROM_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_TOTAL_PERCENTAGE_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "METRIC_VALUE_PERCENTAGE_DELTA_FROM_30_DAYS_AGO": {
+        "oneOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  }
+}
