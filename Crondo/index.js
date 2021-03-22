@@ -31,16 +31,31 @@ const weekdayCodes =
   }
 ;
 
+const pad2 = number => (number < 10 ? '0' : '') + number;
 
 module.exports = async function (context, myTimer) {
   const lasthourTimstamp = slackBotTimeStampFromDate(new Date()-86400000); // /24
   const slackData = await (await slackBotChannelHistory(debugChannel,`&oldest=${lasthourTimstamp}`)).json();
 
-  const dayOfTheWeekCode = weekdayCodes[new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", weekday:"short"}).slice(0, -1)];
+  const TodayDayOfWeekCode = weekdayCodes[nowPacTime({weekday:"short"}).slice(0, -1)];
+  const TodayYear = nowPacTime({year: 'numeric'});
+  const TodayMonth = nowPacTime({month: 'numeric'});
+  const TodayDay = nowPacTime({day: 'numeric'});
+  
 
   for (let func of schedule.filter(x=>x.enabled)) {
-    for (let runtime of func.daily_schedule.filter(x=>x.days.includes(dayOfTheWeekCode))) {
-const skdvndbf=1;
+    for (let runtime of func.daily_schedule.filter(x=>x.days.includes(TodayDayOfWeekCode))) {
+
+      const runToday = new Date(`${TodayYear}-${TodayMonth}-${TodayDay} ${pad2(runtime.hour)}:${pad2(runtime.minute)}:00 PST`);
+const ejhrbf=1;
+
+//new Date('2021-03-22 9:0:00 PST')
+//Mon Mar 22 2021 10:00:00 GMT-0700 (Pacific Daylight Time)
+//new Date('2021-03-22 9:0:00')
+//Mon Mar 22 2021 09:00:00 GMT-0700 (Pacific Daylight Time)
+
+
+
     }
   }
 };
