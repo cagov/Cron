@@ -1,4 +1,4 @@
-const { doDailyStatsPr } = require('./worker');
+const { doDailyStatsPr } = require('./datasetUpdates');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
 const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
