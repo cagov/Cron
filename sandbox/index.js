@@ -12,6 +12,9 @@ const { doCovidVaccineHPI } = require('../CovidVaccineHPI/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 //
 //const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
+
+//const tempFunction = async () => {           };
+
 const CovidEquityData = require('../CovidEquityData');
 const CovidNewsFeed = require('../CovidNewsFeed');
 
@@ -74,6 +77,8 @@ const doWork = async opt => {
     case 'temp':
         //Put some temporary code here
         console.log("Running Temp code");
+        
+        //await tempFunction();
 
         break;
     case 'q':
