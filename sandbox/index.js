@@ -11,20 +11,9 @@ const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
 const { doCovidVaccineHPI } = require('../CovidVaccineHPI/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 //
-const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
+//const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 
-const tempFunction = async () => {       
-    const channel = 'C01H6RB99E2';
-
-//const r  = await (await slackBotChatPost(channel,'test message')).json();
-
-const slackPostTS =  (await (await slackBotChatPost(channel,'test message')).json()).ts;
-
-    await slackBotReplyPost(channel, slackPostTS,`reply finished`);
-    await slackBotReactionAdd(channel, slackPostTS, 'white_check_mark');
-
-let x = 1;
-    };
+//const tempFunction = async () => {           };
 
 const CovidEquityData = require('../CovidEquityData');
 const CovidNewsFeed = require('../CovidNewsFeed');
@@ -89,7 +78,7 @@ const doWork = async opt => {
         //Put some temporary code here
         console.log("Running Temp code");
         
-        await tempFunction();
+        //await tempFunction();
 
         break;
     case 'q':
