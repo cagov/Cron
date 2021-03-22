@@ -5,8 +5,9 @@ const debugChannel = 'C01DBP67MSQ'; // testingbot
 
 module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
+  let ts = null;
   try {
-    const ts = (await slackBotChatPost(debugChannel,`${appName} (Every 30 mins from 9:15am to 1:45pm)`)).json().ts;
+    ts = (await slackBotChatPost(debugChannel,`${appName} (Every 30 mins from 9:15am to 1:45pm)`)).json().ts;
 
     const PrResult = await doCovidVaccineEquity();
 
@@ -20,5 +21,10 @@ module.exports = async function (context, myTimer) {
     await slackBotReactionAdd(debugChannel, ts, 'white_check_mark');
   } catch (e) {
     await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
+
+    if(ts) {
+      await slackBotReplyPost(debugChannel,ts,`${appName} ERROR!`);
+      await slackBotReactionAdd(debugChannel, ts, 'x');
+    }
   }
 };
