@@ -88,6 +88,14 @@
       "args": ["10:doCovidVaccineHPIV2"],
       "cwd": "${workspaceRoot}/sandbox"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DIRECT TEMP",
+      "program": "index",
+      "args": ["temp:TEMP"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
   ],
   "inputs": [
     {

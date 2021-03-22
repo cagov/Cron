@@ -23,6 +23,7 @@ const masterbranch='master', stagingbranch='staging';
 const mergetargets = [masterbranch,stagingbranch];
 
 const readline = require("readline");
+const { DH_CHECK_P_NOT_SAFE_PRIME } = require('constants');
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -71,7 +72,12 @@ const doWork = async opt => {
         console.log("Running doCovidVaccineHPIV2");
         await doCovidVaccineHPIV2();
         break;
-        case 'q':
+    case 'temp':
+        //Put some temporary code here
+        console.log("Running Temp code");
+
+        break;
+    case 'q':
         console.log("Buh bye!");
         break;
     default:
