@@ -9,6 +9,9 @@ const {
   slackBotTimeStampFromDate,
   slackBotTimeStampToDate
  } = require('../common/slackBot');
+
+ const moment = require('moment'); // https://momentjs.com/docs/#/use-it/node-js/
+
 //const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
 //const debugChannel = 'C01DBP67MSQ'; // #testingbot
 const debugChannel = 'C01H6RB99E2'; // #carter-dev
@@ -19,30 +22,27 @@ const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "Ame
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
 
-const weekdayCodes = 
-  {
-    Mon:'M',
-    Tue:'T',
-    Wed:'W',
-    Thu:'R',
-    Fri:'F',
-    Sat:'S',
-    Sun:'U'
-  }
-;
+const weekdayCodes = 'UMTWRFS';
 
 const pad2 = number => (number < 10 ? '0' : '') + number;
+const dataTimeZone = 'America/Los_Angeles';
 
 module.exports = async function (context, myTimer) {
-  const lasthourTimstamp = slackBotTimeStampFromDate(new Date()-86400000); // /24
-  const slackData = await (await slackBotChannelHistory(debugChannel,`&oldest=${lasthourTimstamp}`)).json();
+  const hereNow = moment().tz(dataTimeZone);
 
-  const TodayDayOfWeekCode = weekdayCodes[nowPacTime({weekday:"short"}).slice(0, -1)];
-  const TodayYear = nowPacTime({year: 'numeric'});
-  const TodayMonth = nowPacTime({month: 'numeric'});
-  const TodayDay = nowPacTime({day: 'numeric'});
+
+
+
+
+  const lasthourTimstamp = slackBotTimeStampFromDate(moment().subtract(1, 'hours').valueOf());
+
+  const TodayDayOfWeekCode = weekdayCodes[hereNow.day()];
+  const TodayYear = hereNow.year();
+  const TodayMonth = hereNow.month();
+  const TodayDay = hereNow.day();
+  const TodayHour = hereNow.hour();
   
-
+  const slackData = await (await slackBotChannelHistory(debugChannel,`&oldest=${lasthourTimstamp}`)).json();
   for (let func of schedule.filter(x=>x.enabled)) {
     for (let runtime of func.daily_schedule.filter(x=>x.days.includes(TodayDayOfWeekCode))) {
 
