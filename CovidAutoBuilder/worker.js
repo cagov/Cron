@@ -68,6 +68,7 @@ async function fetchHTML(url) {
         json.meta = {};
     }
     json.meta.PUBLISHED_DATE = todayDateString();
+    json.meta.PUBLISHED_TIME = todayTimeString();
 
     if(JSON.stringify(json)===JSON.stringify(targetcontent)) {
         console.log('data matched - no need to update');
@@ -113,6 +114,7 @@ const get_auto_build_JSON = async() => {
     const json = {
         meta: {
             PUBLISHED_DATE: "1900-01-01"
+            PUBLISHED_TIME: "00:00:00"
           },
         data: {
             comment: "Generated for CronAutoBuilder for build triggering"
