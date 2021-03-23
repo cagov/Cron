@@ -4,7 +4,7 @@
         "name": "CovidAutoBuilder",
         "type": "timerTrigger",
         "direction": "in",
-        "schedule": "0 */10 * * Jan *"
+        "schedule": "0 */20 * * * *"
       }
     ]
   }
