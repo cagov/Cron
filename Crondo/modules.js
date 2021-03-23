@@ -3,14 +3,14 @@ const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
-const { doCovidVaccineHPI } = require('../CovidVaccineHPI/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { slackBotChatPost, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
 //const notifyChannel_covid19_state_dash = 'C01AA1ZB05B'; // #covid19-state-dash
 //const notifyChannel_covid19_blueprint = 'C019DS5S6Q2'; // #covid19-blueprint
+//const notifyChannel_covid19_vaccines = 'C01HTTNKHBM'; //covid19-vaccines
 const notifyChannel_covid19_state_dash = 'C01H6RB99E2'; // #carter-dev
 const notifyChannel_covid19_blueprint =  'C01H6RB99E2'; // #carter-dev
-
+const notifyChannel_covid19_vaccines = 'C01H6RB99E2'; //covid19-vaccines
 /**
  * Runs a CRON module by name
  * @param {string} moduleName The module to run
@@ -42,12 +42,33 @@ const runModule = async (moduleName, feedChannel, slackPostTS) => {
         await slackBotChatPost(notifyChannel_covid19_state_dash, prMessage);
       }
       return;
+      case 'doCovidVaccineEquity':
+        prResult = await doCovidVaccineEquity();
+
+        if(prResult) {
+          prMessage = `Vaccine equity data deployed\n${prResult.html_url}`;
+          await slackBotReplyPost(feedChannel, slackPostTS, prMessage);
+          await slackBotReactionAdd(feedChannel, slackPostTS, 'package');
+          await slackBotChatPost(notifyChannel_covid19_vaccines, prMessage);
+        }
+        return;
+      case 'CovidVaccineHPIV2':
+        prResult = await doCovidVaccineHPIV2();
+
+        if(prResult) {
+          prMessage = `Vaccine HPI data deployed\n${prResult.html_url}`;
+          await slackBotReplyPost(feedChannel, slackPostTS, prMessage);
+          await slackBotReactionAdd(feedChannel, slackPostTS, 'package');
+          await slackBotChatPost(notifyChannel_covid19_vaccines, prMessage);
+        }
+  
+        return;
       case 'CovidWeeklyTierUpdate':
         (await doWeeklyUpdatePrs()).forEach(async p=>{
-          const PrMessage = `Tier Update Deployed\n${p.html_url}`;
-          await slackBotReplyPost(feedChannel, slackPostTS, PrMessage);
+          prMessage = `Tier Update Deployed\n${p.html_url}`;
+          await slackBotReplyPost(feedChannel, slackPostTS, prMessage);
           await slackBotReactionAdd(feedChannel, slackPostTS, 'package');
-          await slackBotChatPost(notifyChannel_covid19_blueprint, PrMessage);
+          await slackBotChatPost(notifyChannel_covid19_blueprint, prMessage);
         });
   
         return;
