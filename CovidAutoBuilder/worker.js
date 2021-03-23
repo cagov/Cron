@@ -21,7 +21,7 @@ const build_json_path = 'pages/_data/auto-builder.json';
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-const testing_mode = true;
+const testing_mode = false;
 
 /**
  * Pull a URL, parse the content and return it.

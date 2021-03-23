@@ -5,7 +5,7 @@ const debugChannel = 'C01DBP67MSQ'; // testingbot
 
 module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
-  const noisy_mode = true;
+  const noisy_mode = false;
   let slackPostTS = null;
   try {
     slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every 15 mins)`)).json()).ts;
