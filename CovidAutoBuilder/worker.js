@@ -113,7 +113,7 @@ const get_auto_build_JSON = async() => {
 
     const json = {
         meta: {
-            PUBLISHED_DATE: "1900-01-01"
+            PUBLISHED_DATE: "1900-01-01",
             PUBLISHED_TIME: "00:00:00"
           },
         data: {
@@ -145,7 +145,7 @@ const force_build = async() => {
         });
         await PrApprove(gitRepo,Pr);
     } else {
-        raise "Unable to get a PR";
+        throw "Unable to get a PR";
     }
 };
 
@@ -179,15 +179,13 @@ const doCovidAutoBuilder = async () => {
         });
         console.log("Checking needs build",needsBuild);
         if (needsBuild) {
-            console.log("Would build here")
+            console.log("Will force a github build here")
             await force_build();
         }
     } else {
         console.log("VaccinesAdmin is 0, likely a parsing issue, report it");
         throw "Failed to parse Vaccines from home page!";
     }
-    // If we successfully got one, pull the JSON file and pull that number.
-    console.log("Returning",needsBuild);
     return needsBuild;
 };
 
