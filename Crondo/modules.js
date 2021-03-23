@@ -1,6 +1,6 @@
 
 const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
-const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
+const { slackBotChatPost, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
 //const notifyChannel_covid19_state_dash = 'C01AA1ZB05B'; // #covid19-state-dash
 const notifyChannel_covid19_state_dash = 'C01H6RB99E2'; // #carter-dev
 
