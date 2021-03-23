@@ -10,6 +10,7 @@ const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
 const { doCovidVaccineHPI } = require('../CovidVaccineHPI/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
+const { doCovidAutoBuilder } = require('../CovidAutoBuilder/worker');
 
 //
 //const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
@@ -78,6 +79,10 @@ const doWork = async opt => {
     case 'crondo':
         console.log("Running Crondo");
         await Crondo();
+        break;
+    case '11':
+        console.log("Running doCovidAutoBuilder");
+        await doCovidAutoBuilder();
         break;
     case 'temp':
         //Put some temporary code here
