@@ -76,13 +76,13 @@ const doWork = async opt => {
         console.log("Running doCovidVaccineHPIV2");
         await doCovidVaccineHPIV2();
         break;
-    case 'crondo':
-        console.log("Running Crondo");
-        await Crondo();
-        break;
     case '11':
         console.log("Running doCovidAutoBuilder");
         await doCovidAutoBuilder();
+        break;
+    case 'crondo':
+        console.log("Running Crondo");
+        await Crondo();
         break;
     case 'temp':
         //Put some temporary code here
