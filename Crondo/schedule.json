@@ -1,6 +1,6 @@
 {
   "meta": {
-    "description": "Data schedule for Crondo; think WHEN. 15 min increments."
+    "description": "Data schedule for Crondo; think WHEN. 5 min increments."
   },
   "data": {
     "functions": [
