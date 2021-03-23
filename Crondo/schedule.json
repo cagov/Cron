@@ -34,6 +34,48 @@
             "days" : "MTWRFSU",
             "hour" : 9,
             "minute" : 30
+          },
+          {
+            "name" : "CovidStateDashboardV2",
+            "message" : "CovidStateDashboardV2 (10:00 AM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 10,
+            "minute" : 0
+          },
+          {
+            "name" : "CovidStateDashboardV2",
+            "message" : "CovidStateDashboardV2 (10:30 AM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 10,
+            "minute" : 30
+          },
+          {
+            "name" : "CovidStateDashboardV2",
+            "message" : "CovidStateDashboardV2 (11:00 AM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 11,
+            "minute" : 0
+          },
+          {
+            "name" : "CovidStateDashboardV2",
+            "message" : "CovidStateDashboardV2 (11:30 AM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 11,
+            "minute" : 30
+          },
+          {
+            "name" : "CovidStateDashboardV2",
+            "message" : "CovidStateDashboardV2 (12:00 PM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 12,
+            "minute" : 0
+          },
+          {
+            "name" : "CovidStateDashboardV2",
+            "message" : "CovidStateDashboardV2 (12:30 PM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 12,
+            "minute" : 30
           }
         ]
       }

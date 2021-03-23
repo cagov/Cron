@@ -18,23 +18,15 @@ const debugChannel = 'C01H6RB99E2'; // #carter-dev
 const notifyChannel = 'C01H6RB99E2'; // #carter-dev
 const schedule = require('./schedule.json').data.functions;
 
-const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
-const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
-const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-
 const weekdayCodes = 'UMTWRFS';
 
-const pad2 = number => (number < 10 ? '0' : '') + number;
-const dataTimeZone = 'America/Los_Angeles';
 
+const dataTimeZone = 'America/Los_Angeles';
+//const dataTimeZone = 'America/New_York';
 module.exports = async function (context, myTimer) {
   const hereNow = moment().tz(dataTimeZone);
 
-
-
-
-
-  const lasthourTimstamp = slackBotTimeStampFromDate(moment().subtract(1, 'hours').valueOf());
+  const lasthourTimstamp = slackBotTimeStampFromDate(moment().subtract(1, 'hours'));
 
   const TodayDayOfWeekCode = weekdayCodes[hereNow.day()];
   const TodayYear = hereNow.year();
@@ -46,7 +38,31 @@ module.exports = async function (context, myTimer) {
   for (let func of schedule.filter(x=>x.enabled)) {
     for (let runtime of func.daily_schedule.filter(x=>x.days.includes(TodayDayOfWeekCode))) {
 
-      const runToday = new Date(`${TodayYear}-${TodayMonth}-${TodayDay} ${pad2(runtime.hour)}:${pad2(runtime.minute)}:00 PST`);
+      //const runToday = moment.tz({hour:runtime.hour,minute:runtime.minute},dataTimeZone);
+const runToday = moment.tz({hour:runtime.hour,minute:runtime.minute},dataTimeZone);
+const sRunToday = runToday.tz('America/Los_Angeles').toLocaleString();
+
+
+
+      const threadStartTime = runToday.clone().subtract(15,'minute');
+      const threadTooLateTime = runToday.clone().add(1,'hour');
+
+      const sThreadStartTime = threadStartTime.toLocaleString();
+      const sThreadStartTimePassed = threadStartTime.from();
+      const threadStartTimePassed = threadStartTime.diff();
+
+      if(threadStartTimePassed<0 && threadTooLateTime.diff()>0) {
+        //Ok to open this thread
+        const RuntimeThread = slackData.messages.find(m=>m.text===runtime.message);
+
+        if(!RuntimeThread) {
+          await slackBotChatPost(debugChannel,runtime.message);
+        }
+      }
+
+
+
+      //new Date(`${TodayYear}-${TodayMonth}-${TodayDay} ${pad2(runtime.hour)}:${pad2(runtime.minute)}:00 PST`);
 const ejhrbf=1;
 
 //new Date('2021-03-22 9:0:00 PST')
