@@ -85,7 +85,7 @@
       "request": "launch",
       "name": "Debug DIRECT Crondo",
       "program": "index",
-      "args": ["11:Crondo"],
+      "args": ["crondo:Crondo"],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {

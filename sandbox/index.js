@@ -75,7 +75,7 @@ const doWork = async opt => {
         console.log("Running doCovidVaccineHPIV2");
         await doCovidVaccineHPIV2();
         break;
-    case '11':
+    case 'crondo':
         console.log("Running Crondo");
         await Crondo();
         break;
