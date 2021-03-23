@@ -18,7 +18,7 @@ module.exports = async function (context, myTimer) {
       await slackBotReactionAdd(debugChannel, slackPostTS, 'building_construction');
       // await slackBotChatPost(notifyChannel, prMessage);
     } else if (noisy_mode) {
-      const prMessage = `No need to build covid19, but testing, so building anyway\n`;
+      const prMessage = `No need to build covid19\n`;
       let slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName}:  ${prMessage}`)).json()).ts;
       await slackBotReactionAdd(debugChannel, slackPostTS, 'ok_hand');
     }
