@@ -7,7 +7,9 @@ const { doCovidVaccineHPI } = require('../CovidVaccineHPI/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { slackBotChatPost, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
 //const notifyChannel_covid19_state_dash = 'C01AA1ZB05B'; // #covid19-state-dash
+//const notifyChannel_covid19_blueprint = 'C019DS5S6Q2'; // #covid19-blueprint
 const notifyChannel_covid19_state_dash = 'C01H6RB99E2'; // #carter-dev
+const notifyChannel_covid19_blueprint =  'C01H6RB99E2'; // #carter-dev
 
 /**
  * Runs a CRON module by name
@@ -40,6 +42,15 @@ const runModule = async (moduleName, feedChannel, slackPostTS) => {
         await slackBotChatPost(notifyChannel_covid19_state_dash, prMessage);
       }
       return;
+      case 'CovidWeeklyTierUpdate':
+        (await doWeeklyUpdatePrs()).forEach(async p=>{
+          const PrMessage = `Tier Update Deployed\n${p.html_url}`;
+          await slackBotReplyPost(feedChannel, slackPostTS, PrMessage);
+          await slackBotReactionAdd(feedChannel, slackPostTS, 'package');
+          await slackBotChatPost(notifyChannel_covid19_blueprint, PrMessage);
+        });
+  
+        return;
   default:
     throw new Error(`no code match for ${moduleName}`);
   }
