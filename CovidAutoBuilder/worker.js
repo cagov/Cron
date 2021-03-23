@@ -21,7 +21,7 @@ const build_json_path = 'pages/_data/auto-builder.json';
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-const testing_mode = true;
+const testing_mode = false;
 
 /**
  * Pull a URL, parse the content and return it.
@@ -159,7 +159,6 @@ const doCovidAutoBuilder = async () => {
     const shownDoses = parseInt(value.split(',').join(''));
     console.log("Shown Doses", shownDoses);
     if (shownDoses > 0) {
-        console.log("beginning fetch");
         await fetch(srcJSONFile,{method:"Get"})
         .then(res => res.json())
         .then(json => {
@@ -177,7 +176,6 @@ const doCovidAutoBuilder = async () => {
                 needsBuild = true;
             }
         });
-        console.log("Checking needs build",needsBuild);
         if (needsBuild) {
             console.log("Will force a github build here")
             await force_build();
