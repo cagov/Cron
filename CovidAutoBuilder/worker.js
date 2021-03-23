@@ -3,7 +3,9 @@ const GitHub = require('github-api');
 const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
 const githubRepo = 'covid19';
-const puppeteer = require("puppeteer");
+// const puppeteer = require("puppeteer");
+const axios = require("axios")
+const cheerio = require("cheerio")
 const fetch = require('node-fetch');
 
 const committer = {
@@ -19,23 +21,21 @@ const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "Ame
 // const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 // const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
 
+async function fetchHTML(url) {
+    const { data } = await axios.get(url);
+    return cheerio.load(data);
+}
+
 const doCovidAutoBuilder = async () => {
     // const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     // const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     // const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
     let needsBuild = false;
 
-    // homePageToCheck and try to get a valid Vaccines Administered
-    console.log("getCurVaccinesAdmin");
-
-
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
     console.log("Looking at home page");
-    await page.goto(homePageToCheck);
-    await page.waitForSelector(mySelector);
-    let element = await page.$(mySelector);
-    const value = await page.evaluate(el => el.textContent, element);
+    const site = await fetchHTML(homePageToCheck);
+    let value = site(mySelector).text();
+
     const shownDoses = parseInt(value.split(',').join(''));
     console.log("Shown Doses", shownDoses);
     if (shownDoses > 0) {
