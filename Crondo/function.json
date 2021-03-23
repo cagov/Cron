@@ -4,7 +4,7 @@
       "name": "Crondo",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 0/15 * * * *"
+      "schedule": "0 0/5 * * * *"
     }
   ]
 }
