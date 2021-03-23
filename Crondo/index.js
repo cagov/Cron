@@ -12,7 +12,7 @@ const {
 
 const { runModule } = require('./modules');
 
-const debugChannel = 'C01H6RB99E2'; // #carter-dev
+const feedChannel = 'C01DBP67MSQ'; // #testing-bot
 const schedule = require('./schedule.json').data.functions;
 
 const weekdayCodes = 'UMTWRFS';
@@ -26,7 +26,7 @@ module.exports = async function () {
 
     const TodayDayOfWeekCode = weekdayCodes[moment().tz(dataTimeZone).day()];
     
-    const slackData = await (await slackBotChannelHistory(debugChannel,`&oldest=${lasthourTimstamp}`)).json();
+    const slackData = await (await slackBotChannelHistory(feedChannel,`&oldest=${lasthourTimstamp}`)).json();
     for (let func of schedule.filter(x=>x.enabled)) {
       for (let runtime of func.daily_schedule.filter(x=>x.days.includes(TodayDayOfWeekCode))) {
         let runToday = moment.tz({hour:runtime.hour,minute:runtime.minute},dataTimeZone);
@@ -39,28 +39,28 @@ module.exports = async function () {
           let RuntimeThread = slackData.messages.find(m=>m.text===runtime.message);
 
           if(!RuntimeThread) {
-            let slackPostTS = (await (await slackBotChatPost(debugChannel,runtime.message)).json()).ts;
+            let slackPostTS = (await (await slackBotChatPost(feedChannel,runtime.message)).json()).ts;
 
             try {
-              await runModule(func.name,debugChannel,slackPostTS);
+              await runModule(func.name,feedChannel,slackPostTS);
             } catch (e) {
               //Report on this error and allow movement forward
-              await slackBotReportError(debugChannel,`Error running ${func.name}`,e);
+              await slackBotReportError(feedChannel,`Error running ${func.name}`,e);
 
               if(slackPostTS) {
-                await slackBotReplyPost(debugChannel, slackPostTS, `${func.name} ERROR!`);
-                await slackBotReactionAdd(debugChannel, slackPostTS, 'x');
+                await slackBotReplyPost(feedChannel, slackPostTS, `${func.name} ERROR!`);
+                await slackBotReactionAdd(feedChannel, slackPostTS, 'x');
               }
             }
 
-            await slackBotReplyPost(debugChannel, slackPostTS,`${func.name} finished`);
-            await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
+            await slackBotReplyPost(feedChannel, slackPostTS,`${func.name} finished`);
+            await slackBotReactionAdd(feedChannel, slackPostTS, 'white_check_mark');
           }
         }
       }
     }
   } catch (e) {
     //Someething in the overall system failed
-    await slackBotReportError(debugChannel,`Error running Crondo`,e);
+    await slackBotReportError(feedChannel,`Error running Crondo`,e);
   }
 };
