@@ -47,13 +47,13 @@ const doCovidAutoBuilder = async () => {
             console.log("JSON doses",jsonDoses);
             if (jsonDoses == shownDoses) {
                 console.log("Values match, no building needed");
-                needsBuild = true;
             }
             else {
                 if (jsonDoses < shownDoses) {
                     throw "JSON Doses is lower than what is on website!";
                 }
                 console.log("Values do not match, build may be needed");
+                needsBuild = true;
                 // !! skip if a build is already underway...
                 // !! instigate a build
                 // !! insure we don't retrigger for 10-15 minutes...
