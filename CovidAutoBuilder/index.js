@@ -12,10 +12,14 @@ module.exports = async function (context, myTimer) {
     const PrResult = await doCovidAutoBuilder();
 
     if(PrResult) {
-      const prMessage = `Time to build\n${PrResult.html_url}`;
+      const prMessage = `Time to build covid19\n`;
       await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'building_construction');
       // await slackBotChatPost(notifyChannel, prMessage);
+    } else {
+        const prMessage = `No need to build covid19\n`;
+        await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
+        await slackBotReactionAdd(debugChannel, slackPostTS, 'ok_hand');
     }
     // We don't want to see messages every 10 minutes
     // await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
