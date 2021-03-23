@@ -17,7 +17,6 @@ const schedule = require('./schedule.json').data.functions;
 
 const weekdayCodes = 'UMTWRFS';
 
-
 const dataTimeZone = 'America/Los_Angeles';
 //const dataTimeZone = 'America/New_York';
 
