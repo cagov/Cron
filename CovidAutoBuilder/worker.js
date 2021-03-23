@@ -159,7 +159,6 @@ const doCovidAutoBuilder = async () => {
     const shownDoses = parseInt(value.split(',').join(''));
     console.log("Shown Doses", shownDoses);
     if (shownDoses > 0) {
-        console.log("beginning fetch");
         await fetch(srcJSONFile,{method:"Get"})
         .then(res => res.json())
         .then(json => {
@@ -177,7 +176,6 @@ const doCovidAutoBuilder = async () => {
                 needsBuild = true;
             }
         });
-        console.log("Checking needs build",needsBuild);
         if (needsBuild) {
             console.log("Will force a github build here")
             await force_build();
