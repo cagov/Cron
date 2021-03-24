@@ -42,8 +42,8 @@ const doTranslationPrUpdate = async masterbranch => {
             //limit file access to a single folder with 'modified' status only.
             const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
 
-            //Do not allow non-printable characters.  New Lines and Arabic number shifts are ok + 8294+8297+65279.
-            const onlyGoodChars = compare.files.every(x=>!nonPrintableCharsRx.test(x.patch.replace(/[\n\u200E\u2066\u2069\uFEFF]/gu,'')));
+            //Do not allow non-printable characters.  New Lines and Arabic number shifts are ok + 8294+8297+65279+8203(zero width space).
+            const onlyGoodChars = compare.files.every(x=>!nonPrintableCharsRx.test(x.patch.replace(/[\n\u200E\u2066\u2069\uFEFF\u200B]/gu,'')));
 
             if (pass && fileaccessok && onlyGoodChars) {
                 //Approve the PR
