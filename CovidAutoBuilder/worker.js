@@ -20,8 +20,9 @@ const build_json_path = 'pages/_data/auto-builder.json';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
-const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'});
-const testing_mode = false;
+const todayTimeStringUnprocessed = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'});
+const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
+const testing_mode = true; // forces a build
 
 /**
  * Pull a URL, parse the content and return it.
@@ -68,7 +69,7 @@ async function fetchHTML(url) {
         json.meta = {};
     }
     json.meta.PUBLISHED_DATE = todayDateString();
-    json.meta.PUBLISHED_TIME = todayTimeString();
+    json.meta.PUBLISHED_TIME = todayTimeStringUnprocessed();
 
     if(JSON.stringify(json)===JSON.stringify(targetcontent)) {
         console.log('data matched - no need to update');
@@ -124,12 +125,16 @@ const get_auto_build_JSON = async() => {
     return {path:build_json_path, json:json};
 };
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 const force_build = async() => {
     // Instigate a build by updating a file
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
-    const prTitle = `${todayDateString()} Auto Builder`;
+    const prTitle = `${todayDateString()} Auto-builder`; 
 
     // !! skip if a build is already underway within the last 10 minutes
 
@@ -137,12 +142,14 @@ const force_build = async() => {
         await get_auto_build_JSON()
     ];
 
-    const Pr = await processFilesForPr(datasets,gitRepo,prTitle);
+    await sleep(2000);
+    const Pr = await processFilesForPr(datasets, gitRepo, prTitle);
     if(Pr) {
         //Label the Pr
         await gitIssues.editIssue(Pr.number,{
             labels: PrLabels
         });
+        await sleep(5000);
         await PrApprove(gitRepo,Pr);
     } else {
         throw "Unable to get a PR";
