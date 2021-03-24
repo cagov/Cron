@@ -22,7 +22,7 @@ const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "Ame
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeStringUnprocessed = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-const testing_mode = true; // forces a build
+const testing_mode = false; // forces a build
 
 /**
  * Pull a URL, parse the content and return it.
