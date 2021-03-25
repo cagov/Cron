@@ -16,6 +16,7 @@ const schemaPath = `../SQL/${SnowFlakeSqlPath}schema/`;
 const nowPacTime = options => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
 const todayTimeString = () => nowPacTime({ hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/:/g, '-');
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const doCovidVaccineHPIV2 = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
@@ -63,6 +64,7 @@ const doCovidVaccineHPIV2 = async () => {
 
   // Approve the PR
   if(Pr) {
+      await sleep(5000); //let the PR actions resolve first
       await gitRepo.mergePullRequest(Pr.number,{
           merge_method: 'squash'
       });
