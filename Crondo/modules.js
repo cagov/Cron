@@ -1,6 +1,5 @@
 
 const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
-const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
@@ -20,16 +19,6 @@ const runModule = async (moduleName, feedChannel, slackPostTS) => {
   let prMessage = null;
 
   switch (moduleName) {
-    case 'CovidStateDashboard':  
-      prResult = await doDailyStatsPr(['master','staging']);
-  
-      if(prResult) {
-        prMessage = `Daily stats deployed\n${prResult.html_url}`;
-        await slackBotReplyPost(feedChannel, slackPostTS, prMessage);
-        await slackBotReactionAdd(feedChannel, slackPostTS, 'package');
-        await slackBotChatPost(notifyChannel_covid19_state_dash, prMessage);
-      }
-      return;
     case 'CovidStateDashboardV2':
       prResult = await doCovidStateDashboarV2();
 

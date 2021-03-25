@@ -5,50 +5,44 @@
   "data": {
     "functions": [
       {
-        "name" : "CovidStateDashboard",
-        "enabled": true,
-        "daily_schedule": [
-          {
-            "message" : "CovidStateDashboard (9:00 AM every day)",
-            "days" : "MTWRFSU",
-            "hour" : 9,
-            "minute" : 0
-          }
-        ]
-      },
-      {
         "name" : "CovidStateDashboardV2",
         "enabled": true,
         "daily_schedule": [
           {
-            "message" : "CovidStateDashboardV2 (9:20 AM every day)",
+            "message" : "CovidStateDashboardV2 (9:00 AM every day)",
             "days" : "MTWRFSU",
             "hour" : 9,
-            "minute" : 20
+            "minute" : 0
           },
           {
-            "message" : "CovidStateDashboardV2 (9:50 AM every day)",
+            "message" : "CovidStateDashboardV2 (9:30 AM every day)",
             "days" : "MTWRFSU",
             "hour" : 9,
-            "minute" : 50
+            "minute" : 30
           },
           {
-            "message" : "CovidStateDashboardV2 (10:20 AM every day)",
+            "message" : "CovidStateDashboardV2 (10:00 AM every day)",
             "days" : "MTWRFSU",
             "hour" : 10,
-            "minute" : 20
+            "minute" : 0
           },
           {
-            "message" : "CovidStateDashboardV2 (10:50 AM every day)",
+            "message" : "CovidStateDashboardV2 (10:30 AM every day)",
             "days" : "MTWRFSU",
             "hour" : 10,
-            "minute" : 50
+            "minute" : 30
           },
           {
-            "message" : "CovidStateDashboardV2 (11:20 AM every day)",
+            "message" : "CovidStateDashboardV2 (11:00 AM every day)",
             "days" : "MTWRFSU",
             "hour" : 11,
-            "minute" : 20
+            "minute" : 0
+          },
+          {
+            "message" : "CovidStateDashboardV2 (11:30 AM every day)",
+            "days" : "MTWRFSU",
+            "hour" : 11,
+            "minute" : 30
           }
         ]
       }
