@@ -25,6 +25,8 @@ const appName = 'CovidEquityData';
 const sqlRootPath = "../SQL/CDT_COVID/Equity/";
 const schemaPath = `${sqlRootPath}schema/`;
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 // eslint-disable-next-line no-unused-vars
 module.exports = async function (context, functionInput) {
     try {
@@ -277,6 +279,7 @@ If there are issues with the data:
                 labels: PrLabels
             });
 
+            await sleep(5000); //give PR time to check actions
             //Approve Pr
             await gitRepo.mergePullRequest(Pr.number,{
                 merge_method: 'squash'
