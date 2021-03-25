@@ -12,7 +12,8 @@ const PrPrefix = 'Auto Tier Update';
 const branchPrefix = 'auto-tier-update';
 const commitMessage = 'update Tiers';
 const PrLabels = ['Automatic Deployment'];
- 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const getData = async () => {
     const sqlResults = await queryDataset(getSQL('CDT_COVID/TierUpdate'),process.env["SNOWFLAKE_CDT_COVID"]);
 
@@ -94,6 +95,7 @@ const doWeeklyUpdatePrs = async mergetargets => {
                     report.push({Pr});
                 } else {
                     //Auto approve and delete non-master PRs
+                    await sleep(5000); //PR actions need time to check
                     await gitRepo.mergePullRequest(Pr.number,{
                         merge_method: 'squash'
                     });

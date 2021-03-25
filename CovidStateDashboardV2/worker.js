@@ -14,6 +14,7 @@ const masterBranch = 'master';
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
  * Check to see if we need stats update PRs, make them if we do.
@@ -38,6 +39,7 @@ const doCovidStateDashboarV2 = async () => {
             labels: PrLabels
         });
 
+        await sleep(5000); //let the PR check actions first
         await PrApprove(gitRepo,Pr);
     }
 
