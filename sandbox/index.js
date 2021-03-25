@@ -5,10 +5,8 @@ Object.keys(Values).forEach(x=>process.env[x]=Values[x]); //Load local settings 
 const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker');
 const { doHealthCheck } = require('../CovidSiteHealth/worker');
-const { doDailyStatsPr } = require('../CovidStateDashboard/datasetUpdates');
 const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
-const { doCovidVaccineHPI } = require('../CovidVaccineHPI/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { doCovidAutoBuilder } = require('../CovidAutoBuilder/worker');
 
@@ -40,10 +38,6 @@ const doWork = async opt => {
         console.log("Running CovidEquityData");
         await CovidEquityData();
         break;
-    case '2':
-        console.log("Running doDailyStatsPr");
-        await doDailyStatsPr(mergetargets);
-        break;
     case '3':
         console.log("Running doTranslationPrUpdate");
         await doTranslationPrUpdate(masterbranch);
@@ -67,10 +61,6 @@ const doWork = async opt => {
     case '8':
         console.log("Running doCovidVaccineEquity");
         await doCovidVaccineEquity();
-        break;
-    case '9':
-        console.log("Running doCovidVaccineHPI");
-        await doCovidVaccineHPI();
         break;
     case '10':
         console.log("Running doCovidVaccineHPIV2");

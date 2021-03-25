@@ -1,10 +1,10 @@
 {
   "bindings": [
     {
-      "name": "CovidVaccineHPI",
+      "name": "CovidStateDashboardV2",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 20/30 16-18 * * *"
+      "schedule": "0 0/30 16-18 * * *"
     }
   ]
 }
