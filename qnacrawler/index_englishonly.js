@@ -9,12 +9,12 @@ const parser = new xml2js.Parser();
 
 // Use sitemap to determine pages to crawl
 const sitemap_url = 'https://covid19.ca.gov/sitemap.xml';
-// Skip non-english pages - NO LONGER IN USE
+// Skip non-english pages
 const skip_pattern = /^https:\/\/covid19.ca.gov\/(es|ar|ko|tl|vi|zh-hans|zh-hant)\//;
 
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function goTo(url, page) {
   await page.goto(url);
@@ -78,13 +78,9 @@ async function run() {
       .on('end', () => {
           parser.parseString(pdata, async (err, result) => {
               let urls = result.urlset.url.map( url =>  url.loc.toString());
-
-
-              // NO SKIPSIES!
-              // urls = urls.filter( url => !(url.match(skip_pattern)));
+              urls = urls.filter( url => !(url.match(skip_pattern)));
               // console.log("this.pagelist = ",urls.length,"items");
               // now do our crawl
-              urls.sort();
               let qnaFile = `Question	Answer	Source\n`;
               const browser = await puppeteer.launch({ headless: true });
               const page = await browser.newPage();
@@ -100,7 +96,7 @@ async function run() {
                         console.log("Failed to get",urls[i]);
                         if (tries < 3) {
                             console.log("Sleep and retry"); 
-                            await sleep(2000);
+                            await sleep(1000);
                             continue;
                         }
                         else {
@@ -134,7 +130,6 @@ async function run() {
                     qnaFile += `${item.question}	${answer + commentContent}	${urls[i]}\n`;
                   });
                 }
-                await sleep(100);
               }
               fs.writeFileSync("./qna.tsv", qnaFile, "utf8");
               browser.close();
