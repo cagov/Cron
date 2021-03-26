@@ -22,11 +22,11 @@ const dataTimeZone = 'America/Los_Angeles';
 
 module.exports = async function () {
   try {
-    const lasthourTimstamp = slackBotTimeStampFromDate(moment().subtract(1, 'hours'));
+    const startOfDataTimeStamp = slackBotTimeStampFromDate(moment().startOf('day'));
 
     const TodayDayOfWeekCode = weekdayCodes[moment().tz(dataTimeZone).day()];
     
-    const slackData = await (await slackBotChannelHistory(feedChannel,`&oldest=${lasthourTimstamp}`)).json();
+    const slackData = await (await slackBotChannelHistory(feedChannel,`&oldest=${startOfDataTimeStamp}`)).json();
     for (let func of schedule.filter(x=>x.enabled)) {
       for (let runtime of func.daily_schedule.filter(x=>x.days.includes(TodayDayOfWeekCode))) {
         let runToday = moment.tz({hour:runtime.hour,minute:runtime.minute},dataTimeZone);
@@ -34,15 +34,18 @@ module.exports = async function () {
         let threadStartTimePassed = runToday.diff()<0;
         let threadNotTooLate = runToday.clone().add(1,'hour').diff()>0;
 
+        let RuntimeThread = slackData.messages.find(m=>m.text===runtime.message);
+
         if(threadStartTimePassed && threadNotTooLate) {
           //We should have a run for this
-          let RuntimeThread = slackData.messages.find(m=>m.text===runtime.message);
 
           if(!RuntimeThread) {
             let slackPostTS = (await (await slackBotChatPost(feedChannel,runtime.message)).json()).ts;
 
             try {
               await runModule(func.name,feedChannel,slackPostTS);
+              await slackBotReplyPost(feedChannel, slackPostTS,`${func.name} finished`);
+              await slackBotReactionAdd(feedChannel, slackPostTS, 'white_check_mark');
             } catch (e) {
               //Report on this error and allow movement forward
               await slackBotReportError(feedChannel,`Error running ${func.name}`,e);
@@ -52,9 +55,6 @@ module.exports = async function () {
                 await slackBotReactionAdd(feedChannel, slackPostTS, 'x');
               }
             }
-
-            await slackBotReplyPost(feedChannel, slackPostTS,`${func.name} finished`);
-            await slackBotReactionAdd(feedChannel, slackPostTS, 'white_check_mark');
           }
         }
       }
