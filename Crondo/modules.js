@@ -1,11 +1,11 @@
 
-const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
+//const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { slackBotChatPost, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
 const notifyChannel_covid19_state_dash = 'C01AA1ZB05B'; // #covid19-state-dash
-const notifyChannel_covid19_blueprint = 'C019DS5S6Q2'; // #covid19-blueprint
+//const notifyChannel_covid19_blueprint = 'C019DS5S6Q2'; // #covid19-blueprint
 const notifyChannel_covid19_vaccines = 'C01HTTNKHBM'; //covid19-vaccines
 
 
@@ -27,8 +27,6 @@ const slackPrResult = async (prResult, prMessageHeader,notifyChannel, feedChanne
     }
   }
 };
-
-
 
 /**
  * Runs a CRON module by name
