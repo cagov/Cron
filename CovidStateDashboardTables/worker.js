@@ -49,11 +49,16 @@ const doCovidStateDashboardTables = async () => {
     regionList.forEach(r=>{
         let byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===r);
 
+        const json = {...jsonTemplate};
+        json.data.time_series.HOSPITALIZED_PATIENTS = byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS}));
+
+
         //const json = {...jsonTemplate};
         allFilesMap.set(
-            `${outputPath}/hospitalized_patients/${r.replace(/ /g,'_')}.json`,
-            {...jsonTemplate}.data.time_series.HOSPITALIZED_PATIENTS = byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS})));
+            `${outputPath}/hospitalized_patients/${r.replace(/ /g,'_')}.json`,json);
 
+
+            const xsx = 1;
     });
 
 
