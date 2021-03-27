@@ -19,7 +19,8 @@ const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, Fai
       .map(filename=>({name: filename.replace(/\.sql$/,''), filename, fullfilename:`${sqlFullPath}/${filename}`}));
 
   const JsonOutput = {
-    DbSqlWork:{}
+    DbSqlWork:{},
+    schema:{}
   };
 
   sqlFiles.forEach(sql=>{
@@ -28,9 +29,6 @@ const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, Fai
     if(schemaPathFormat) {
       const schemaPath =  sqlFullPath + schemaPathFormat.replace(/\[file\]/,sql.name);
       if(fs.existsSync(schemaPath)) {
-        if(!JsonOutput.schema) {
-          JsonOutput.schema = {};
-        }
 
         const newSchema = {
           schema : JSON.parse(fs.readFileSync(schemaPath))
