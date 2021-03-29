@@ -84,9 +84,6 @@ const doCovidStateDashboardTables = async () => {
 
     let allFilesMap = new Map();
 
-let delme = 52;
-
-
     regionList.forEach(myRegion=>{
         let byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===myRegion);
 
@@ -141,13 +138,7 @@ let delme = 52;
                 }
             };
 
-            if (delme>0) {
-                allFilesMap.set(`icu_available_beds/${myRegion.replace(/ /g,'_')}`,jsonIcuBeds);
-                delme--;
-            } else {
-                const x = myRegion;
-            }
-
+            allFilesMap.set(`icu_available_beds/${myRegion.replace(/ /g,'_')}`,jsonIcuBeds);
         }
     });
 
