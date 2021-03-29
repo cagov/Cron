@@ -84,41 +84,40 @@ const doCovidStateDashboardTables = async () => {
 
     let allFilesMap = new Map();
 
-    regionList.forEach(r=>{
-        let byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===r);
+    regionList.forEach(myRegion=>{
+        let byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===myRegion);
 
         if(byRegion.length>0) {
+            const latestData = byRegion[0];
+
             let json = {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
-                    REGION: r
+                    coverage: myRegion
                 },
                 data:{
-                    latest:{},
-                    time_series:{}
+                    latest:{
+                        HOSPITALIZED_PATIENTS: {
+                            TOTAL:latestData.HOSPITALIZED_PATIENTS,
+                            CHANGE:latestData.HOSPITALIZED_PATIENTS_CHANGE,
+                            CHANGE_FACTOR:latestData.HOSPITALIZED_PATIENTS_CHANGE_FACTOR
+                        },
+                        ICU_PATIENTS: {
+                            TOTAL:latestData.ICU_PATIENTS,
+                            CHANGE:latestData.ICU_PATIENTS_CHANGE,
+                            CHANGE_FACTOR:latestData.ICU_PATIENTS_CHANGE_FACTOR
+                        }
+                    },
+                    time_series:{
+                        HOSPITALIZED_PATIENTS: byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS})),
+                        HOSPITALIZED_PATIENTS_14_DAY_AVG: byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS_14_DAY_AVG})),
+                        ICU_PATIENTS: byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS})),
+                        ICU_PATIENTS_14_DAY_AVG: byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS_14_DAY_AVG}))
+                    }
                 }
             };
-            json.data.time_series.HOSPITALIZED_PATIENTS = byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS}));
-            json.data.time_series.HOSPITALIZED_PATIENTS_14_DAY_AVG = byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS_14_DAY_AVG}));
-            json.data.time_series.ICU_PATIENTS = byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS}));
-            json.data.time_series.ICU_PATIENTS_14_DAY_AVG = byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS_14_DAY_AVG}));
 
-            const latestData = byRegion[0];
-
-            json.data.latest.HOSPITALIZED_PATIENTS = {
-                TOTAL:latestData.HOSPITALIZED_PATIENTS,
-                CHANGE:latestData.HOSPITALIZED_PATIENTS_CHANGE,
-                CHANGE_FACTOR:latestData.HOSPITALIZED_PATIENTS_CHANGE_FACTOR
-            };
-
-            json.data.latest.ICU_PATIENTS = {
-                TOTAL:latestData.ICU_PATIENTS,
-                CHANGE:latestData.ICU_PATIENTS_CHANGE,
-                CHANGE_FACTOR:latestData.ICU_PATIENTS_CHANGE_FACTOR
-            };
-
-            //const json = {...jsonTemplate};
-            allFilesMap.set(`patients/${r.replace(/ /g,'_')}`,json);
+            allFilesMap.set(`patients/${myRegion.replace(/ /g,'_')}`,json);
         }
     });
 
