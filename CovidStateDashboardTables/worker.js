@@ -80,11 +80,9 @@ const doCovidStateDashboardTables = async () => {
         validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
     });
 
-    const regionList = ["Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
+    const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
 
     let allFilesMap = new Map();
-
-
 
     regionList.forEach(r=>{
         let byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===r);
@@ -120,8 +118,7 @@ const doCovidStateDashboardTables = async () => {
             };
 
             //const json = {...jsonTemplate};
-            allFilesMap.set(
-            `patients/${r.replace(/ /g,'_')}`,json);
+            allFilesMap.set(`patients/${r.replace(/ /g,'_')}`,json);
         }
     });
 
@@ -136,6 +133,8 @@ const doCovidStateDashboardTables = async () => {
             base: masterBranch
         }))
         .data;
+
+        console.log(`PR created - ${Pr.html_url}`);
 
         //Label the Pr
         await gitIssues.editIssue(Pr.number,{
