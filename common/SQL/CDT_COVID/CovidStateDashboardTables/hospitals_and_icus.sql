@@ -1,12 +1,24 @@
-with rootData AS (
+with 
+    pops AS (
+        select 
+            replace(COUNTY, ' County','') AS popcounty,
+            POPULATION from PRODUCTION.CDF_DEMOGRAPHICS_POPULATION_BY_COUNTY
+        where
+            YEAR = (select max(YEAR) from PRODUCTION.CDF_DEMOGRAPHICS_POPULATION_BY_COUNTY)
+    ),
+rootData AS (
     select
         COUNTY AS REGION,
+        MAX(pops.POPULATION) AS POPULATION,
         TO_DATE(SF_LOAD_TIMESTAMP) AS DATE,
         IFNULL(SUM(ICU_SUSPECTED_COVID_PATIENTS),0) + IFNULL(SUM(ICU_COVID_CONFIRMED_PATIENTS),0) AS ICU_PATIENTS,
         IFNULL(SUM(HOSPITALIZED_COVID_CONFIRMED_PATIENTS),0) + IFNULL(SUM(HOSPITALIZED_SUSPECTED_COVID_PATIENTS),0) AS HOSPITALIZED_PATIENTS,
         IFNULL(SUM(ICU_AVAILABLE_BEDS),0) as ICU_AVAILABLE_BEDS
     from
         COVID.PRODUCTION.VW_CHA_HOSPITALDATA_OLD
+    left outer join
+        pops
+        on popcounty = COUNTY
     where
         DATE>='2020-03-30'
     group by 
@@ -18,6 +30,7 @@ with rootData AS (
 select
     REGION,
     DATE,
+    POPULATION,
     
     HOSPITALIZED_PATIENTS,
     HOSPITALIZED_PATIENTS - HOSPITALIZED_PATIENTS_PREV  AS HOSPITALIZED_PATIENTS_CHANGE,
@@ -48,6 +61,7 @@ from
         
         select
             'California' AS REGION,
+            SUM(POPULATION) AS POPULATION,
             DATE,
             SUM(ICU_PATIENTS) AS ICU_PATIENTS,
             SUM(HOSPITALIZED_PATIENTS) AS HOSPITALIZED_PATIENTS,

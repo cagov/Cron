@@ -100,12 +100,14 @@ const doCovidStateDashboardTables = async () => {
                         HOSPITALIZED_PATIENTS: {
                             TOTAL:latestData.HOSPITALIZED_PATIENTS,
                             CHANGE:latestData.HOSPITALIZED_PATIENTS_CHANGE,
-                            CHANGE_FACTOR:latestData.HOSPITALIZED_PATIENTS_CHANGE_FACTOR
+                            CHANGE_FACTOR:latestData.HOSPITALIZED_PATIENTS_CHANGE_FACTOR,
+                            POPULATION:latestData.POPULATION
                         },
                         ICU_PATIENTS: {
                             TOTAL:latestData.ICU_PATIENTS,
                             CHANGE:latestData.ICU_PATIENTS_CHANGE,
-                            CHANGE_FACTOR:latestData.ICU_PATIENTS_CHANGE_FACTOR
+                            CHANGE_FACTOR:latestData.ICU_PATIENTS_CHANGE_FACTOR,
+                            POPULATION:latestData.POPULATION
                         }
                     },
                     time_series:{
@@ -129,7 +131,8 @@ const doCovidStateDashboardTables = async () => {
                         ICU_AVAILABLE_BEDS: {
                             TOTAL:latestData.ICU_AVAILABLE_BEDS,
                             CHANGE:latestData.ICU_AVAILABLE_BEDS_CHANGE,
-                            CHANGE_FACTOR:latestData.ICU_AVAILABLE_BEDS_CHANGE_FACTOR
+                            CHANGE_FACTOR:latestData.ICU_AVAILABLE_BEDS_CHANGE_FACTOR,
+                            POPULATION:latestData.POPULATION
                         }
                     },
                     time_series:{
