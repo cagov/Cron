@@ -84,13 +84,16 @@ const doCovidStateDashboardTables = async () => {
 
     let allFilesMap = new Map();
 
+let delme = 52;
+
+
     regionList.forEach(myRegion=>{
         let byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===myRegion);
 
         if(byRegion.length>0) {
             const latestData = byRegion[0];
 
-            let json = {
+            let jsonPatients = {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
                     coverage: myRegion
@@ -117,7 +120,34 @@ const doCovidStateDashboardTables = async () => {
                 }
             };
 
-            allFilesMap.set(`patients/${myRegion.replace(/ /g,'_')}`,json);
+            allFilesMap.set(`patients/${myRegion.replace(/ /g,'_')}`,jsonPatients);
+
+            let jsonIcuBeds = {
+                meta:{
+                    PUBLISHED_DATE: todayDateString(),
+                    coverage: myRegion
+                },
+                data:{
+                    latest:{
+                        ICU_AVAILABLE_BEDS: {
+                            TOTAL:latestData.ICU_AVAILABLE_BEDS,
+                            CHANGE:latestData.ICU_AVAILABLE_BEDS_CHANGE,
+                            CHANGE_FACTOR:latestData.ICU_AVAILABLE_BEDS_CHANGE_FACTOR
+                        }
+                    },
+                    time_series:{
+                        ICU_AVAILABLE_BEDS: byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_AVAILABLE_BEDS}))
+                    }
+                }
+            };
+
+            if (delme>0) {
+                allFilesMap.set(`icu_available_beds/${myRegion.replace(/ /g,'_')}`,jsonIcuBeds);
+                delme--;
+            } else {
+                const x = myRegion;
+            }
+
         }
     });
 
