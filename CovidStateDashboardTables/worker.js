@@ -17,6 +17,30 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
 const outputPath = '/state_dash_tables/';
 
+const createTreeFromFileMap = (existingTree,filesMap,rootPath) => {
+    const targetTree = existingTree || [];
+
+    for (const [key,value] of filesMap) {
+        //Tree parts...
+        //https://docs.github.com/en/free-pro-team@latest/rest/reference/git#create-a-tree
+        const mode = '100644'; //code for tree blob
+        const type = 'blob';
+    
+        const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
+        const content = JSON.stringify(value,null,2);
+        
+        const treeRow = 
+            {
+                path: `${rootPath}${newFileName}`,
+                content, mode, type
+            };
+
+        targetTree.push(treeRow);
+    }
+
+    return targetTree;
+};
+
 const doCovidStateDashboardTables = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
@@ -51,19 +75,35 @@ const doCovidStateDashboardTables = async () => {
 
         const json = {...jsonTemplate};
         json.data.time_series.HOSPITALIZED_PATIENTS = byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS}));
+        json.data.time_series.HOSPITALIZED_PATIENTS_14_DAY_AVG = byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS_14_DAY_AVG}));
+        json.data.time_series.ICU_PATIENTS = byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS}));
+        json.data.time_series.ICU_PATIENTS_14_DAY_AVG = byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS_14_DAY_AVG}));
 
+        const latestData = byRegion[0];
+
+        json.data.latest.HOSPITALIZED_PATIENTS = {
+            TOTAL:latestData.HOSPITALIZED_PATIENTS,
+            CHANGE:latestData.HOSPITALIZED_PATIENTS_CHANGE,
+            CHANGE_FACTOR:latestData.HOSPITALIZED_PATIENTS_CHANGE_FACTOR
+        };
+
+        json.data.latest.ICU_PATIENTS = {
+            TOTAL:latestData.ICU_PATIENTS,
+            CHANGE:latestData.ICU_PATIENTS_CHANGE,
+            CHANGE_FACTOR:latestData.ICU_PATIENTS_CHANGE_FACTOR
+        };
 
         //const json = {...jsonTemplate};
         allFilesMap.set(
-            `${outputPath}/hospitalized_patients/${r.replace(/ /g,'_')}.json`,json);
+            `${outputPath}/patients/${r.replace(/ /g,'_')}.json`,json);
 
 
-            const xsx = 1;
+
     });
 
 
 
-    const x =1;
+
 
 
 
