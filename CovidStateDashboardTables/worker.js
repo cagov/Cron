@@ -15,7 +15,7 @@ const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: 
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
-const outputPath = '/data/state_dash_tables/';
+const outputPath = 'data/state_dash_tables/';
 
 const createTreeFromFileMap = (existingTree,filesMap,rootPath) => {
     const targetTree = existingTree || [];
@@ -41,12 +41,36 @@ const createTreeFromFileMap = (existingTree,filesMap,rootPath) => {
     return targetTree;
 };
 
+//function to return a new branch if the tree has changes
+const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
+    const refResult = await gitRepo.getRef(`heads/${masterBranch}`);
+    const baseSha = refResult.data.object.sha;
+
+    console.log(`Creating tree for ${commitName}`);
+    const createTreeResult = await gitRepo.createTree(tree,baseSha);
+    const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,commitName,committer);
+    const commitSha = commitResult.data.sha;
+
+    //Compare the proposed commit with the trunk (master) branch
+    const compare = await gitRepo.compareBranches(baseSha,commitSha);
+    if (compare.data.files.length) {
+        console.log(`${compare.data.files.length} changes.`);
+        //Create a new branch and assign this commit to it, return the new branch.
+        await gitRepo.createBranch(masterBranch,branch);
+        return await gitRepo.updateHead(`heads/${branch}`,commitSha);
+    } else {
+        console.log('no changes');
+        return null;
+    }
+};
+
 const doCovidStateDashboardTables = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
     const prTitle = `${todayDateString()} Covid Dashboard Tables`;
+    const newBranchName =`${todayDateString()}-${todayTimeString()}-state-dash-tables`;
 
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/[file]/input/schema.json','schema/[file]/input/sample.json','schema/[file]/input/fail/');
     const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
@@ -60,22 +84,22 @@ const doCovidStateDashboardTables = async () => {
 
     let allFilesMap = new Map();
 
-    const jsonTemplate = {
-        meta:{
-            PUBLISHED_DATE: todayDateString()
-        },
-        data:{
-            latest:{},
-            time_series:{}
-        }
-    };
+
 
     regionList.forEach(r=>{
         let byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===r);
 
-
         if(byRegion.length>0) {
-            const json = {...jsonTemplate};
+            let json = {
+                meta:{
+                    PUBLISHED_DATE: todayDateString(),
+                    REGION: r
+                },
+                data:{
+                    latest:{},
+                    time_series:{}
+                }
+            };
             json.data.time_series.HOSPITALIZED_PATIENTS = byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS}));
             json.data.time_series.HOSPITALIZED_PATIENTS_14_DAY_AVG = byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS_14_DAY_AVG}));
             json.data.time_series.ICU_PATIENTS = byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS}));
@@ -104,15 +128,30 @@ const doCovidStateDashboardTables = async () => {
 
     const workTree = createTreeFromFileMap(null,allFilesMap,outputPath);
 
-    const Pr = null; //await processFilesForPr(datasets,gitRepo,prTitle);
-    if(Pr) {
+    const newBranch = await branchIfChanged(gitRepo, workTree, newBranchName, newBranchName);
+    if(newBranch) {
+        const Pr = (await gitRepo.createPullRequest({
+            title: prTitle,
+            head: newBranchName,
+            base: masterBranch
+        }))
+        .data;
+
         //Label the Pr
         await gitIssues.editIssue(Pr.number,{
             labels: PrLabels
         });
-    }
 
-    return Pr;
+        //await sleep(5000); //give PR time to check actions
+        //Approve Pr
+        //await gitRepo.mergePullRequest(Pr.number,{
+        //    merge_method: 'squash'
+        //});
+
+        //Delete Branch
+        //await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
+        return Pr;
+    }
 };
 
 
