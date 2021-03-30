@@ -107,8 +107,12 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series:{
-                        HOSPITALIZED_PATIENTS: hospitals_and_icus_byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS})),
-                        HOSPITALIZED_PATIENTS_14_DAY_AVG: hospitals_and_icus_byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS_14_DAY_AVG}))
+                        HOSPITALIZED_PATIENTS: hospitals_and_icus_byRegion
+                            .map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS}))
+                            .filter(m=>m.VALUE!==null),
+                        HOSPITALIZED_PATIENTS_14_DAY_AVG: hospitals_and_icus_byRegion
+                            .map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS_14_DAY_AVG}))
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });
@@ -129,8 +133,12 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series:{
-                        ICU_PATIENTS: hospitals_and_icus_byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS})),
-                        ICU_PATIENTS_14_DAY_AVG: hospitals_and_icus_byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS_14_DAY_AVG}))
+                        ICU_PATIENTS: hospitals_and_icus_byRegion
+                            .map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS}))
+                            .filter(m=>m.VALUE!==null),
+                        ICU_PATIENTS_14_DAY_AVG: hospitals_and_icus_byRegion
+                            .map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS_14_DAY_AVG}))
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });
@@ -151,43 +159,57 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series:{
-                        ICU_BEDS: hospitals_and_icus_byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_AVAILABLE_BEDS}))
+                        ICU_BEDS: hospitals_and_icus_byRegion
+                            .map(m=>({DATE:m.DATE,VALUE:m.ICU_AVAILABLE_BEDS}))
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });
         } //if(hospitals_and_icus_byRegion.length>0)
 
-        let summary_by_region = allData.summary_by_region.filter(f=>f.REGION===myRegion);
-        if(summary_by_region.length) {
+        let summary_by_region = allData.summary_by_region.find(f=>f.REGION===myRegion);
+        let rows_by_region = allData.cases_deaths_tests_rows.filter(f=>f.REGION===myRegion);
+        if(summary_by_region && rows_by_region.length) {
             allFilesMap.set(`confirmed-cases-episode-date/${regionFileName}`,
             {
-                meta:{
+                meta: {
                     PUBLISHED_DATE: todayDateString(),
                     coverage: myRegion
                 },
-                data:{
-                    latest:{
+                data: {
+                    latest: {
                         CONFIRMED_CASES_EPISODE_DATE: {
                             total_confirmed_cases: summary_by_region.total_confirmed_cases,
                             new_cases: summary_by_region.new_cases,
                             new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
-                            cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days
+                            cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days,
+                            EPISODE_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.EPISODE_UNCERTAINTY_PERIOD).DATE
                         }
                     },
-                    time_series:{
-                        CONFIRMED_CASES_EPISODE_DATE: []
+                    time_series: {
+                        CONFIRMED_CASES_EPISODE_DATE: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.CASES}))
+                            .filter(m=>m.VALUE!==null),
+                        AVG_CASE_RATE_PER_100K_7_DAYS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_CASE_RATE_PER_100K_7_DAYS}))
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });
+
+            const result = allFilesMap.get(`confirmed-cases-episode-date/${regionFileName}`);
+
+            const ejhrbvejhrv=1;
+            /*
             
             allFilesMap.set(`confirmed-cases-reported-date/${regionFileName}`,
             {
-                meta:{
+                meta: {
                     PUBLISHED_DATE: todayDateString(),
                     coverage: myRegion
                 },
-                data:{
-                    latest:{
+                data: {
+                    latest: {
                         CONFIRMED_CASES_REPORTED_DATE: {
                             total_confirmed_cases: summary_by_region.total_confirmed_cases,
                             new_cases: summary_by_region.new_cases,
@@ -196,40 +218,51 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series:{
-                        CONFIRMED_CASES_REPORTED_DATE: []
+                        CONFIRMED_CASES_REPORTED_DATE: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_CASES}))
+                            .filter(m=>m.VALUE!==null),
+                        AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_CASE_REPORT_RATE_PER_100K_7_DAYS}))
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });
 
             allFilesMap.set(`confirmed-deaths-death-date/${regionFileName}`,
             {
-                meta:{
+                meta: {
                     PUBLISHED_DATE: todayDateString(),
                     coverage: myRegion
                 },
-                data:{
-                    latest:{
+                data: {
+                    latest: {
                         CONFIRMED_DEATHS_DEATH_DATE: {
                             total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
                             new_deaths: summary_by_region.new_deaths,
                             new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
-                            deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days
+                            deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days,
+                            DEATH_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.DEATH_UNCERTAINTY_PERIOD).DATE
                         }
                     },
-                    time_series:{
-                        CONFIRMED_DEATHS_DEATH_DATE: []
+                    time_series: {
+                        CONFIRMED_DEATHS_DEATH_DATE: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.DEATHS}))
+                            .filter(m=>m.VALUE!==null),
+                        AVG_DEATH_RATE_PER_100K_7_DAYS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_DEATH_RATE_PER_100K_7_DAYS}))
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });
 
             allFilesMap.set(`confirmed-deaths-reported-date/${regionFileName}`,
             {
-                meta:{
+                meta: {
                     PUBLISHED_DATE: todayDateString(),
                     coverage: myRegion
                 },
-                data:{
-                    latest:{
+                data: {
+                    latest: {
                         CONFIRMED_DEATHS_REPORTED_DATE: {
                             total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
                             new_deaths: summary_by_region.new_deaths,
@@ -237,14 +270,18 @@ const doCovidStateDashboardTables = async () => {
                             deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days
                         }
                     },
-                    time_series:{
-                        CONFIRMED_DEATHS_REPORTED_DATE: []
+                    time_series: {
+                        CONFIRMED_DEATHS_REPORTED_DATE: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_DEATHS}))
+                            .filter(m=>m.VALUE!==null),
+                        AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS}))
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });
-            
+            */
         } //if(summary_by_region.length)
-
     });
 
 
