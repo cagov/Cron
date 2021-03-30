@@ -16,7 +16,8 @@ const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
 const outputPath = 'data/dashboard/state-dashboard/';
-const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
+//const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
+  const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz",         "Sierra"];
 
 const createTreeFromFileMap = (existingTree,filesMap,rootPath) => {
     const targetTree = existingTree || [];
@@ -197,11 +198,11 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            const result = allFilesMap.get(`confirmed-cases-episode-date/${regionFileName}`);
+            if(regionFileName==='Shasta') {
+                let delme = allFilesMap.get(`confirmed-cases-episode-date/${regionFileName}`);
+                let ajehvbehrj=1;
+            }
 
-            const ejhrbvejhrv=1;
-            /*
-            
             allFilesMap.set(`confirmed-cases-reported-date/${regionFileName}`,
             {
                 meta: {
@@ -218,12 +219,12 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series:{
-                        CONFIRMED_CASES_REPORTED_DATE: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_CASES}))
-                            .filter(m=>m.VALUE!==null),
-                        AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_CASE_REPORT_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)
+                        CONFIRMED_CASES_REPORTED_DATE: [], //rows_by_region
+                            //.map(m=>({DATE:m.DATE,VALUE:m.REPORTED_CASES}))
+                            //.filter(m=>m.VALUE!==null),
+                        AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: [] //rows_by_region
+                            //.map(m=>({DATE:m.DATE,VALUE:m.AVG_CASE_REPORT_RATE_PER_100K_7_DAYS}))
+                            //.filter(m=>m.VALUE!==null)
                     }
                 }
             });
@@ -245,12 +246,12 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series: {
-                        CONFIRMED_DEATHS_DEATH_DATE: rows_by_region
+                        CONFIRMED_DEATHS_DEATH_DATE: [], /*rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.DEATHS}))
-                            .filter(m=>m.VALUE!==null),
-                        AVG_DEATH_RATE_PER_100K_7_DAYS: rows_by_region
+                            .filter(m=>m.VALUE!==null),*/
+                        AVG_DEATH_RATE_PER_100K_7_DAYS: [] /*rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.AVG_DEATH_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)
+                            .filter(m=>m.VALUE!==null)*/
                     }
                 }
             });
@@ -271,16 +272,15 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series: {
-                        CONFIRMED_DEATHS_REPORTED_DATE: rows_by_region
+                        CONFIRMED_DEATHS_REPORTED_DATE: [],  /*rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_DEATHS}))
-                            .filter(m=>m.VALUE!==null),
-                        AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
+                            .filter(m=>m.VALUE!==null),*/
+                        AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: [] /*rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)
+                            .filter(m=>m.VALUE!==null)*/
                     }
                 }
             });
-            */
         } //if(summary_by_region.length)
     });
 
