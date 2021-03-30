@@ -85,12 +85,14 @@ const doCovidStateDashboardTables = async () => {
     let allFilesMap = new Map();
 
     regionList.forEach(myRegion=>{
+        let regionFileName = myRegion.replace(/ /g,'_');
         let hospitals_and_icus_byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===myRegion);
 
-        if(hospitals_and_icus_byRegion.length>0) {
+        if(hospitals_and_icus_byRegion.length) {
             const latestData = hospitals_and_icus_byRegion[0];
 
-            let json_hospitalized_patients = {
+            allFilesMap.set(`hospitalized-patients/${regionFileName}`,
+            {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
                     coverage: myRegion
@@ -109,11 +111,10 @@ const doCovidStateDashboardTables = async () => {
                         HOSPITALIZED_PATIENTS_14_DAY_AVG: hospitals_and_icus_byRegion.map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS_14_DAY_AVG}))
                     }
                 }
-            };
+            });
 
-            allFilesMap.set(`hospitalized-patients/${myRegion.replace(/ /g,'_')}`,json_hospitalized_patients);
-
-            let json_icu_patients = {
+            allFilesMap.set(`icu-patients/${regionFileName}`,
+            {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
                     coverage: myRegion
@@ -132,11 +133,10 @@ const doCovidStateDashboardTables = async () => {
                         ICU_PATIENTS_14_DAY_AVG: hospitals_and_icus_byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS_14_DAY_AVG}))
                     }
                 }
-            };
+            });
 
-            allFilesMap.set(`icu-patients/${myRegion.replace(/ /g,'_')}`,json_icu_patients);
-
-            let jsonIcuBeds = {
+            allFilesMap.set(`icu-beds/${regionFileName}`,
+            {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
                     coverage: myRegion
@@ -154,15 +154,96 @@ const doCovidStateDashboardTables = async () => {
                         ICU_BEDS: hospitals_and_icus_byRegion.map(m=>({DATE:m.DATE,VALUE:m.ICU_AVAILABLE_BEDS}))
                     }
                 }
-            };
-
-            allFilesMap.set(`icu-beds/${myRegion.replace(/ /g,'_')}`,jsonIcuBeds);
+            });
         } //if(hospitals_and_icus_byRegion.length>0)
 
         let summary_by_region = allData.summary_by_region.filter(f=>f.REGION===myRegion);
+        if(summary_by_region.length) {
+            allFilesMap.set(`confirmed-cases-episode-date/${regionFileName}`,
+            {
+                meta:{
+                    PUBLISHED_DATE: todayDateString(),
+                    coverage: myRegion
+                },
+                data:{
+                    latest:{
+                        CONFIRMED_CASES_EPISODE_DATE: {
+                            total_confirmed_cases: summary_by_region.total_confirmed_cases,
+                            new_cases: summary_by_region.new_cases,
+                            new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
+                            cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days
+                        }
+                    },
+                    time_series:{
+                        CONFIRMED_CASES_EPISODE_DATE: []
+                    }
+                }
+            });
+            
+            allFilesMap.set(`confirmed-cases-reported-date/${regionFileName}`,
+            {
+                meta:{
+                    PUBLISHED_DATE: todayDateString(),
+                    coverage: myRegion
+                },
+                data:{
+                    latest:{
+                        CONFIRMED_CASES_REPORTED_DATE: {
+                            total_confirmed_cases: summary_by_region.total_confirmed_cases,
+                            new_cases: summary_by_region.new_cases,
+                            new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
+                            cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days
+                        }
+                    },
+                    time_series:{
+                        CONFIRMED_CASES_REPORTED_DATE: []
+                    }
+                }
+            });
 
+            allFilesMap.set(`confirmed-deaths-death-date/${regionFileName}`,
+            {
+                meta:{
+                    PUBLISHED_DATE: todayDateString(),
+                    coverage: myRegion
+                },
+                data:{
+                    latest:{
+                        CONFIRMED_DEATHS_DEATH_DATE: {
+                            total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
+                            new_deaths: summary_by_region.new_deaths,
+                            new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
+                            deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days
+                        }
+                    },
+                    time_series:{
+                        CONFIRMED_DEATHS_DEATH_DATE: []
+                    }
+                }
+            });
 
-        const xascsac =1;
+            allFilesMap.set(`confirmed-deaths-reported-date/${regionFileName}`,
+            {
+                meta:{
+                    PUBLISHED_DATE: todayDateString(),
+                    coverage: myRegion
+                },
+                data:{
+                    latest:{
+                        CONFIRMED_DEATHS_REPORTED_DATE: {
+                            total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
+                            new_deaths: summary_by_region.new_deaths,
+                            new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
+                            deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days
+                        }
+                    },
+                    time_series:{
+                        CONFIRMED_DEATHS_REPORTED_DATE: []
+                    }
+                }
+            });
+            
+        } //if(summary_by_region.length)
 
     });
 
