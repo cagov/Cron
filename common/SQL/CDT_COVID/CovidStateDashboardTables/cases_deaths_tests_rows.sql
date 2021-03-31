@@ -1,7 +1,6 @@
 select
     DATE,
     AREA "REGION",
-    POPULATION,
     
     CASES,
     REPORTED_CASES,

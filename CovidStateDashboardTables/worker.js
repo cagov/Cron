@@ -50,6 +50,7 @@ const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
     const baseSha = refResult.data.object.sha;
 
     let treeParts = [tree];
+    const totalRows = tree.length;
 
     //Split the tree into allowable sizes
     let evalIndex = 0;
@@ -64,8 +65,10 @@ const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
 
     //Loop through adding items to the tree
     let createTreeResult = {data:{sha:baseSha}};
+    let rowCount = 0;
     for(let treePart of treeParts) {
-        console.log(`Creating tree for ${commitName} - ${treePart.length} items`);
+        rowCount += treePart.length;
+        console.log(`Creating tree for ${commitName} - ${rowCount}/${totalRows} items`);
         createTreeResult = await gitRepo.createTree(treePart,createTreeResult.data.sha);
     }
 
@@ -203,7 +206,8 @@ const doCovidStateDashboardTables = async () => {
                             new_cases: summary_by_region.new_cases,
                             new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
                             cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days,
-                            EPISODE_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.EPISODE_UNCERTAINTY_PERIOD).DATE
+                            EPISODE_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.EPISODE_UNCERTAINTY_PERIOD).DATE,
+                            POPULATION:summary_by_region.POPULATION
                         }
                     },
                     time_series: {
@@ -229,16 +233,17 @@ const doCovidStateDashboardTables = async () => {
                             total_confirmed_cases: summary_by_region.total_confirmed_cases,
                             new_cases: summary_by_region.new_cases,
                             new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
-                            cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days
+                            cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days,
+                            POPULATION:summary_by_region.POPULATION
                         }
                     },
                     time_series:{
-                        CONFIRMED_CASES_REPORTED_DATE: [], //rows_by_region
-                            //.map(m=>({DATE:m.DATE,VALUE:m.REPORTED_CASES}))
-                            //.filter(m=>m.VALUE!==null),
-                        AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: [] //rows_by_region
-                            //.map(m=>({DATE:m.DATE,VALUE:m.AVG_CASE_REPORT_RATE_PER_100K_7_DAYS}))
-                            //.filter(m=>m.VALUE!==null)
+                        CONFIRMED_CASES_REPORTED_DATE: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_CASES}))
+                            .filter(m=>m.VALUE!==null),
+                        AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_CASE_REPORT_RATE_PER_100K_7_DAYS}))
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });
@@ -256,16 +261,17 @@ const doCovidStateDashboardTables = async () => {
                             new_deaths: summary_by_region.new_deaths,
                             new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
                             deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days,
-                            DEATH_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.DEATH_UNCERTAINTY_PERIOD).DATE
+                            DEATH_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.DEATH_UNCERTAINTY_PERIOD).DATE,
+                            POPULATION:summary_by_region.POPULATION
                         }
                     },
                     time_series: {
-                        CONFIRMED_DEATHS_DEATH_DATE: [], /*rows_by_region
+                        CONFIRMED_DEATHS_DEATH_DATE: rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.DEATHS}))
-                            .filter(m=>m.VALUE!==null),*/
-                        AVG_DEATH_RATE_PER_100K_7_DAYS: [] /*rows_by_region
+                            .filter(m=>m.VALUE!==null),
+                        AVG_DEATH_RATE_PER_100K_7_DAYS: rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.AVG_DEATH_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)*/
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });
@@ -282,16 +288,17 @@ const doCovidStateDashboardTables = async () => {
                             total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
                             new_deaths: summary_by_region.new_deaths,
                             new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
-                            deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days
+                            deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days,
+                            POPULATION:summary_by_region.POPULATION
                         }
                     },
                     time_series: {
-                        CONFIRMED_DEATHS_REPORTED_DATE: [],  /*rows_by_region
+                        CONFIRMED_DEATHS_REPORTED_DATE: rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_DEATHS}))
-                            .filter(m=>m.VALUE!==null),*/
-                        AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: [] /*rows_by_region
+                            .filter(m=>m.VALUE!==null),
+                        AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)*/
+                            .filter(m=>m.VALUE!==null)
                     }
                 }
             });

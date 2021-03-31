@@ -1,6 +1,7 @@
 select
     area "REGION",
     max(DATE) "DATE",
+    max(POPULATION) "POPULATION",
     SUM(LATEST_TOTAL_CONFIRMED_CASES) "total_confirmed_cases",
     SUM(NEWLY_REPORTED_CASES) "new_cases",
     SUM(LATEST_PCT_CH_CASES_REPORTED_1_DAY) "new_cases_delta_1_day",
