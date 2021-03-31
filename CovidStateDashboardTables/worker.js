@@ -16,8 +16,8 @@ const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
 const outputPath = 'data/dashboard/state-dashboard/';
-//const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
-  const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz",         "Sierra"];
+const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
+//const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz",         "Sierra","Siskiyou"];
 
 const createTreeFromFileMap = (existingTree,filesMap,rootPath) => {
     const targetTree = existingTree || [];
@@ -43,13 +43,32 @@ const createTreeFromFileMap = (existingTree,filesMap,rootPath) => {
     return targetTree;
 };
 
+
 //function to return a new branch if the tree has changes
 const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
     const refResult = await gitRepo.getRef(`heads/${masterBranch}`);
     const baseSha = refResult.data.object.sha;
 
-    console.log(`Creating tree for ${commitName}`);
-    const createTreeResult = await gitRepo.createTree(tree,baseSha);
+    let treeParts = [tree];
+
+    //Split the tree into allowable sizes
+    let evalIndex = 0;
+    while(evalIndex < treeParts.length) {
+        if(JSON.stringify(treeParts[evalIndex]).length>9000000) {
+            let half = Math.ceil(treeParts[evalIndex].length / 2);
+            treeParts.unshift(treeParts[evalIndex].splice(0, half));
+        } else {
+            evalIndex++;
+        }
+    }
+
+    //Loop through adding items to the tree
+    let createTreeResult = {data:{sha:baseSha}};
+    for(let treePart of treeParts) {
+        console.log(`Creating tree for ${commitName} - ${treePart.length} items`);
+        createTreeResult = await gitRepo.createTree(treePart,createTreeResult.data.sha);
+    }
+
     const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,commitName,committer);
     const commitSha = commitResult.data.sha;
 
@@ -197,11 +216,6 @@ const doCovidStateDashboardTables = async () => {
                     }
                 }
             });
-
-            if(regionFileName==='Shasta') {
-                let delme = allFilesMap.get(`confirmed-cases-episode-date/${regionFileName}`);
-                let ajehvbehrj=1;
-            }
 
             allFilesMap.set(`confirmed-cases-reported-date/${regionFileName}`,
             {
