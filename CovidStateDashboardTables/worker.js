@@ -52,6 +52,8 @@ const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
     let treeParts = [tree];
     const totalRows = tree.length;
 
+    console.log(`Tree data is ${Buffer.byteLength(JSON.stringify(tree))} bytes`);
+
     //Split the tree into allowable sizes
     let evalIndex = 0;
     while(evalIndex < treeParts.length) {
