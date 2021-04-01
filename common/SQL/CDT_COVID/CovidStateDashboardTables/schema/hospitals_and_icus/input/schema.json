@@ -76,7 +76,7 @@
   },
   "type": "array",
   "uniqueItems": true,
-  "minItems": 20000,
+  "minItems": 5,
   "items": {
     "type": "object",
     "required": [
