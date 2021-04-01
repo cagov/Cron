@@ -202,8 +202,8 @@ const doCovidStateDashboardTables = async () => {
                             new_cases: summary_by_region.new_cases,
                             new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
                             cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days,
-                            EPISODE_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.EPISODE_UNCERTAINTY_PERIOD).DATE,
-                            POPULATION:summary_by_region.POPULATION
+                            EPISODE_UNCERTAINTY_PERIOD: summary_by_region.EPISODE_UNCERTAINTY_PERIOD,
+                            POPULATION: summary_by_region.POPULATION
                         }
                     },
                     time_series: {
@@ -226,7 +226,7 @@ const doCovidStateDashboardTables = async () => {
                             new_cases: summary_by_region.new_cases,
                             new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
                             cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days,
-                            POPULATION:summary_by_region.POPULATION
+                            POPULATION: summary_by_region.POPULATION
                         }
                     },
                     time_series: {
@@ -249,8 +249,8 @@ const doCovidStateDashboardTables = async () => {
                             new_deaths: summary_by_region.new_deaths,
                             new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
                             deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days,
-                            DEATH_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.DEATH_UNCERTAINTY_PERIOD).DATE,
-                            POPULATION:summary_by_region.POPULATION
+                            DEATH_UNCERTAINTY_PERIOD: summary_by_region.DEATH_UNCERTAINTY_PERIOD,
+                            POPULATION: summary_by_region.POPULATION
                         }
                     },
                     time_series: {
@@ -273,7 +273,7 @@ const doCovidStateDashboardTables = async () => {
                             new_deaths: summary_by_region.new_deaths,
                             new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
                             deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days,
-                            POPULATION:summary_by_region.POPULATION
+                            POPULATION: summary_by_region.POPULATION
                         }
                     },
                     time_series: {
@@ -295,8 +295,8 @@ const doCovidStateDashboardTables = async () => {
                             total_tests_performed: summary_by_region.total_tests_performed,
                             new_tests_reported: summary_by_region.new_tests_reported,
                             new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
-                            TESTING_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.TESTING_UNCERTAINTY_PERIOD).DATE,
-                            POPULATION:summary_by_region.POPULATION
+                            TESTING_UNCERTAINTY_PERIOD: summary_by_region.TESTING_UNCERTAINTY_PERIOD,
+                            POPULATION: summary_by_region.POPULATION
                         }
                     },
                     time_series: {
@@ -318,7 +318,7 @@ const doCovidStateDashboardTables = async () => {
                             total_tests_performed: summary_by_region.total_tests_performed,
                             new_tests_reported: summary_by_region.new_tests_reported,
                             new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
-                            POPULATION:summary_by_region.POPULATION
+                            POPULATION: summary_by_region.POPULATION
                         }
                     },
                     time_series: {
@@ -339,8 +339,8 @@ const doCovidStateDashboardTables = async () => {
                         POSITIVITY_RATE: {
                             test_positivity_7_days: summary_by_region.test_positivity_7_days,
                             test_positivity_7_days_delta_7_days: summary_by_region.test_positivity_7_days_delta_7_days,
-                            TESTING_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.TESTING_UNCERTAINTY_PERIOD).DATE,
-                            POPULATION:summary_by_region.POPULATION
+                            TESTING_UNCERTAINTY_PERIOD: summary_by_region.TESTING_UNCERTAINTY_PERIOD,
+                            POPULATION: summary_by_region.POPULATION
                         }
                     },
                     time_series: {
