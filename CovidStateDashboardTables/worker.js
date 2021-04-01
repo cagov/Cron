@@ -108,6 +108,7 @@ const doCovidStateDashboardTables = async () => {
     Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
         const schemaObject = sqlWorkAndSchemas.schema[file];
         const targetJSON = allData[file];
+        //require('fs').writeFileSync("new_sample.json", JSON.stringify(targetJSON,null,2), 'utf8');
         validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
     });
 

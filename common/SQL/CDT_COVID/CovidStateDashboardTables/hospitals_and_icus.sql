@@ -56,6 +56,7 @@ select
 from
     (
         select * from rootData
+        where REGION is not null
         
         union
         
