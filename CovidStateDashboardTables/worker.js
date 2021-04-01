@@ -376,6 +376,9 @@ const doCovidStateDashboardTables = async () => {
                     time_series: {
                         TEST_POSITIVITY_RATE_7_DAYS: rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.TEST_POSITIVITY_RATE_7_DAYS}))
+                            .filter(m=>m.VALUE!==null),
+                        TOTAL_TESTS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.TOTAL_TESTS}))
                             .filter(m=>m.VALUE!==null)
                     }
                 }
