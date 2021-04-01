@@ -1,5 +1,5 @@
 const { queryDataset } = require('../common/snowflakeQuery');
-const { validateJSON, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
+const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const GitHub = require('github-api');
 const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
@@ -13,7 +13,7 @@ const masterBranch = 'master';
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+//const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
 const outputPath = 'data/dashboard/state-dashboard/';
 const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
@@ -300,6 +300,82 @@ const doCovidStateDashboardTables = async () => {
                             .filter(m=>m.VALUE!==null),
                         AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
                             .map(m=>({DATE:m.DATE,VALUE:m.AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS}))
+                            .filter(m=>m.VALUE!==null)
+                    }
+                }
+            });
+
+            allFilesMap.set(`total-tests-testing-date/${regionFileName}`,
+            {
+                meta: {
+                    PUBLISHED_DATE: todayDateString(),
+                    coverage: myRegion
+                },
+                data: {
+                    latest: {
+                        TOTAL_TESTS_TESTING_DATE: {
+                            total_tests_performed: summary_by_region.total_tests_performed,
+                            new_tests_reported: summary_by_region.new_tests_reported,
+                            new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
+                            TESTING_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.TESTING_UNCERTAINTY_PERIOD).DATE,
+                            POPULATION:summary_by_region.POPULATION
+                        }
+                    },
+                    time_series: {
+                        TOTAL_TESTS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.TOTAL_TESTS}))
+                            .filter(m=>m.VALUE!==null),
+                        AVG_TEST_RATE_PER_100K_7_DAYS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_TEST_RATE_PER_100K_7_DAYS}))
+                            .filter(m=>m.VALUE!==null)
+                    }
+                }
+            });
+
+            allFilesMap.set(`total-tests-reported-date/${regionFileName}`,
+            {
+                meta: {
+                    PUBLISHED_DATE: todayDateString(),
+                    coverage: myRegion
+                },
+                data: {
+                    latest: {
+                        TOTAL_TESTS_REPORTED_DATE: {
+                            total_tests_performed: summary_by_region.total_tests_performed,
+                            new_tests_reported: summary_by_region.new_tests_reported,
+                            new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
+                            POPULATION:summary_by_region.POPULATION
+                        }
+                    },
+                    time_series: {
+                        REPORTED_TESTS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_TESTS}))
+                            .filter(m=>m.VALUE!==null),
+                        AVG_TEST_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_TEST_REPORT_RATE_PER_100K_7_DAYS}))
+                            .filter(m=>m.VALUE!==null)
+                    }
+                }
+            });
+
+            allFilesMap.set(`positivity-rate/${regionFileName}`,
+            {
+                meta: {
+                    PUBLISHED_DATE: todayDateString(),
+                    coverage: myRegion
+                },
+                data: {
+                    latest: {
+                        POSITIVITY_RATE: {
+                            test_positivity_7_days: summary_by_region.test_positivity_7_days,
+                            test_positivity_7_days_delta_7_days: summary_by_region.test_positivity_7_days_delta_7_days,
+                            TESTING_UNCERTAINTY_PERIOD: rows_by_region.find(f=>!f.TESTING_UNCERTAINTY_PERIOD).DATE,
+                            POPULATION:summary_by_region.POPULATION
+                        }
+                    },
+                    time_series: {
+                        TEST_POSITIVITY_RATE_7_DAYS: rows_by_region
+                            .map(m=>({DATE:m.DATE,VALUE:m.TEST_POSITIVITY_RATE_7_DAYS}))
                             .filter(m=>m.VALUE!==null)
                     }
                 }
