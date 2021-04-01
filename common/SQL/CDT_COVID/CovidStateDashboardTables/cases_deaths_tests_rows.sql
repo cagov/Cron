@@ -24,7 +24,7 @@ from
     COVID.PRODUCTION.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS
 where
     AREA not in ('Out of state','Unknown') 
-    and DATE > '2020-03-01'
+    and DATE >= '2020-03-01'
 order by
     AREA,
     DATE DESC
