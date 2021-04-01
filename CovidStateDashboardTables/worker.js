@@ -89,6 +89,12 @@ const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
     }
 };
 
+const getDateValueRows = (dataset, valueColumnName) =>
+    dataset
+        .map(m=>({DATE:m.DATE,VALUE:m[valueColumnName]}))
+        .filter(m=>m.VALUE!==null);
+
+
 const doCovidStateDashboardTables = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
@@ -104,7 +110,6 @@ const doCovidStateDashboardTables = async () => {
         const targetJSON = allData[file];
         validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
     });
-
 
     let allFilesMap = new Map();
 
@@ -130,13 +135,9 @@ const doCovidStateDashboardTables = async () => {
                             POPULATION:latestData.POPULATION
                         }
                     },
-                    time_series:{
-                        HOSPITALIZED_PATIENTS: hospitals_and_icus_byRegion
-                            .map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS}))
-                            .filter(m=>m.VALUE!==null),
-                        HOSPITALIZED_PATIENTS_14_DAY_AVG: hospitals_and_icus_byRegion
-                            .map(m=>({DATE:m.DATE,VALUE:m.HOSPITALIZED_PATIENTS_14_DAY_AVG}))
-                            .filter(m=>m.VALUE!==null)
+                    time_series: {
+                        HOSPITALIZED_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS'),
+                        HOSPITALIZED_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS_14_DAY_AVG')
                     }
                 }
             });
@@ -157,12 +158,8 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series:{
-                        ICU_PATIENTS: hospitals_and_icus_byRegion
-                            .map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS}))
-                            .filter(m=>m.VALUE!==null),
-                        ICU_PATIENTS_14_DAY_AVG: hospitals_and_icus_byRegion
-                            .map(m=>({DATE:m.DATE,VALUE:m.ICU_PATIENTS_14_DAY_AVG}))
-                            .filter(m=>m.VALUE!==null)
+                        ICU_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'ICU_PATIENTS'),
+                        ICU_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'ICU_PATIENTS_14_DAY_AVG')
                     }
                 }
             });
@@ -182,10 +179,8 @@ const doCovidStateDashboardTables = async () => {
                             POPULATION:latestData.POPULATION
                         }
                     },
-                    time_series:{
-                        ICU_BEDS: hospitals_and_icus_byRegion
-                            .map(m=>({DATE:m.DATE,VALUE:m.ICU_AVAILABLE_BEDS}))
-                            .filter(m=>m.VALUE!==null)
+                    time_series: {
+                        ICU_BEDS: getDateValueRows(hospitals_and_icus_byRegion,'ICU_AVAILABLE_BEDS')
                     }
                 }
             });
@@ -212,12 +207,8 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series: {
-                        CONFIRMED_CASES_EPISODE_DATE: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.CASES}))
-                            .filter(m=>m.VALUE!==null),
-                        AVG_CASE_RATE_PER_100K_7_DAYS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_CASE_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)
+                        CONFIRMED_CASES_EPISODE_DATE: getDateValueRows(rows_by_region,'CASES'),
+                        AVG_CASE_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_CASE_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
@@ -238,13 +229,9 @@ const doCovidStateDashboardTables = async () => {
                             POPULATION:summary_by_region.POPULATION
                         }
                     },
-                    time_series:{
-                        CONFIRMED_CASES_REPORTED_DATE: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_CASES}))
-                            .filter(m=>m.VALUE!==null),
-                        AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_CASE_REPORT_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)
+                    time_series: {
+                        CONFIRMED_CASES_REPORTED_DATE: getDateValueRows(rows_by_region,'REPORTED_CASES'),
+                        AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_CASE_REPORT_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
@@ -267,12 +254,8 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series: {
-                        CONFIRMED_DEATHS_DEATH_DATE: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.DEATHS}))
-                            .filter(m=>m.VALUE!==null),
-                        AVG_DEATH_RATE_PER_100K_7_DAYS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_DEATH_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)
+                        CONFIRMED_DEATHS_DEATH_DATE: getDateValueRows(rows_by_region,'DEATHS'),
+                        AVG_DEATH_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_DEATH_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
@@ -294,12 +277,8 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series: {
-                        CONFIRMED_DEATHS_REPORTED_DATE: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_DEATHS}))
-                            .filter(m=>m.VALUE!==null),
-                        AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)
+                        CONFIRMED_DEATHS_REPORTED_DATE: getDateValueRows(rows_by_region,'REPORTED_DEATHS'),
+                        AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
@@ -321,12 +300,8 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series: {
-                        TOTAL_TESTS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.TOTAL_TESTS}))
-                            .filter(m=>m.VALUE!==null),
-                        AVG_TEST_RATE_PER_100K_7_DAYS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_TEST_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)
+                        TOTAL_TESTS: getDateValueRows(rows_by_region,'TOTAL_TESTS'),
+                        AVG_TEST_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
@@ -347,12 +322,8 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series: {
-                        REPORTED_TESTS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.REPORTED_TESTS}))
-                            .filter(m=>m.VALUE!==null),
-                        AVG_TEST_REPORT_RATE_PER_100K_7_DAYS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.AVG_TEST_REPORT_RATE_PER_100K_7_DAYS}))
-                            .filter(m=>m.VALUE!==null)
+                        REPORTED_TESTS: getDateValueRows(rows_by_region,'REPORTED_TESTS'),
+                        AVG_TEST_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_REPORT_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
@@ -373,12 +344,8 @@ const doCovidStateDashboardTables = async () => {
                         }
                     },
                     time_series: {
-                        TEST_POSITIVITY_RATE_7_DAYS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.TEST_POSITIVITY_RATE_7_DAYS}))
-                            .filter(m=>m.VALUE!==null),
-                        TOTAL_TESTS: rows_by_region
-                            .map(m=>({DATE:m.DATE,VALUE:m.TOTAL_TESTS}))
-                            .filter(m=>m.VALUE!==null)
+                        TEST_POSITIVITY_RATE_7_DAYS: getDateValueRows(rows_by_region,'TEST_POSITIVITY_RATE_7_DAYS'),
+                        TOTAL_TESTS: getDateValueRows(rows_by_region,'TOTAL_TESTS')
                     }
                 }
             });
