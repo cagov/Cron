@@ -16,6 +16,7 @@
     "jsonschema": "^1.4.0",
     "md5": "^2.3.0",
     "node-fetch": "^2.6.1",
+    "sha1": "^1.1.1",
     "snowflake-sdk": "^1.5.3",
     "xlsx": "^0.15.5"
   }

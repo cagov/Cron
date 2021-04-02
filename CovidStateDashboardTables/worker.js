@@ -9,6 +9,7 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
+const doValidation = false;
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
@@ -18,8 +19,12 @@ const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
 const outputPath = 'data/dashboard/';
 const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
 
-const createTreeFromFileMap = (existingTree,filesMap,rootPath) => {
-    const targetTree = existingTree || [];
+//Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
+const sha1 = require('sha1');
+const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}\0${content}`);
+
+const createTreeFromFileMap = (filesMap,rootPath,referenceTree) => {
+    const targetTree = [];
 
     for (const [key,value] of filesMap) {
         //Tree parts...
@@ -33,10 +38,20 @@ const createTreeFromFileMap = (existingTree,filesMap,rootPath) => {
         const treeRow = 
             {
                 path: `${rootPath}${newFileName}`,
-                content, mode, type
+                content, 
+                mode, 
+                type
             };
 
-        targetTree.push(treeRow);
+        if(referenceTree) {
+            let existingFile = referenceTree.data.tree.find(x=>`data/dashboard/${x.path}`===treeRow.path);
+
+            let sha = gitHubBlobPredictSha(content);
+
+            if(sha!==existingFile.sha) {
+                targetTree.push(treeRow);
+            }
+        }
     }
 
     return targetTree;
@@ -45,6 +60,11 @@ const createTreeFromFileMap = (existingTree,filesMap,rootPath) => {
 
 //function to return a new branch if the tree has changes
 const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
+    if(!tree.length) {
+        console.log('No tree changes');
+        return null;
+    }
+
     const refResult = await gitRepo.getRef(`heads/${masterBranch}`);
     const baseSha = refResult.data.object.sha;
 
@@ -106,13 +126,15 @@ const doCovidStateDashboardTables = async () => {
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/input/[file]/schema.json','schema/input/[file]/sample.json','schema/input/[file]/fail/','schema/output/');
     
     const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
-    Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
-        const schemaObject = sqlWorkAndSchemas.schema[file];
-        const targetJSON = allData[file];
-        //require('fs').writeFileSync(`${file}_sample.json`, JSON.stringify(targetJSON,null,2), 'utf8');
-        console.log(`Validating - ${file}`);
-        validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
-    });
+    if(doValidation) {
+        Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
+            const schemaObject = sqlWorkAndSchemas.schema[file];
+            const targetJSON = allData[file];
+            //require('fs').writeFileSync(`${file}_sample.json`, JSON.stringify(targetJSON,null,2), 'utf8');
+            console.log(`Validating - ${file}`);
+            validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
+        });
+    }
 
     let allFilesMap = new Map();
 
@@ -366,20 +388,25 @@ const doCovidStateDashboardTables = async () => {
         } //if(summary_by_region.length)
     });
 
-    //Validate output
-    console.log('Validating output files');
-    for (let [key,value] of allFilesMap) {
-        let rootFolder = key.split('/')[0];
-        let schema = sqlWorkAndSchemas.outputSchema.find(f=>rootFolder===f.name);
+    if(doValidation) {
+        //Validate output
+        console.log('Validating output files');
+        for (let [key,value] of allFilesMap) {
+            let rootFolder = key.split('/')[0];
+            let schema = sqlWorkAndSchemas.outputSchema.find(f=>rootFolder===f.name);
 
-        if(schema) {
-            validateJSON2(`${key} failed validation`, value, schema.json);
-        } else {
-            throw new Error(`Missing validator for ${key}.`);
+            if(schema) {
+                validateJSON2(`${key} failed validation`, value, schema.json);
+            } else {
+                throw new Error(`Missing validator for ${key}.`);
+            }
         }
     }
 
-    const workTree = createTreeFromFileMap(null,allFilesMap,outputPath);
+    const referenceTreeSha = (await gitRepo.getSha(masterBranch,'data'))
+        .data.find(f=>f.name==='dashboard').sha;
+    const referenceTree = await gitRepo.getTree(`${referenceTreeSha}?recursive=true`);
+    const workTree = createTreeFromFileMap(allFilesMap,outputPath,referenceTree);
 
     const newBranch = await branchIfChanged(gitRepo, workTree, newBranchName, newBranchName);
     if(newBranch) {
