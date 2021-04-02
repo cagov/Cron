@@ -12,7 +12,7 @@ const getSqlWorkAndSchemas_getFileNames = passTestPath =>
         name:testPath.split('/').pop(),
         json:JSON.parse(fs.readFileSync(testPath))}));
 
-const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, FailTestPathFormat) => {
+const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, FailTestPathFormat, outputSchemaPath) => {
   const sqlFullPath = `${__dirname}/${sqlPath}`;
   const sqlFiles = fs.readdirSync(sqlFullPath)
       .filter(f=>f.endsWith('.sql'))
@@ -20,8 +20,16 @@ const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, Fai
 
   const JsonOutput = {
     DbSqlWork:{},
-    schema:{}
+    schema:{},
+    outputSchema: []
   };
+
+  if(outputSchemaPath) {
+    JsonOutput.outputSchema = fs.readdirSync(sqlFullPath+outputSchemaPath)
+    .filter(f=>f.endsWith('.json'))
+    .map(filename=>({name: filename.replace(/\.json$/,''), json: JSON.parse(fs.readFileSync(`${sqlFullPath}${outputSchemaPath}${filename}`))}));
+  }
+
 
   sqlFiles.forEach(sql=>{
     JsonOutput.DbSqlWork[sql.name] = fs.readFileSync(sql.fullfilename).toString();
