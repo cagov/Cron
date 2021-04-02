@@ -9,9 +9,10 @@
       "minimum": 0,
       "maximum": 99999999
     },
-    "number-non-neg": {
+    "100k-report-rate": {
       "type": "number",
-      "minimum": 0
+      "minimum": -100000,
+      "maximum": 100000
     },
     "county": {
       "type": "string",
@@ -80,30 +81,25 @@
   },
   "type": "array",
   "uniqueItems": true,
-  "minItems": 59,
-  "maxItems": 59,
+  "minItems": 1,
   "items": {
     "type": "object",
     "required": [
       "REGION",
       "DATE",
-      "POPULATION",
-      "EPISODE_UNCERTAINTY_PERIOD",
-      "DEATH_UNCERTAINTY_PERIOD",
-      "TESTING_UNCERTAINTY_PERIOD",
-      "total_confirmed_cases",
-      "new_cases",
-      "new_cases_delta_1_day",
-      "cases_per_100k_7_days",
-      "total_confirmed_deaths",
-      "new_deaths",
-      "new_deaths_delta_1_day",
-      "deaths_per_100k_7_days",
-      "total_tests_performed",
-      "new_tests_reported",
-      "new_tests_reported_delta_1_day",
-      "test_positivity_7_days",
-      "test_positivity_7_days_delta_7_days"
+      "CASES",
+      "REPORTED_CASES",
+      "AVG_CASE_RATE_PER_100K_7_DAYS",
+      "AVG_CASE_REPORT_RATE_PER_100K_7_DAYS",
+      "DEATHS",
+      "REPORTED_DEATHS",
+      "AVG_DEATH_RATE_PER_100K_7_DAYS",
+      "AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS",
+      "TOTAL_TESTS",
+      "REPORTED_TESTS",
+      "AVG_TEST_RATE_PER_100K_7_DAYS",
+      "AVG_TEST_REPORT_RATE_PER_100K_7_DAYS",
+      "TEST_POSITIVITY_RATE_7_DAYS"
     ],
     "additionalProperties": false,
     "properties": {
@@ -113,56 +109,81 @@
       "DATE": {
         "$ref": "#/definitions/date-YYYY-MM-DD"
       },
-      "POPULATION": {
+      "CASES": {
         "$ref": "#/definitions/integer-zero-to-everyone"
       },
-      "EPISODE_UNCERTAINTY_PERIOD": {
-        "$ref": "#/definitions/date-YYYY-MM-DD"
-      },
-      "DEATH_UNCERTAINTY_PERIOD": {
-        "$ref": "#/definitions/date-YYYY-MM-DD"
-      },
-      "TESTING_UNCERTAINTY_PERIOD": {
-        "$ref": "#/definitions/date-YYYY-MM-DD"
-      },
-      "total_confirmed_cases": {
-        "$ref": "#/definitions/integer-zero-to-everyone"
-      },
-      "new_cases": {
+      "REPORTED_CASES": {
         "type": "integer"
       },
-      "new_cases_delta_1_day": {
-        "type": "number"
+      "AVG_CASE_RATE_PER_100K_7_DAYS": {
+        "$ref": "#/definitions/100k-report-rate"
       },
-      "cases_per_100k_7_days": {
-        "$ref": "#/definitions/number-non-neg"
+      "AVG_CASE_REPORT_RATE_PER_100K_7_DAYS": {
+        "$ref": "#/definitions/100k-report-rate"
       },
-      "total_confirmed_deaths": {
+      "DEATHS": {
         "$ref": "#/definitions/integer-zero-to-everyone"
       },
-      "new_deaths": {
+      "REPORTED_DEATHS": {
         "type": "integer"
       },
-      "new_deaths_delta_1_day": {
-        "type": "number"
+      "AVG_DEATH_RATE_PER_100K_7_DAYS": {
+        "$ref": "#/definitions/100k-report-rate"
       },
-      "deaths_per_100k_7_days": {
-        "$ref": "#/definitions/number-non-neg"
+      "AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS": {
+        "$ref": "#/definitions/100k-report-rate"
       },
-      "total_tests_performed": {
-        "$ref": "#/definitions/integer-zero-to-everyone"
+      "TOTAL_TESTS": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/integer-zero-to-everyone"
+          },
+          {
+            "type": "null"
+          }
+        ]
       },
-      "new_tests_reported": {
-        "type": "integer"
+      "REPORTED_TESTS": {
+        "oneOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
       },
-      "new_tests_reported_delta_1_day": {
-        "type": "number"
+      "AVG_TEST_RATE_PER_100K_7_DAYS": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/100k-report-rate"
+          },
+          {
+            "type": "null"
+          }
+        ]
       },
-      "test_positivity_7_days": {
-        "$ref": "#/definitions/number-non-neg"
+      "AVG_TEST_REPORT_RATE_PER_100K_7_DAYS": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/100k-report-rate"
+          },
+          {
+            "type": "null"
+          }
+        ]
       },
-      "test_positivity_7_days_delta_7_days": {
-        "type": "number"
+      "TEST_POSITIVITY_RATE_7_DAYS": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
       }
     }
   }
