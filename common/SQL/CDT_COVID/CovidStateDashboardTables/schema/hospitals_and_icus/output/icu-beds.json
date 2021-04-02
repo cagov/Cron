@@ -97,7 +97,7 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "HOSPITALIZED_PATIENTS": {
+            "ICU_BEDS": {
               "required": true,
               "type": "object",
               "additionalProperties": false,
@@ -129,12 +129,12 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "HOSPITALIZED_PATIENTS_14_DAY_AVG": {
+            "ICU_BEDS": {
               "required": true,
               "type": "array",
               "uniqueItems": true,
-              "minItems": 1,
-              "maxItems": 500,
+              "minItems": 300,
+              "maxItems": 900,
               "items": {
                 "required": true,
                 "type": "object",
@@ -146,31 +146,7 @@
                   },
                   "VALUE": {
                     "required": true,
-                    "type": "number",
-                    "minimum": 0
-                  }
-                }
-              }
-            },
-            "HOSPITALIZED_PATIENTS": {
-              "required": true,
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 1,
-              "maxItems": 500,
-              "items": {
-                "required": true,
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "DATE": {
-                    "required": true,
-                    "$ref": "#/definitions/date-YYYY-MM-DD"
-                  },
-                  "VALUE": {
-                    "required": true,
-                    "type": "integer",
-                    "minimum": 0
+                    "type": "integer"
                   }
                 }
               }

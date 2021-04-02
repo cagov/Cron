@@ -105,9 +105,13 @@ const doCovidStateDashboardTables = async () => {
 
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/[file]/input/schema.json','schema/[file]/input/sample.json','schema/[file]/input/fail/');
     
-    sqlWorkAndSchemas.schema.hospitals_and_icus.hospitalized_patients_schema = require(`../common/SQL/CDT_COVID/CovidStateDashboardTables/schema/hospitals_and_icus/output/hospitalized-patients-schema.json`);
-    sqlWorkAndSchemas.schema.hospitals_and_icus.icu_patients_schema = require(`../common/SQL/CDT_COVID/CovidStateDashboardTables/schema/hospitals_and_icus/output/icu-patients-schema.json`);
- 
+    const outputSchemaRoot = '../common/SQL/CDT_COVID/CovidStateDashboardTables/schema/';
+    sqlWorkAndSchemas.schema.hospitals_and_icus.outputschema = {
+        hospitalized_patients : require(`${outputSchemaRoot}hospitals_and_icus/output/hospitalized-patients.json`),
+        icu_patients : require(`${outputSchemaRoot}hospitals_and_icus/output/icu-patients.json`),
+        icu_beds : require(`${outputSchemaRoot}hospitals_and_icus/output/icu-beds.json`)
+    };
+
     const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
     Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
         const schemaObject = sqlWorkAndSchemas.schema[file];
@@ -373,23 +377,27 @@ const doCovidStateDashboardTables = async () => {
     console.log('Validating output files');
     for (let [key,value] of allFilesMap) {
         let rootFolder = key.split('/')[0];
+        let schema = null;
 
         switch (rootFolder) {
             case folder_hospitalized_patients:
-                validateJSON2(`${key} failed validation`, 
-                    value,
-                    sqlWorkAndSchemas.schema.hospitals_and_icus.hospitalized_patients_schema
-                );
+                schema = sqlWorkAndSchemas.schema.hospitals_and_icus.outputschema.hospitalized_patients;
                 break;
             case folder_icu_patients:
-                validateJSON2(`${key} failed validation`, 
-                    value,
-                    sqlWorkAndSchemas.schema.hospitals_and_icus.icu_patients_schema
-                );
+                schema = sqlWorkAndSchemas.schema.hospitals_and_icus.outputschema.icu_patients;
                 break;
-
+            case folder_icu_beds:
+                schema = sqlWorkAndSchemas.schema.hospitals_and_icus.outputschema.icu_beds;
+                break;
+            //case folder_confirmed_cases_episode_date:
+            //    schema = sqlWorkAndSchemas.schema.hospitals_and_icus.outputschemaicu_beds_schema;
+            //    break;
             default:
                 //throw new Error(`No validator for ${key}`.);
+        }
+
+        if(schema) {
+            validateJSON2(`${key} failed validation`, value, schema);
         }
     }
 
