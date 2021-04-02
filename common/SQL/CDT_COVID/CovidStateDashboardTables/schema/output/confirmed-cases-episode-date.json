@@ -136,6 +136,29 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
+            "AVG_CASE_RATE_PER_100K_7_DAYS": {
+              "required": true,
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 300,
+              "maxItems": 900,
+              "items": {
+                "required": true,
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "DATE": {
+                    "required": true,
+                    "$ref": "#/definitions/date-YYYY-MM-DD"
+                  },
+                  "VALUE": {
+                    "required": true,
+                    "type": "number",
+                    "minimum": 0
+                  }
+                }
+              }
+            },
             "CONFIRMED_CASES_EPISODE_DATE": {
               "required": true,
               "type": "array",

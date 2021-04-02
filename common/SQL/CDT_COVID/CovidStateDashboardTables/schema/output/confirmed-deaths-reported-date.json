@@ -97,31 +97,27 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "CONFIRMED_CASES_EPISODE_DATE": {
+            "CONFIRMED_DEATHS_REPORTED_DATE": {
               "required": true,
               "type": "object",
               "additionalProperties": false,
               "properties": {
-                "total_confirmed_cases": {
+                "total_confirmed_deaths": {
                   "required": true,
                   "type": "integer",
                   "minimum": 0
                 },
-                "new_cases": {
+                "new_deaths": {
                   "required": true,
                   "type": "integer"
                 },
-                "new_cases_delta_1_day": {
+                "new_deaths_delta_1_day": {
                   "required": true,
                   "type": "number"
                 },
-                "cases_per_100k_7_days": {
+                "deaths_per_100k_7_days": {
                   "required": true,
                   "type": "number"
-                },
-                "EPISODE_UNCERTAINTY_PERIOD": {
-                  "required": true,
-                  "$ref": "#/definitions/date-YYYY-MM-DD"
                 },
                 "POPULATION": {
                   "required": true,
@@ -136,11 +132,34 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "CONFIRMED_CASES_EPISODE_DATE": {
+            "AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS": {
               "required": true,
               "type": "array",
               "uniqueItems": true,
-              "minItems": 300,
+              "minItems": 1,
+              "maxItems": 900,
+              "items": {
+                "required": true,
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "DATE": {
+                    "required": true,
+                    "$ref": "#/definitions/date-YYYY-MM-DD"
+                  },
+                  "VALUE": {
+                    "required": true,
+                    "type": "number",
+                    "minimum": 0
+                  }
+                }
+              }
+            },
+            "CONFIRMED_DEATHS_REPORTED_DATE": {
+              "required": true,
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
               "maxItems": 900,
               "items": {
                 "required": true,
