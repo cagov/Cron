@@ -104,6 +104,10 @@ const doCovidStateDashboardTables = async () => {
     const newBranchName =`${todayDateString()}-${todayTimeString()}-state-dash-tables`;
 
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/[file]/input/schema.json','schema/[file]/input/sample.json','schema/[file]/input/fail/');
+    
+    sqlWorkAndSchemas.schema.hospitals_and_icus.hospitalized_patients_schema = require(`../common/SQL/CDT_COVID/CovidStateDashboardTables/schema/hospitals_and_icus/output/hospitalized-patients-schema.json`);
+    sqlWorkAndSchemas.schema.hospitals_and_icus.icu_patients_schema = require(`../common/SQL/CDT_COVID/CovidStateDashboardTables/schema/hospitals_and_icus/output/icu-patients-schema.json`);
+ 
     const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
     Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
         const schemaObject = sqlWorkAndSchemas.schema[file];
@@ -115,6 +119,17 @@ const doCovidStateDashboardTables = async () => {
 
     let allFilesMap = new Map();
 
+    const folder_hospitalized_patients = 'hospitalized-patients';
+    const folder_icu_patients = 'icu_patients';
+    const folder_icu_beds = 'icu-beds';
+    const folder_confirmed_cases_episode_date = 'confirmed-cases-episode-date';
+    const folder_confirmed_cases_reported_date = 'confirmed-cases-reported-date';
+    const folder_confirmed_deaths_death_date = 'confirmed-deaths-death-date';
+    const folder_confirmed_deaths_reported_date = 'confirmed-deaths-reported-date';
+    const folder_total_tests_testing_date = 'total-tests-testing-date';
+    const folder_total_tests_reported_date = 'total-tests-reported-date';
+    const folder_positivity_rate = 'positivity-rate';
+
     regionList.forEach(myRegion=>{
         let regionFileName = myRegion.replace(/ /g,'_');
         let hospitals_and_icus_byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===myRegion);
@@ -122,7 +137,7 @@ const doCovidStateDashboardTables = async () => {
         if(hospitals_and_icus_byRegion.length) {
             const latestData = hospitals_and_icus_byRegion[0];
 
-            allFilesMap.set(`hospitalized-patients/${regionFileName}`,
+            allFilesMap.set(`${folder_hospitalized_patients}/${regionFileName}`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -144,7 +159,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`icu-patients/${regionFileName}`,
+            allFilesMap.set(`${folder_icu_patients}/${regionFileName}`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -166,7 +181,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`icu-beds/${regionFileName}`,
+            allFilesMap.set(`${folder_icu_beds}/${regionFileName}`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -191,7 +206,7 @@ const doCovidStateDashboardTables = async () => {
         let summary_by_region = allData.summary_by_region.find(f=>f.REGION===myRegion);
         let rows_by_region = allData.cases_deaths_tests_rows.filter(f=>f.REGION===myRegion);
         if(summary_by_region && rows_by_region.length) {
-            allFilesMap.set(`confirmed-cases-episode-date/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_cases_episode_date}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -215,7 +230,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`confirmed-cases-reported-date/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_cases_reported_date}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -238,7 +253,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`confirmed-deaths-death-date/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_deaths_death_date}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -262,7 +277,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`confirmed-deaths-reported-date/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_deaths_reported_date}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -285,7 +300,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`total-tests-testing-date/${regionFileName}`,
+            allFilesMap.set(`${folder_total_tests_testing_date}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -308,7 +323,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`total-tests-reported-date/${regionFileName}`,
+            allFilesMap.set(`${folder_total_tests_reported_date}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -330,7 +345,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`positivity-rate/${regionFileName}`,
+            allFilesMap.set(`${folder_positivity_rate}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -354,6 +369,29 @@ const doCovidStateDashboardTables = async () => {
         } //if(summary_by_region.length)
     });
 
+    //Validate output
+    console.log('Validating output files');
+    for (let [key,value] of allFilesMap) {
+        let rootFolder = key.split('/')[0];
+
+        switch (rootFolder) {
+            case folder_hospitalized_patients:
+                validateJSON2(`${key} failed validation`, 
+                    value,
+                    sqlWorkAndSchemas.schema.hospitals_and_icus.hospitalized_patients_schema
+                );
+                break;
+            case folder_icu_patients:
+                validateJSON2(`${key} failed validation`, 
+                    value,
+                    sqlWorkAndSchemas.schema.hospitals_and_icus.icu_patients_schema
+                );
+                break;
+
+            default:
+                //throw new Error(`No validator for ${key}`.);
+        }
+    }
 
     const workTree = createTreeFromFileMap(null,allFilesMap,outputPath);
 
