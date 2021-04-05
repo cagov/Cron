@@ -15,7 +15,8 @@ module.exports = async function (context, myTimer) {
       const prMessage = `State Dashboard Tables \n${PrResult.html_url}`;
       await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
-      await slackBotChatPost(notifyChannel, prMessage);
+      //removing notifications until final deployment
+      //await slackBotChatPost(notifyChannel, prMessage);
     }
 
     await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
