@@ -14,7 +14,7 @@ const doValidation = true;
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-//const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
 const outputPath = 'data/dashboard';
 const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
@@ -432,14 +432,14 @@ const doCovidStateDashboardTables = async () => {
             labels: PrLabels
         });
 
-        //await sleep(5000); //give PR time to check actions
+        await sleep(5000); //give PR time to check actions
         //Approve Pr
-        //await gitRepo.mergePullRequest(Pr.number,{
-        //    merge_method: 'squash'
-        //});
+        await gitRepo.mergePullRequest(Pr.number,{
+            merge_method: 'squash'
+        });
 
         //Delete Branch
-        //await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
+        await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
         return Pr;
     }
 };
