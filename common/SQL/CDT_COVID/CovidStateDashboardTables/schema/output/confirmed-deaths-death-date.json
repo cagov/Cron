@@ -1,0 +1,190 @@
+{
+  "definitions": {
+    "date-YYYY-MM-DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "county": {
+      "type": "string",
+      "enum": [
+        "California",
+        "Alameda",
+        "Alpine",
+        "Amador",
+        "Butte",
+        "Calaveras",
+        "Colusa",
+        "Contra Costa",
+        "Del Norte",
+        "El Dorado",
+        "Fresno",
+        "Glenn",
+        "Humboldt",
+        "Imperial",
+        "Inyo",
+        "Kern",
+        "Kings",
+        "Lake",
+        "Lassen",
+        "Los Angeles",
+        "Madera",
+        "Marin",
+        "Mariposa",
+        "Mendocino",
+        "Merced",
+        "Modoc",
+        "Mono",
+        "Monterey",
+        "Napa",
+        "Nevada",
+        "Orange",
+        "Placer",
+        "Plumas",
+        "Riverside",
+        "Sacramento",
+        "San Benito",
+        "San Bernardino",
+        "San Diego",
+        "San Francisco",
+        "San Joaquin",
+        "San Luis Obispo",
+        "San Mateo",
+        "Santa Barbara",
+        "Santa Clara",
+        "Santa Cruz",
+        "Shasta",
+        "Sierra",
+        "Siskiyou",
+        "Solano",
+        "Sonoma",
+        "Stanislaus",
+        "Sutter",
+        "Tehama",
+        "Trinity",
+        "Tulare",
+        "Tuolumne",
+        "Ventura",
+        "Yolo",
+        "Yuba"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "meta": {
+      "required": true,
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "PUBLISHED_DATE": {
+          "required": true,
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        },
+        "coverage": {
+          "required": true,
+          "$ref": "#/definitions/county"
+        }
+      }
+    },
+    "data": {
+      "required": true,
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "latest": {
+          "required": true,
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "CONFIRMED_DEATHS_DEATH_DATE": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "total_confirmed_deaths": {
+                  "required": true,
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "new_deaths": {
+                  "required": true,
+                  "type": "integer"
+                },
+                "new_deaths_delta_1_day": {
+                  "required": true,
+                  "type": "number"
+                },
+                "deaths_per_100k_7_days": {
+                  "required": true,
+                  "type": "number"
+                },
+                "DEATH_UNCERTAINTY_PERIOD": {
+                  "required": true,
+                  "$ref": "#/definitions/date-YYYY-MM-DD"
+                },
+                "POPULATION": {
+                  "required": true,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "time_series": {
+          "required": true,
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "AVG_DEATH_RATE_PER_100K_7_DAYS": {
+              "required": true,
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 300,
+              "maxItems": 900,
+              "items": {
+                "required": true,
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "DATE": {
+                    "required": true,
+                    "$ref": "#/definitions/date-YYYY-MM-DD"
+                  },
+                  "VALUE": {
+                    "required": true,
+                    "type": "number",
+                    "minimum": 0
+                  }
+                }
+              }
+            },
+            "CONFIRMED_DEATHS_DEATH_DATE": {
+              "required": true,
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 300,
+              "maxItems": 900,
+              "items": {
+                "required": true,
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "DATE": {
+                    "required": true,
+                    "$ref": "#/definitions/date-YYYY-MM-DD"
+                  },
+                  "VALUE": {
+                    "required": true,
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
