@@ -85,7 +85,7 @@ const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
         }
     }
 
-    
+    //Grab the starting point for a fresh tree
     const refResult = await gitRepo.getRef(`heads/${masterBranch}`);
     const baseSha = refResult.data.object.sha;
 
@@ -98,6 +98,7 @@ const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
         createTreeResult = await gitRepo.createTree(treePart,createTreeResult.data.sha);
     }
 
+    //Create a commit the maps to all the tree changes
     const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,commitName,committer);
     const commitSha = commitResult.data.sha;
 
