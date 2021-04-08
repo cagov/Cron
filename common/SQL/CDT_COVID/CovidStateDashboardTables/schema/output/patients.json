@@ -97,6 +97,31 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
+            "HOSPITALIZED_PATIENTS": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "TOTAL": {
+                  "required": true,
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "CHANGE": {
+                  "required": true,
+                  "type": "integer"
+                },
+                "CHANGE_FACTOR": {
+                  "required": true,
+                  "type": "number"
+                },
+                "POPULATION": {
+                  "required": true,
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
             "ICU_PATIENTS": {
               "required": true,
               "type": "object",
@@ -129,6 +154,52 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
+            "HOSPITALIZED_PATIENTS_14_DAY_AVG": {
+              "required": true,
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 300,
+              "maxItems": 900,
+              "items": {
+                "required": true,
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "DATE": {
+                    "required": true,
+                    "$ref": "#/definitions/date-YYYY-MM-DD"
+                  },
+                  "VALUE": {
+                    "required": true,
+                    "type": "number",
+                    "minimum": 0
+                  }
+                }
+              }
+            },
+            "HOSPITALIZED_PATIENTS": {
+              "required": true,
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 300,
+              "maxItems": 900,
+              "items": {
+                "required": true,
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "DATE": {
+                    "required": true,
+                    "$ref": "#/definitions/date-YYYY-MM-DD"
+                  },
+                  "VALUE": {
+                    "required": true,
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              }
+            },
             "ICU_PATIENTS": {
               "required": true,
               "type": "array",

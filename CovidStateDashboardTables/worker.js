@@ -144,8 +144,7 @@ const doCovidStateDashboardTables = async () => {
 
     let allFilesMap = new Map();
 
-    const folder_hospitalized_patients = 'hospitalized-patients';
-    const folder_icu_patients = 'icu-patients';
+    const folder_patients = 'patients';
     const folder_icu_beds = 'icu-beds';
     const folder_confirmed_cases = 'confirmed-cases';
     const folder_confirmed_deaths = 'confirmed-deaths';
@@ -159,7 +158,7 @@ const doCovidStateDashboardTables = async () => {
         if(hospitals_and_icus_byRegion.length) {
             const latestData = hospitals_and_icus_byRegion[0];
 
-            allFilesMap.set(`${folder_hospitalized_patients}/${regionFileName}`,
+            allFilesMap.set(`${folder_patients}/${regionFileName}`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -172,23 +171,7 @@ const doCovidStateDashboardTables = async () => {
                             CHANGE:latestData.HOSPITALIZED_PATIENTS_CHANGE,
                             CHANGE_FACTOR:latestData.HOSPITALIZED_PATIENTS_CHANGE_FACTOR,
                             POPULATION:latestData.POPULATION
-                        }
-                    },
-                    time_series: {
-                        HOSPITALIZED_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS'),
-                        HOSPITALIZED_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS_14_DAY_AVG')
-                    }
-                }
-            });
-
-            allFilesMap.set(`${folder_icu_patients}/${regionFileName}`,
-            {
-                meta:{
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data:{
-                    latest:{
+                        },
                         ICU_PATIENTS: {
                             TOTAL:latestData.ICU_PATIENTS,
                             CHANGE:latestData.ICU_PATIENTS_CHANGE,
@@ -196,8 +179,10 @@ const doCovidStateDashboardTables = async () => {
                             POPULATION:latestData.POPULATION
                         }
                     },
-                    time_series:{
+                    time_series: {
+                        HOSPITALIZED_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS'),
                         ICU_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'ICU_PATIENTS'),
+                        HOSPITALIZED_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS_14_DAY_AVG'),
                         ICU_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'ICU_PATIENTS_14_DAY_AVG')
                     }
                 }
