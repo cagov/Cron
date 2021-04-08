@@ -138,28 +138,70 @@
           "properties": {
             "CONFIRMED_CASES_EPISODE_DATE": {
               "required": true,
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 300,
-              "maxItems": 900,
-              "items": {
-                "required": true,
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "DATE": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "DATE_RANGE": {
+                  "required": true,
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "MINIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    },
+                    "MAXIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    }
+                  }
+                },
+                "VALUES": {
+                  "required": true,
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 300,
+                  "maxItems": 900,
+                  "items": {
                     "required": true,
-                    "$ref": "#/definitions/date-YYYY-MM-DD"
-                  },
-                  "VALUE": {
-                    "required": true,
-                    "type": "integer",
-                    "minimum": 0
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "DATE": {
+                        "required": true,
+                        "$ref": "#/definitions/date-YYYY-MM-DD"
+                      },
+                      "VALUE": {
+                        "required": true,
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    }
                   }
                 }
               }
             },
             "AVG_CASE_REPORT_RATE_PER_100K_7_DAYS": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "DATE_RANGE": {
+                  "required": true,
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "MINIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    },
+                    "MAXIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    }
+                  }
+                },
+                "VALUES": {
               "required": true,
               "type": "array",
               "uniqueItems": true,
@@ -179,9 +221,29 @@
                     "type": "number"
                   }
                 }
-              }
+              }}}
             },
             "CONFIRMED_CASES_REPORTED_DATE": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "DATE_RANGE": {
+                  "required": true,
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "MINIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    },
+                    "MAXIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    }
+                  }
+                },
+                "VALUES": {
               "required": true,
               "type": "array",
               "uniqueItems": true,
@@ -201,9 +263,29 @@
                     "type": "integer"
                   }
                 }
-              }
+              }}}
             },
             "AVG_CASE_RATE_PER_100K_7_DAYS": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "DATE_RANGE": {
+                  "required": true,
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "MINIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    },
+                    "MAXIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    }
+                  }
+                },
+                "VALUES": {
               "required": true,
               "type": "array",
               "uniqueItems": true,
@@ -224,7 +306,7 @@
                     "minimum": 0
                   }
                 }
-              }
+              }}}
             }
           }
         }
