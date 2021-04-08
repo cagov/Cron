@@ -157,26 +157,28 @@
                   }
                 },
                 "VALUES": {
-              "required": true,
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 300,
-              "maxItems": 900,
-              "items": {
-                "required": true,
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "DATE": {
+                  "required": true,
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 300,
+                  "maxItems": 900,
+                  "items": {
                     "required": true,
-                    "$ref": "#/definitions/date-YYYY-MM-DD"
-                  },
-                  "VALUE": {
-                    "required": true,
-                    "type": "number",
-                    "minimum": 0
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "DATE": {
+                        "required": true,
+                        "$ref": "#/definitions/date-YYYY-MM-DD"
+                      },
+                      "VALUE": {
+                        "required": true,
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    }
                   }
-                }}}
+                }
               }
             },
             "CONFIRMED_DEATHS_DEATH_DATE": {
@@ -200,27 +202,29 @@
                   }
                 },
                 "VALUES": {
-              "required": true,
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 300,
-              "maxItems": 900,
-              "items": {
-                "required": true,
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "DATE": {
+                  "required": true,
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 300,
+                  "maxItems": 900,
+                  "items": {
                     "required": true,
-                    "$ref": "#/definitions/date-YYYY-MM-DD"
-                  },
-                  "VALUE": {
-                    "required": true,
-                    "type": "integer",
-                    "minimum": 0
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "DATE": {
+                        "required": true,
+                        "$ref": "#/definitions/date-YYYY-MM-DD"
+                      },
+                      "VALUE": {
+                        "required": true,
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    }
                   }
                 }
-              }}}
+              }
             },
             "AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS": {
               "required": true,
@@ -243,24 +247,26 @@
                   }
                 },
                 "VALUES": {
-              "required": true,
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 300,
-              "maxItems": 900,
-              "items": {
-                "required": true,
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "DATE": {
+                  "required": true,
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 300,
+                  "maxItems": 900,
+                  "items": {
                     "required": true,
-                    "$ref": "#/definitions/date-YYYY-MM-DD"
-                  },
-                  "VALUE": {
-                    "required": true,
-                    "type": "number"
-                  }}}
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "DATE": {
+                        "required": true,
+                        "$ref": "#/definitions/date-YYYY-MM-DD"
+                      },
+                      "VALUE": {
+                        "required": true,
+                        "type": "number"
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -285,26 +291,28 @@
                   }
                 },
                 "VALUES": {
-              "required": true,
-              "type": "array",
-              "uniqueItems": true,
-              "minItems": 300,
-              "maxItems": 900,
-              "items": {
-                "required": true,
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                  "DATE": {
+                  "required": true,
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 300,
+                  "maxItems": 900,
+                  "items": {
                     "required": true,
-                    "$ref": "#/definitions/date-YYYY-MM-DD"
-                  },
-                  "VALUE": {
-                    "required": true,
-                    "type": "integer"
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "DATE": {
+                        "required": true,
+                        "$ref": "#/definitions/date-YYYY-MM-DD"
+                      },
+                      "VALUE": {
+                        "required": true,
+                        "type": "integer"
+                      }
+                    }
                   }
                 }
-              }}}
+              }
             }
           }
         }
