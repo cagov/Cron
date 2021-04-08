@@ -42,9 +42,10 @@ const doTranslationPrUpdate = async masterbranch => {
             //limit file access to a single folder with 'modified' status only.
             const fileaccessok = compare.files.every(x=>x.filename.startsWith('pages/translated-posts/'));
 
-            //Do not allow non-printable characters.  New Lines,tabs and Arabic number shifts are ok + 8294+8297+65279+8203(zero width space).
+            //Do not allow non-printable characters.  New Lines,tabs and Arabic number shifts are ok + 8294+8297+65279+8203(zero width space) + Word Joiner (8288).
             const badCharFiles = compare.files
-                .map(x=>({filename:x.filename,patch: x.patch.replace(/[\n\t\u200E\u2066\u2069\uFEFF\u200B]/gu,'')}))
+                .filter(x=>x.patch)
+                .map(x=>({filename:x.filename,patch: x.patch.replace(/[\n\t\u200E\u2066\u2069\uFEFF\u200B\u2060]/gu,'')}))
                 .map(x=>({...x,badChar: x.patch.match(nonPrintableCharsRx)}))
                 .filter(x=>x.badChar);
 
@@ -57,7 +58,7 @@ const doTranslationPrUpdate = async masterbranch => {
                 await gitRepo.deleteRef(`heads/${pr.head.ref}`);
             } else {
                 badCharFiles.forEach(x=>{
-                    console.error(`Bad file char (${JSON.stringify(x.badChar[0])}) in ${x.filename}`);
+                    console.error(`Bad file char (${JSON.stringify(x.badChar[0])} - ${x.badChar[0].charCodeAt(0)}) in ${x.filename}`);
                 });
             }
         }
