@@ -147,10 +147,8 @@ const doCovidStateDashboardTables = async () => {
     const folder_hospitalized_patients = 'hospitalized-patients';
     const folder_icu_patients = 'icu-patients';
     const folder_icu_beds = 'icu-beds';
-    const folder_confirmed_cases_episode_date = 'confirmed-cases-episode-date';
-    const folder_confirmed_cases_reported_date = 'confirmed-cases-reported-date';
-    const folder_confirmed_deaths_death_date = 'confirmed-deaths-death-date';
-    const folder_confirmed_deaths_reported_date = 'confirmed-deaths-reported-date';
+    const folder_confirmed_cases = 'confirmed-cases';
+    const folder_confirmed_deaths = 'confirmed-deaths';
     const folder_total_tests_testing_date = 'total-tests-testing-date';
     const folder_total_tests_reported_date = 'total-tests-reported-date';
     const folder_positivity_rate = 'positivity-rate';
@@ -231,7 +229,7 @@ const doCovidStateDashboardTables = async () => {
         let summary_by_region = allData.summary_by_region.find(f=>f.REGION===myRegion);
         let rows_by_region = allData.cases_deaths_tests_rows.filter(f=>f.REGION===myRegion);
         if(summary_by_region && rows_by_region.length) {
-            allFilesMap.set(`${folder_confirmed_cases_episode_date}/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_cases}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -239,7 +237,7 @@ const doCovidStateDashboardTables = async () => {
                 },
                 data: {
                     latest: {
-                        CONFIRMED_CASES_EPISODE_DATE: {
+                        CONFIRMED_CASES: {
                             total_confirmed_cases: summary_by_region.total_confirmed_cases,
                             new_cases: summary_by_region.new_cases,
                             new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
@@ -250,35 +248,14 @@ const doCovidStateDashboardTables = async () => {
                     },
                     time_series: {
                         CONFIRMED_CASES_EPISODE_DATE: getDateValueRows(rows_by_region,'CASES'),
-                        AVG_CASE_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_CASE_RATE_PER_100K_7_DAYS')
-                    }
-                }
-            });
-
-            allFilesMap.set(`${folder_confirmed_cases_reported_date}/${regionFileName}`,
-            {
-                meta: {
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data: {
-                    latest: {
-                        CONFIRMED_CASES_REPORTED_DATE: {
-                            total_confirmed_cases: summary_by_region.total_confirmed_cases,
-                            new_cases: summary_by_region.new_cases,
-                            new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
-                            cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days,
-                            POPULATION: summary_by_region.POPULATION
-                        }
-                    },
-                    time_series: {
                         CONFIRMED_CASES_REPORTED_DATE: getDateValueRows(rows_by_region,'REPORTED_CASES'),
+                        AVG_CASE_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_CASE_RATE_PER_100K_7_DAYS'),
                         AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_CASE_REPORT_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
 
-            allFilesMap.set(`${folder_confirmed_deaths_death_date}/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_deaths}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -286,7 +263,7 @@ const doCovidStateDashboardTables = async () => {
                 },
                 data: {
                     latest: {
-                        CONFIRMED_DEATHS_DEATH_DATE: {
+                        CONFIRMED_DEATHS: {
                             total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
                             new_deaths: summary_by_region.new_deaths,
                             new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
@@ -297,29 +274,8 @@ const doCovidStateDashboardTables = async () => {
                     },
                     time_series: {
                         CONFIRMED_DEATHS_DEATH_DATE: getDateValueRows(rows_by_region,'DEATHS'),
-                        AVG_DEATH_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_DEATH_RATE_PER_100K_7_DAYS')
-                    }
-                }
-            });
-
-            allFilesMap.set(`${folder_confirmed_deaths_reported_date}/${regionFileName}`,
-            {
-                meta: {
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data: {
-                    latest: {
-                        CONFIRMED_DEATHS_REPORTED_DATE: {
-                            total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
-                            new_deaths: summary_by_region.new_deaths,
-                            new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
-                            deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days,
-                            POPULATION: summary_by_region.POPULATION
-                        }
-                    },
-                    time_series: {
                         CONFIRMED_DEATHS_REPORTED_DATE: getDateValueRows(rows_by_region,'REPORTED_DEATHS'),
+                        AVG_DEATH_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_DEATH_RATE_PER_100K_7_DAYS'),
                         AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS')
                     }
                 }
