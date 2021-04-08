@@ -149,8 +149,7 @@ const doCovidStateDashboardTables = async () => {
     const folder_icu_beds = 'icu-beds';
     const folder_confirmed_cases = 'confirmed-cases';
     const folder_confirmed_deaths = 'confirmed-deaths';
-    const folder_total_tests_testing_date = 'total-tests-testing-date';
-    const folder_total_tests_reported_date = 'total-tests-reported-date';
+    const folder_total_tests = 'total-tests';
     const folder_positivity_rate = 'positivity-rate';
 
     regionList.forEach(myRegion=>{
@@ -281,7 +280,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`${folder_total_tests_testing_date}/${regionFileName}`,
+            allFilesMap.set(`${folder_total_tests}/${regionFileName}`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -289,7 +288,7 @@ const doCovidStateDashboardTables = async () => {
                 },
                 data: {
                     latest: {
-                        TOTAL_TESTS_TESTING_DATE: {
+                        TOTAL_TESTS: {
                             total_tests_performed: summary_by_region.total_tests_performed,
                             new_tests_reported: summary_by_region.new_tests_reported,
                             new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
@@ -299,28 +298,8 @@ const doCovidStateDashboardTables = async () => {
                     },
                     time_series: {
                         TOTAL_TESTS: getDateValueRows(rows_by_region,'TOTAL_TESTS'),
-                        AVG_TEST_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_RATE_PER_100K_7_DAYS')
-                    }
-                }
-            });
-
-            allFilesMap.set(`${folder_total_tests_reported_date}/${regionFileName}`,
-            {
-                meta: {
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data: {
-                    latest: {
-                        TOTAL_TESTS_REPORTED_DATE: {
-                            total_tests_performed: summary_by_region.total_tests_performed,
-                            new_tests_reported: summary_by_region.new_tests_reported,
-                            new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
-                            POPULATION: summary_by_region.POPULATION
-                        }
-                    },
-                    time_series: {
                         REPORTED_TESTS: getDateValueRows(rows_by_region,'REPORTED_TESTS'),
+                        AVG_TEST_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_RATE_PER_100K_7_DAYS'),
                         AVG_TEST_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_REPORT_RATE_PER_100K_7_DAYS')
                     }
                 }
