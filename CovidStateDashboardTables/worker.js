@@ -9,7 +9,8 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
-const doValidation = true;
+const doInputValidation = false;
+const doOutputValidation = false;
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
@@ -22,6 +23,13 @@ const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras"
 //Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
 const sha1 = require('sha1');
 const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}\0${content}`);
+
+const folder_patients = 'patients';
+const folder_icu_beds = 'icu-beds';
+const folder_confirmed_cases = 'confirmed-cases';
+const folder_confirmed_deaths = 'confirmed-deaths';
+const folder_total_tests = 'total-tests';
+const folder_positivity_rate = 'positivity-rate';
 
 /**
  * 
@@ -115,11 +123,24 @@ const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
     }
 };
 
-const getDateValueRows = (dataset, valueColumnName) =>
-    dataset
-        .map(m=>({DATE:m.DATE,VALUE:m[valueColumnName]}))
-        .filter(m=>m.VALUE!==null);
+const getDateValueRows = (dataset, valueColumnName) => {
+    let DateValueRange = dataset
+        .filter(m=>m[valueColumnName]!==null) //0s are ok
+        .map(m=>m.DATE);
 
+    let MINIMUM = DateValueRange[DateValueRange.length-1];
+    let MAXIMUM = DateValueRange[0];
+
+    return {
+        DATE_RANGE: {
+            MINIMUM,
+            MAXIMUM
+        },
+        VALUES: dataset
+            .filter(f=>f.DATE>=MINIMUM && f.DATE <= MAXIMUM)
+            .map(m=>({DATE:m.DATE,VALUE:m[valueColumnName]??0}))
+    };
+};
 
 const doCovidStateDashboardTables = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
@@ -132,7 +153,7 @@ const doCovidStateDashboardTables = async () => {
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/input/[file]/schema.json','schema/input/[file]/sample.json','schema/input/[file]/fail/','schema/output/');
     
     const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
-    if(doValidation) {
+    if(doInputValidation) {
         Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
             const schemaObject = sqlWorkAndSchemas.schema[file];
             const targetJSON = allData[file];
@@ -143,13 +164,6 @@ const doCovidStateDashboardTables = async () => {
     }
 
     let allFilesMap = new Map();
-
-    const folder_patients = 'patients';
-    const folder_icu_beds = 'icu-beds';
-    const folder_confirmed_cases = 'confirmed-cases';
-    const folder_confirmed_deaths = 'confirmed-deaths';
-    const folder_total_tests = 'total-tests';
-    const folder_positivity_rate = 'positivity-rate';
 
     regionList.forEach(myRegion=>{
         let regionFileName = myRegion.replace(/ /g,'_');
@@ -314,7 +328,7 @@ const doCovidStateDashboardTables = async () => {
         } //if(summary_by_region.length)
     });
 
-    if(doValidation) {
+    if(doOutputValidation) {
         //Validate output
         console.log('Validating output files');
         for (let [key,value] of allFilesMap) {
