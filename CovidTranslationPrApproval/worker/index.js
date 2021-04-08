@@ -44,7 +44,7 @@ const doTranslationPrUpdate = async masterbranch => {
 
             //Do not allow non-printable characters.  New Lines,tabs and Arabic number shifts are ok + 8294+8297+65279+8203(zero width space) + Word Joiner (8288).
             const badCharFiles = compare.files
-                .filter(x=>x.patch)
+                .filter(x=>x.patch) //Sometimes patches are null if it is just whitespace
                 .map(x=>({filename:x.filename,patch: x.patch.replace(/[\n\t\u200E\u2066\u2069\uFEFF\u200B\u2060]/gu,'')}))
                 .map(x=>({...x,badChar: x.patch.match(nonPrintableCharsRx)}))
                 .filter(x=>x.badChar);
