@@ -6,7 +6,8 @@ const githubRepo = 'covid19';
 // const puppeteer = require("puppeteer");
 const axios = require("axios")
 const cheerio = require("cheerio")
-const fetch = require('node-fetch');
+ const fetch = require('node-fetch');
+var fetchRetry = require('fetch-retry')(fetch);
 
 const committer = {
   name: process.env["GITHUB_NAME"],
@@ -166,7 +167,7 @@ const doCovidAutoBuilder = async () => {
     const shownDoses = parseInt(value.split(',').join(''));
     console.log("Shown Doses", shownDoses);
     if (shownDoses > 0) {
-        await fetch(srcJSONFile,{method:"Get"})
+        await fetchRetry(srcJSONFile,{method:"Get",retries:3,retryDelay:2000})
         .then(res => res.json())
         .then(json => {
             const jsonDoses = json.data.vaccinations.CUMMULATIVE_DAILY_DOSES_ADMINISTERED;

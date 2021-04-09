@@ -1,21 +1,22 @@
-const { doCovidVaccineEquity } = require('./worker');
+const { doCovidStateDashboardTables } = require('./worker');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
-const notifyChannel = 'C01HTTNKHBM'; //covid19-vaccines
-const debugChannel = 'C01DBP67MSQ'; // testingbot
+const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
+const debugChannel = 'C01DBP67MSQ'; // #testingbot
 
 module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   let slackPostTS = null;
   try {
-    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every 30 mins from 9:15am to 11:45pm)`)).json()).ts;
+    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (9:10 every day)`)).json()).ts;
 
-    const PrResult = await doCovidVaccineEquity();
+    const PrResult = await doCovidStateDashboardTables();
 
     if(PrResult) {
-      const prMessage = `Vaccine equity data deployed\n${PrResult.html_url}`;
+      const prMessage = `State Dashboard Tables \n${PrResult.html_url}`;
       await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
-      await slackBotChatPost(notifyChannel, prMessage);
+      //removing notifications until final deployment
+      //await slackBotChatPost(notifyChannel, prMessage);
     }
 
     await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);

@@ -1,0 +1,145 @@
+{
+  "definitions": {
+    "date-YYYY-MM-DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "integer-zero-to-everyone": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 99999999
+    },
+    "county": {
+      "type": "string",
+      "enum": [
+        "California",
+        "Alameda",
+        "Alpine",
+        "Amador",
+        "Butte",
+        "Calaveras",
+        "Colusa",
+        "Contra Costa",
+        "Del Norte",
+        "El Dorado",
+        "Fresno",
+        "Glenn",
+        "Humboldt",
+        "Imperial",
+        "Inyo",
+        "Kern",
+        "Kings",
+        "Lake",
+        "Lassen",
+        "Los Angeles",
+        "Madera",
+        "Marin",
+        "Mariposa",
+        "Mendocino",
+        "Merced",
+        "Modoc",
+        "Mono",
+        "Monterey",
+        "Napa",
+        "Nevada",
+        "Orange",
+        "Placer",
+        "Plumas",
+        "Riverside",
+        "Sacramento",
+        "San Benito",
+        "San Bernardino",
+        "San Diego",
+        "San Francisco",
+        "San Joaquin",
+        "San Luis Obispo",
+        "San Mateo",
+        "Santa Barbara",
+        "Santa Clara",
+        "Santa Cruz",
+        "Shasta",
+        "Sierra",
+        "Siskiyou",
+        "Solano",
+        "Sonoma",
+        "Stanislaus",
+        "Sutter",
+        "Tehama",
+        "Trinity",
+        "Tulare",
+        "Tuolumne",
+        "Ventura",
+        "Yolo",
+        "Yuba"
+      ]
+    }
+  },
+  "type": "array",
+  "uniqueItems": true,
+  "minItems": 5,
+  "maxItems": 50000,
+  "items": {
+    "type": "object",
+    "required": [
+      "REGION",
+      "DATE",
+      "POPULATION",
+      "HOSPITALIZED_PATIENTS",
+      "HOSPITALIZED_PATIENTS_CHANGE",
+      "HOSPITALIZED_PATIENTS_CHANGE_FACTOR",
+      "HOSPITALIZED_PATIENTS_14_DAY_AVG",
+      "ICU_PATIENTS",
+      "ICU_PATIENTS_CHANGE",
+      "ICU_PATIENTS_CHANGE_FACTOR",
+      "ICU_PATIENTS_14_DAY_AVG",
+      "ICU_AVAILABLE_BEDS",
+      "ICU_AVAILABLE_BEDS_CHANGE",
+      "ICU_AVAILABLE_BEDS_CHANGE_FACTOR"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "REGION": {
+        "$ref": "#/definitions/county"
+      },
+      "DATE": {
+        "$ref": "#/definitions/date-YYYY-MM-DD"
+      },
+      "POPULATION": {
+        "$ref": "#/definitions/integer-zero-to-everyone"
+      },
+      "HOSPITALIZED_PATIENTS": {
+        "$ref": "#/definitions/integer-zero-to-everyone"
+      },
+      "HOSPITALIZED_PATIENTS_CHANGE": {
+        "type": "integer"
+      },
+      "HOSPITALIZED_PATIENTS_CHANGE_FACTOR": {
+        "type": "number"
+      },
+      "HOSPITALIZED_PATIENTS_14_DAY_AVG": {
+        "type": "number"
+      },
+      "ICU_PATIENTS": {
+        "$ref": "#/definitions/integer-zero-to-everyone"
+      },
+      "ICU_PATIENTS_CHANGE": {
+        "type": "integer"
+      },
+      "ICU_PATIENTS_CHANGE_FACTOR": {
+        "type": "number"
+      },
+      "ICU_PATIENTS_14_DAY_AVG": {
+        "type": "number"
+      },
+      "ICU_AVAILABLE_BEDS": {
+        "type": "integer"
+      },
+      "ICU_AVAILABLE_BEDS_CHANGE": {
+        "type": "integer"
+      },
+      "ICU_AVAILABLE_BEDS_CHANGE_FACTOR": {
+        "type": "number"
+      }
+    }
+  }
+}

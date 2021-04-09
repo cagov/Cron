@@ -6,7 +6,7 @@ module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   let slackPostTS = null;
   try {
-    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} ran (9am every day)`)).json()).ts;
+    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} ran (8:58am every day)`)).json()).ts;
 
     const masterbranch='master', stagingbranch='staging';
     const mergetargets = [masterbranch,stagingbranch];
