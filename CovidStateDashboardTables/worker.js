@@ -9,7 +9,8 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
-const doValidation = true;
+const doInputValidation = true;
+const doOutputValidation = true;
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
@@ -22,6 +23,13 @@ const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras"
 //Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
 const sha1 = require('sha1');
 const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}\0${content}`);
+
+const folder_patients = 'patients';
+const folder_icu_beds = 'icu-beds';
+const folder_confirmed_cases = 'confirmed-cases';
+const folder_confirmed_deaths = 'confirmed-deaths';
+const folder_total_tests = 'total-tests';
+const folder_positivity_rate = 'positivity-rate';
 
 /**
  * 
@@ -38,12 +46,11 @@ const createTreeFromFileMap = (filesMap,referenceTree) => {
         const mode = '100644'; //code for tree blob
         const type = 'blob';
     
-        const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
         let content = JSON.stringify(value,null,2);
 
         const treeRow = 
             {
-                path: newFileName,
+                path: key,
                 content, 
                 mode, 
                 type
@@ -115,11 +122,24 @@ const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
     }
 };
 
-const getDateValueRows = (dataset, valueColumnName) =>
-    dataset
-        .map(m=>({DATE:m.DATE,VALUE:m[valueColumnName]}))
-        .filter(m=>m.VALUE!==null);
+const getDateValueRows = (dataset, valueColumnName) => {
+    let DateValueRange = dataset
+        .filter(m=>m[valueColumnName]!==null) //0s are ok
+        .map(m=>m.DATE);
 
+    let MINIMUM = DateValueRange[DateValueRange.length-1];
+    let MAXIMUM = DateValueRange[0];
+
+    return {
+        DATE_RANGE: {
+            MINIMUM,
+            MAXIMUM
+        },
+        VALUES: dataset
+            .filter(f=>f.DATE>=MINIMUM && f.DATE <= MAXIMUM)
+            .map(m=>({DATE:m.DATE,VALUE:m[valueColumnName]??0}))
+    };
+};
 
 const doCovidStateDashboardTables = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
@@ -132,7 +152,7 @@ const doCovidStateDashboardTables = async () => {
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/input/[file]/schema.json','schema/input/[file]/sample.json','schema/input/[file]/fail/','schema/output/');
     
     const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
-    if(doValidation) {
+    if(doInputValidation) {
         Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
             const schemaObject = sqlWorkAndSchemas.schema[file];
             const targetJSON = allData[file];
@@ -144,25 +164,14 @@ const doCovidStateDashboardTables = async () => {
 
     let allFilesMap = new Map();
 
-    const folder_hospitalized_patients = 'hospitalized-patients';
-    const folder_icu_patients = 'icu-patients';
-    const folder_icu_beds = 'icu-beds';
-    const folder_confirmed_cases_episode_date = 'confirmed-cases-episode-date';
-    const folder_confirmed_cases_reported_date = 'confirmed-cases-reported-date';
-    const folder_confirmed_deaths_death_date = 'confirmed-deaths-death-date';
-    const folder_confirmed_deaths_reported_date = 'confirmed-deaths-reported-date';
-    const folder_total_tests_testing_date = 'total-tests-testing-date';
-    const folder_total_tests_reported_date = 'total-tests-reported-date';
-    const folder_positivity_rate = 'positivity-rate';
-
     regionList.forEach(myRegion=>{
-        let regionFileName = myRegion.replace(/ /g,'_');
+        let regionFileName = myRegion.toLowerCase().replace(/ /g,'_');
         let hospitals_and_icus_byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===myRegion);
 
         if(hospitals_and_icus_byRegion.length) {
             const latestData = hospitals_and_icus_byRegion[0];
 
-            allFilesMap.set(`${folder_hospitalized_patients}/${regionFileName}`,
+            allFilesMap.set(`${folder_patients}/${regionFileName}.json`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -175,23 +184,7 @@ const doCovidStateDashboardTables = async () => {
                             CHANGE:latestData.HOSPITALIZED_PATIENTS_CHANGE,
                             CHANGE_FACTOR:latestData.HOSPITALIZED_PATIENTS_CHANGE_FACTOR,
                             POPULATION:latestData.POPULATION
-                        }
-                    },
-                    time_series: {
-                        HOSPITALIZED_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS'),
-                        HOSPITALIZED_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS_14_DAY_AVG')
-                    }
-                }
-            });
-
-            allFilesMap.set(`${folder_icu_patients}/${regionFileName}`,
-            {
-                meta:{
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data:{
-                    latest:{
+                        },
                         ICU_PATIENTS: {
                             TOTAL:latestData.ICU_PATIENTS,
                             CHANGE:latestData.ICU_PATIENTS_CHANGE,
@@ -199,14 +192,16 @@ const doCovidStateDashboardTables = async () => {
                             POPULATION:latestData.POPULATION
                         }
                     },
-                    time_series:{
+                    time_series: {
+                        HOSPITALIZED_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS'),
                         ICU_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'ICU_PATIENTS'),
+                        HOSPITALIZED_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS_14_DAY_AVG'),
                         ICU_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'ICU_PATIENTS_14_DAY_AVG')
                     }
                 }
             });
 
-            allFilesMap.set(`${folder_icu_beds}/${regionFileName}`,
+            allFilesMap.set(`${folder_icu_beds}/${regionFileName}.json`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -231,7 +226,7 @@ const doCovidStateDashboardTables = async () => {
         let summary_by_region = allData.summary_by_region.find(f=>f.REGION===myRegion);
         let rows_by_region = allData.cases_deaths_tests_rows.filter(f=>f.REGION===myRegion);
         if(summary_by_region && rows_by_region.length) {
-            allFilesMap.set(`${folder_confirmed_cases_episode_date}/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_cases}/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -239,7 +234,7 @@ const doCovidStateDashboardTables = async () => {
                 },
                 data: {
                     latest: {
-                        CONFIRMED_CASES_EPISODE_DATE: {
+                        CONFIRMED_CASES: {
                             total_confirmed_cases: summary_by_region.total_confirmed_cases,
                             new_cases: summary_by_region.new_cases,
                             new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
@@ -250,35 +245,14 @@ const doCovidStateDashboardTables = async () => {
                     },
                     time_series: {
                         CONFIRMED_CASES_EPISODE_DATE: getDateValueRows(rows_by_region,'CASES'),
-                        AVG_CASE_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_CASE_RATE_PER_100K_7_DAYS')
-                    }
-                }
-            });
-
-            allFilesMap.set(`${folder_confirmed_cases_reported_date}/${regionFileName}`,
-            {
-                meta: {
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data: {
-                    latest: {
-                        CONFIRMED_CASES_REPORTED_DATE: {
-                            total_confirmed_cases: summary_by_region.total_confirmed_cases,
-                            new_cases: summary_by_region.new_cases,
-                            new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
-                            cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days,
-                            POPULATION: summary_by_region.POPULATION
-                        }
-                    },
-                    time_series: {
                         CONFIRMED_CASES_REPORTED_DATE: getDateValueRows(rows_by_region,'REPORTED_CASES'),
+                        AVG_CASE_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_CASE_RATE_PER_100K_7_DAYS'),
                         AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_CASE_REPORT_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
 
-            allFilesMap.set(`${folder_confirmed_deaths_death_date}/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_deaths}/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -286,7 +260,7 @@ const doCovidStateDashboardTables = async () => {
                 },
                 data: {
                     latest: {
-                        CONFIRMED_DEATHS_DEATH_DATE: {
+                        CONFIRMED_DEATHS: {
                             total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
                             new_deaths: summary_by_region.new_deaths,
                             new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
@@ -297,35 +271,14 @@ const doCovidStateDashboardTables = async () => {
                     },
                     time_series: {
                         CONFIRMED_DEATHS_DEATH_DATE: getDateValueRows(rows_by_region,'DEATHS'),
-                        AVG_DEATH_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_DEATH_RATE_PER_100K_7_DAYS')
-                    }
-                }
-            });
-
-            allFilesMap.set(`${folder_confirmed_deaths_reported_date}/${regionFileName}`,
-            {
-                meta: {
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data: {
-                    latest: {
-                        CONFIRMED_DEATHS_REPORTED_DATE: {
-                            total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
-                            new_deaths: summary_by_region.new_deaths,
-                            new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
-                            deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days,
-                            POPULATION: summary_by_region.POPULATION
-                        }
-                    },
-                    time_series: {
                         CONFIRMED_DEATHS_REPORTED_DATE: getDateValueRows(rows_by_region,'REPORTED_DEATHS'),
+                        AVG_DEATH_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_DEATH_RATE_PER_100K_7_DAYS'),
                         AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
 
-            allFilesMap.set(`${folder_total_tests_testing_date}/${regionFileName}`,
+            allFilesMap.set(`${folder_total_tests}/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -333,7 +286,7 @@ const doCovidStateDashboardTables = async () => {
                 },
                 data: {
                     latest: {
-                        TOTAL_TESTS_TESTING_DATE: {
+                        TOTAL_TESTS: {
                             total_tests_performed: summary_by_region.total_tests_performed,
                             new_tests_reported: summary_by_region.new_tests_reported,
                             new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
@@ -343,34 +296,14 @@ const doCovidStateDashboardTables = async () => {
                     },
                     time_series: {
                         TOTAL_TESTS: getDateValueRows(rows_by_region,'TOTAL_TESTS'),
-                        AVG_TEST_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_RATE_PER_100K_7_DAYS')
-                    }
-                }
-            });
-
-            allFilesMap.set(`${folder_total_tests_reported_date}/${regionFileName}`,
-            {
-                meta: {
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data: {
-                    latest: {
-                        TOTAL_TESTS_REPORTED_DATE: {
-                            total_tests_performed: summary_by_region.total_tests_performed,
-                            new_tests_reported: summary_by_region.new_tests_reported,
-                            new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
-                            POPULATION: summary_by_region.POPULATION
-                        }
-                    },
-                    time_series: {
                         REPORTED_TESTS: getDateValueRows(rows_by_region,'REPORTED_TESTS'),
+                        AVG_TEST_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_RATE_PER_100K_7_DAYS'),
                         AVG_TEST_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_REPORT_RATE_PER_100K_7_DAYS')
                     }
                 }
             });
 
-            allFilesMap.set(`${folder_positivity_rate}/${regionFileName}`,
+            allFilesMap.set(`${folder_positivity_rate}/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -394,27 +327,29 @@ const doCovidStateDashboardTables = async () => {
         } //if(summary_by_region.length)
     });
 
-    if(doValidation) {
-        //Validate output
-        console.log('Validating output files');
-        for (let [key,value] of allFilesMap) {
-            let rootFolder = key.split('/')[0];
-            let schema = sqlWorkAndSchemas.outputSchema.find(f=>rootFolder===f.name);
-
-            if(schema) {
-                validateJSON2(`${key} failed validation`, value, schema.json);
-            } else {
-                throw new Error(`Missing validator for ${key}.`);
-            }
-        }
-    }
-
     const treeParentPath = outputPath.split('/')[0];
     const rootTree = await gitRepo.getSha(masterBranch,treeParentPath);
     const referenceTreeSha = rootTree.data.find(f=>f.path===outputPath).sha;
     const referenceTree = await gitRepo.getTree(`${referenceTreeSha}?recursive=true`);
 
     const workTree = createTreeFromFileMap(allFilesMap,referenceTree);
+
+    if(doOutputValidation) {
+        //Validate tree output
+        console.log(`Validating ${workTree.length} output files`);
+        for (let treeRow of workTree) {
+            let fileName = treeRow.path.replace(`${outputPath}/`,'');
+            let rootFolder = fileName.split('/')[0];
+            let content = allFilesMap.get(fileName);
+            let schema = sqlWorkAndSchemas.outputSchema.find(f=>rootFolder===f.name);
+
+            if(schema) {
+                validateJSON2(`${fileName} failed validation`, content, schema.json);
+            } else {
+                throw new Error(`Missing validator for ${fileName}.`);
+            }
+        }
+    }
 
     const newBranch = await branchIfChanged(gitRepo, workTree, newBranchName, newBranchName);
     if(newBranch) {

@@ -97,21 +97,29 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "POSITIVITY_RATE": {
+            "CONFIRMED_DEATHS": {
               "required": true,
               "type": "object",
               "additionalProperties": false,
               "properties": {
-                "test_positivity_7_days": {
+                "total_confirmed_deaths": {
                   "required": true,
-                  "type": "number",
+                  "type": "integer",
                   "minimum": 0
                 },
-                "test_positivity_7_days_delta_7_days": {
+                "new_deaths": {
+                  "required": true,
+                  "type": "integer"
+                },
+                "new_deaths_delta_1_day": {
                   "required": true,
                   "type": "number"
                 },
-                "TESTING_UNCERTAINTY_PERIOD": {
+                "deaths_per_100k_7_days": {
+                  "required": true,
+                  "type": "number"
+                },
+                "DEATH_UNCERTAINTY_PERIOD": {
                   "required": true,
                   "$ref": "#/definitions/date-YYYY-MM-DD"
                 },
@@ -128,7 +136,52 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "TOTAL_TESTS": {
+            "AVG_DEATH_RATE_PER_100K_7_DAYS": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "DATE_RANGE": {
+                  "required": true,
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "MINIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    },
+                    "MAXIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    }
+                  }
+                },
+                "VALUES": {
+                  "required": true,
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 300,
+                  "maxItems": 900,
+                  "items": {
+                    "required": true,
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "DATE": {
+                        "required": true,
+                        "$ref": "#/definitions/date-YYYY-MM-DD"
+                      },
+                      "VALUE": {
+                        "required": true,
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "CONFIRMED_DEATHS_DEATH_DATE": {
               "required": true,
               "type": "object",
               "additionalProperties": false,
@@ -173,7 +226,7 @@
                 }
               }
             },
-            "TEST_POSITIVITY_RATE_7_DAYS": {
+            "AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS": {
               "required": true,
               "type": "object",
               "additionalProperties": false,
@@ -210,8 +263,51 @@
                       },
                       "VALUE": {
                         "required": true,
-                        "type": "number",
-                        "minimum": 0
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "CONFIRMED_DEATHS_REPORTED_DATE": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "DATE_RANGE": {
+                  "required": true,
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "MINIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    },
+                    "MAXIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    }
+                  }
+                },
+                "VALUES": {
+                  "required": true,
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 300,
+                  "maxItems": 900,
+                  "items": {
+                    "required": true,
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "DATE": {
+                        "required": true,
+                        "$ref": "#/definitions/date-YYYY-MM-DD"
+                      },
+                      "VALUE": {
+                        "required": true,
+                        "type": "integer"
                       }
                     }
                   }
