@@ -46,12 +46,11 @@ const createTreeFromFileMap = (filesMap,referenceTree) => {
         const mode = '100644'; //code for tree blob
         const type = 'blob';
     
-        const newFileName = `${key.toLowerCase().replace(/ /g,'')}.json`;
         let content = JSON.stringify(value,null,2);
 
         const treeRow = 
             {
-                path: newFileName,
+                path: key,
                 content, 
                 mode, 
                 type
@@ -166,13 +165,13 @@ const doCovidStateDashboardTables = async () => {
     let allFilesMap = new Map();
 
     regionList.forEach(myRegion=>{
-        let regionFileName = myRegion.replace(/ /g,'_');
+        let regionFileName = myRegion.toLowerCase().replace(/ /g,'_');
         let hospitals_and_icus_byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===myRegion);
 
         if(hospitals_and_icus_byRegion.length) {
             const latestData = hospitals_and_icus_byRegion[0];
 
-            allFilesMap.set(`${folder_patients}/${regionFileName}`,
+            allFilesMap.set(`${folder_patients}/${regionFileName}.json`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -202,7 +201,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`${folder_icu_beds}/${regionFileName}`,
+            allFilesMap.set(`${folder_icu_beds}/${regionFileName}.json`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -227,7 +226,7 @@ const doCovidStateDashboardTables = async () => {
         let summary_by_region = allData.summary_by_region.find(f=>f.REGION===myRegion);
         let rows_by_region = allData.cases_deaths_tests_rows.filter(f=>f.REGION===myRegion);
         if(summary_by_region && rows_by_region.length) {
-            allFilesMap.set(`${folder_confirmed_cases}/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_cases}/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -253,7 +252,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`${folder_confirmed_deaths}/${regionFileName}`,
+            allFilesMap.set(`${folder_confirmed_deaths}/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -279,7 +278,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`${folder_total_tests}/${regionFileName}`,
+            allFilesMap.set(`${folder_total_tests}/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -304,7 +303,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`${folder_positivity_rate}/${regionFileName}`,
+            allFilesMap.set(`${folder_positivity_rate}/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -328,27 +327,29 @@ const doCovidStateDashboardTables = async () => {
         } //if(summary_by_region.length)
     });
 
-    if(doOutputValidation) {
-        //Validate output
-        console.log('Validating output files');
-        for (let [key,value] of allFilesMap) {
-            let rootFolder = key.split('/')[0];
-            let schema = sqlWorkAndSchemas.outputSchema.find(f=>rootFolder===f.name);
-
-            if(schema) {
-                validateJSON2(`${key} failed validation`, value, schema.json);
-            } else {
-                throw new Error(`Missing validator for ${key}.`);
-            }
-        }
-    }
-
     const treeParentPath = outputPath.split('/')[0];
     const rootTree = await gitRepo.getSha(masterBranch,treeParentPath);
     const referenceTreeSha = rootTree.data.find(f=>f.path===outputPath).sha;
     const referenceTree = await gitRepo.getTree(`${referenceTreeSha}?recursive=true`);
 
     const workTree = createTreeFromFileMap(allFilesMap,referenceTree);
+
+    if(doOutputValidation) {
+        //Validate tree output
+        console.log(`Validating ${workTree.length} output files`);
+        for (let treeRow of workTree) {
+            let fileName = treeRow.path.replace(`${outputPath}/`,'');
+            let rootFolder = fileName.split('/')[0];
+            let content = allFilesMap.get(fileName);
+            let schema = sqlWorkAndSchemas.outputSchema.find(f=>rootFolder===f.name);
+
+            if(schema) {
+                validateJSON2(`${fileName} failed validation`, content, schema.json);
+            } else {
+                throw new Error(`Missing validator for ${fileName}.`);
+            }
+        }
+    }
 
     const newBranch = await branchIfChanged(gitRepo, workTree, newBranchName, newBranchName);
     if(newBranch) {
