@@ -1,28 +1,16 @@
 -- Current vaccine administrations by age group (distinct people)
--- 247 rows
+-- 245 rows
 --   by county(REGION) + 'California' + 'Outside California'
---   by age(CATEGORY) (0-17,18-49,50-64/65+)
+--   by age(CATEGORY) (0-17,18-49,50-64/65+,Unknown)
 with
-ranges as (select * from
-  (values
-   ('0-17', 0,  17),
-   ('18-49',18, 49),
-   ('50-64',50, 64),
-   ('65+',  65, 119)
-  ) as foo (NAME, RMIN, RMAX)
-),
 GB as ( --Master list of corrected data grouped by region/category
   select
-  coalesce(ranges.NAME,'Unknown') "CATEGORY",
+  REPLACE(RECIP_AGE_GROUP,'Unknown Agegroup','Unknown') "CATEGORY",
   MIXED_COUNTY "REGION",
     count(distinct recip_id) "ADMIN_COUNT", --For total people
 	MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE_2" -- new view only includes second dose as the latest dose
   from
     CA_VACCINE.CA_VACCINE.VW_DERIVED_BASE_RECIPIENTS
-  left outer join
-    ranges
-    on RMIN<=RECIP_AGE --changed to RECIP_AGE, no longer calculating by current date.
-    and RMAX>=RECIP_AGE --changed to RECIP_AGE, no longer calculating by current date.
   where
     RECIP_ID IS NOT NULL
   group by
