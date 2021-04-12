@@ -24,13 +24,6 @@ const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras"
 const sha1 = require('sha1');
 const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}\0${content}`);
 
-const folder_patients = 'patients';
-const folder_icu_beds = 'icu-beds';
-const folder_confirmed_cases = 'confirmed-cases';
-const folder_confirmed_deaths = 'confirmed-deaths';
-const folder_total_tests = 'total-tests';
-const folder_positivity_rate = 'positivity-rate';
-
 /**
  * 
  * @param {Map<string,any>} filesMap 
@@ -171,7 +164,7 @@ const doCovidStateDashboardTables = async () => {
         if(hospitals_and_icus_byRegion.length) {
             const latestData = hospitals_and_icus_byRegion[0];
 
-            allFilesMap.set(`${folder_patients}/${regionFileName}.json`,
+            allFilesMap.set(`patients/${regionFileName}.json`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -201,7 +194,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`${folder_icu_beds}/${regionFileName}.json`,
+            allFilesMap.set(`icu-beds/${regionFileName}.json`,
             {
                 meta:{
                     PUBLISHED_DATE: todayDateString(),
@@ -226,7 +219,7 @@ const doCovidStateDashboardTables = async () => {
         let summary_by_region = allData.summary_by_region.find(f=>f.REGION===myRegion);
         let rows_by_region = allData.cases_deaths_tests_rows.filter(f=>f.REGION===myRegion);
         if(summary_by_region && rows_by_region.length) {
-            allFilesMap.set(`${folder_confirmed_cases}/${regionFileName}.json`,
+            allFilesMap.set(`confirmed-cases/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -252,7 +245,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`${folder_confirmed_deaths}/${regionFileName}.json`,
+            allFilesMap.set(`confirmed-deaths/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -278,7 +271,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`${folder_total_tests}/${regionFileName}.json`,
+            allFilesMap.set(`total-tests/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
@@ -303,7 +296,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`${folder_positivity_rate}/${regionFileName}.json`,
+            allFilesMap.set(`positivity-rate/${regionFileName}.json`,
             {
                 meta: {
                     PUBLISHED_DATE: todayDateString(),
