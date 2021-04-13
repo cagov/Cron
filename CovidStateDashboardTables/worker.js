@@ -1,119 +1,21 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
+const { createTreeFromFileMap, PrIfChanged } = require('./gitTreeCommon');
 const GitHub = require('github-api');
 const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static';
-const committer = {
-  name: process.env["GITHUB_NAME"],
-  email: process.env["GITHUB_EMAIL"]
-};
 const masterBranch = 'master';
 const doInputValidation = true;
 const doOutputValidation = true;
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
-const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
+//const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
 const outputPath = 'data/dashboard';
 const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
-
-//Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
-const sha1 = require('sha1');
-const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}\0${content}`);
-
-/**
- * 
- * @param {Map<string,any>} filesMap 
- * @param {{data:{tree:[{path:string}]}}} referenceTree 
- * @returns 
- */
-const createTreeFromFileMap = (filesMap,referenceTree) => {
-    const targetTree = [];
-
-    for (const [key,value] of filesMap) {
-        //Tree parts...
-        //https://docs.github.com/en/free-pro-team@latest/rest/reference/git#create-a-tree
-        const mode = '100644'; //code for tree blob
-        const type = 'blob';
-    
-        let content = JSON.stringify(value,null,2);
-
-        const treeRow = 
-            {
-                path: key,
-                content, 
-                mode, 
-                type
-            };
-
-        let existingFile = referenceTree.data.tree.find(x=>x.path===treeRow.path);
-        if(!existingFile || existingFile.sha !== gitHubBlobPredictSha(content)) {
-            treeRow.path = `${outputPath}/${treeRow.path}`;
-
-            targetTree.push(treeRow);
-        }
-        
-    }
-
-    return targetTree;
-};
-
-
-//function to return a new branch if the tree has changes
-const branchIfChanged = async (gitRepo, tree, branch, commitName) => {
-    if(!tree.length) {
-        console.log('No tree changes');
-        return null;
-    }
-
-    let treeParts = [tree];
-    const totalRows = tree.length;
-
-    console.log(`Tree data is ${Buffer.byteLength(JSON.stringify(tree))} bytes`);
-
-    //Split the tree into allowable sizes
-    let evalIndex = 0;
-    while(evalIndex < treeParts.length) {
-        if(JSON.stringify(treeParts[evalIndex]).length>9000000) {
-            let half = Math.ceil(treeParts[evalIndex].length / 2);
-            treeParts.unshift(treeParts[evalIndex].splice(0, half));
-        } else {
-            evalIndex++;
-        }
-    }
-
-    //Grab the starting point for a fresh tree
-    const refResult = await gitRepo.getRef(`heads/${masterBranch}`);
-    const baseSha = refResult.data.object.sha;
-
-    //Loop through adding items to the tree
-    let createTreeResult = {data:{sha:baseSha}};
-    let rowCount = 0;
-    for(let treePart of treeParts) {
-        rowCount += treePart.length;
-        console.log(`Creating tree for ${commitName} - ${rowCount}/${totalRows} items`);
-        createTreeResult = await gitRepo.createTree(treePart,createTreeResult.data.sha);
-    }
-
-    //Create a commit the maps to all the tree changes
-    const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,commitName,committer);
-    const commitSha = commitResult.data.sha;
-
-    //Compare the proposed commit with the trunk (master) branch
-    const compare = await gitRepo.compareBranches(baseSha,commitSha);
-    if (compare.data.files.length) {
-        console.log(`${compare.data.files.length} changes.`);
-        //Create a new branch and assign this commit to it, return the new branch.
-        await gitRepo.createBranch(masterBranch,branch);
-        return await gitRepo.updateHead(`heads/${branch}`,commitSha);
-    } else {
-        console.log('no changes');
-        return null;
-    }
-};
 
 const getDateValueRows = (dataset, valueColumnName) => {
     let DateValueRange = dataset
@@ -138,9 +40,6 @@ const doCovidStateDashboardTables = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
-
-    const prTitle = `${todayDateString()} Covid Dashboard Tables`;
-    const newBranchName =`${todayDateString()}-${todayTimeString()}-state-dash-tables`;
 
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/input/[file]/schema.json','schema/input/[file]/sample.json','schema/input/[file]/fail/','schema/output/');
     
@@ -320,12 +219,7 @@ const doCovidStateDashboardTables = async () => {
         } //if(summary_by_region.length)
     });
 
-    const treeParentPath = outputPath.split('/')[0];
-    const rootTree = await gitRepo.getSha(masterBranch,treeParentPath);
-    const referenceTreeSha = rootTree.data.find(f=>f.path===outputPath).sha;
-    const referenceTree = await gitRepo.getTree(`${referenceTreeSha}?recursive=true`);
-
-    const workTree = createTreeFromFileMap(allFilesMap,referenceTree);
+    const workTree = await createTreeFromFileMap(gitRepo,masterBranch,allFilesMap,outputPath);
 
     if(doOutputValidation) {
         //Validate tree output
@@ -344,15 +238,24 @@ const doCovidStateDashboardTables = async () => {
         }
     }
 
-    const newBranch = await branchIfChanged(gitRepo, workTree, newBranchName, newBranchName);
-    if(newBranch) {
-        const Pr = (await gitRepo.createPullRequest({
-            title: prTitle,
-            head: newBranchName,
-            base: masterBranch
-        }))
-        .data;
+    /*
+const PRs = [
+    {
+        title : "Covid Dashboard Tables",
+        folders : [
+            "patients",
+            "icu-beds",
+            "confirmed-cases",
+            "confirmed-deaths",
+            "total-tests",
+            "positivity-rate"
+        ]
+    }
+];
+*/
 
+    let Pr = await PrIfChanged(gitRepo, masterBranch, workTree, `${todayDateString()} Covid Dashboard Tables`);
+    if(Pr) {
         console.log(`PR created - ${Pr.html_url}`);
 
         //Label the Pr
