@@ -1,21 +1,44 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
-const { createTreeFromFileMap, PrIfChanged } = require('./gitTreeCommon');
+const { createTreeFromFileMap, PrIfChanged, todayDateString, sleep } = require('./gitTreeCommon');
 const GitHub = require('github-api');
+const committer = {
+    name: process.env["GITHUB_NAME"],
+    email: process.env["GITHUB_EMAIL"]
+};
 const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static';
 const masterBranch = 'master';
 const doInputValidation = true;
 const doOutputValidation = true;
-
-const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
-const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
-//const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
 const outputPath = 'data/dashboard';
 const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
+
+const PrInfoList = [
+    {
+        title : "Covid Dashboard Tables - Tests",
+        folders : [
+            "total-tests",
+            "positivity-rate"
+        ]
+    },
+    {
+        title : "Covid Dashboard Tables - Patients",
+        folders : [
+            "patients",
+            "icu-beds"
+        ]
+    },
+    {
+        title : "Covid Dashboard Tables - Cases/Deaths",
+        folders : [
+            "confirmed-cases",
+            "confirmed-deaths"
+        ]
+    }
+];
 
 const getDateValueRows = (dataset, valueColumnName) => {
     let DateValueRange = dataset
@@ -238,37 +261,12 @@ const doCovidStateDashboardTables = async () => {
         }
     }
 
-    
-    const PrInfoList = [
-        {
-            title : "Covid Dashboard Tables - Tests",
-            folders : [
-                "total-tests",
-                "positivity-rate"
-            ]
-        },
-        {
-            title : "Covid Dashboard Tables - Patients",
-            folders : [
-                "patients",
-                "icu-beds"
-            ]
-        },
-        {
-            title : "Covid Dashboard Tables - Cases/Deaths",
-            folders : [
-                "confirmed-cases",
-                "confirmed-deaths"
-            ]
-        }
-    ];
-
+    //Filter the tree and create Prs
     let PrList = [];
-
     for (let PrInfo of PrInfoList) {
         let filterTree = workTree.filter(t=>PrInfo.folders.some(f=>t.path.startsWith(`${outputPath}/${f}`)));
 
-        let Pr = await PrIfChanged(gitRepo, masterBranch, filterTree, `${todayDateString()} ${PrInfo.title}`);
+        let Pr = await PrIfChanged(gitRepo, masterBranch, filterTree, `${todayDateString()} ${PrInfo.title}`, committer);
         if(Pr) {    
             //Label the Pr
             await gitIssues.editIssue(Pr.number,{
@@ -279,6 +277,7 @@ const doCovidStateDashboardTables = async () => {
         }
     }
 
+    //Delay and approve Prs
     if(PrList.length) {
         await sleep(5000); //give PRs time to check actions
         for (let Pr of PrList) {
@@ -297,7 +296,6 @@ const doCovidStateDashboardTables = async () => {
         return null;
     }
 };
-
 
 module.exports = {
     doCovidStateDashboardTables

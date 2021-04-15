@@ -1,7 +1,7 @@
-const committer = {
-  name: process.env["GITHUB_NAME"],
-  email: process.env["GITHUB_EMAIL"]
-};
+const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
+const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
+const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 //Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
 const sha1 = require('sha1');
@@ -48,17 +48,16 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
  * @param {string} masterBranch usually "master" or "main"
  * @param {{}[]} tree from createTreeFromFileMap
  * @param {string} PrTitle the name of the new branch to create
+ * @param {{name:string,email:string}} committer Github Name/Email
  * @returns {Promise<{html_url:string;number:number,head:{ref:string}}>} the new PR
  */
-const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle) => {
+const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer) => {
   if(!tree.length) {
     console.log('No tree changes');
     return null;
   }
 
-  const commitName = PrTitle;
-  const newBranchName = PrTitle.replace(/ /g,'_');
-
+  const newBranchName = `${PrTitle}-${todayTimeString()}`.replace(/ /g,'_');
   let treeParts = [tree];
   const totalRows = tree.length;
 
@@ -84,12 +83,12 @@ const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle) => {
   let rowCount = 0;
   for(let treePart of treeParts) {
       rowCount += treePart.length;
-      console.log(`Creating tree for ${commitName} - ${rowCount}/${totalRows} items`);
+      console.log(`Creating tree for ${PrTitle} - ${rowCount}/${totalRows} items`);
       createTreeResult = await gitRepo.createTree(treePart,createTreeResult.data.sha);
   }
 
   //Create a commit the maps to all the tree changes
-  const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,commitName,committer);
+  const commitResult = await gitRepo.commit(baseSha,createTreeResult.data.sha,PrTitle,committer);
   const commitSha = commitResult.data.sha;
 
   //Compare the proposed commit with the trunk (master) branch
@@ -119,5 +118,9 @@ const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle) => {
 
 module.exports = {
   createTreeFromFileMap,
-  PrIfChanged
+  PrIfChanged,
+  todayDateString,
+  todayTimeString,
+  nowPacTime,
+  sleep
 };
