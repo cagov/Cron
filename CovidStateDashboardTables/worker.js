@@ -297,6 +297,7 @@ const doCovidStateDashboardTables = async () => {
     }
 };
 
+
 module.exports = {
     doCovidStateDashboardTables
 };
