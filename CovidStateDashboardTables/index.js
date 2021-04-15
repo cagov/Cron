@@ -1,6 +1,6 @@
 const { doCovidStateDashboardTables } = require('./worker');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
-const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
+//const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
 
 module.exports = async function (context, myTimer) {
@@ -9,14 +9,16 @@ module.exports = async function (context, myTimer) {
   try {
     slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (9:10 every day)`)).json()).ts;
 
-    const PrResult = await doCovidStateDashboardTables();
+    const PrResults = await doCovidStateDashboardTables();
 
-    if(PrResult) {
-      const prMessage = `State Dashboard Tables \n${PrResult.html_url}`;
-      await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
+    if(PrResults) {
       await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
-      //removing notifications until final deployment
-      //await slackBotChatPost(notifyChannel, prMessage);
+
+      for (let Pr of PrResults) {
+        await slackBotReplyPost(debugChannel, slackPostTS, Pr.html_url);
+        //removing notifications until final deployment
+        //await slackBotChatPost(notifyChannel, Pr.html_url);
+      }
     }
 
     await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
