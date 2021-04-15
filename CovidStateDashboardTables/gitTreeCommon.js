@@ -1,10 +1,19 @@
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
+/**
+ * Halts processing for a set time
+ * @param {number} ms milliseconds to sleep (1000 = 1s)
+ */
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 //Git generates the SHA by concatenating a header in the form of blob {content.length} {null byte} and the contents of your file
 const sha1 = require('sha1');
+/**
+ * Returns a Github equivalent sha hash for any given content
+ * @param {string} content string content to hash
+ * @returns SHA Hash that would be used on Github for the given content
+ */
 const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}\0${content}`);
 
 /**
