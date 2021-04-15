@@ -6,8 +6,8 @@ const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static';
 const committer = {
-    name: process.env["GITHUB_NAME"],
-    email: process.env["GITHUB_EMAIL"]
+  name: process.env["GITHUB_NAME"],
+  email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
 const doInputValidation = true;
