@@ -238,40 +238,63 @@ const doCovidStateDashboardTables = async () => {
         }
     }
 
-    /*
-const PRs = [
-    {
-        title : "Covid Dashboard Tables",
-        folders : [
-            "patients",
-            "icu-beds",
-            "confirmed-cases",
-            "confirmed-deaths",
-            "total-tests",
-            "positivity-rate"
-        ]
+    
+    const PrInfoList = [
+        {
+            title : "Covid Dashboard Tables - Tests",
+            folders : [
+                "total-tests",
+                "positivity-rate"
+            ]
+        },
+        {
+            title : "Covid Dashboard Tables - Patients",
+            folders : [
+                "patients",
+                "icu-beds"
+            ]
+        },
+        {
+            title : "Covid Dashboard Tables - Cases/Deaths",
+            folders : [
+                "confirmed-cases",
+                "confirmed-deaths"
+            ]
+        }
+    ];
+
+    let PrList = [];
+
+    for (let PrInfo of PrInfoList) {
+        let filterTree = workTree.filter(t=>PrInfo.folders.some(f=>t.path.startsWith(`${outputPath}/${f}`)));
+
+        let Pr = await PrIfChanged(gitRepo, masterBranch, filterTree, `${todayDateString()} ${PrInfo.title}`);
+        if(Pr) {    
+            //Label the Pr
+            await gitIssues.editIssue(Pr.number,{
+                labels: PrLabels
+            });
+
+            PrList.push(Pr);
+        }
     }
-];
-*/
 
-    let Pr = await PrIfChanged(gitRepo, masterBranch, workTree, `${todayDateString()} Covid Dashboard Tables`);
-    if(Pr) {
-        console.log(`PR created - ${Pr.html_url}`);
-
-        //Label the Pr
-        await gitIssues.editIssue(Pr.number,{
-            labels: PrLabels
-        });
-
-        await sleep(5000); //give PR time to check actions
-        //Approve Pr
-        await gitRepo.mergePullRequest(Pr.number,{
-            merge_method: 'squash'
-        });
-
-        //Delete Branch
-        await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
-        return Pr;
+    if(PrList.length) {
+        await sleep(5000); //give PRs time to check actions
+        for (let Pr of PrList) {
+            console.log(`Approving Pr - ${Pr.html_url}`);
+        
+            //Approve Pr
+            await gitRepo.mergePullRequest(Pr.number,{
+                merge_method: 'squash'
+            });
+    
+            //Delete Branch
+            await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
+        }
+        return PrList;
+    } else {
+        return null;
     }
 };
 
