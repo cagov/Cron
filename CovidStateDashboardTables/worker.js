@@ -2,13 +2,13 @@ const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const { createTreeFromFileMap, PrIfChanged, todayDateString, sleep } = require('./gitTreeCommon');
 const GitHub = require('github-api');
+const PrLabels = ['Automatic Deployment'];
+const githubUser = 'cagov';
+const githubRepo = 'covid-static';
 const committer = {
     name: process.env["GITHUB_NAME"],
     email: process.env["GITHUB_EMAIL"]
 };
-const PrLabels = ['Automatic Deployment'];
-const githubUser = 'cagov';
-const githubRepo = 'covid-static';
 const masterBranch = 'master';
 const doInputValidation = true;
 const doOutputValidation = true;
