@@ -279,7 +279,7 @@ const doCovidStateDashboardTables = async () => {
 
     //Delay and approve Prs
     if(PrList.length) {
-        await sleep(5000); //give PRs time to check actions
+        await sleep(10000); //give PRs time to check actions
         for (let Pr of PrList) {
             console.log(`Approving Pr - ${Pr.html_url}`);
         
