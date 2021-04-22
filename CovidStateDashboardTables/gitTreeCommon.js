@@ -62,7 +62,7 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
  */
 const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer) => {
   if(!tree.length) {
-    console.log('No tree changes');
+    console.log(`No tree changes for - ${PrTitle}`);
     return null;
   }
 
