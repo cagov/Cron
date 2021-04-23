@@ -274,14 +274,10 @@ const doCovidStateDashboardTables = async () => {
             });
 
             PrList.push(Pr);
-        }
-    }
 
-    //Delay and approve Prs
-    if(PrList.length) {
-        await sleep(10000); //give PRs time to check actions
-        for (let Pr of PrList) {
-            console.log(`Approving Pr - ${Pr.html_url}`);
+            console.log(`Sleeping Pr - ${Pr.html_url}`);
+            await sleep(5000); //give PR time to check actions
+            console.log(`Merging Pr - ${Pr.html_url}`);
         
             //Approve Pr
             await gitRepo.mergePullRequest(Pr.number,{
@@ -291,10 +287,9 @@ const doCovidStateDashboardTables = async () => {
             //Delete Branch
             await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
         }
-        return PrList;
-    } else {
-        return null;
     }
+
+    return PrList.length ? PrList : null;
 };
 
 
