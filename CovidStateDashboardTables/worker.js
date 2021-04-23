@@ -273,6 +273,8 @@ const doCovidStateDashboardTables = async () => {
                 labels: PrLabels
             });
 
+            PrList.push(Pr);
+
             console.log(`Sleeping Pr - ${Pr.html_url}`);
             await sleep(5000); //give PR time to check actions
             console.log(`Merging Pr - ${Pr.html_url}`);
@@ -284,8 +286,6 @@ const doCovidStateDashboardTables = async () => {
     
             //Delete Branch
             await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
-
-            PrList.push(Pr);
         }
     }
 
