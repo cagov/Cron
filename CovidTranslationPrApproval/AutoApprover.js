@@ -8,6 +8,8 @@ const labelDoNotPublish = 'Do not publish 🚫';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const moment = require('moment'); // https://momentjs.com/docs/#/use-it/node-js/
+//const dataTimeZone = 'America/Los_Angeles';
+const dataTimeZone = 'America/New_York';
 
 //Check to see if we need stats update PRs, make them if we do.
 const doAutoApprover = async () => {
@@ -19,6 +21,8 @@ const doAutoApprover = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     
+    let thisTime = moment(dataTimeZone);
+
     const Prs = (await gitRepo.listPullRequests(
         {
             base : masterbranch,
