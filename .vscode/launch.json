@@ -91,6 +91,14 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Debug DIRECT AutoApprover",
+      "program": "index",
+      "args": ["12:AutoApprover"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Debug DIRECT CovidStateDashboardTables",
       "program": "index",
       "args": ["13:CovidStateDashboardTables"],

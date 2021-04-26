@@ -1,15 +1,15 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
-const { createTreeFromFileMap, PrIfChanged, todayDateString, sleep } = require('./gitTreeCommon');
+const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('./gitTreeCommon');
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment'];
+const PrLabels = ['Automatic Deployment','Publish at 9 a.m. ☀️'];
 const githubUser = 'cagov';
-const githubRepo = 'covid-static';
+const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const masterBranch = 'master';
+const masterBranch = 'main';
 const doInputValidation = true;
 const doOutputValidation = true;
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
@@ -274,18 +274,6 @@ const doCovidStateDashboardTables = async () => {
             });
 
             PrList.push(Pr);
-
-            console.log(`Sleeping Pr - ${Pr.html_url}`);
-            await sleep(5000); //give PR time to check actions
-            console.log(`Merging Pr - ${Pr.html_url}`);
-        
-            //Approve Pr
-            await gitRepo.mergePullRequest(Pr.number,{
-                merge_method: 'squash'
-            });
-    
-            //Delete Branch
-            await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
         }
     }
 

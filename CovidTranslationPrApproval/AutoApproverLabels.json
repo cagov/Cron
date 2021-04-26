@@ -1,0 +1,32 @@
+{
+  "meta":{},
+  "data":{
+    "specialLabels":{
+      "DoNotPublish":"Do not publish 🚫",
+      "PublishASAP":"Publish ASAP ✅"
+    },
+    "timeLabels":
+    [
+      {
+        "label":"Publish at 9 a.m. ☀️",
+        "hour":9,
+        "minute":0
+      },
+      {
+        "label":"Publish at 10 a.m. ☀️",
+        "hour":10,
+        "minute":0
+      },
+      {
+        "label":"Publish at 11 a.m. ☀️",
+        "hour":11,
+        "minute":0
+      },
+      {
+        "label":"Publish at 6:00 p.m.🌛",
+        "hour":18,
+        "minute":0
+      }
+    ]
+  }
+}
