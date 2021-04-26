@@ -2,14 +2,13 @@ const GitHub = require('github-api'); //https://github-tools.github.io/github/do
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const masterbranch = 'main';
-const labelPublishASAP = 'Publish ASAP ✅';
-const labelPublishHeader = 'Publish at ';
-const labelDoNotPublish = 'Do not publish 🚫';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const moment = require('moment'); // https://momentjs.com/docs/#/use-it/node-js/
-//const dataTimeZone = 'America/Los_Angeles';
-const dataTimeZone = 'America/New_York';
+const dataTimeZone = 'America/Los_Angeles';
+//const dataTimeZone = 'America/New_York';
+
+const AutoApproverLabels = require('./AutoApproverLabels.json').data;
 
 //Check to see if we need stats update PRs, make them if we do.
 const doAutoApprover = async () => {
@@ -21,7 +20,10 @@ const doAutoApprover = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     
-    let thisTime = moment().tz(dataTimeZone).day();
+    let thisTime = moment().tz(dataTimeZone);
+    let thisHour = thisTime.hour();
+    let thisMinute = Math.floor(thisTime.minute() / 5) * 5; //Round down to 5 mins
+    let ActiveLabel = AutoApproverLabels.timeLabels.find(x=>x.hour===thisHour && x.minute===thisMinute)?.label;
 
     const Prs = (await gitRepo.listPullRequests(
         {
@@ -32,8 +34,8 @@ const doAutoApprover = async () => {
         .data
         .filter(p=>
             !p.draft //ignore drafts
-            &&p.labels.some(s=>s.name.startsWith(labelPublishHeader) || s.name===labelPublishASAP)
-            &&!p.labels.some(s=>s.name===labelDoNotPublish)
+            &&p.labels.some(s=>s.name===ActiveLabel || s.name===AutoApproverLabels.specialLabels.PublishASAP)
+            &&!p.labels.some(s=>s.name===AutoApproverLabels.specialLabels.DoNotPublish)
         );
     for (const prlist of Prs) {
         //get the full pr detail
@@ -45,11 +47,11 @@ const doAutoApprover = async () => {
 
             if (pass) {
                 //Approve the PR
-                //await gitRepo.mergePullRequest(pr.number,{
-                //    merge_method: 'squash'
-                //});
+                await gitRepo.mergePullRequest(pr.number,{
+                    merge_method: 'squash'
+                });
 
-                //await gitRepo.deleteRef(`heads/${pr.head.ref}`);
+                await gitRepo.deleteRef(`heads/${pr.head.ref}`);
                 await sleep(5000); //Wait after any approval so the next Pr can update
             }
         }
