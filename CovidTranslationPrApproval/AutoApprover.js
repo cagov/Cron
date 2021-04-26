@@ -21,7 +21,7 @@ const doAutoApprover = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     
-    let thisTime = moment(dataTimeZone);
+    let thisTime = moment().tz(dataTimeZone).day();
 
     const Prs = (await gitRepo.listPullRequests(
         {
