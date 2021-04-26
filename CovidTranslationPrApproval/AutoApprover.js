@@ -7,6 +7,7 @@ const labelPublishHeader = 'Publish at ';
 const labelDoNotPublish = 'Do not publish 🚫';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const moment = require('moment'); // https://momentjs.com/docs/#/use-it/node-js/
 
 //Check to see if we need stats update PRs, make them if we do.
 const doAutoApprover = async () => {
