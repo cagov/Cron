@@ -1,9 +1,15 @@
 const GitHub = require('github-api'); //https://github-tools.github.io/github/docs/3.2.3/Repository.html
 const githubUser = 'cagov';
-const githubRepo = 'covid19-static-data';
+const githubRepo = 'covid-static-data';
+const masterbranch = 'main';
+const labelPublishASAP = 'Publish ASAP ✅';
+const labelPublishHeader = 'Publish at ';
+const labelDoNotPublish = 'Do not publish 🚫';
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 //Check to see if we need stats update PRs, make them if we do.
-const doAutoApprover = async masterbranch => {
+const doAutoApprover = async () => {
     //https://github-tools.github.io/github/docs/3.2.3/Repository.html#listPullRequests
     //https://developer.github.com/v3/pulls/#list-pull-requests
 
@@ -21,7 +27,8 @@ const doAutoApprover = async masterbranch => {
         .data
         .filter(p=>
             !p.draft //ignore drafts
-            //&&p.labels.some(s=>s.name===labelFilter) //require the 'Translated Content' label
+            &&p.labels.some(s=>s.name.startsWith(labelPublishHeader) || s.name===labelPublishASAP)
+            &&!p.labels.some(s=>s.name===labelDoNotPublish)
         );
     for (const prlist of Prs) {
         //get the full pr detail
@@ -33,11 +40,12 @@ const doAutoApprover = async masterbranch => {
 
             if (pass) {
                 //Approve the PR
-                await gitRepo.mergePullRequest(pr.number,{
-                    merge_method: 'squash'
-                });
+                //await gitRepo.mergePullRequest(pr.number,{
+                //    merge_method: 'squash'
+                //});
 
-                await gitRepo.deleteRef(`heads/${pr.head.ref}`);
+                //await gitRepo.deleteRef(`heads/${pr.head.ref}`);
+                await sleep(5000); //Wait after any approval so the next Pr can update
             }
         }
     }
