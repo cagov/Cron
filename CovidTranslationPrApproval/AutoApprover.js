@@ -11,6 +11,7 @@ const dataTimeZone = 'America/Los_Angeles';
 const AutoApproverLabels = require('./AutoApproverLabels.json').data;
 const labelPublishASAP = AutoApproverLabels.specialLabels.PublishASAP;
 const labelDoNotPublish = AutoApproverLabels.specialLabels.DoNotPublish;
+const securityGroups = ['OWNER','CONTRIBUTOR','COLLABORATOR'];
 
 //Check to see if we need stats update PRs, make them if we do.
 const doAutoApprover = async () => {
@@ -43,6 +44,7 @@ const doAutoApprover = async () => {
             .data
             .filter(p=>
                 !p.draft //ignore drafts
+                &&securityGroups.includes(p.author_association) //Security
                 &&p.labels.some(s=>s.name===ActiveLabel)
             );
 
@@ -69,6 +71,7 @@ const doAutoApprover = async () => {
         .data
         .filter(p=>
             !p.draft //ignore drafts
+            &&securityGroups.includes(p.author_association)
             &&p.labels.some(s=>s.name===labelPublishASAP) //Only incude marked for publishing
             &&!p.labels.some(s=>s.name===labelDoNotPublish) //Hard exclude DoNots (Stop button)
         );
