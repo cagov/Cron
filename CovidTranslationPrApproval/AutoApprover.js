@@ -55,6 +55,7 @@ const doAutoApprover = async () => {
                 await gitIssues.editIssue(Pr.number,{
                     labels
                 });
+                await sleep(5000); //let the label apply
             }
         }
     }
