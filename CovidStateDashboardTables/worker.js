@@ -10,8 +10,8 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'main';
-const doInputValidation = true;
-const doOutputValidation = true;
+const doInputValidation = false;
+const doOutputValidation = false;
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
 const outputPath = 'data/dashboard';
 const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras","Colusa","Contra Costa","Del Norte","El Dorado","Fresno","Glenn","Humboldt","Imperial","Inyo","Kern","Kings","Lake","Lassen","Los Angeles","Madera","Marin","Mariposa","Mendocino","Merced","Modoc","Mono","Monterey","Napa","Nevada","Orange","Placer","Plumas","Riverside","Sacramento","San Benito","San Bernardino","San Diego","San Francisco","San Joaquin","San Luis Obispo","San Mateo","Santa Barbara","Santa Clara","Santa Cruz","Shasta","Sierra","Siskiyou","Solano","Sonoma","Stanislaus","Sutter","Tehama","Trinity","Tulare","Tuolumne","Ventura","Yolo","Yuba"];
@@ -274,6 +274,22 @@ const doCovidStateDashboardTables = async () => {
             });
 
             PrList.push(Pr);
+        }
+    }
+
+    let branches = ['2021-05-04_Covid_Dashboard_Tables_-_Tests-12-30-22'];
+    if(branches.length) {
+        const targetStagingBranchName = 'carter-test-staging';
+        let targetBranchResult = await gitRepo.getBranch(targetStagingBranchName);
+        let targetBranchDeleteResult = await gitRepo.deleteRef(`heads/${targetStagingBranchName}`);
+        let targetBranchCreateResult = await gitRepo.createBranch(masterBranch,targetStagingBranchName);
+        
+        for (let branch of branches) {
+            await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/merges`, {
+                base: targetStagingBranchName,
+                head: branch,
+                commit_message: 'merge'
+            });
         }
     }
 
