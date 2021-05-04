@@ -2,7 +2,7 @@ const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 const notifyChannel = 'C019DS5S6Q2'; // dimmer
-const appName = 'CoivdWeeklyTierUpdateHTTPTriger';
+const appName = 'CovidWeeklyTierUpdateHTTPTrigger';
 
 module.exports = async function (context, req) {
     let activity = {};
