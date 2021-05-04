@@ -10,6 +10,7 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'main';
+const stagingBranch = 'CovidStateDashboardTables_Staging';
 const doInputValidation = true;
 const doOutputValidation = true;
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
@@ -274,6 +275,20 @@ const doCovidStateDashboardTables = async () => {
             });
 
             PrList.push(Pr);
+        }
+    }
+
+    //Merge all the PRs into a single branch for staging
+    if(PrList.length) {
+        await gitRepo.deleteRef(`heads/${stagingBranch}`);
+        await gitRepo.createBranch(masterBranch,stagingBranch);
+        
+        for (let Pr of PrList) {
+            await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/merges`, {
+                base: stagingBranch,
+                head: Pr.head.sha,
+                commit_message: `Merged PR ${Pr.html_url}`
+            });
         }
     }
 
