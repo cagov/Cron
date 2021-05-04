@@ -10,6 +10,7 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'main';
+const stagingBranch = 'CovidStateDashboardTables_Staging';
 const doInputValidation = false;
 const doOutputValidation = false;
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
@@ -277,18 +278,16 @@ const doCovidStateDashboardTables = async () => {
         }
     }
 
-    let branches = ['2021-05-04_Covid_Dashboard_Tables_-_Tests-12-30-22'];
-    if(branches.length) {
-        const targetStagingBranchName = 'carter-test-staging';
-        let targetBranchResult = await gitRepo.getBranch(targetStagingBranchName);
-        let targetBranchDeleteResult = await gitRepo.deleteRef(`heads/${targetStagingBranchName}`);
-        let targetBranchCreateResult = await gitRepo.createBranch(masterBranch,targetStagingBranchName);
+    //Merge all the PRs into a single branch for staging
+    if(PrList.length) {
+        await gitRepo.deleteRef(`heads/${stagingBranch}`);
+        await gitRepo.createBranch(masterBranch,stagingBranch);
         
-        for (let branch of branches) {
+        for (let Pr of PrList) {
             await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/merges`, {
-                base: targetStagingBranchName,
-                head: branch,
-                commit_message: 'merge'
+                base: stagingBranch,
+                head: Pr.head.sha,
+                commit_message: `Merged PR ${Pr.html_url}`
             });
         }
     }
