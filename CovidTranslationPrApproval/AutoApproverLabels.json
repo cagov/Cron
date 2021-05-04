@@ -13,6 +13,11 @@
         "minute":0
       },
       {
+        "label":"Publish at 9:15 a.m. ☀️",
+        "hour":9,
+        "minute":15
+      },
+      {
         "label":"Publish at 10 a.m. ☀️",
         "hour":10,
         "minute":0
