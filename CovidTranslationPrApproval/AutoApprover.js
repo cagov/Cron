@@ -93,7 +93,7 @@ const doAutoApprover = async () => {
 
                 //This is where some notification should happen
 
-                await sleep(10000); //Wait after any approval so the next Pr can update
+                await sleep(20000); //Wait after any approval so the next Pr can update
             }
         }
     }
