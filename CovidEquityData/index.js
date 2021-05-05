@@ -141,8 +141,9 @@ If there are issues with the data:
 
         // healthequity data
         // equity metric line chart
+        const HealthequityHeader = 'healthequity-';
         allData.HealthEquityData.forEach(item => {
-            let mapKey = `healthequity-${item.COUNTY}`;
+            let mapKey = `${HealthequityHeader}${item.COUNTY}`;
             let countyInfo = allFilesMap.get(mapKey) || {}; // ts:Date.now() insures file uniqueness
 
             if(!countyInfo[item.METRIC]) {
@@ -209,6 +210,13 @@ If there are issues with the data:
                             `${schemaPath}CumulativeData/output/schema.json`,
                             `${schemaPath}CumulativeData/output/sample.json`,
                             `${schemaPath}CumulativeData/output/fail/`
+                        );
+                    } else if(key.startsWith(HealthequityHeader)) {
+                        validateJSON(`${key} failed validation`, 
+                            value,
+                            `${schemaPath}HealthEquityData/output/schema.json`,
+                            `${schemaPath}HealthEquityData/output/sample.json`,
+                            `${schemaPath}HealthEquityData/output/fail/`
                         );
                     }
             }
