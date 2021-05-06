@@ -16,7 +16,7 @@ const { doCovidStateDashboardTables } = require('../CovidStateDashboardTables/wo
 
 //const tempFunction = async () => {           };
 
-const CovidEquityData = require('../CovidEquityData');
+const { doCovidEquityData } = require('../CovidEquityData/worker');
 const CovidNewsFeed = require('../CovidNewsFeed');
 
 //const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
@@ -37,7 +37,7 @@ const doWork = async opt => {
     switch (opt) {
     case '1':
         console.log("Running CovidEquityData");
-        await CovidEquityData();
+        await doCovidEquityData();
         break;
     case '3':
         console.log("Running doTranslationPrUpdate");
