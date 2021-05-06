@@ -1,10 +1,10 @@
 const { doCovidEquityData } = require('./worker');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd, slackBotDelayedChatPost } = require('../common/slackBot');
-//const notifyChannel = 'C01BMCQK0F6'; // main channel
-//const debugChannel = 'C01DBP67MSQ'; // #testingbot
+const notifyChannel = 'C01BMCQK0F6'; // main channel
+const debugChannel = 'C01DBP67MSQ'; // #testingbot
 
-const notifyChannel = 'C01H6RB99E2'; //Carter debug
-const debugChannel = 'C01H6RB99E2'; //Carter debug
+//const notifyChannel = 'C01H6RB99E2'; //Carter debug
+//const debugChannel = 'C01H6RB99E2'; //Carter debug
 
 module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
