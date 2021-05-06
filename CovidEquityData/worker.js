@@ -153,13 +153,8 @@ If there are issues with the data:
         allFilesMap.set(cumulative_combined_key,info);
     });
 
-    // write one file for statewide data
-    let statewideMapKey = `statewide-data`;
-    let statewidePopData = [];
-    allData.StatewideData.forEach(item => {
-        statewidePopData.push(item);
-    });
-    allFilesMap.set(statewideMapKey,statewidePopData);
+    // no reformatting on statewide data
+    allFilesMap.set(`statewide-data`,allData.StatewideData);
 
     //Validate Results
     for (let [key,value] of allFilesMap) {

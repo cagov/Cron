@@ -1,0 +1,53 @@
+{
+  "type": "array",
+  "uniqueItems": true,
+  "minItems": 56,
+  "maxItems": 56,
+  "items": {
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+      "AGE_GROUP": {
+        "required": true,
+        "type": "string",
+        "enum": [
+          "0-17",
+          "18-49",
+          "50-64",
+          "65+"
+        ]
+      },
+      "GENDER": {
+        "required": true,
+        "type": "string",
+        "enum": [
+          "Female",
+          "Male"
+        ]
+      },
+      "RACE_ETHNICITY": {
+        "required": true,
+        "type": "string",
+        "enum": [
+          "African American",
+          "American Indian",
+          "Asian",
+          "Latino",
+          "Multi-Race",
+          "Native Hawaiian and other Pacific Islander",
+          "White"
+        ]
+      },
+      "POPULATION": {
+        "required": true,
+        "type": "integer",
+        "minimum": 0
+      },
+      "SF_LOAD_TIMESTAMP": {
+        "required": true,
+        "type": "string",
+        "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])"
+      }
+    }
+  }
+}
