@@ -1,6 +1,6 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
-const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('./gitTreeCommon');
+const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
 const GitHub = require('github-api');
 const PrLabels = ['Automatic Deployment','Publish at 9:15 a.m. ☀️'];
 const githubUser = 'cagov';
