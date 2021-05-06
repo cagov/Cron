@@ -23,13 +23,13 @@ const doCovidEquityData = async () => {
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
-    const branchPrefixFull = `${branchPrefix}${todayDateString}-${todayTimeString}-equitydash`;
+    const branchPrefixFull = `${branchPrefix}${todayDateString()}-${todayTimeString()}-equitydash`;
     const stagingBranchName = `${branchPrefixFull}-2-review`;
     const productionBranchName = `${branchPrefixFull}-review-complete`;
     const stagingCommitText = 'Staging Equity Data';
     const productionCommitText = 'Prod Equity Data';
-    const stagingPrTitle = `${todayDateString} equity dashboard chart data update (Staging)`;
-    const productionPrTitle = `${todayDateString} equity dashboard chart data update`;
+    const stagingPrTitle = `${todayDateString()} equity dashboard chart data update (Staging)`;
+    const productionPrTitle = `${todayDateString()} equity dashboard chart data update`;
 
     const productionPrMessage = `
 Equity dashboard stats updates in this PR may be reviewed on staging - [here](https://staging.covid19.ca.gov/equity/).
