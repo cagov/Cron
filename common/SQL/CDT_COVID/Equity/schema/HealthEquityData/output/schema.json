@@ -71,8 +71,8 @@
     "healthequityrow": {
       "type": "array",
       "uniqueItems": true,
-      "minItems": 1,
-      "maxItems": 999,
+      "minItems": 20,
+      "maxItems": 100,
       "items": {
         "type": "object",
         "required": [

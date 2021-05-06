@@ -67,69 +67,72 @@
         "Yolo",
         "Yuba"
       ]
-    }
-  },
-  "type": "array",
-  "uniqueItems": true,
-  "minItems": 25,
-  "maxItems": 4000,
-  "items": {
-    "type": "object",
-    "required": [
-      "COUNTY",
-      "DATE",
-      "METRIC",
-      "METRIC_VALUE",
-      "METRIC_VALUE_30_DAYS_AGO",
-      "METRIC_VALUE_DIFF"
-    ],
-    "additionalProperties": true,
-    "properties": {
-      "COUNTY": {
-        "$ref": "#/definitions/county"
-      },
-      "DATE": {
-        "$ref": "#/definitions/date_YYYY_MM_DD"
-      },
-      "METRIC": {
-        "type": "string",
-        "enum": [
-          "county_positivity_all_nopris",
-          "county_positivity_low_hpi"
-        ]
-      },
-      "METRIC_VALUE": {
-        "oneOf": [
-          {
-            "type": "number",
-            "minimum": 0
+    },
+    "healthequityrow": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 20,
+      "maxItems": 4000,
+      "items": {
+        "type": "object",
+        "required": [
+          "COUNTY",
+          "DATE",
+          "METRIC",
+          "METRIC_VALUE",
+          "METRIC_VALUE_30_DAYS_AGO",
+          "METRIC_VALUE_DIFF"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "COUNTY": {
+            "$ref": "#/definitions/county"
           },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "METRIC_VALUE_30_DAYS_AGO": {
-        "oneOf": [
-          {
-            "type": "number",
-            "minimum": 0
+          "DATE": {
+            "$ref": "#/definitions/date_YYYY_MM_DD"
           },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "METRIC_VALUE_DIFF": {
-        "oneOf": [
-          {
-            "type": "number"
+          "METRIC": {
+            "type": "string",
+            "enum": [
+              "county_positivity_all_nopris",
+              "county_positivity_low_hpi"
+            ]
           },
-          {
-            "type": "null"
+          "METRIC_VALUE": {
+            "oneOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "METRIC_VALUE_30_DAYS_AGO": {
+            "oneOf": [
+              {
+                "type": "number",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "METRIC_VALUE_DIFF": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
-        ]
+        }
       }
     }
-  }
+  },
+  "$ref": "#/definitions/healthequityrow"
 }
