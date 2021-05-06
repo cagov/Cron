@@ -119,8 +119,9 @@ If there are issues with the data:
     });
 
     // social data should all go in one file
+    const SocialDataHeader = 'social-data-';
     allData.SocialData.forEach(item => {
-        let mapKey = `social-data-${item.SOCIAL_DET}`;
+        let mapKey = `${SocialDataHeader}${item.SOCIAL_DET}`;
         let countyInfo = allFilesMap.get(mapKey) || [];
 
         countyInfo.push(item);
@@ -205,6 +206,13 @@ If there are issues with the data:
                         `${schemaPath}HealthEquityData/output/schema.json`,
                         `${schemaPath}HealthEquityData/output/sample.json`,
                         `${schemaPath}HealthEquityData/output/fail/`
+                    );
+                } else if(key.startsWith(SocialDataHeader)) {
+                    validateJSON(`${key} failed validation`, 
+                        value,
+                        `${schemaPath}SocialData/output/schema.json`,
+                        `${schemaPath}SocialData/output/sample.json`,
+                        `${schemaPath}SocialData/output/fail/`
                     );
                 }
         }
