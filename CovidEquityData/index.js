@@ -10,7 +10,7 @@ module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   let slackPostTS = null;
   try {
-    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (9:10 every day)`)).json()).ts;
+    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} started (planned Tuesdays 1:20pm)`)).json()).ts;
 
     const Pr = await doCovidEquityData();
 
