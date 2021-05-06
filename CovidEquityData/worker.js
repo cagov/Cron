@@ -17,7 +17,9 @@ const PrReviewers = ['vargoCDPH','sindhuravuri'];
 const sqlRootPath = "../SQL/CDT_COVID/Equity/";
 const schemaPath = `${sqlRootPath}schema/`;
 
-// eslint-disable-next-line no-unused-vars
+/**
+ * @returns {Promise<{html_url:string;number:number,head:{ref:string}}>} the new PR
+ */
 const doCovidEquityData = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
@@ -302,6 +304,8 @@ If there are issues with the data:
         //Request reviewers for Pr
         //https://docs.github.com/en/free-pro-team@latest/rest/reference/pulls#request-reviewers-for-a-pull-request
         await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/pulls/${Pr.number}/requested_reviewers`,{reviewers:PrReviewers});
+    
+        return Pr;
     }
 };
 
