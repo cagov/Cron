@@ -1,6 +1,6 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
-const { createTreeFromFileMap, PrIfChanged, todayDateString, todayTimeString, sleep } = require('../common/gitTreeCommon');
+const { todayDateString, todayTimeString, sleep } = require('../common/gitTreeCommon');
 const masterBranch = 'master';
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
