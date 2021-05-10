@@ -13,6 +13,12 @@ The output json uses a different field structure which is clearer because we are
 
 Because the output json is different and we want to keep it that way this new version of the service writes to a v2 file location.
 
+## Examples of data in use
+
+- <a href="https://covid19.ca.gov/vaccination-progress-data/">covid19.ca.gov vaccine dashboard</a>
+
+<img src="img/vaccine-hpi.png">
+
 # TimerTrigger - JavaScript
 
 The `TimerTrigger` makes it incredibly easy to have your functions executed on a schedule. This sample demonstrates a simple use case of calling your function every 5 minutes.
