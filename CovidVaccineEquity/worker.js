@@ -1,4 +1,5 @@
-const { queryDataset,getSQL } = require('../common/snowflakeQuery');
+const { queryDataset } = require('../common/snowflakeQuery');
+const { validateJSON, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const GitHub = require('github-api');
 const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
@@ -8,7 +9,9 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
-const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/';
+//const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/CovidVaccineEquity/';
+const sqlRootPath = "../SQL/CDTCDPH_VACCINE/CovidVaccineEquity/";
+//const schemaPath = `${sqlRootPath}schema/`;
 const targetPath = 'data/vaccine-equity/';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
@@ -26,13 +29,15 @@ const doCovidVaccineEquity = async () => {
     const CommitText = 'Update Vaccine Equity Data';
     const PrTitle = `${todayDateString()} Vaccine Equity`;
 
-    const DbSqlWork = {
-        vaccines_by_age : getSQL(`${SnowFlakeSqlPath}vaccines_by_age`),
-        vaccines_by_gender : getSQL(`${SnowFlakeSqlPath}vaccines_by_gender`),
-        vaccines_by_race_eth: getSQL(`${SnowFlakeSqlPath}vaccines_by_race_eth`)
-    };
+    const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/[file]/input/schema.json','schema/[file]/input/sample.json');
+    const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
 
-    const allData = await queryDataset(DbSqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
+    Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
+        const schemaObject = sqlWorkAndSchemas.schema[file];
+        const targetJSON = allData[file];
+        validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
+    });
+
     const newTree = [];
 
     const getTreeValue = (path,value) => {
