@@ -2,7 +2,39 @@
 
 This service retrieves information to power the covid19 equity dashboard: <a href="https://covid19.ca.gov/equity/">covid19.ca.gov/equity/</a>. It queries snowflake and writes retrieved data as static json files to the cagov/covid-static repo.
 
-## Example
+
+## Approvals
+
+- Data is retrieved from snowflake
+- Data is not published before the statewide coordinated daily stats release time 9:30am daily
+- Data is published as static json files to the covid-static(-data) repository and from there pushed to files.covid19.ca.gov
+- Data will be initially published as an open pull request on the static repository. 
+- Data consumed by charts in staging is written into the /to-review folder. 
+  - A PR is created and merged immediately for these json files.
+- Data consumed by charts in production is read from the /reviewed folder. 
+  - A PR with the daily data is created for this folder but not merged automatically. 
+  - A primary and backup scientist are added as reviewers to the daily PR.
+  - Instructions on the PR include links to the url of the page in staging where the information about to be merged is used so the charts can be browsed
+  - A slack message is also sent to the covid-equity channel with a 5 minute delay to notify people the latest data is available for review in staging and the PR can be approved at will for use in production. The delay is meant to give the covid-static repo time to deploy the staging files just merged and for the short CDN cache on files.covid19 to expire.
+  - The reviewers can merge the PR if the data is acceptable
+- FYI there is a 10 minute CDN cache on files deployed to files.covid19.ca.gov. The publishing flow does not yet invalidate this cache.
+- Data available on files.covid19.ca.gov is consumed by the charts on covid19.ca.gov pages with client side code and in the case of top box stats by the 11ty static site pregeneration build service to create the page HTML.
+
+
+## Schedule
+
+The timing that this function runs is controlled by the cron syntax in the <a href="function.json">function.json</a> file. The function as a service runs on GMT.
+
+## Queries
+
+The SQL used by this service is imported at the top of the <a href="index.js">index.js</a> file from the ../common/SQL/Equity folder in this repository
+
+## Data validation
+
+The structure of the data retrieved from snowflake is verified by tests referenced in this function's <a href="worker.js">worker.js file</a> imported from the ../common/SQL/Equity/schema folder in this repository.
+
+
+## Example chart
 
 ### Snowflake query
 
@@ -22,23 +54,6 @@ The missingness chart that uses the data above is:
 
 The frontend code in each environment uses a config parameter defined during the site build process which identifies the url the charts should query to retrieve their data. This url is defined in the <a href="https://github.com/cagov/covid19/blob/master/src/js/equity-dash/rollup.config.js">equity dash js bundle rollup file</a>. The build parameters are environment variables passed into the run scripts in ```package.json``` and these build commands are used in the yml workflow scripts that create each environments codebase during the git action run.
 
-## Approvals
 
-- Data consumed by charts in staging is written into the /to-review folder. 
-  - A PR is created and merged immediately for these json files.
-- Data consumed by charts in production is read from the /reviewed folder. 
-  - A PR with the daily data is created for this folder but not merged automatically. 
-  - A primary and backup scientist are added as reviewers to the daily PR.
-  - Instructions on the PR include links to the url of the page in staging where the information about to be merged is used so the charts can be browsed
-  - A slack message is also sent to the covid-equity channel with a 5 minute delay to notify people the latest data is available for review in staging and the PR can be approved at will for use in production. The delay is meant to give the covid-static repo time to deploy the staging files just merged and for the short CDN cache on files.covid19 to expire.
-  - The reviewers can merge the PR if the data is acceptable
 
-## Data problems
 
-If there are issues with the data used by the charts we can review the snowflake queries this service makes and see if snowflake contains the expected data. If not excalate to Triston Mosbacher who setup the pipelines feeding this data into snowflake.
-
-## ToDo
-
-There is some obvious room for improvement in this service. 
-- It runs pretty slowly which is bad because it was timing out in the cloud until the default function timeout was bumped to the max(10 mins) for the Azure plan and removed an await to make sure it completes before shutoff.
-- It should be migrated to use the github octokit rest library for communication with github
