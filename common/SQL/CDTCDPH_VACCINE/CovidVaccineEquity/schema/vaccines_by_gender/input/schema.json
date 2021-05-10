@@ -1,0 +1,109 @@
+{
+  "definitions": {
+    "date_YYYY_MM_DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "county": {
+      "type": "string",
+      "enum": [
+        "Outside California",
+        "Unknown",
+        "California",
+        "Alameda",
+        "Alpine",
+        "Amador",
+        "Butte",
+        "Calaveras",
+        "Colusa",
+        "Contra Costa",
+        "Del Norte",
+        "El Dorado",
+        "Fresno",
+        "Glenn",
+        "Humboldt",
+        "Imperial",
+        "Inyo",
+        "Kern",
+        "Kings",
+        "Lake",
+        "Lassen",
+        "Los Angeles",
+        "Madera",
+        "Marin",
+        "Mariposa",
+        "Mendocino",
+        "Merced",
+        "Modoc",
+        "Mono",
+        "Monterey",
+        "Napa",
+        "Nevada",
+        "Orange",
+        "Placer",
+        "Plumas",
+        "Riverside",
+        "Sacramento",
+        "San Benito",
+        "San Bernardino",
+        "San Diego",
+        "San Francisco",
+        "San Joaquin",
+        "San Luis Obispo",
+        "San Mateo",
+        "Santa Barbara",
+        "Santa Clara",
+        "Santa Cruz",
+        "Shasta",
+        "Sierra",
+        "Siskiyou",
+        "Solano",
+        "Sonoma",
+        "Stanislaus",
+        "Sutter",
+        "Tehama",
+        "Trinity",
+        "Tulare",
+        "Tuolumne",
+        "Ventura",
+        "Yolo",
+        "Yuba"
+      ]
+    }
+  },
+  "type": "array",
+  "uniqueItems": true,
+  "minItems": 181,
+  "maxItems": 181,
+  "items": {
+    "type": "object",
+    "required": [
+      "LATEST_ADMIN_DATE",
+      "REGION",
+      "CATEGORY",
+      "METRIC_VALUE"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "REGION": {
+        "$ref": "#/definitions/county"
+      },
+      "LATEST_ADMIN_DATE": {
+        "$ref": "#/definitions/date_YYYY_MM_DD"
+      },
+      "CATEGORY": {
+        "type": "string",
+        "enum": [
+          "M",
+          "F",
+          "U"
+        ]
+      },
+      "METRIC_VALUE": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
+    }
+  }
+}

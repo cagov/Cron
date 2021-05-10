@@ -1,4 +1,5 @@
-const { queryDataset,getSQL } = require('../common/snowflakeQuery');
+const { queryDataset } = require('../common/snowflakeQuery');
+const { validateJSON, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const GitHub = require('github-api');
 const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
@@ -8,7 +9,8 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
-const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/';
+const sqlRootPath = "../SQL/CDTCDPH_VACCINE/CovidVaccineEquity/";
+const schemaPath = `${sqlRootPath}schema/`;
 const targetPath = 'data/vaccine-equity/';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
@@ -26,13 +28,15 @@ const doCovidVaccineEquity = async () => {
     const CommitText = 'Update Vaccine Equity Data';
     const PrTitle = `${todayDateString()} Vaccine Equity`;
 
-    const DbSqlWork = {
-        vaccines_by_age : getSQL(`${SnowFlakeSqlPath}vaccines_by_age`),
-        vaccines_by_gender : getSQL(`${SnowFlakeSqlPath}vaccines_by_gender`),
-        vaccines_by_race_eth: getSQL(`${SnowFlakeSqlPath}vaccines_by_race_eth`)
-    };
+    const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/[file]/input/schema.json','schema/[file]/input/sample.json');
+    const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
 
-    const allData = await queryDataset(DbSqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
+    Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
+        const schemaObject = sqlWorkAndSchemas.schema[file];
+        const targetJSON = allData[file];
+        validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
+    });
+
     const newTree = [];
 
     const getTreeValue = (path,value) => {
@@ -44,7 +48,14 @@ const doCovidVaccineEquity = async () => {
         };
     };
 
-    const customAddDatsetToTree = (dataset, path_prefix, tree, sortMap) => {
+    /**
+     * @param {{CATEGORY: string,REGION: string,LATEST_ADMIN_DATE: string, METRIC_VALUE: number}[]} dataset
+     * @param {string} schemaName
+     * @param {string} path_prefix
+     * @param {{mode :string, type :string, path:string,content : string}[]} tree
+     * @param {{CATEGORY: string,FROM: string}[]} sortMap
+     */
+    const customAddDatsetToTree = (dataset, schemaName, path_prefix, tree, sortMap) => {
         const sortMapStrings = sortMap.map(x=>x.FROM||x.CATEGORY);
 
         //Make sure at least some of the data has the expected CATEGORIES
@@ -98,6 +109,11 @@ const doCovidVaccineEquity = async () => {
                     },
                     data
                 };
+
+                validateJSON(`${schemaName} failed SQL output validation`,
+                    result,
+                    `${schemaPath}${schemaName}/output/schema.json`,
+                    `${schemaPath}${schemaName}/output/sample.json`);
 
                 tree.push(getTreeValue(`${targetPath}${path}`,result));
             }
@@ -175,9 +191,9 @@ const doCovidVaccineEquity = async () => {
         }
     ];
 
-    customAddDatsetToTree(allData.vaccines_by_age,`age/vaccines_by_age_`,newTree,sortmap_Age);
-    customAddDatsetToTree(allData.vaccines_by_gender,`gender/vaccines_by_gender_`,newTree,sortmap_Gender);
-    customAddDatsetToTree(allData.vaccines_by_race_eth,`race-ethnicity/vaccines_by_race_ethnicity_`,newTree,sortMap_Race);
+    customAddDatsetToTree(allData.vaccines_by_age,"vaccines_by_age",`age/vaccines_by_age_`,newTree,sortmap_Age);
+    customAddDatsetToTree(allData.vaccines_by_gender,"vaccines_by_gender",`gender/vaccines_by_gender_`,newTree,sortmap_Gender);
+    customAddDatsetToTree(allData.vaccines_by_race_eth,"vaccines_by_race_eth",`race-ethnicity/vaccines_by_race_ethnicity_`,newTree,sortMap_Race);
 
     //function to return a new branch if the tree has changes
     const branchIfChanged = async (tree, branch, commitName) => {
