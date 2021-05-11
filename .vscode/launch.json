@@ -75,14 +75,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DIRECT CovidVaccineHPI",
-      "program": "index",
-      "args": ["9:doCovidVaccineHPI"],
-      "cwd": "${workspaceRoot}/sandbox"
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "Debug DIRECT CovidVaccineHPIV2",
       "program": "index",
       "args": ["10:doCovidVaccineHPIV2"],
