@@ -79,19 +79,19 @@ from (
       BD
   union
   select
-      MAX(BD.LATEST_ADMIN_DATE),
-      SUM(BD.REGION_TOTAL),
+      MAX(LATEST_ADMIN_DATE),
+      SUM(REGION_TOTAL),
       'California',
-      BD.CATEGORY,
-      SUM(BD.ADMIN_COUNT)
+      CATEGORY,
+      SUM(ADMIN_COUNT)
   from
       BD
   group by
-      BD.CATEGORY
+      CATEGORY
 ) main
 join
     sortmap sm
     on sm.CATEGORY = main.CATEGORY
 order by
     REGION,
-    sm.SORT
+    SORT
