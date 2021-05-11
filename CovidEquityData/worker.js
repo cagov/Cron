@@ -1,13 +1,13 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const { todayDateString, todayTimeString, sleep } = require('../common/gitTreeCommon');
-const masterBranch = 'master';
+const masterBranch = 'main';
 const stagingFileLoc = 'data/to-review/equitydash/';
 const productionFileLoc = 'data/reviewed/equitydash/';
 const branchPrefix = 'data-';
 const GitHub = require('github-api');
 const githubUser = 'cagov';
-const githubRepo = 'covid-static';
+const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
