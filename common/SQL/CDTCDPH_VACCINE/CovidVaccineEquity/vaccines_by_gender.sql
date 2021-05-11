@@ -1,8 +1,15 @@
 -- Current vaccine administrations by gender (distinct people)
--- 182 rows
+-- 183 rows
 --   by county(REGION) + 'California' + 'Outside California'
 --   by gender(CATEGORY) (Female,Male,Unknown/undifferentiated)
 with
+SortMap as (select * from
+  (values
+   (1,'F','Female'),
+   (2,'M','Male'),
+   (3,'U','Unknown/undifferentiated')
+  ) as foo (SORT, CATEGORY, REPLACEMENT)
+),
 GB as ( --Master list of corrected data grouped by region/category
   select
     RECIP_SEX "CATEGORY",
@@ -31,20 +38,23 @@ BD as ( -- Region Totals added to category data
   select
       TA.LATEST_ADMIN_DATE,
       TA.REGION_TOTAL,
-      GB.REGION,
-      GB.CATEGORY,
-      GB.ADMIN_COUNT
+      TA.REGION,
+      sm.CATEGORY,
+      coalesce(GB.ADMIN_COUNT,0) "ADMIN_COUNT"
   from
-      GB
-  join
-      TA
-      on TA.REGION = GB.REGION
+    TA
+  cross join
+      SortMap sm
+  left outer join
+     GB
+     on GB.REGION=TA.REGION
+     and GB.CATEGORY=sm.CATEGORY
 )
 
 select
     LATEST_ADMIN_DATE,
     REGION,
-    CATEGORY,
+    coalesce(sm.REPLACEMENT,sm.CATEGORY) "CATEGORY",
     ADMIN_COUNT/REGION_TOTAL "METRIC_VALUE"
     --,ADMIN_COUNT
     --,REGION_TOTAL
@@ -53,7 +63,6 @@ from (
       *
   from
       BD
-
   union
   select
       MAX(BD.LATEST_ADMIN_DATE),
@@ -65,7 +74,10 @@ from (
       BD
   group by
       BD.CATEGORY
-)
+) main
+join
+    sortmap sm
+    on sm.CATEGORY = main.CATEGORY
 order by
     REGION,
-    ADMIN_COUNT desc
+    sm.SORT

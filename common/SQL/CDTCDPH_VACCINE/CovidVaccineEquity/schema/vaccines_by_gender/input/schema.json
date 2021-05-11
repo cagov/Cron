@@ -73,8 +73,8 @@
   },
   "type": "array",
   "uniqueItems": true,
-  "minItems": 181,
-  "maxItems": 181,
+  "minItems": 183,
+  "maxItems": 183,
   "items": {
     "type": "object",
     "required": [
@@ -94,9 +94,9 @@
       "CATEGORY": {
         "type": "string",
         "enum": [
-          "M",
-          "F",
-          "U"
+          "Female",
+          "Male",
+          "Unknown/undifferentiated"
         ]
       },
       "METRIC_VALUE": {

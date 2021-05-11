@@ -73,8 +73,8 @@
   },
   "type": "array",
   "uniqueItems": true,
-  "minItems": 546,
-  "maxItems": 546,
+  "minItems": 549,
+  "maxItems": 549,
   "items": {
     "type": "object",
     "required": [

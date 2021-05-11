@@ -1,5 +1,5 @@
 -- Current vaccine administrations by age group (distinct people)
--- 247 rows
+-- 305 rows
 --   by county(REGION) + 'California' + 'Outside California'
 --   by age(CATEGORY) (0-17,18-49,50-64/65+)
 with
@@ -10,6 +10,15 @@ ranges as (select * from
    ('50-64',50, 64),
    ('65+',  65, 119)
   ) as foo (NAME, RMIN, RMAX)
+),
+SortMap as (select * from
+  (values
+   (1,'0-17',null),
+   (2,'18-49',null),
+   (3,'50-64',null),
+   (4,'65+',null),
+   (5,'Unknown',null)
+  ) as foo (SORT, CATEGORY, REPLACEMENT)
 ),
 GB as ( --Master list of corrected data grouped by region/category
   select
@@ -43,20 +52,23 @@ BD as ( -- Region Totals added to category data
   select
       TA.LATEST_ADMIN_DATE,
       TA.REGION_TOTAL,
-      GB.REGION,
-      GB.CATEGORY,
-      GB.ADMIN_COUNT
+      TA.REGION,
+      sm.CATEGORY,
+      coalesce(GB.ADMIN_COUNT,0) "ADMIN_COUNT"
   from
-      GB
-  join
-      TA
-      on TA.REGION = GB.REGION
+    TA
+  cross join
+      SortMap sm
+  left outer join
+     GB
+     on GB.REGION=TA.REGION
+     and GB.CATEGORY=sm.CATEGORY
 )
 
 select
     LATEST_ADMIN_DATE,
     REGION,
-    CATEGORY,
+    coalesce(sm.REPLACEMENT,sm.CATEGORY) "CATEGORY",
     ADMIN_COUNT/REGION_TOTAL "METRIC_VALUE"
     --,ADMIN_COUNT
     --,REGION_TOTAL
@@ -65,7 +77,6 @@ from (
       *
   from
       BD
-
   union
   select
       MAX(BD.LATEST_ADMIN_DATE),
@@ -77,7 +88,10 @@ from (
       BD
   group by
       BD.CATEGORY
-)
+) main
+join
+    sortmap sm
+    on sm.CATEGORY = main.CATEGORY
 order by
     REGION,
-    ADMIN_COUNT desc
+    sm.SORT

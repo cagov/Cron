@@ -1,5 +1,5 @@
   -- Current vaccine administrations by race (distinct people)
-  -- 546 rows
+  -- 549 rows
   --   by county(REGION) (County/California/"Outside California")
   --   by race(CATEGORY) (White/Latino/Asian/etc)
 with
@@ -79,10 +79,10 @@ from (
       BD
   group by
       BD.CATEGORY
-) foo
+) main
 join
     sortmap sm
-    on sm.CATEGORY = foo.CATEGORY
+    on sm.CATEGORY = main.CATEGORY
 order by
     REGION,
     sm.SORT
