@@ -12,7 +12,7 @@ module.exports = async function (context, myTimer) {
     const PrResult = await doCovidVaccineEquity();
 
     if(PrResult) {
-      const prMessage = `Vaccine equity data deployed\n${PrResult.html_url}`;
+      const prMessage = `Vaccine equity data ready\n${PrResult.html_url}`;
       await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
       await slackBotChatPost(notifyChannel, prMessage);
