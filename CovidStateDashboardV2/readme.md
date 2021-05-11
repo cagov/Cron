@@ -4,7 +4,7 @@ This service is used to retrieve data to populate the stats on the covid19.ca.go
 
 - Data is retrieved from snowflake
 - Data is not published before the statewide coordinated daily stats release time 9:30am daily
-- Data is published as static json files to the covid-static(-data) repository and from there pushed to files.covid19.ca.gov
+- Data is published as static json files to the covid-static-data repository and from there pushed to files.covid19.ca.gov
 - Data will be initially published as an open pull request on the static repository. 
 - Data publishing can be stopped by applying a "do not publish" label to the pull request
 - Data publishing can be resumed by applying a "Publish ASAP" label. The presence of this label will allow the cronjob that runs every few minutes to merge the pull request. To publish immediately you could also manually merge the pull request.
