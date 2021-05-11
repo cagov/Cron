@@ -7,7 +7,7 @@ This service retrieves information to power the covid19 equity dashboard: <a hre
 
 - Data is retrieved from snowflake
 - Data is not published before the statewide coordinated daily stats release time 9:30am daily
-- Data is published as static json files to the covid-static(-data) repository and from there pushed to files.covid19.ca.gov
+- Data is published as static json files to the covid-static-data repository and from there pushed to files.covid19.ca.gov
 - Data will be initially published as an open pull request on the static repository. 
 - Data consumed by charts in staging is written into the /to-review folder. 
   - A PR is created and merged immediately for these json files.
