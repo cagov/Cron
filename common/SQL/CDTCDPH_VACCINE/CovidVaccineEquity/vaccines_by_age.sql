@@ -25,7 +25,7 @@ GB as ( --Master list of corrected data grouped by region/category
   coalesce(ranges.NAME,'Unknown') "CATEGORY",
   MIXED_COUNTY "REGION",
     count(distinct recip_id) "ADMIN_COUNT", --For total people
-	MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE_2" -- new view only includes second dose as the latest dose
+	MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
     CA_VACCINE.CA_VACCINE.VW_DERIVED_BASE_RECIPIENTS
   left outer join
@@ -42,7 +42,7 @@ TA as ( -- Region Totals
   select
     REGION,
     SUM(ADMIN_COUNT) "REGION_TOTAL",
-    MAX(LATEST_ADMIN_DATE_2) "LATEST_ADMIN_DATE"
+    MAX(LATEST_ADMIN_DATE) "LATEST_ADMIN_DATE"
   from
       GB
   group by
