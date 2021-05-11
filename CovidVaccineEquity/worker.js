@@ -53,17 +53,8 @@ const doCovidVaccineEquity = async () => {
      * @param {string} schemaName
      * @param {string} path_prefix
      * @param {{mode :string, type :string, path:string,content : string}[]} tree
-     * @param {{CATEGORY: string,FROM: string}[]} sortMap
      */
-    const customAddDatsetToTree = (dataset, schemaName, path_prefix, tree, sortMap) => {
-        const sortMapStrings = sortMap.map(x=>x.FROM||x.CATEGORY);
-
-        //Make sure at least some of the data has the expected CATEGORIES
-        const missingCat = sortMapStrings.find(s=>!dataset.some(m=>m.CATEGORY===s));
-        if(missingCat) {
-            throw new Error(`missing expected sortmap CATEGORY - "${missingCat}". Dataset - ${path_prefix}`);
-        }
-
+    const customAddDatsetToTree = (dataset, schemaName, path_prefix, tree) => {
         const regions = dataset
             .map(x=>x.REGION)
             .filter((value, index, self) => 
@@ -80,27 +71,6 @@ const doCovidVaccineEquity = async () => {
                     CATEGORY:x.CATEGORY,
                     METRIC_VALUE:x.METRIC_VALUE
                 }));
-
-                //Add 0s for missing mapped values
-                sortMapStrings
-                    .filter(a=>!data.some(s=>s.CATEGORY===a))
-                    .forEach(CATEGORY=>{
-                        data.push({CATEGORY,METRIC_VALUE:0});
-                    });
-
-                const sortFunction = (a,b) => sortMapStrings.indexOf(a.CATEGORY)-sortMapStrings.indexOf(b.CATEGORY);
-                data.sort(sortFunction);
-
-                data.forEach(x=>{
-                    const replacementIndex = sortMapStrings.indexOf(x.CATEGORY);
-
-                    if (replacementIndex===-1) {
-                        throw new Error(`unexpected sortmap CATEGORY - "${x.CATEGORY}". File - ${path}`);
-                    } else {
-                        x.CATEGORY = sortMap[replacementIndex].CATEGORY;
-                    }
-                });
-
                 const result = {
                     meta: {
                         REGION,
@@ -120,80 +90,9 @@ const doCovidVaccineEquity = async () => {
             );
     };
 
-    //sortMaps ensure the results match a set sort and changes column values
-
-    const sortMap_Race = [
-        {
-            CATEGORY: "American Indian or Alaska Native (AI/AN)",
-            FROM: "American Indian or Alaska Native"
-        },
-        {
-            CATEGORY: "Asian American",
-            FROM: "Asian"
-        },
-        {
-            CATEGORY: "Black",
-            FROM: "Black or African American"
-        },
-        {
-            CATEGORY: "Latino"
-        },
-        {
-            CATEGORY: "Multi-race",
-            FROM: "Multiracial"
-        },
-        {
-            CATEGORY: "Native Hawaiian or Other Pacific Islander (NHPI)",
-            FROM: "Native Hawaiian or Other Pacific Islander"
-        },
-        {
-            CATEGORY: "White"
-        },
-        {
-            CATEGORY: "Other",
-            FROM: "Other Race"
-        },
-        {
-            CATEGORY: "Unknown"
-        }
-    ];
-
-    const sortmap_Age = [
-        {
-            CATEGORY: "0-17"
-        },
-        {
-            CATEGORY: "18-49"
-        },
-        {
-            CATEGORY: "50-64"
-        },
-        {
-            CATEGORY: "65+"
-        },
-        {
-            CATEGORY: "Unknown"
-        }
-    ];
-
-    const sortmap_Gender = [
-        {
-            FROM: "F",
-            CATEGORY: "Female"
-        },
-        {
-            FROM: "M",
-            CATEGORY: "Male"
-        },
-        {
-            FROM: "U",
-            CATEGORY: "Unknown/undifferentiated"
-        }
-    ];
-
-    customAddDatsetToTree(allData.vaccines_by_age,"vaccines_by_age",`age/vaccines_by_age_`,newTree,sortmap_Age);
-    customAddDatsetToTree(allData.vaccines_by_gender,"vaccines_by_gender",`gender/vaccines_by_gender_`,newTree,sortmap_Gender);
-    customAddDatsetToTree(allData.vaccines_by_race_eth,"vaccines_by_race_eth",`race-ethnicity/vaccines_by_race_ethnicity_`,newTree,sortMap_Race);
+    customAddDatsetToTree(allData.vaccines_by_age,"vaccines_by_age",`age/vaccines_by_age_`,newTree);
+    customAddDatsetToTree(allData.vaccines_by_gender,"vaccines_by_gender",`gender/vaccines_by_gender_`,newTree);
+    customAddDatsetToTree(allData.vaccines_by_race_eth,"vaccines_by_race_eth",`race-ethnicity/vaccines_by_race_ethnicity_`,newTree);
 
     //function to return a new branch if the tree has changes
     const branchIfChanged = async (tree, branch, commitName) => {
