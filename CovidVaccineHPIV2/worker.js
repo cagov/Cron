@@ -1,13 +1,14 @@
 const { queryDataset, getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 const GitHub = require('github-api');
+const PrLabels = ['Automatic Deployment','Publish at 9:15 a.m. ☀️'];
 const githubUser = 'cagov';
-const githubRepo = 'covid-static';
+const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const targetBranch = 'master';
+const targetBranch = 'main';
 const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/vaccine_hpi_v2/';
 const targetPath = 'data/vaccine-hpi/v2/';
 const targetFileName = 'vaccine-hpi.json';
@@ -16,11 +17,11 @@ const schemaPath = `../SQL/${SnowFlakeSqlPath}schema/`;
 const nowPacTime = options => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
 const todayTimeString = () => nowPacTime({ hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/:/g, '-');
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const doCovidVaccineHPIV2 = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
   const gitRepo = await gitModule.getRepo(githubUser, githubRepo);
+  const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
   const branchPrefix = 'data-vaccine-hpi-v2-';
   const commitMessage = 'Update Vaccine HPI Data';
@@ -59,17 +60,12 @@ const doCovidVaccineHPIV2 = async () => {
         base: targetBranch
       }))
         .data;
-    }
-  }
 
-  // Approve the PR
-  if(Pr) {
-      await sleep(5000); //let the PR actions resolve first
-      await gitRepo.mergePullRequest(Pr.number,{
-          merge_method: 'squash'
+      //Label the Pr
+      await gitIssues.editIssue(Pr.number,{
+          labels: PrLabels
       });
-
-      await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
+    }
   }
   return Pr;
 };
@@ -93,9 +89,9 @@ const getData = async () => {
     }
     sqlResults.doses.forEach(doses => {
       if (doses.HPIQUARTILE === r.HPIQUARTILE) {
-        r.COMBINED_DOSES = doses["COUNT(VAX_EVENT_ID)"]
+        r.COMBINED_DOSES = doses["COUNT(VAX_EVENT_ID)"];
       }
-    })
+    });
 
     delete r.LATEST_ADMIN_DATE;
   });
