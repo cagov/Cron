@@ -2,7 +2,7 @@
 
 This service provides data for vaccines delivered by HPI both for the partially/fully vaccinated people chart and the total doses chart shown on the /vaccines page.
 
-Charts in staging refer to this new file location in the staging branch of covid-static.
+Charts in staging refer to this new file location in the staging branch of covid-static-data.
 
 The production charts should use the new file location on files.covid19
 
