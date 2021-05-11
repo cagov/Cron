@@ -94,14 +94,14 @@
       "CATEGORY": {
         "type": "string",
         "enum": [
-          "American Indian or Alaska Native",
-          "Asian",
-          "Black or African American",
+          "American Indian or Alaska Native (AI/AN)",
+          "Asian American",
+          "Black",
           "Latino",
-          "Multiracial",
-          "Native Hawaiian or Other Pacific Islander",
+          "Multi-race",
+          "Native Hawaiian or Other Pacific Islander (NHPI)",
           "White",
-          "Other Race",
+          "Other",
           "Unknown"
         ]
       },
