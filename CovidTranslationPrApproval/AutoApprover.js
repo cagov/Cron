@@ -13,8 +13,17 @@ const labelPublishASAP = AutoApproverLabels.specialLabels.PublishASAP;
 const labelDoNotPublish = AutoApproverLabels.specialLabels.DoNotPublish;
 const securityGroups = ['OWNER','CONTRIBUTOR','COLLABORATOR'];
 
-//Check to see if we need stats update PRs, make them if we do.
+/**
+ * Check to see if we need stats update PRs, make them if we do.
+ * @returns {Promise<{approvals: string[],skips: string[],labels: string[]}>}
+ */
 const doAutoApprover = async () => {
+    let report = {
+        approvals: [],
+        skips: [],
+        labels: []
+    };
+
     //https://github-tools.github.io/github/docs/3.2.3/Repository.html#listPullRequests
     //https://developer.github.com/v3/pulls/#list-pull-requests
 
@@ -57,9 +66,11 @@ const doAutoApprover = async () => {
                 await gitIssues.editIssue(Pr.number,{
                     labels
                 });
-                await sleep(5000); //let the label apply
+                report.labels.push(Pr.html_url);
             }
         }
+
+        await sleep(5000); //let label application apply
     }
 
     const Prs = (await gitRepo.listPullRequests(
@@ -79,24 +90,22 @@ const doAutoApprover = async () => {
         //get the full pr detail
         const pr = (await gitRepo.getPullRequest(prlist.number)).data;
         if (pr.mergeable) {
-            //Grab all the checks running on this PR
-            const checks = (await gitRepo._request('GET',`/repos/${gitRepo.__fullname}/commits/${pr.head.sha}/check-runs`)).data;
-            const pass = checks.check_runs.every(x=>x && x.status==='completed' && x.conclusion==='success');
+            //Approve the PR
+            await gitRepo.mergePullRequest(pr.number,{
+                merge_method: 'squash'
+            });
 
-            if (pass) {
-                //Approve the PR
-                await gitRepo.mergePullRequest(pr.number,{
-                    merge_method: 'squash'
-                });
+            await gitRepo.deleteRef(`heads/${pr.head.ref}`);
 
-                await gitRepo.deleteRef(`heads/${pr.head.ref}`);
+            report.approvals.push(pr.html_url);
 
-                //This is where some notification should happen
-
-                await sleep(20000); //Wait after any approval so the next Pr can update
-            }
+            await sleep(20000); //Wait after any approval so the next Pr can update
+        } else {
+            report.skips.push(pr.html_url); //report PR not mergeable
         }
     }
+
+    return report;
 };
 
 module.exports = {
