@@ -11,7 +11,7 @@ try {
   //await slackBotChatPost(debugChannel,`${appName} ran`);
 
   await doTranslationPrUpdate(masterbranch);
-  let report = await doAutoApprover(masterbranch);
+  let report = await doAutoApprover();
 
   if(report.approvals.length || report.labels.length || report.skips.length) {
     let slackPostTS = (await (await slackBotChatPost(debugChannel,`AutoApprover results`)).json()).ts;
