@@ -7,7 +7,6 @@ const appName = 'CovidTranslationPrApproval';
 const masterbranch='master';
 
 module.exports = async function (context, myTimer) {
-  
 try {
   //await slackBotChatPost(debugChannel,`${appName} ran`);
 
