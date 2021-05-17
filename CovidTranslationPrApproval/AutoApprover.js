@@ -99,7 +99,7 @@ const doAutoApprover = async () => {
 
             report.approvals.push(pr.html_url);
 
-            await sleep(20000); //Wait after any approval so the next Pr can update
+            await sleep(30000); //Wait after any approval so the next Pr can update
         } else {
             report.skips.push(pr.html_url); //report PR not mergeable
         }
