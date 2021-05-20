@@ -4,6 +4,7 @@ Object.keys(Values).forEach(x=>process.env[x]=Values[x]); //Load local settings 
 
 const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker');
+const { doAutoApprover } = require('../CovidTranslationPrApproval/AutoApprover');
 const { doHealthCheck } = require('../CovidSiteHealth/worker');
 const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
@@ -15,7 +16,7 @@ const { doCovidStateDashboardTables } = require('../CovidStateDashboardTables/wo
 
 //const tempFunction = async () => {           };
 
-const CovidEquityData = require('../CovidEquityData');
+const { doCovidEquityData } = require('../CovidEquityData/worker');
 const CovidNewsFeed = require('../CovidNewsFeed');
 
 //const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
@@ -36,7 +37,7 @@ const doWork = async opt => {
     switch (opt) {
     case '1':
         console.log("Running CovidEquityData");
-        await CovidEquityData();
+        await doCovidEquityData();
         break;
     case '3':
         console.log("Running doTranslationPrUpdate");
@@ -69,6 +70,10 @@ const doWork = async opt => {
     case '11':
         console.log("Running doCovidAutoBuilder");
         await doCovidAutoBuilder();
+        break;
+    case '12':
+        console.log("Running doAutoApprover");
+        await doAutoApprover();
         break;
     case '13':
         console.log("Running doCovidStateDashboardTables");

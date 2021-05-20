@@ -13,7 +13,8 @@ try {
     await slackBotChatPost(notifyChannel,`*${appName} Report*\n\`\`\`${JSON.stringify(report,null,2)}\`\`\``);
   }
 } catch (e) {
-  if(e && e.stack && e.stack.includes('ECONNRESET')) {
+  if(e && e.stack && (e.stack.includes('EAI_AGAIN') || e.stack.includes('ECONNRESET') || e.stack.includes('reason: socket hang up'))) {
+    //filter routine connection issues
     await slackBotReportError(tempChannel,`Error running ${appName}`,e,context,myTimer);
   } else {
     await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);

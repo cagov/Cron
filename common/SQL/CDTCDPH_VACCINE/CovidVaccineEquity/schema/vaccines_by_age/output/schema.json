@@ -1,0 +1,126 @@
+{
+  "definitions": {
+    "date-YYYY-MM-DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "county": {
+      "type": "string",
+      "enum": [
+        "Outside California",
+        "Unknown",
+        "California",
+        "Alameda",
+        "Alpine",
+        "Amador",
+        "Butte",
+        "Calaveras",
+        "Colusa",
+        "Contra Costa",
+        "Del Norte",
+        "El Dorado",
+        "Fresno",
+        "Glenn",
+        "Humboldt",
+        "Imperial",
+        "Inyo",
+        "Kern",
+        "Kings",
+        "Lake",
+        "Lassen",
+        "Los Angeles",
+        "Madera",
+        "Marin",
+        "Mariposa",
+        "Mendocino",
+        "Merced",
+        "Modoc",
+        "Mono",
+        "Monterey",
+        "Napa",
+        "Nevada",
+        "Orange",
+        "Placer",
+        "Plumas",
+        "Riverside",
+        "Sacramento",
+        "San Benito",
+        "San Bernardino",
+        "San Diego",
+        "San Francisco",
+        "San Joaquin",
+        "San Luis Obispo",
+        "San Mateo",
+        "Santa Barbara",
+        "Santa Clara",
+        "Santa Cruz",
+        "Shasta",
+        "Sierra",
+        "Siskiyou",
+        "Solano",
+        "Sonoma",
+        "Stanislaus",
+        "Sutter",
+        "Tehama",
+        "Trinity",
+        "Tulare",
+        "Tuolumne",
+        "Ventura",
+        "Yolo",
+        "Yuba"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "meta": {
+      "required": true,
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "REGION": {
+          "required": true,
+          "$ref": "#/definitions/county"
+        },
+        "LATEST_ADMIN_DATE": {
+          "required": true,
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        },
+        "PUBLISHED_DATE": {
+          "required": true,
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        }
+      }
+    },
+    "data": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "CATEGORY": {
+            "required": true,
+            "type": "string",
+            "enum": [
+              "0-17",
+              "18-49",
+              "50-64",
+              "65+",
+              "Unknown"
+            ]
+          },
+          "METRIC_VALUE": {
+            "required": true,
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    }
+  }
+}

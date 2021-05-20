@@ -1,0 +1,242 @@
+[
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-19",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.011350098206524,
+    "METRIC_VALUE_30_DAYS_AGO": 0.027429307123455,
+    "METRIC_VALUE_DIFF": -0.016079208916932
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-20",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.010877192982456,
+    "METRIC_VALUE_30_DAYS_AGO": 0.026541550644627,
+    "METRIC_VALUE_DIFF": -0.01566435766217
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-21",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.010885005187136,
+    "METRIC_VALUE_30_DAYS_AGO": 0.024475692278159,
+    "METRIC_VALUE_DIFF": -0.013590687091023
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-22",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.011154542854419,
+    "METRIC_VALUE_30_DAYS_AGO": 0.023190442726634,
+    "METRIC_VALUE_DIFF": -0.012035899872215
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-23",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.011655011655012,
+    "METRIC_VALUE_30_DAYS_AGO": 0.022414011127972,
+    "METRIC_VALUE_DIFF": -0.01075899947296
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-24",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012059856266203,
+    "METRIC_VALUE_30_DAYS_AGO": 0.021684165416756,
+    "METRIC_VALUE_DIFF": -0.009624309150553
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-25",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012747504500082,
+    "METRIC_VALUE_30_DAYS_AGO": 0.020471899702635,
+    "METRIC_VALUE_DIFF": -0.007724395202553
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-26",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.013716558452595,
+    "METRIC_VALUE_30_DAYS_AGO": 0.019510964717054,
+    "METRIC_VALUE_DIFF": -0.005794406264458
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-27",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.01387184730743,
+    "METRIC_VALUE_30_DAYS_AGO": 0.018474321576947,
+    "METRIC_VALUE_DIFF": -0.004602474269517
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-28",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.013737661544724,
+    "METRIC_VALUE_30_DAYS_AGO": 0.018161870450266,
+    "METRIC_VALUE_DIFF": -0.004424208905542
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-29",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.013432442232258,
+    "METRIC_VALUE_30_DAYS_AGO": 0.018253069495768,
+    "METRIC_VALUE_DIFF": -0.004820627263511
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-30",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.013241560144215,
+    "METRIC_VALUE_30_DAYS_AGO": 0.017995744553328,
+    "METRIC_VALUE_DIFF": -0.004754184409113
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-03-31",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.01306501242328,
+    "METRIC_VALUE_30_DAYS_AGO": 0.016291248846966,
+    "METRIC_VALUE_DIFF": -0.003226236423686
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-01",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012988736459698,
+    "METRIC_VALUE_30_DAYS_AGO": 0.015899106422402,
+    "METRIC_VALUE_DIFF": -0.002910369962704
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-02",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012505264521981,
+    "METRIC_VALUE_30_DAYS_AGO": 0.015613064866021,
+    "METRIC_VALUE_DIFF": -0.00310780034404
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-03",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012353885313143,
+    "METRIC_VALUE_30_DAYS_AGO": 0.015690312269486,
+    "METRIC_VALUE_DIFF": -0.003336426956343
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-04",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012269737381691,
+    "METRIC_VALUE_30_DAYS_AGO": 0.015099317194289,
+    "METRIC_VALUE_DIFF": -0.002829579812599
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-05",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012594544063908,
+    "METRIC_VALUE_30_DAYS_AGO": 0.014714794039498,
+    "METRIC_VALUE_DIFF": -0.002120249975591
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-06",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.01261840499235,
+    "METRIC_VALUE_30_DAYS_AGO": 0.014210331420107,
+    "METRIC_VALUE_DIFF": -0.001591926427758
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-07",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012875611460517,
+    "METRIC_VALUE_30_DAYS_AGO": 0.014089746570565,
+    "METRIC_VALUE_DIFF": -0.001214135110048
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-08",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012523052603847,
+    "METRIC_VALUE_30_DAYS_AGO": 0.013496856896339,
+    "METRIC_VALUE_DIFF": -0.000973804292493
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-09",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012539129512053,
+    "METRIC_VALUE_30_DAYS_AGO": 0.013232368408877,
+    "METRIC_VALUE_DIFF": -0.000693238896824
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-10",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012555783806758,
+    "METRIC_VALUE_30_DAYS_AGO": 0.012921496108076,
+    "METRIC_VALUE_DIFF": -0.000365712301319
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-11",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.01305114638448,
+    "METRIC_VALUE_30_DAYS_AGO": 0.013131813676908,
+    "METRIC_VALUE_DIFF": -0.000080667292428
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-12",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012800634001792,
+    "METRIC_VALUE_30_DAYS_AGO": 0.013164271978237,
+    "METRIC_VALUE_DIFF": -0.000363637976445
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-13",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012917352706533,
+    "METRIC_VALUE_30_DAYS_AGO": 0.013509050592102,
+    "METRIC_VALUE_DIFF": -0.000591697885569
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-14",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.012820512820513,
+    "METRIC_VALUE_30_DAYS_AGO": 0.013212850767838,
+    "METRIC_VALUE_DIFF": -0.000392337947325
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-15",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.013163995231156,
+    "METRIC_VALUE_30_DAYS_AGO": 0.012818682277537,
+    "METRIC_VALUE_DIFF": 0.000345312953619
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-16",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.013591399270061,
+    "METRIC_VALUE_30_DAYS_AGO": 0.012674693443741,
+    "METRIC_VALUE_DIFF": 0.00091670582632
+  },
+  {
+    "COUNTY": "Alameda",
+    "DATE": "2021-04-17",
+    "METRIC": "county_positivity_all_nopris",
+    "METRIC_VALUE": 0.013605893674919,
+    "METRIC_VALUE_30_DAYS_AGO": 0.011969689656837,
+    "METRIC_VALUE_DIFF": 0.001636204018082
+  }
+]
