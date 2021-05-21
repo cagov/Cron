@@ -2,7 +2,7 @@
 
 This service provides data for vaccines delivered by HPI both for the partially/fully vaccinated people chart and the total doses chart shown on the /vaccines page.
 
-Charts in staging refer to this new file location in the staging branch of covid-static.
+Charts in staging refer to this new file location in the staging branch of covid-static-data.
 
 The production charts should use the new file location on files.covid19
 
@@ -12,6 +12,12 @@ This new SQL uses improved views with cleaner data provided by CDPH so we change
 The output json uses a different field structure which is clearer because we are no longer referring to first_dose which doesn't make sense with the single dose vaccine from J&J.
 
 Because the output json is different and we want to keep it that way this new version of the service writes to a v2 file location.
+
+## Examples of data in use
+
+- <a href="https://covid19.ca.gov/vaccination-progress-data/">covid19.ca.gov vaccine dashboard</a>
+
+<img src="img/vaccine-hpi.png">
 
 # TimerTrigger - JavaScript
 

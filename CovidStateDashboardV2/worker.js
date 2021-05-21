@@ -2,19 +2,18 @@ const { getData_daily_stats_v2 } = require('./daily-stats-v2');
 const { getData_infections_by_group } = require('./infections-by-group');
 
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment'];
+const PrLabels = ['Automatic Deployment','Publish at 9 a.m. ☀️'];
 const githubUser = 'cagov';
-const githubRepo = 'covid-static';
+const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const masterBranch = 'master';
+const masterBranch = 'main';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
  * Check to see if we need stats update PRs, make them if we do.
@@ -38,9 +37,6 @@ const doCovidStateDashboarV2 = async () => {
         await gitIssues.editIssue(Pr.number,{
             labels: PrLabels
         });
-
-        await sleep(5000); //let the PR check actions first
-        await PrApprove(gitRepo,Pr);
     }
 
     return Pr;
@@ -105,20 +101,6 @@ const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
     }
 
     return Pr;
-};
-
-/**
- * Squash a PR and delete the branch
- * @param {*} gitRepo 
- * @param {{number:number,head:{ref:string}}} Pr 
- */
-const PrApprove = async (gitRepo, Pr) => {
-    //Approve the PR
-    await gitRepo.mergePullRequest(Pr.number,{
-        merge_method: 'squash'
-    });
-    //Delete PR branch
-    await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
 };
 
 module.exports = {

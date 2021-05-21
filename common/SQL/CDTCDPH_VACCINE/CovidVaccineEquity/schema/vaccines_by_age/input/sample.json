@@ -1,0 +1,1832 @@
+[
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Alameda",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.020545
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Alameda",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.518067
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Alameda",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.247345
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Alameda",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.214044
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Alameda",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-07",
+    "REGION": "Alpine",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.001218
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-07",
+    "REGION": "Alpine",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.375152
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-07",
+    "REGION": "Alpine",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.35201
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-07",
+    "REGION": "Alpine",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.27162
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-07",
+    "REGION": "Alpine",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Amador",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.007287
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Amador",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.22324
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Amador",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.278719
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Amador",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.490754
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Amador",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Butte",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.012479
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Butte",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.393455
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Butte",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.245867
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Butte",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.3482
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Butte",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Calaveras",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.008373
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Calaveras",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.211917
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Calaveras",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.287705
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Calaveras",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.492005
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Calaveras",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "California",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.018549
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "California",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.465553
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "California",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.262398
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "California",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.2535
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "California",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 1E-06
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Colusa",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.00994
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Colusa",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.427311
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Colusa",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.277212
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Colusa",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.285537
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Colusa",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Contra Costa",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.024522
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Contra Costa",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.449716
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Contra Costa",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.27159
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Contra Costa",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.254172
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Contra Costa",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Del Norte",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.007997
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Del Norte",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.298491
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Del Norte",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.293084
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Del Norte",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.400428
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Del Norte",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "El Dorado",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.015674
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "El Dorado",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.31172
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "El Dorado",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.299818
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "El Dorado",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.372788
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "El Dorado",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Fresno",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.016917
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Fresno",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.458707
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Fresno",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.260206
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Fresno",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.264169
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Fresno",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Glenn",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.011969
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Glenn",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.356568
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Glenn",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.276604
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Glenn",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.354858
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Glenn",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Humboldt",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.015245
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Humboldt",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.43139
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Humboldt",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.234564
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Humboldt",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.318801
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Humboldt",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Imperial",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.023802
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Imperial",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.481558
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Imperial",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.256792
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Imperial",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.237849
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Imperial",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Inyo",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.014079
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Inyo",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.334628
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Inyo",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.259862
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Inyo",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.391431
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Inyo",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kern",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.019032
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kern",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.45136
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kern",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.271183
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kern",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.258424
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kern",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kings",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.01551
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kings",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.472344
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kings",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.280039
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kings",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.232107
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Kings",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lake",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.004575
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lake",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.294037
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lake",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.295616
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lake",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.405773
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lake",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lassen",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.006318
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lassen",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.259516
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lassen",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.285252
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lassen",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.448914
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Lassen",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Los Angeles",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.018288
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Los Angeles",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.489627
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Los Angeles",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.264647
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Los Angeles",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.227439
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Los Angeles",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Madera",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.019245
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Madera",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.405157
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Madera",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.26591
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Madera",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.309688
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Madera",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Marin",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.028205
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Marin",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.393028
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Marin",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.279037
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Marin",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.29973
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Marin",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mariposa",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.010397
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mariposa",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.267828
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mariposa",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.276029
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mariposa",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.445746
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mariposa",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mendocino",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.016108
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mendocino",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.362094
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mendocino",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.253799
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mendocino",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.368
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Mendocino",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Merced",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.015396
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Merced",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.454079
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Merced",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.260332
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Merced",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.270194
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Merced",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Modoc",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.00989
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Modoc",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.22442
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Modoc",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.270065
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Modoc",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.495626
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Modoc",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-08",
+    "REGION": "Mono",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.022194
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-08",
+    "REGION": "Mono",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.483643
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-08",
+    "REGION": "Mono",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.282232
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-08",
+    "REGION": "Mono",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.211931
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-08",
+    "REGION": "Mono",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Monterey",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.020498
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Monterey",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.497921
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Monterey",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.248547
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Monterey",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.233033
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Monterey",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Napa",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.020647
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Napa",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.43019
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Napa",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.260579
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Napa",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.288584
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Napa",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Nevada",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.014447
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Nevada",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.308655
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Nevada",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.262688
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Nevada",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.414211
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Nevada",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Orange",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.01892
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Orange",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.452063
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Orange",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.272742
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Orange",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.256276
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Orange",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Outside California",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.007074
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Outside California",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.528734
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Outside California",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.238682
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Outside California",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.225505
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Outside California",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 5E-06
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Placer",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.018442
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Placer",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.358628
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Placer",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.269149
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Placer",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.353782
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Placer",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Plumas",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.009744
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Plumas",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.255294
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Plumas",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.269975
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Plumas",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.464986
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Plumas",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Riverside",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.017999
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Riverside",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.403777
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Riverside",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.276732
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Riverside",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.301492
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Riverside",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sacramento",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.017212
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sacramento",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.447913
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sacramento",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.265854
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sacramento",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.26902
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sacramento",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Benito",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.020357
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Benito",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.465775
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Benito",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.284813
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Benito",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.229055
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Benito",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Bernardino",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.018302
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Bernardino",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.446121
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Bernardino",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.28322
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Bernardino",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.252357
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Bernardino",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Diego",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.016713
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Diego",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.456553
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Diego",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.251702
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Diego",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.275032
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Diego",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Francisco",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.013623
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Francisco",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.553629
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Francisco",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.227069
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Francisco",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.205679
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Francisco",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Joaquin",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.019569
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Joaquin",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.440157
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Joaquin",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.276407
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Joaquin",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.263837
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Joaquin",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 3E-05
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Luis Obispo",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.013139
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Luis Obispo",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.384798
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Luis Obispo",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.246241
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Luis Obispo",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.355821
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Luis Obispo",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Mateo",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.022572
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Mateo",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.484518
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Mateo",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.257438
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Mateo",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.235472
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "San Mateo",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Barbara",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.017544
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Barbara",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.469488
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Barbara",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.241276
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Barbara",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.271693
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Barbara",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Clara",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.024388
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Clara",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.524044
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Clara",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.2505
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Clara",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.201068
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Clara",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Cruz",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.021793
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Cruz",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.444341
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Cruz",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.261919
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Cruz",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.271947
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Santa Cruz",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Shasta",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.008844
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Shasta",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.285091
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Shasta",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.269142
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Shasta",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.436923
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Shasta",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-06",
+    "REGION": "Sierra",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.000734
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-06",
+    "REGION": "Sierra",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.24945
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-06",
+    "REGION": "Sierra",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.292003
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-06",
+    "REGION": "Sierra",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.457814
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-06",
+    "REGION": "Sierra",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Siskiyou",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.009708
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Siskiyou",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.256609
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Siskiyou",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.263299
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Siskiyou",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.470384
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Siskiyou",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Solano",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.017929
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Solano",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.410953
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Solano",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.283516
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Solano",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.287602
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Solano",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sonoma",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.017706
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sonoma",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.404308
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sonoma",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.267457
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sonoma",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.310529
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sonoma",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Stanislaus",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.020883
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Stanislaus",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.429899
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Stanislaus",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.267327
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Stanislaus",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.281869
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Stanislaus",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 2.3E-05
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sutter",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.010782
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sutter",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.388595
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sutter",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.278359
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sutter",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.322265
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Sutter",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tehama",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.009388
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tehama",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.286901
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tehama",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.285506
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tehama",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.418205
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tehama",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Trinity",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.003541
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Trinity",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.253069
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Trinity",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.271719
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Trinity",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.471671
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Trinity",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tulare",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.01805
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tulare",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.458852
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tulare",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.268227
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tulare",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.254871
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tulare",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tuolumne",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.007472
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tuolumne",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.235632
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tuolumne",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.266881
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tuolumne",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.490014
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Tuolumne",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-09",
+    "REGION": "Unknown",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.047588
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-09",
+    "REGION": "Unknown",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.53329
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-09",
+    "REGION": "Unknown",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.214145
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-09",
+    "REGION": "Unknown",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.204977
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-09",
+    "REGION": "Unknown",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Ventura",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.01969
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Ventura",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.430359
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Ventura",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.2783
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Ventura",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.271651
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Ventura",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yolo",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.019737
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yolo",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.517005
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yolo",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.233098
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yolo",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.230159
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yolo",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yuba",
+    "CATEGORY": "0-17",
+    "METRIC_VALUE": 0.009543
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yuba",
+    "CATEGORY": "18-49",
+    "METRIC_VALUE": 0.387645
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yuba",
+    "CATEGORY": "50-64",
+    "METRIC_VALUE": 0.287277
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yuba",
+    "CATEGORY": "65+",
+    "METRIC_VALUE": 0.315535
+  },
+  {
+    "LATEST_ADMIN_DATE": "2021-05-10",
+    "REGION": "Yuba",
+    "CATEGORY": "Unknown",
+    "METRIC_VALUE": 0
+  }
+]

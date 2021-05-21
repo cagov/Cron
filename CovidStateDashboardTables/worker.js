@@ -1,15 +1,16 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
-const { createTreeFromFileMap, PrIfChanged, todayDateString, sleep } = require('./gitTreeCommon');
+const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment'];
+const PrLabels = ['Automatic Deployment','Publish at 9:10 a.m. ☀️'];
 const githubUser = 'cagov';
-const githubRepo = 'covid-static';
+const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const masterBranch = 'master';
+const masterBranch = 'main';
+const stagingBranch = 'CovidStateDashboardTables_Staging';
 const doInputValidation = true;
 const doOutputValidation = true;
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
@@ -277,24 +278,21 @@ const doCovidStateDashboardTables = async () => {
         }
     }
 
-    //Delay and approve Prs
+    //Merge all the PRs into a single branch for staging
     if(PrList.length) {
-        await sleep(10000); //give PRs time to check actions
-        for (let Pr of PrList) {
-            console.log(`Approving Pr - ${Pr.html_url}`);
+        await gitRepo.deleteRef(`heads/${stagingBranch}`);
+        await gitRepo.createBranch(masterBranch,stagingBranch);
         
-            //Approve Pr
-            await gitRepo.mergePullRequest(Pr.number,{
-                merge_method: 'squash'
+        for (let Pr of PrList) {
+            await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/merges`, {
+                base: stagingBranch,
+                head: Pr.head.sha,
+                commit_message: `Merged PR ${Pr.html_url}`
             });
-    
-            //Delete Branch
-            await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
         }
-        return PrList;
-    } else {
-        return null;
     }
+
+    return PrList.length ? PrList : null;
 };
 
 

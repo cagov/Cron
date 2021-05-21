@@ -7,12 +7,12 @@ module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   let slackPostTS = null;
   try {
-    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every 30 mins from 9:20am to 11:50am)`)).json()).ts;
+    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Wed @ 8:05am)`)).json()).ts;
 
     const PrResult = await doCovidVaccineHPIV2();
 
     if(PrResult) {
-      const prMessage = `Vaccine HPI data deployed\n${PrResult.html_url}`;
+      const prMessage = `Vaccine HPI data ready\n${PrResult.html_url}`;
       await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
       await slackBotChatPost(notifyChannel, prMessage);

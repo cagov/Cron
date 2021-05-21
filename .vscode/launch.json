@@ -67,17 +67,17 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DIRECT CovidVaccineHPI",
+      "name": "Debug DIRECT CovidVaccineHPIV2",
       "program": "index",
-      "args": ["9:doCovidVaccineHPI"],
+      "args": ["10:doCovidVaccineHPIV2"],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DIRECT CovidVaccineHPIV2",
+      "name": "Debug DIRECT AutoApprover",
       "program": "index",
-      "args": ["10:doCovidVaccineHPIV2"],
+      "args": ["12:AutoApprover"],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
