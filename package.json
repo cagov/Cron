@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cagov/Cron"
+    "url": "https://github.com/cagov/Cron.git"
   },
   "description": "",
   "main": "index.js",
