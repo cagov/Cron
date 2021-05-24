@@ -87,7 +87,7 @@ const doAutoApprover = async () => {
         );
     for (const prlist of Prs) {
         //get the full pr detail
-        const pr = (await gitRepo.getPullRequest(prlist.number)).data;
+        const pr = (await gitRepo.getPullRequest(`${prlist.number}?cachebust=${new Date().valueOf()}`)).data;
         if (pr.mergeable) {
             //Approve the PR
             await gitRepo.mergePullRequest(pr.number,{
