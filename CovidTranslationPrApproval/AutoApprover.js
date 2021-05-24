@@ -40,7 +40,7 @@ const doAutoApprover = async () => {
             .diff(moment().startOf('day')
             .add(x.hour, 'hours')
             .add(x.minute, 'minutes'),'minutes')}))
-        .find(x=>x.diff>0 && x.diff<15)
+            .reverse().find(x=>x.diff>0 && x.diff<15)
         ?.label;
 
     if(ActiveLabel) {
