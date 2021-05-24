@@ -35,15 +35,14 @@ const doAutoApprover = async () => {
     
     moment.tz.setDefault(dataTimeZone); //So important when using Moment.JS
 
-    let ActiveLabel = AutoApproverLabels.timeLabels
+    const ActiveLabels = AutoApproverLabels.timeLabels
         .map(x=>({label:x.label,diff:moment()
             .diff(moment().startOf('day')
             .add(x.hour, 'hours')
             .add(x.minute, 'minutes'),'minutes')}))
-        .find(x=>x.diff>0 && x.diff<15)
-        ?.label;
+            .filter(x=>x.diff>0 && x.diff<15);
 
-    if(ActiveLabel) {
+    for (const ActiveLabel of ActiveLabels) {
         //Mark any Prs with the time publish label as publish asap
         const PrsTimeReady = (await gitRepo.listPullRequests(
             {
@@ -54,7 +53,7 @@ const doAutoApprover = async () => {
             .filter(p=>
                 !p.draft //ignore drafts
                 &&securityGroups.includes(p.author_association) //Security
-                &&p.labels.some(s=>s.name===ActiveLabel)
+                &&p.labels.some(s=>s.name===ActiveLabel.label)
             );
 
         //Time is up.  Mark it for publishing (in case we miss it this pass)
@@ -88,7 +87,7 @@ const doAutoApprover = async () => {
         );
     for (const prlist of Prs) {
         //get the full pr detail
-        const pr = (await gitRepo.getPullRequest(prlist.number)).data;
+        const pr = (await gitRepo.getPullRequest(`${prlist.number}?cachebust=${new Date().valueOf()}`)).data;
         if (pr.mergeable) {
             //Approve the PR
             await gitRepo.mergePullRequest(pr.number,{
