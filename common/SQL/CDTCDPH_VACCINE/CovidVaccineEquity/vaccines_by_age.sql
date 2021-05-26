@@ -5,7 +5,7 @@
 with
 ranges as (select * from
   (values
-   ('0-17', 0,  17),
+   ('12-17', 12,  17),
    ('18-49',18, 49),
    ('50-64',50, 64),
    ('65+',  65, 119)
@@ -13,7 +13,7 @@ ranges as (select * from
 ),
 SortMap as (select * from
   (values
-   (1,'0-17',null),
+   (1,'12-17',null),
    (2,'18-49',null),
    (3,'50-64',null),
    (4,'65+',null),
