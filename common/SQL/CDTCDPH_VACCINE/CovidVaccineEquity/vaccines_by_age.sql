@@ -1,20 +1,20 @@
 -- Current vaccine administrations by age group (distinct people)
 -- 305 rows
 --   by county(REGION) + 'California' + 'Outside California'
---   by age(CATEGORY) (0-17,18-49,50-64/65+,Unknown)
+--   by age(CATEGORY) (12-17,18-49,50-64/65+,Unknown)
 with
 SortMap as (select * from
   (values
-   (1,'0-17',null),
+   (1,'12-17',null),
    (2,'18-49',null),
    (3,'50-64',null),
    (4,'65+',null),
-   (5,'Unknown',null)
+   (5,'Unknown Agegroup','Unknown')
   ) as foo (SORT, CATEGORY, REPLACEMENT)
 ),
 GB as ( --Master list of corrected data grouped by region/category
   select
-  REPLACE(RECIP_AGE_GROUP,'Unknown Agegroup','Unknown') "CATEGORY",
+  RECIP_AGE_GROUP "CATEGORY",
   MIXED_COUNTY "REGION",
     count(distinct recip_id) "ADMIN_COUNT", --For total people
 	MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE"
