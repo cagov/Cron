@@ -28,36 +28,37 @@ module.exports = async function () {
     const TodayDayOfWeekCode = weekdayCodes[moment().tz(dataTimeZone).day()];
     
     const slackData = await (await slackBotChannelHistory(feedChannel,`&oldest=${startOfDataTimeStamp}`)).json();
-    for (const func of jobs.filter(x=>x.enabled&x.days.includes(TodayDayOfWeekCode))) {
+    for (const myjob of jobs.filter(x=>x.enabled&x.days.includes(TodayDayOfWeekCode))) {
       
-        const runToday = moment.tz({hour:func.runat.hour,minute:func.runat.minute},dataTimeZone);
+        const runToday = moment.tz({hour:myjob.runat.hour,minute:myjob.runat.minute},dataTimeZone);
 
         const threadStartTimePassed = runToday.diff()<0;
-        const threadNotTooLate = runToday.clone().add(1,'hour').diff()>0;
 
-        const RuntimeThread = slackData.messages.find(m=>m.text===func.title);
-
-        if(threadStartTimePassed && threadNotTooLate) {
+        if(threadStartTimePassed) {
           //We should have a run for this
 
+          //const threadNotTooLate = runToday.clone().add(1,'hour').diff()>0;
+          let RuntimeThread = slackData.messages.find(m=>m.text===myjob.title);
+
+          let runPlease = !RuntimeThread;
           if(!RuntimeThread) {
-            let slackPostTS = (await (await slackBotChatPost(feedChannel,func.title)).json()).ts;
-
-            try {
-              //await runModule(func.name,feedChannel,slackPostTS);
-              await slackBotReplyPost(feedChannel, slackPostTS,`${func.title} finished`);
-              await slackBotReactionAdd(feedChannel, slackPostTS, 'white_check_mark');
-            } catch (e) {
-              //Report on this error and allow movement forward
-              await slackBotReportError(feedChannel,`Error running ${func.title}`,e);
-
-              if(slackPostTS) {
-                await slackBotReplyPost(feedChannel, slackPostTS, `${func.title} ERROR!`);
-                await slackBotReactionAdd(feedChannel, slackPostTS, 'x');
-              }
-            }
+            RuntimeThread = await (await slackBotChatPost(feedChannel,myjob.title)).json();
           }
-        
+          const slackPostTS = RuntimeThread.ts;
+          try {
+            if(runPlease) {
+              //await runModule(func.name,feedChannel,slackPostTS);
+
+              await slackBotReplyPost(feedChannel, slackPostTS,`${myjob.title} finished`);
+              await slackBotReactionAdd(feedChannel, slackPostTS, 'white_check_mark');
+            } else {
+              await slackBotReplyPost(feedChannel, slackPostTS,`${myjob.title} scanned`);
+            }
+          } catch (e) {
+            //Report on this error and allow movement forward
+            await slackBotReactionAdd(feedChannel, slackPostTS, 'x');
+            await slackBotReplyPost(feedChannel, slackPostTS, `\`\`\`${e.stack}\`\`\``);
+          }
       }
     }
   } catch (e) {
