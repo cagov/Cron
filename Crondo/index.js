@@ -3,7 +3,7 @@ const moment = require('moment'); // https://momentjs.com/docs/#/use-it/node-js/
 
 //const { runModule } = require('./modules');
 
-const feedChannel = 'C0243VANW1W'; // #crondo-dev
+const channel = 'C0243VANW1W'; // #crondo-dev
 const schedule = require("./schedule.json");
 const jobs = schedule.data.jobs;
 
@@ -19,10 +19,9 @@ module.exports = async function () {
 
     const TodayDayOfWeekCode = weekdayCodes[moment().tz(dataTimeZone).day()];
     
-    const slackData = await slackWeb.conversations.history({channel:feedChannel,oldest:startOfDataTimeStamp});
-    //await (await slackBotChannelHistory(feedChannel,`&oldest=${startOfDataTimeStamp}`)).json();
+    const slackData = await slackWeb.conversations.history({channel,oldest:startOfDataTimeStamp});
+
     for (const myjob of jobs.filter(x=>x.enabled&x.days.includes(TodayDayOfWeekCode))) {
-      
         const runToday = moment.tz({hour:myjob.runat.hour,minute:myjob.runat.minute},dataTimeZone);
 
         const threadStartTimePassed = runToday.diff()<0;
@@ -35,27 +34,27 @@ module.exports = async function () {
 
           let runPlease = !RuntimeThread;
           if(!RuntimeThread) {
-            RuntimeThread = await slackWeb.chat.postMessage({channel: feedChannel,text: myjob.title});
+            RuntimeThread = await slackWeb.chat.postMessage({channel,text:myjob.title});
           }
-          const slackPostTS = RuntimeThread.ts;
+          const thread_ts = RuntimeThread.ts;
           try {
             if(runPlease) {
               //await runModule(func.name,feedChannel,slackPostTS);
-              await slackWeb.chat.postMessage({channel: feedChannel, text:`${myjob.title} finished`,thread_ts:slackPostTS});
-              await slackWeb.reactions.add({channel:feedChannel,timestamp:slackPostTS,name:'white_check_mark'});
+              await slackWeb.chat.postMessage({channel,thread_ts,text:`${myjob.title} finished`});
+              await slackWeb.reactions.add({channel,timestamp:thread_ts,name:'white_check_mark'});
             } else {
-              await slackWeb.chat.postMessage({channel: feedChannel,text:`${myjob.title} scanned`,thread_ts:slackPostTS});
+              await slackWeb.chat.postMessage({channel,thread_ts,text:`${myjob.title} scanned`});
             }
           } catch (e) {
             //Report on this error and allow movement forward
-            await slackWeb.reactions.add({channel:feedChannel,timestamp:slackPostTS,name:'x'});
-            await slackWeb.chat.postMessage({channel: feedChannel,text:`\`\`\`${e}\`\`\``,thread_ts:slackPostTS
+            await slackWeb.reactions.add({channel,timestamp:thread_ts,name:'x'});
+            await slackWeb.chat.postMessage({channel,thread_ts,text:`\`\`\`${e}\`\`\``
             });
           }
       }
     }
   } catch (e) {
     //Someething in the overall system failed
-    await slackWeb.chat.postMessage({channel: feedChannel,text:`*Error running Crondo*\`\`\`${e}\`\`\``});
+    await slackWeb.chat.postMessage({channel,text:`*Error running Crondo*\`\`\`${e}\`\`\``});
   }
 };
