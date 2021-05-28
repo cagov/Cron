@@ -4,6 +4,7 @@ const moment = require('moment'); // https://momentjs.com/docs/#/use-it/node-js/
 //const { runModule } = require('./modules');
 
 const channel = 'C0243VANW1W'; // #crondo-dev
+const myUser = 'U01CYP9UF62';
 const schedule = require("./schedule.json");
 const jobs = schedule.data.jobs;
 
@@ -20,6 +21,7 @@ module.exports = async function () {
     const TodayDayOfWeekCode = weekdayCodes[moment().tz(dataTimeZone).day()];
     
     const slackData = await slackWeb.conversations.history({channel,oldest:startOfDataTimeStamp});
+    //https://api.slack.com/methods/conversations.history
 
     for (const myjob of jobs.filter(x=>x.enabled&x.days.includes(TodayDayOfWeekCode))) {
         const runToday = moment.tz({hour:myjob.runat.hour,minute:myjob.runat.minute},dataTimeZone);
@@ -35,8 +37,16 @@ module.exports = async function () {
           let runPlease = !RuntimeThread;
           if(!RuntimeThread) {
             RuntimeThread = await slackWeb.chat.postMessage({channel,text:myjob.title});
+            //https://api.slack.com/methods/chat.postMessage
           }
           const thread_ts = RuntimeThread.ts;
+
+          if(RuntimeThread.reply_users?.length>1) {
+            //user activiy
+            const replies = await slackWeb.conversations.replies({channel,ts:thread_ts, limit:999});
+            await slackWeb.chat.postMessage({channel,thread_ts,text:`user activity detected.`});
+          }
+
           try {
             if(runPlease) {
               //await runModule(func.name,feedChannel,slackPostTS);
