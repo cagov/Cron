@@ -3,49 +3,29 @@
     "description": "Data schedule for Crondo; think WHEN. 5 min increments."
   },
   "data": {
-    "functions": [
+    "jobs": [
       {
-        "name" : "CovidStateDashboardV2",
+        "title" : "Covid Daily Stats",
+        "sqlPath": "DailyStats",
+        "filter": "DailyStats",
         "enabled": true,
-        "approval_delay": 15,
-        "daily_schedule": [
-          {
-            "message" : "CovidStateDashboardV2 (9:00 AM every day)",
-            "days" : "MTWRFSU",
-            "hour" : 9,
-            "minute" : 0
-          },
-          {
-            "message" : "CovidStateDashboardV2 (9:30 AM every day)",
-            "days" : "MTWRFSU",
-            "hour" : 9,
-            "minute" : 30
-          },
-          {
-            "message" : "CovidStateDashboardV2 (10:00 AM every day)",
-            "days" : "MTWRFSU",
-            "hour" : 10,
-            "minute" : 0
-          },
-          {
-            "message" : "CovidStateDashboardV2 (10:30 AM every day)",
-            "days" : "MTWRFSU",
-            "hour" : 10,
-            "minute" : 30
-          },
-          {
-            "message" : "CovidStateDashboardV2 (11:00 AM every day)",
-            "days" : "MTWRFSU",
-            "hour" : 11,
-            "minute" : 0
-          },
-          {
-            "message" : "CovidStateDashboardV2 (11:30 AM every day)",
-            "days" : "MTWRFSU",
-            "hour" : 11,
-            "minute" : 30
-          }
-        ]
+        "days" : "MTWRFSU",
+        "runat" : {
+          "hour": 12,
+          "minute": 30
+        },
+        "publishat": {
+          "hour": 9,
+          "minute": 15
+        },
+        "labels": ["Automatic Deployment"],
+        "Reviewers": [],
+        "PrMessage": "* PR Message",
+        "githubUser": "cagov",
+        "githubRepo": "automation-development-target",
+        "SlackNotificationChannel": "C0243VANW1W",
+        "SlackNotificationDelay": 1,
+        "SlackNotificationMessage": "Daily Stats Ready."
       }
     ]
   }
