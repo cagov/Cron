@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@slack/web-api": "^6.2.3",
     "axios": "^0.21.1",
     "calibre": "^3.2.0",
     "cheerio": "*",
