@@ -88,7 +88,8 @@
               "maximum": 99999999
             },
             "NEWLY_REPORTED_DEATHS":{
-              "$ref": "#/definitions/integer-zero-to-everyone"
+              "type": "integer",
+              "maximum": 99999999
             },
             "LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS":{
               "type": "number",
