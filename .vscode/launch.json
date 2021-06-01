@@ -11,9 +11,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DIRECT doHealthCheck",
+      "name": "Debug DIRECT Crondo",
       "program": "index",
-      "args": ["6:doHealthCheck"],
+      "args": ["crondo:Crondo"],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -78,14 +78,6 @@
       "name": "Debug DIRECT AutoApprover",
       "program": "index",
       "args": ["12:AutoApprover"],
-      "cwd": "${workspaceRoot}/sandbox"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Debug DIRECT Crondo",
-      "program": "index",
-      "args": ["crondo:Crondo"],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
