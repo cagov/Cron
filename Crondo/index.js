@@ -4,7 +4,7 @@ const moment = require('moment'); // https://momentjs.com/docs/#/use-it/node-js/
 //const { runModule } = require('./modules');
 
 const channel = 'C0243VANW1W'; // #crondo-dev
-const myUser = 'U01CYP9UF62';
+const botUserId = 'U01CYP9UF62'; //The Slack user of this process for filtering work
 const schedule = require("./schedule.json");
 const jobs = schedule.data.jobs;
 
@@ -12,6 +12,9 @@ const weekdayCodes = 'UMTWRFS';
 
 const dataTimeZone = 'America/Los_Angeles';
 //const dataTimeZone = 'America/New_York';
+
+const commands = ['run','help'];
+const helpText = '*Crondo Commands...*\n`help` : Show this list.\n`run` : Restart the job.';
 
 module.exports = async function () {
   const slackWeb = new WebClient(process.env["SLACKBOT_TOKEN"]);
@@ -41,25 +44,44 @@ module.exports = async function () {
           }
           const thread_ts = RuntimeThread.ts;
 
-          if(RuntimeThread.reply_users?.length>1) {
+          if(RuntimeThread.reply_users?.filter(x=>x!==botUserId).length) {
             //user activiy
             const replies = await slackWeb.conversations.replies({channel,ts:thread_ts, limit:999});
-            await slackWeb.chat.postMessage({channel,thread_ts,text:`user activity detected.`});
+
+            const userCommands = replies.messages.filter(x=>x.user!==botUserId&&commands.includes(x.text));
+            const unasnweredCommands = userCommands.filter(x=>!x.reactions || !x.reactions.some(y=>y.users.some(u=>u===botUserId)));
+
+            for(const command of unasnweredCommands) {
+              switch (command.text) {
+                case 'help':
+                  await slackWeb.chat.postMessage({channel,thread_ts,text:helpText});
+                  break;
+                case 'run':
+                  runPlease = true; //mark for re-run
+                  await slackWeb.chat.postMessage({channel,thread_ts,text:`Run restart`});
+                  break;
+                default:
+                  await slackWeb.chat.postMessage({channel,thread_ts,text:`Command not implemented - ${command.text}`});
+              }
+              await slackWeb.reactions.add({channel,timestamp:command.ts,name:'gear'});
+            }
           }
 
           try {
             if(runPlease) {
               //await runModule(func.name,feedChannel,slackPostTS);
               await slackWeb.chat.postMessage({channel,thread_ts,text:`${myjob.title} finished`});
-              await slackWeb.reactions.add({channel,timestamp:thread_ts,name:'white_check_mark'});
-            } else {
-              await slackWeb.chat.postMessage({channel,thread_ts,text:`${myjob.title} scanned`});
+
+              if(!RuntimeThread.reactions.some(x=>x.name==='white_check_mark')) {
+                await slackWeb.reactions.add({channel,timestamp:thread_ts,name:'white_check_mark'});
+              }
             }
           } catch (e) {
             //Report on this error and allow movement forward
-            await slackWeb.reactions.add({channel,timestamp:thread_ts,name:'x'});
-            await slackWeb.chat.postMessage({channel,thread_ts,text:`\`\`\`${e}\`\`\``
-            });
+            if(!RuntimeThread.reactions.some(x=>x.name==='x')) {
+              await slackWeb.reactions.add({channel,timestamp:thread_ts,name:'x'});
+            }
+            await slackWeb.chat.postMessage({channel,thread_ts,text:`\`\`\`${e}\`\`\``});
           }
       }
     }
