@@ -15,7 +15,7 @@ const { doCovidStateDashboardTables } = require('../CovidStateDashboardTables/wo
 //const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 
 //const tempFunction = async () => {           };
-
+const Crondo = require('../Crondo');
 const { doCovidEquityData } = require('../CovidEquityData/worker');
 const CovidNewsFeed = require('../CovidNewsFeed');
 
@@ -78,6 +78,10 @@ const doWork = async opt => {
     case '13':
         console.log("Running doCovidStateDashboardTables");
         await doCovidStateDashboardTables();
+        break;
+    case 'crondo':
+        console.log("Running Crondo");
+        await Crondo();
         break;
     case 'temp':
         //Put some temporary code here

@@ -11,17 +11,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug sandbox",
+      "name": "Debug DIRECT Crondo",
       "program": "index",
-      "args": ["${input:sandboxCodeSelection}"],
-      "cwd": "${workspaceRoot}/sandbox"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Debug DIRECT doHealthCheck",
-      "program": "index",
-      "args": ["6:doHealthCheck"],
+      "args": ["crondo:Crondo"],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -104,24 +96,5 @@
       "args": ["temp:TEMP"],
       "cwd": "${workspaceRoot}/sandbox"
     },
-  ],
-  "inputs": [
-    {
-      "id": "sandboxCodeSelection",
-      "type": "pickString",
-      "options": [
-        "1:CovidEquityData",
-        "2:doDailyStatsPr",
-        "3:doTranslationPrUpdate",
-        "4:doWeeklyUpdatePrs",
-        "5:CovidNewsFeed",
-        "6:doHealthCheck",
-        "7:doCovidStateDashboarV2",
-        "8:doCovidVaccineEquity",
-        "9:doCovidVaccineHPI",
-        "10:doCovidVaccineHPIV2"
-      ],
-      "description": "Select code to debug"
-    }
   ]
 }
