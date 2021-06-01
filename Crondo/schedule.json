@@ -5,7 +5,7 @@
   "data": {
     "jobs": [
       {
-        "title" : "Covid Daily Stats 7",
+        "title" : "Covid Daily Stats",
         "sqlPath": "DailyStats",
         "filter": "DailyStats",
         "enabled": true,

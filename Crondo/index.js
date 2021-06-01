@@ -1,5 +1,6 @@
 const { WebClient } = require('@slack/web-api'); //https://slack.dev/node-slack-sdk/web-api
 const moment = require('moment'); // https://momentjs.com/docs/#/use-it/node-js/
+const { runSqlLoader } = require('./loaders'); //https://slack.dev/node-slack-sdk/web-api
 
 //const { runModule } = require('./modules');
 
@@ -69,16 +70,18 @@ module.exports = async function () {
 
           try {
             if(runPlease) {
+              const filterInput = await runSqlLoader(myjob.sqlPath);
+
               //await runModule(func.name,feedChannel,slackPostTS);
               await slackWeb.chat.postMessage({channel,thread_ts,text:`${myjob.title} finished`});
 
-              if(!RuntimeThread.reactions.some(x=>x.name==='white_check_mark')) {
+              if(!RuntimeThread.reactions?.some(x=>x.name==='white_check_mark')) {
                 await slackWeb.reactions.add({channel,timestamp:thread_ts,name:'white_check_mark'});
               }
             }
           } catch (e) {
             //Report on this error and allow movement forward
-            if(!RuntimeThread.reactions.some(x=>x.name==='x')) {
+            if(!RuntimeThread.reactions?.some(x=>x.name==='x')) {
               await slackWeb.reactions.add({channel,timestamp:thread_ts,name:'x'});
             }
             await slackWeb.chat.postMessage({channel,thread_ts,text:`\`\`\`${e}\`\`\``});
