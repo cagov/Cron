@@ -40,6 +40,10 @@ const WpApi_GetPagedData = async objecttype => {
   return rows;
 };
 
+const cleanupContent = html => html
+  .replace(/\n\n\n/g,'\n') //reduce triple spacing
+  .replace(/^\n/g,'') //remove leading CR
+  ;
 
 module.exports = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
@@ -75,12 +79,12 @@ module.exports = async () => {
   allPosts.forEach(x=>{
     const jsonFilepath = `posts/${x.slug}.json`;
     const json = getCommonJson(x);
-    json.tags = x.tags.map(t=>taglist[t]);
     json.categories = x.categories.map(t=>categorylist[t]);
+    json.tags = x.tags.map(t=>taglist[t]);
 
     const htmlFilepath = `posts/${x.slug}.html`;
     allFilesMap.set(jsonFilepath,json);
-    allFilesMap.set(htmlFilepath,x.content.rendered);
+    allFilesMap.set(htmlFilepath,cleanupContent(x.content.rendered));
   });
 
   allPages.forEach(x=>{
@@ -91,7 +95,7 @@ module.exports = async () => {
 
     const htmlFilepath = `pages/${x.slug}.html`;
     allFilesMap.set(jsonFilepath,json);
-    allFilesMap.set(htmlFilepath,x.content.rendered);
+    allFilesMap.set(htmlFilepath,cleanupContent(x.content.rendered));
   });
 
   const workTree = await createTreeFromFileMap(gitRepo,masterBranch,allFilesMap,outputPath);
