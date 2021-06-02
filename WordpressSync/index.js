@@ -46,15 +46,16 @@ module.exports = async () => {
   const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
   //const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
-  const getList = async listname => (await fetchRetry(`${wordPressApiUrl}${listname}?context=embed&hide_empty=true&per_page=100`,
-    {method:"Get",retries:3,retryDelay:2000})        
-    .then(res => res.json()))
-    .map(x=>({id:x.id,name:x.name}));
+  const fetchDictionary = async listname => Object.assign({}, ...
+    (await fetchRetry(`${wordPressApiUrl}${listname}?context=embed&hide_empty=true&per_page=100`,
+      {method:"Get",retries:3,retryDelay:2000})        
+      .then(res => res.json()))
+      .map(x=>({[x.id]:x.name})));
 
   //List of WP categories
-  const categorylist = await getList('categories');
-  const taglist = await getList('tags');
-  const userlist = await getList('users');
+  const categorylist = await fetchDictionary('categories');
+  const taglist = await fetchDictionary('tags');
+  const userlist = await fetchDictionary('users');
 
   const allPosts = await WpApi_GetPagedData('posts');
   const allPages = await WpApi_GetPagedData('pages');
@@ -63,7 +64,7 @@ module.exports = async () => {
     id: x.id,
     slug: x.slug,
     title: x.title.rendered,
-    author: userlist.find(l=>l.id===x.author).name,
+    author: userlist[x.author],
     date_gmt: x.date_gmt,
     modified_gmt: x.modified_gmt,
     link: x.link,
@@ -72,11 +73,10 @@ module.exports = async () => {
 
   const allFilesMap = new Map();
   allPosts.forEach(x=>{
-
     const jsonFilepath = `posts/${x.slug}.json`;
     const json = getCommonJson(x);
-    json.tags = x.tags.map(t=>taglist.find(l=>l.id===t).name);
-    json.categories = x.categories.map(t=>categorylist.find(l=>l.id===t).name);
+    json.tags = x.tags.map(t=>taglist[t]);
+    json.categories = x.categories.map(t=>categorylist[t]);
 
     const htmlFilepath = `posts/${x.slug}.html`;
     allFilesMap.set(jsonFilepath,json);
@@ -97,5 +97,4 @@ module.exports = async () => {
   const workTree = await createTreeFromFileMap(gitRepo,masterBranch,allFilesMap,outputPath);
 
   await PrIfChanged(gitRepo, masterBranch, workTree, `${todayDateString()} Testing Wordpress`, committer);
-
 };
