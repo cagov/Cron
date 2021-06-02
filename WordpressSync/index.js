@@ -46,38 +46,50 @@ module.exports = async () => {
   const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
   //const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
-  //List of WP categories
-  const categorylist = (await fetchRetry(`${wordPressApiUrl}categories?context=embed&hide_empty=true&per_page=100&orderby=slug&order=asc`,
+  const getList = async listname => (await fetchRetry(`${wordPressApiUrl}${listname}?context=embed&hide_empty=true&per_page=100`,
     {method:"Get",retries:3,retryDelay:2000})        
     .then(res => res.json()))
     .map(x=>({id:x.id,name:x.name}));
 
-  const taglist = (await fetchRetry(`${wordPressApiUrl}tags?context=embed&hide_empty=true&per_page=100&orderby=slug&order=asc`,
-    {method:"Get",retries:3,retryDelay:2000})        
-    .then(res => res.json()))
-    .map(x=>({id:x.id,name:x.name}));
+  //List of WP categories
+  const categorylist = await getList('categories');
+  const taglist = await getList('tags');
+  const userlist = await getList('users');
 
   const allPosts = await WpApi_GetPagedData('posts');
-  //const allPages = await WpApi_GetPagedData('pages');
+  const allPages = await WpApi_GetPagedData('pages');
 
+  const getCommonJson = x => ({
+    id: x.id,
+    slug: x.slug,
+    title: x.title.rendered,
+    author: userlist.find(l=>l.id===x.author).name,
+    date_gmt: x.date_gmt,
+    modified_gmt: x.modified_gmt,
+    link: x.link,
+    excerpt: x.excerpt.rendered
+  });
 
   const allFilesMap = new Map();
   allPosts.forEach(x=>{
 
     const jsonFilepath = `posts/${x.slug}.json`;
-    const json = {
-      id: x.id,
-      slug: x.slug,
-      author: x.author,
-      date_gmt: x.date_gmt,
-      modified_gmt: x.modified_gmt,
-      tags: x.tags.map(t=>taglist.find(l=>l.id===t).name),
-      categories: x.categories.map(t=>categorylist.find(l=>l.id===t).name),
-      title: x.title.rendered
-    };
+    const json = getCommonJson(x);
+    json.tags = x.tags.map(t=>taglist.find(l=>l.id===t).name);
+    json.categories = x.categories.map(t=>categorylist.find(l=>l.id===t).name);
 
     const htmlFilepath = `posts/${x.slug}.html`;
-    
+    allFilesMap.set(jsonFilepath,json);
+    allFilesMap.set(htmlFilepath,x.content.rendered);
+  });
+
+  allPages.forEach(x=>{
+    const jsonFilepath = `pages/${x.slug}.json`;
+    const json = getCommonJson(x);
+    json.parent = x.parent;
+    json.menu_order = x.menu_order;
+
+    const htmlFilepath = `pages/${x.slug}.html`;
     allFilesMap.set(jsonFilepath,json);
     allFilesMap.set(htmlFilepath,x.content.rendered);
   });
