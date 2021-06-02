@@ -27,7 +27,7 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
  const createTreeFromFileMap = async (gitRepo, masterBranch, filesMap, outputPath) => {
   const rootTree = await gitRepo.getSha(masterBranch,outputPath.includes('/') ? outputPath.split('/')[0] : '');
   const referenceTreeSha = rootTree.data.find(f=>f.path===outputPath).sha;
-  const referenceTree = await gitRepo.getTree(`${referenceTreeSha}?recursive=true`);
+  const referenceTree = (await gitRepo.getTree(`${referenceTreeSha}?recursive=true`)).data.tree;
 
   const targetTree = [];
   //Tree parts...
@@ -37,7 +37,10 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
 
   for (const [key,value] of filesMap) {
       let content = typeof value === 'string' ? value : JSON.stringify(value,null,2);
-      let existingFile = referenceTree.data.tree.find(x=>x.path===key);
+      let existingFile = referenceTree.find(x=>x.type==='blob'&&x.path===key);
+      if(existingFile) {
+        existingFile.found=true;
+      }
       if(!existingFile || existingFile.sha !== gitHubBlobPredictSha(content)) {
         targetTree.push({
           path: `${outputPath}/${key}`,
@@ -46,6 +49,16 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
           type
         });
       }
+  }
+
+  //process deletes
+  for (const delme of referenceTree.filter(x=>x.type==='blob'&&!x.found)) {
+    targetTree.push({
+      path: `${outputPath}/${delme.path}`,
+      mode, 
+      type,
+      sha : null //will trigger a delete
+    });
   }
 
   return targetTree;
