@@ -25,7 +25,7 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
  * @returns 
  */
  const createTreeFromFileMap = async (gitRepo, masterBranch, filesMap, outputPath) => {
-  const rootTree = await gitRepo.getSha(masterBranch,outputPath.split('/')[0]);
+  const rootTree = await gitRepo.getSha(masterBranch,outputPath.includes('/') ? outputPath.split('/')[0] : '');
   const referenceTreeSha = rootTree.data.find(f=>f.path===outputPath).sha;
   const referenceTree = await gitRepo.getTree(`${referenceTreeSha}?recursive=true`);
 
@@ -36,7 +36,7 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
   const type = 'blob';
 
   for (const [key,value] of filesMap) {
-      let content = JSON.stringify(value,null,2);
+      let content = typeof value === 'string' ? value : JSON.stringify(value,null,2);
       let existingFile = referenceTree.data.tree.find(x=>x.path===key);
       if(!existingFile || existingFile.sha !== gitHubBlobPredictSha(content)) {
         targetTree.push({
