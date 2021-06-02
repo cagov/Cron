@@ -1,4 +1,13 @@
-
+const GitHub = require('github-api');
+const githubUser = 'cagov';
+const githubRepo = 'automation-development-target';
+const committer = {
+  name: process.env["GITHUB_NAME"],
+  email: process.env["GITHUB_EMAIL"]
+};
+const outputPath = 'wordpress_output';
+const masterBranch = 'main';
+const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
 const wordPressUrl = 'https://as-go-covid19-d-001.azurewebsites.net';
 const wordPressApiUrl = `${wordPressUrl}/wp-json/wp/v2/`;
 
@@ -33,22 +42,26 @@ const WpApi_GetPagedData = async objecttype => {
 
 
 module.exports = async () => {
-    //List of WP categories
-    const categorylist = (await fetchRetry(`${wordPressApiUrl}categories?context=embed&hide_empty=true&per_page=100&orderby=slug&order=asc`,
-      {method:"Get",retries:3,retryDelay:2000})        
-      .then(res => res.json()))
-      .map(x=>({id:x.id,name:x.name}));
+  const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
+  const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
+  //const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
-    const taglist = (await fetchRetry(`${wordPressApiUrl}tags?context=embed&hide_empty=true&per_page=100&orderby=slug&order=asc`,
-      {method:"Get",retries:3,retryDelay:2000})        
-      .then(res => res.json()))
-      .map(x=>({id:x.id,name:x.name}));
+  //List of WP categories
+  const categorylist = (await fetchRetry(`${wordPressApiUrl}categories?context=embed&hide_empty=true&per_page=100&orderby=slug&order=asc`,
+    {method:"Get",retries:3,retryDelay:2000})        
+    .then(res => res.json()))
+    .map(x=>({id:x.id,name:x.name}));
+
+  const taglist = (await fetchRetry(`${wordPressApiUrl}tags?context=embed&hide_empty=true&per_page=100&orderby=slug&order=asc`,
+    {method:"Get",retries:3,retryDelay:2000})        
+    .then(res => res.json()))
+    .map(x=>({id:x.id,name:x.name}));
 
   const allPosts = await WpApi_GetPagedData('posts');
-  const allPages = await WpApi_GetPagedData('pages');
+  //const allPages = await WpApi_GetPagedData('pages');
 
 
-  const allData = new Map();
+  const allFilesMap = new Map();
   allPosts.forEach(x=>{
 
     const jsonFilepath = `posts/${x.slug}.json`;
@@ -65,11 +78,12 @@ module.exports = async () => {
 
     const htmlFilepath = `posts/${x.slug}.html`;
     
-    allData.set(jsonFilepath,json);
-    allData.set(htmlFilepath,x.content.rendered);
+    allFilesMap.set(jsonFilepath,json);
+    allFilesMap.set(htmlFilepath,x.content.rendered);
   });
 
+  const workTree = await createTreeFromFileMap(gitRepo,masterBranch,allFilesMap,outputPath);
 
-const yo =1;
+  await PrIfChanged(gitRepo, masterBranch, workTree, `${todayDateString()} Testing Wordpress`, committer);
 
 };
