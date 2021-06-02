@@ -104,6 +104,14 @@
       "args": ["temp:TEMP"],
       "cwd": "${workspaceRoot}/sandbox"
     },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DIRECT WordpressSync",
+      "program": "debug",
+      "cwd": "${workspaceRoot}/WordpressSync",
+      "outputCapture": "std"
+    },
   ],
   "inputs": [
     {
