@@ -43,21 +43,30 @@ const WpApi_GetPagedData = async objecttype => {
   return rows;
 };
 
+/**
+ * prepares WP content for storage
+ * @param {string} html WP html to clean
+ */
 const cleanupContent = html => html
   .replace(/\n\n\n/g,'\n') //reduce triple spacing
   .replace(/^\n/g,'') //remove leading CR
   ;
 
+/**
+ * fetches a dictionary object from WP
+ * @param {string} listname the list to get
+ * @returns {Promise<{}>} the dictionary
+ */
+const fetchDictionary = async listname => Object.assign({}, ...
+  (await fetchRetry(`${wordPressApiUrl}${listname}?context=embed&hide_empty=true&per_page=100`,
+    {method:"Get",retries:3,retryDelay:2000})
+    .then(res => res.json()))
+    .map(x=>({[x.id]:x.name})));
+
 module.exports = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
   const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
   //const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
-
-  const fetchDictionary = async listname => Object.assign({}, ...
-    (await fetchRetry(`${wordPressApiUrl}${listname}?context=embed&hide_empty=true&per_page=100`,
-      {method:"Get",retries:3,retryDelay:2000})        
-      .then(res => res.json()))
-      .map(x=>({[x.id]:x.name})));
 
   //List of WP categories
   const categorylist = await fetchDictionary('categories');
