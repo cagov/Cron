@@ -1,14 +1,17 @@
 const GitHub = require('github-api');
 const githubUser = 'cagov';
+const wordPressUrl = 'https://as-go-covid19-d-001.azurewebsites.net';
 const githubRepo = 'automation-development-target';
+const outputPath = 'wordpress_output';
+//const githubRepo = 'digital.ca.gov';
+//const outputPath = 'wordpress';
+//const wordPressUrl = 'https://live-odi-content-api.pantheonsite.io';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const outputPath = 'wordpress_output';
 const masterBranch = 'main';
 const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
-const wordPressUrl = 'https://as-go-covid19-d-001.azurewebsites.net';
 const wordPressApiUrl = `${wordPressUrl}/wp-json/wp/v2/`;
 
 const fetch = require('node-fetch');
