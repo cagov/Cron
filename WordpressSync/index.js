@@ -67,15 +67,19 @@ const fetchDictionary = async listname => Object.assign({}, ...
  * Gets a JSON starting point common to many WP items
  * @param {{}} wpRow row from API
  * @param {{}} userlist dictionary of users
+ * @param {string} file_path_html
+ * @param {string} file_path_json 
  */
-const getWpCommonJson = (wpRow,userlist) => ({
+const getWpCommonJsonData = (wpRow,userlist,file_path_html,file_path_json) => ({
   id: wpRow.id,
   slug: wpRow.slug,
   title: wpRow.title.rendered,
   author: userlist[wpRow.author],
   date_gmt: wpRow.date_gmt,
   modified_gmt: wpRow.modified_gmt,
-  link: wpRow.link,
+  wordpress_url: wpRow.link,
+  file_path_html,
+  file_path_json,
   excerpt: wpRow.excerpt.rendered
 });
 
@@ -88,6 +92,28 @@ const startManifest = () => ({
     posts: []
   }
 });
+
+/**
+ * @param {{ date_gmt: string }} data 
+ */
+const wrapInFileMeta = data => ({
+  meta: {
+    created_date: data.date_gmt
+  },
+  data
+});
+
+/**
+ * returns a copy of the JsonData excluding fields that are not desired in the manifest
+ * @param {{}} JsonData 
+ * @returns manifestRow
+ */
+const covertWpJsonDataToManifestRow = JsonData => {
+  const manifestRow = {...JsonData};
+  delete manifestRow.modified_gmt;
+  delete manifestRow.excerpt;
+  return manifestRow;
+};
 
 module.exports = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
@@ -105,36 +131,25 @@ module.exports = async () => {
   const allFilesMap = new Map();
   const manifest = startManifest();
   allPosts.forEach(x=>{
+    const jsonData = getWpCommonJsonData(x,userlist,`posts/${x.slug}.html`,`posts/${x.slug}.json`);
+    jsonData.categories = x.categories.map(t=>categorylist[t]);
+    jsonData.tags = x.tags.map(t=>taglist[t]);
 
-    const json = getWpCommonJson(x,userlist);
-    json.categories = x.categories.map(t=>categorylist[t]);
-    json.tags = x.tags.map(t=>taglist[t]);
+    allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(jsonData));
+    allFilesMap.set(jsonData.file_path_html,cleanupContent(x.content.rendered));
 
-    const htmlFilepath = `posts/${x.slug}.html`;
-    const jsonFilepath = `posts/${x.slug}.json`;
-    allFilesMap.set(jsonFilepath,json);
-    allFilesMap.set(htmlFilepath,cleanupContent(x.content.rendered));
-
-    const manifestRow = {...json};
-    delete manifestRow.modified_gmt;
-    delete manifestRow.excerpt;
-    manifest.data.posts.push(manifestRow);
+    manifest.data.posts.push(covertWpJsonDataToManifestRow(jsonData));
   });
 
   allPages.forEach(x=>{
-    const json = getWpCommonJson(x,userlist);
-    json.parent = x.parent;
-    json.menu_order = x.menu_order;
+    const jsonData = getWpCommonJsonData(x,userlist,`pages/${x.slug}.html`,`pages/${x.slug}.json`);
+    jsonData.parent = x.parent;
+    jsonData.menu_order = x.menu_order;
 
-    const jsonFilepath = `pages/${x.slug}.json`;
-    const htmlFilepath = `pages/${x.slug}.html`;
-    allFilesMap.set(jsonFilepath,json);
-    allFilesMap.set(htmlFilepath,cleanupContent(x.content.rendered));
+    allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(jsonData));
+    allFilesMap.set(jsonData.file_path_html,cleanupContent(x.content.rendered));
 
-    const manifestRow = {...json};
-    delete manifestRow.modified_gmt;
-    delete manifestRow.excerpt;
-    manifest.data.pages.push(manifestRow);
+    manifest.data.pages.push(covertWpJsonDataToManifestRow(jsonData));
   });
 
   allFilesMap.set('manifest.json',manifest);
