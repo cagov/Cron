@@ -63,6 +63,32 @@ const fetchDictionary = async listname => Object.assign({}, ...
     .then(res => res.json()))
     .map(x=>({[x.id]:x.name})));
 
+/**
+ * Gets a JSON starting point common to many WP items
+ * @param {{}} wpRow row from API
+ * @param {{}} userlist dictionary of users
+ */
+const getWpCommonJson = (wpRow,userlist) => ({
+  id: wpRow.id,
+  slug: wpRow.slug,
+  title: wpRow.title.rendered,
+  author: userlist[wpRow.author],
+  date_gmt: wpRow.date_gmt,
+  modified_gmt: wpRow.modified_gmt,
+  link: wpRow.link,
+  excerpt: wpRow.excerpt.rendered
+});
+
+const startManifest = () => ({
+  meta: {
+
+  },
+  data: {
+    pages: [],
+    posts: []
+  }
+});
+
 module.exports = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
   const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
@@ -76,39 +102,42 @@ module.exports = async () => {
   const allPosts = await WpApi_GetPagedData('posts');
   const allPages = await WpApi_GetPagedData('pages');
 
-  const getCommonJson = x => ({
-    id: x.id,
-    slug: x.slug,
-    title: x.title.rendered,
-    author: userlist[x.author],
-    date_gmt: x.date_gmt,
-    modified_gmt: x.modified_gmt,
-    link: x.link,
-    excerpt: x.excerpt.rendered
-  });
-
   const allFilesMap = new Map();
+  const manifest = startManifest();
   allPosts.forEach(x=>{
-    const jsonFilepath = `posts/${x.slug}.json`;
-    const json = getCommonJson(x);
+
+    const json = getWpCommonJson(x,userlist);
     json.categories = x.categories.map(t=>categorylist[t]);
     json.tags = x.tags.map(t=>taglist[t]);
 
     const htmlFilepath = `posts/${x.slug}.html`;
+    const jsonFilepath = `posts/${x.slug}.json`;
     allFilesMap.set(jsonFilepath,json);
     allFilesMap.set(htmlFilepath,cleanupContent(x.content.rendered));
+
+    const manifestRow = {...json};
+    delete manifestRow.modified_gmt;
+    delete manifestRow.excerpt;
+    manifest.data.posts.push(manifestRow);
   });
 
   allPages.forEach(x=>{
-    const jsonFilepath = `pages/${x.slug}.json`;
-    const json = getCommonJson(x);
+    const json = getWpCommonJson(x,userlist);
     json.parent = x.parent;
     json.menu_order = x.menu_order;
 
+    const jsonFilepath = `pages/${x.slug}.json`;
     const htmlFilepath = `pages/${x.slug}.html`;
     allFilesMap.set(jsonFilepath,json);
     allFilesMap.set(htmlFilepath,cleanupContent(x.content.rendered));
+
+    const manifestRow = {...json};
+    delete manifestRow.modified_gmt;
+    delete manifestRow.excerpt;
+    manifest.data.pages.push(manifestRow);
   });
+
+  allFilesMap.set('manifest.json',manifest);
 
   const workTree = await createTreeFromFileMap(gitRepo,masterBranch,allFilesMap,outputPath);
 
