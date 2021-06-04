@@ -71,9 +71,10 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
  * @param {{}[]} tree from createTreeFromFileMap
  * @param {string} PrTitle the name of the new branch to create
  * @param {{name:string,email:string}} committer Github Name/Email
+ * @param {boolean} [commit_only] true if skipping the PR process and just making a commit
  * @returns {Promise<{html_url:string;number:number,head:{ref:string}}>} the new PR
  */
-const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer) => {
+const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer,commit_only) => {
   if(!tree.length) {
     console.log(`No tree changes for - ${PrTitle}`);
     return null;
@@ -116,7 +117,14 @@ const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer) => {
   //Compare the proposed commit with the trunk (master) branch
   const compare = await gitRepo.compareBranches(baseSha,commitSha);
   if (compare.data.files.length) {
-      console.log(`${compare.data.files.length} changes.`);
+    console.log(`${compare.data.files.length} changes.`);
+
+    if(commit_only) {
+      console.log(`Commit created - ${commitResult.data.html_url}`);
+      await gitRepo.updateHead(`heads/${masterBranch}`,commitSha);
+      
+      return null;
+    } else {
       //Create a new branch and assign this commit to it, return the new branch.
       await gitRepo.createBranch(masterBranch,newBranchName);
       await gitRepo.updateHead(`heads/${newBranchName}`,commitSha);
@@ -131,7 +139,7 @@ const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer) => {
       console.log(`PR created - ${Pr.html_url}`);
 
       return Pr;
-
+    }
   } else {
       console.log('no changes');
       return null;

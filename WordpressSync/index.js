@@ -11,7 +11,8 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'main';
-const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
+const commitTitle = 'Wordpress Content Update';
+const { createTreeFromFileMap, PrIfChanged } = require('../common/gitTreeCommon');
 const wordPressApiUrl = `${wordPressUrl}/wp-json/wp/v2/`;
 
 const fetch = require('node-fetch');
@@ -166,5 +167,5 @@ module.exports = async () => {
 
   const workTree = await createTreeFromFileMap(gitRepo,masterBranch,allFilesMap,outputPath);
 
-  await PrIfChanged(gitRepo, masterBranch, workTree, `${todayDateString()} Testing Wordpress`, committer);
+  await PrIfChanged(gitRepo, masterBranch, workTree, commitTitle, committer, true);
 };
