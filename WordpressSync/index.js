@@ -17,6 +17,16 @@ const wordPressApiUrl = `${wordPressUrl}/wp-json/wp/v2/`;
 const fetch = require('node-fetch');
 const fetchRetry = require('fetch-retry')(fetch);
 
+const commonMeta = {
+  api_version: "v2",
+  process: {
+    source_code: "https://github.com/cagov/cron",
+    source_data: wordPressUrl,
+    deployment_target: `https://github.com/${githubUser}/${githubRepo}/tree/main/${outputPath}`
+  },
+  refresh_frequency: "as needed"
+};
+
 /**
  * Call the paged wordpress api
  * @param {string} objecttype 
@@ -84,9 +94,7 @@ const getWpCommonJsonData = (wpRow,userlist,file_path_html,file_path_json) => ({
 });
 
 const startManifest = () => ({
-  meta: {
-
-  },
+  meta: commonMeta,
   data: {
     pages: [],
     posts: []
@@ -94,11 +102,13 @@ const startManifest = () => ({
 });
 
 /**
- * @param {{ date_gmt: string }} data 
+ * @param {{ date_gmt: string, modified_gmt: string }} data 
  */
 const wrapInFileMeta = data => ({
   meta: {
-    created_date: data.date_gmt
+    created_date: data.date_gmt,
+    updated_date: data.modified_gmt,
+    ...commonMeta
   },
   data
 });
