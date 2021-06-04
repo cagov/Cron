@@ -141,6 +141,8 @@ module.exports = async () => {
 
   const allFilesMap = new Map();
   const manifest = startManifest();
+  
+  // POSTS
   allPosts.forEach(x=>{
     const jsonData = getWpCommonJsonData(x,userlist,`posts/${x.slug}.html`,`posts/${x.slug}.json`);
     jsonData.categories = x.categories.map(t=>categorylist[t]);
@@ -152,6 +154,7 @@ module.exports = async () => {
     manifest.data.posts.push(covertWpJsonDataToManifestRow(jsonData));
   });
 
+  // PAGES
   allPages.forEach(x=>{
     const jsonData = getWpCommonJsonData(x,userlist,`pages/${x.slug}.html`,`pages/${x.slug}.json`);
     jsonData.parent = x.parent;
