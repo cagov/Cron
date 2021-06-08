@@ -24,14 +24,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.196467,
+    "METRIC_VALUE": 0.196465,
     "POP_METRIC_VALUE": 0.19851
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000146,
+    "METRIC_VALUE": 0.000147,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -94,14 +94,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.472196,
+    "METRIC_VALUE": 0.472144,
     "POP_METRIC_VALUE": 0.336091
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000052,
+    "METRIC_VALUE": 0.000104,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -178,35 +178,35 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "12-17",
-    "METRIC_VALUE": 0.048387,
+    "METRIC_VALUE": 0.049012,
     "POP_METRIC_VALUE": 0.092969
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "18-49",
-    "METRIC_VALUE": 0.467708,
+    "METRIC_VALUE": 0.466232,
     "POP_METRIC_VALUE": 0.49786
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "50-64",
-    "METRIC_VALUE": 0.251081,
+    "METRIC_VALUE": 0.251445,
     "POP_METRIC_VALUE": 0.213569
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.232675,
+    "METRIC_VALUE": 0.233165,
     "POP_METRIC_VALUE": 0.195602
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000149,
+    "METRIC_VALUE": 0.000147,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -269,14 +269,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.234859,
+    "METRIC_VALUE": 0.234857,
     "POP_METRIC_VALUE": 0.216151
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000087,
+    "METRIC_VALUE": 0.000088,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -339,14 +339,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.34385,
+    "METRIC_VALUE": 0.343839,
     "POP_METRIC_VALUE": 0.271575
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000225,
+    "METRIC_VALUE": 0.000235,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -374,14 +374,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.243311,
+    "METRIC_VALUE": 0.243306,
     "POP_METRIC_VALUE": 0.168372
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000183,
+    "METRIC_VALUE": 0.000187,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -549,14 +549,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.238138,
+    "METRIC_VALUE": 0.238129,
     "POP_METRIC_VALUE": 0.149912
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000188,
+    "METRIC_VALUE": 0.000197,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -584,14 +584,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.225553,
+    "METRIC_VALUE": 0.225509,
     "POP_METRIC_VALUE": 0.144691
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000153,
+    "METRIC_VALUE": 0.000196,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -689,14 +689,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.209966,
+    "METRIC_VALUE": 0.209924,
     "POP_METRIC_VALUE": 0.191553
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000135,
+    "METRIC_VALUE": 0.000177,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -724,14 +724,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.289091,
+    "METRIC_VALUE": 0.289075,
     "POP_METRIC_VALUE": 0.189634
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.00008,
+    "METRIC_VALUE": 0.000096,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -759,14 +759,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.276814,
+    "METRIC_VALUE": 0.276799,
     "POP_METRIC_VALUE": 0.305989
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000128,
+    "METRIC_VALUE": 0.000143,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -794,14 +794,14 @@
     "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.41766,
+    "METRIC_VALUE": 0.416865,
     "POP_METRIC_VALUE": 0.344538
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000794,
+    "METRIC_VALUE": 0.001589,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1004,14 +1004,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.268148,
+    "METRIC_VALUE": 0.268137,
     "POP_METRIC_VALUE": 0.242508
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000521,
+    "METRIC_VALUE": 0.000531,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1074,50 +1074,15 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.23561,
+    "METRIC_VALUE": 0.235598,
     "POP_METRIC_VALUE": 0.199788
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000075,
+    "METRIC_VALUE": 0.000087,
     "POP_METRIC_VALUE": 0
-  },
-  {
-    "LATEST_ADMIN_DATE": "2021-06-07",
-    "REGION": "Outside California",
-    "CATEGORY": "12-17",
-    "METRIC_VALUE": 0.015719,
-    "POP_METRIC_VALUE": null
-  },
-  {
-    "LATEST_ADMIN_DATE": "2021-06-07",
-    "REGION": "Outside California",
-    "CATEGORY": "18-49",
-    "METRIC_VALUE": 0.544957,
-    "POP_METRIC_VALUE": null
-  },
-  {
-    "LATEST_ADMIN_DATE": "2021-06-07",
-    "REGION": "Outside California",
-    "CATEGORY": "50-64",
-    "METRIC_VALUE": 0.232023,
-    "POP_METRIC_VALUE": null
-  },
-  {
-    "LATEST_ADMIN_DATE": "2021-06-07",
-    "REGION": "Outside California",
-    "CATEGORY": "65+",
-    "METRIC_VALUE": 0.206227,
-    "POP_METRIC_VALUE": null
-  },
-  {
-    "LATEST_ADMIN_DATE": "2021-06-07",
-    "REGION": "Outside California",
-    "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.001075,
-    "POP_METRIC_VALUE": null
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
@@ -1144,14 +1109,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.325028,
+    "METRIC_VALUE": 0.325023,
     "POP_METRIC_VALUE": 0.235809
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000092,
+    "METRIC_VALUE": 0.000097,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1214,14 +1179,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.275853,
+    "METRIC_VALUE": 0.275846,
     "POP_METRIC_VALUE": 0.191122
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000103,
+    "METRIC_VALUE": 0.00011,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1249,14 +1214,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.2399,
+    "METRIC_VALUE": 0.239899,
     "POP_METRIC_VALUE": 0.187133
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000225,
+    "METRIC_VALUE": 0.000226,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1319,14 +1284,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.230273,
+    "METRIC_VALUE": 0.230267,
     "POP_METRIC_VALUE": 0.157291
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000237,
+    "METRIC_VALUE": 0.000242,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1354,14 +1319,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.247671,
+    "METRIC_VALUE": 0.24767,
     "POP_METRIC_VALUE": 0.186456
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000054,
+    "METRIC_VALUE": 0.000055,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1389,14 +1354,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.194147,
+    "METRIC_VALUE": 0.194145,
     "POP_METRIC_VALUE": 0.217226
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000128,
+    "METRIC_VALUE": 0.000129,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1424,14 +1389,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.240185,
+    "METRIC_VALUE": 0.240182,
     "POP_METRIC_VALUE": 0.170226
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000151,
+    "METRIC_VALUE": 0.000154,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1459,14 +1424,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.332932,
+    "METRIC_VALUE": 0.332918,
     "POP_METRIC_VALUE": 0.251486
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000193,
+    "METRIC_VALUE": 0.000206,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1494,14 +1459,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.215597,
+    "METRIC_VALUE": 0.21559,
     "POP_METRIC_VALUE": 0.232872
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000116,
+    "METRIC_VALUE": 0.000124,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1564,14 +1529,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.183287,
+    "METRIC_VALUE": 0.183272,
     "POP_METRIC_VALUE": 0.190064
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000055,
+    "METRIC_VALUE": 0.000071,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1739,14 +1704,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.264091,
+    "METRIC_VALUE": 0.264074,
     "POP_METRIC_VALUE": 0.21108
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000433,
+    "METRIC_VALUE": 0.00045,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1774,14 +1739,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.286993,
+    "METRIC_VALUE": 0.28699,
     "POP_METRIC_VALUE": 0.254716
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000267,
+    "METRIC_VALUE": 0.00027,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1844,14 +1809,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.294943,
+    "METRIC_VALUE": 0.294919,
     "POP_METRIC_VALUE": 0.190518
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000191,
+    "METRIC_VALUE": 0.000215,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -1999,35 +1964,35 @@
     "REGION": "Unknown",
     "CATEGORY": "12-17",
     "METRIC_VALUE": 0.14975,
-    "POP_METRIC_VALUE": null
+    "POP_METRIC_VALUE": 0
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "18-49",
     "METRIC_VALUE": 0.431614,
-    "POP_METRIC_VALUE": null
+    "POP_METRIC_VALUE": 0
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "50-64",
     "METRIC_VALUE": 0.206988,
-    "POP_METRIC_VALUE": null
+    "POP_METRIC_VALUE": 0
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "65+",
     "METRIC_VALUE": 0.211647,
-    "POP_METRIC_VALUE": null
+    "POP_METRIC_VALUE": 0
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Unknown",
     "METRIC_VALUE": 0,
-    "POP_METRIC_VALUE": null
+    "POP_METRIC_VALUE": 0
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
@@ -2054,14 +2019,14 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "65+",
-    "METRIC_VALUE": 0.253061,
+    "METRIC_VALUE": 0.253059,
     "POP_METRIC_VALUE": 0.212233
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.000083,
+    "METRIC_VALUE": 0.000085,
     "POP_METRIC_VALUE": 0
   },
   {

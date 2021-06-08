@@ -108,21 +108,21 @@
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Female",
-    "METRIC_VALUE": 0.526629,
+    "METRIC_VALUE": 0.528405,
     "POP_METRIC_VALUE": 0.502871
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Male",
-    "METRIC_VALUE": 0.469572,
+    "METRIC_VALUE": 0.468118,
     "POP_METRIC_VALUE": 0.497129
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Unknown/undifferentiated",
-    "METRIC_VALUE": 0.003799,
+    "METRIC_VALUE": 0.003477,
     "POP_METRIC_VALUE": 0
   },
   {
@@ -649,27 +649,6 @@
     "CATEGORY": "Unknown/undifferentiated",
     "METRIC_VALUE": 0.007778,
     "POP_METRIC_VALUE": 0
-  },
-  {
-    "LATEST_ADMIN_DATE": "2021-06-07",
-    "REGION": "Outside California",
-    "CATEGORY": "Female",
-    "METRIC_VALUE": 0.433661,
-    "POP_METRIC_VALUE": null
-  },
-  {
-    "LATEST_ADMIN_DATE": "2021-06-07",
-    "REGION": "Outside California",
-    "CATEGORY": "Male",
-    "METRIC_VALUE": 0.545709,
-    "POP_METRIC_VALUE": null
-  },
-  {
-    "LATEST_ADMIN_DATE": "2021-06-07",
-    "REGION": "Outside California",
-    "CATEGORY": "Unknown/undifferentiated",
-    "METRIC_VALUE": 0.02063,
-    "POP_METRIC_VALUE": null
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",
@@ -1201,21 +1180,21 @@
     "REGION": "Unknown",
     "CATEGORY": "Female",
     "METRIC_VALUE": 0.488852,
-    "POP_METRIC_VALUE": null
+    "POP_METRIC_VALUE": 0
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Male",
     "METRIC_VALUE": 0.508819,
-    "POP_METRIC_VALUE": null
+    "POP_METRIC_VALUE": 0
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Unknown/undifferentiated",
     "METRIC_VALUE": 0.002329,
-    "POP_METRIC_VALUE": null
+    "POP_METRIC_VALUE": 0
   },
   {
     "LATEST_ADMIN_DATE": "2021-06-07",

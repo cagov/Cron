@@ -7,7 +7,6 @@
     "county": {
       "type": "string",
       "enum": [
-        "Outside California",
         "Unknown",
         "California",
         "Alameda",
@@ -73,8 +72,8 @@
   },
   "type": "array",
   "uniqueItems": true,
-  "minItems": 305,
-  "maxItems": 305,
+  "minItems": 300,
+  "maxItems": 300,
   "items": {
     "type": "object",
     "required": [
