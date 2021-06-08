@@ -28,7 +28,6 @@ GB as ( --Master list of corrected data grouped by region/category
     and pop.AGE_GROUP=RECIP_AGE_GROUP
   where
     RECIP_ID IS NOT NULL
-    and REGION <> 'Outside California'
   group by
       REGION,
       CATEGORY
@@ -91,6 +90,8 @@ from (
 join
     sortmap sm
     on sm.CATEGORY = main.CATEGORY
+where
+    REGION <> 'Outside California' --Exclude outside california for final results, but keep it in the ca total
 order by
     REGION,
     SORT
