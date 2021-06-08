@@ -81,7 +81,8 @@
       "LATEST_ADMIN_DATE",
       "REGION",
       "CATEGORY",
-      "METRIC_VALUE"
+      "METRIC_VALUE",
+      "POP_METRIC_VALUE"
     ],
     "additionalProperties": false,
     "properties": {
@@ -102,6 +103,11 @@
         ]
       },
       "METRIC_VALUE": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "POP_METRIC_VALUE": {
         "type": "number",
         "minimum": 0,
         "maximum": 1

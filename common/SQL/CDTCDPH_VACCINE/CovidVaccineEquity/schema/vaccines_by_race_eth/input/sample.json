@@ -1,3296 +1,3845 @@
 [
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.00304
+    "METRIC_VALUE": 0.003059,
+    "POP_METRIC_VALUE": 0.002932
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.325192
+    "METRIC_VALUE": 0.330419,
+    "POP_METRIC_VALUE": 0.26349
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.06709
+    "METRIC_VALUE": 0.069347,
+    "POP_METRIC_VALUE": 0.114622
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.136911
+    "METRIC_VALUE": 0.148337,
+    "POP_METRIC_VALUE": 0.234036
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.012382
+    "METRIC_VALUE": 0.015273,
+    "POP_METRIC_VALUE": 0.042527
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.007589
+    "METRIC_VALUE": 0.007604,
+    "POP_METRIC_VALUE": 0.008028
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.305903
+    "METRIC_VALUE": 0.29981,
+    "POP_METRIC_VALUE": 0.334365
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.087068
+    "METRIC_VALUE": 0.080306,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Alameda",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.054825
+    "METRIC_VALUE": 0.045844,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-07",
+    "LATEST_ADMIN_DATE": "2021-06-02",
     "REGION": "Alpine",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.017052
+    "METRIC_VALUE": 0.017011,
+    "POP_METRIC_VALUE": 0.196059
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-07",
+    "LATEST_ADMIN_DATE": "2021-06-02",
     "REGION": "Alpine",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.01218
+    "METRIC_VALUE": 0.00729,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-07",
+    "LATEST_ADMIN_DATE": "2021-06-02",
     "REGION": "Alpine",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.002436
+    "METRIC_VALUE": 0.003645,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-07",
+    "LATEST_ADMIN_DATE": "2021-06-02",
     "REGION": "Alpine",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.013398
+    "METRIC_VALUE": 0.010936,
+    "POP_METRIC_VALUE": 0.080788
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-07",
+    "LATEST_ADMIN_DATE": "2021-06-02",
     "REGION": "Alpine",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0
+    "METRIC_VALUE": 0,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-07",
+    "LATEST_ADMIN_DATE": "2021-06-02",
     "REGION": "Alpine",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0
+    "METRIC_VALUE": 0,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-07",
+    "LATEST_ADMIN_DATE": "2021-06-02",
     "REGION": "Alpine",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.188794
+    "METRIC_VALUE": 0.198056,
+    "POP_METRIC_VALUE": 0.723153
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-07",
+    "LATEST_ADMIN_DATE": "2021-06-02",
     "REGION": "Alpine",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.010962
+    "METRIC_VALUE": 0.010936,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-07",
+    "LATEST_ADMIN_DATE": "2021-06-02",
     "REGION": "Alpine",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.755177
+    "METRIC_VALUE": 0.752126,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.008391
+    "METRIC_VALUE": 0.008679,
+    "POP_METRIC_VALUE": 0.016426
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.017499
+    "METRIC_VALUE": 0.017618,
+    "POP_METRIC_VALUE": 0.012688
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.005189
+    "METRIC_VALUE": 0.005041,
+    "POP_METRIC_VALUE": 0.027024
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.081038
+    "METRIC_VALUE": 0.083307,
+    "POP_METRIC_VALUE": 0.141125
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.001214
+    "METRIC_VALUE": 0.001819,
+    "POP_METRIC_VALUE": 0.026641
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.003699
+    "METRIC_VALUE": 0.003638,
+    "POP_METRIC_VALUE": 0.000971
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.741982
+    "METRIC_VALUE": 0.741763,
+    "POP_METRIC_VALUE": 0.775125
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.09103
+    "METRIC_VALUE": 0.089232,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Amador",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.049959
+    "METRIC_VALUE": 0.048903,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Butte",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.012346
+    "METRIC_VALUE": 0.012359,
+    "POP_METRIC_VALUE": 0.014475
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Butte",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.042742
+    "METRIC_VALUE": 0.046088,
+    "POP_METRIC_VALUE": 0.044579
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Butte",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.010561
+    "METRIC_VALUE": 0.011503,
+    "POP_METRIC_VALUE": 0.0163
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Butte",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.116682
+    "METRIC_VALUE": 0.123647,
+    "POP_METRIC_VALUE": 0.159107
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Butte",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.013183
+    "METRIC_VALUE": 0.014228,
+    "POP_METRIC_VALUE": 0.03969
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Butte",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002039
+    "METRIC_VALUE": 0.00218,
+    "POP_METRIC_VALUE": 0.001984
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Butte",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.708005
+    "METRIC_VALUE": 0.699009,
+    "POP_METRIC_VALUE": 0.723864
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Butte",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.059057
+    "METRIC_VALUE": 0.056823,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Butte",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.035386
+    "METRIC_VALUE": 0.034163,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Calaveras",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.004808
+    "METRIC_VALUE": 0.005186,
+    "POP_METRIC_VALUE": 0.01239
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Calaveras",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.017016
+    "METRIC_VALUE": 0.016854,
+    "POP_METRIC_VALUE": 0.013498
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Calaveras",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.005618
+    "METRIC_VALUE": 0.005934,
+    "POP_METRIC_VALUE": 0.008033
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Calaveras",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.072494
+    "METRIC_VALUE": 0.077886,
+    "POP_METRIC_VALUE": 0.116164
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Calaveras",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.000864
+    "METRIC_VALUE": 0.001097,
+    "POP_METRIC_VALUE": 0.030193
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Calaveras",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002485
+    "METRIC_VALUE": 0.002493,
+    "POP_METRIC_VALUE": 0.001083
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Calaveras",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.618248
+    "METRIC_VALUE": 0.622787,
+    "POP_METRIC_VALUE": 0.81864
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Calaveras",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.081245
+    "METRIC_VALUE": 0.082573,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Calaveras",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.197223
+    "METRIC_VALUE": 0.185191,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.003307
+    "METRIC_VALUE": 0.003245,
+    "POP_METRIC_VALUE": 0.00436
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.169581
+    "METRIC_VALUE": 0.169532,
+    "POP_METRIC_VALUE": 0.131127
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.037415
+    "METRIC_VALUE": 0.03818,
+    "POP_METRIC_VALUE": 0.057389
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.255986
+    "METRIC_VALUE": 0.272824,
+    "POP_METRIC_VALUE": 0.393845
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.011694
+    "METRIC_VALUE": 0.012777,
+    "POP_METRIC_VALUE": 0.027926
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.005283
+    "METRIC_VALUE": 0.005291,
+    "POP_METRIC_VALUE": 0.003596
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.37091
+    "METRIC_VALUE": 0.360385,
+    "POP_METRIC_VALUE": 0.381757
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.089233
+    "METRIC_VALUE": 0.085091,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "California",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.05659
+    "METRIC_VALUE": 0.052675,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Colusa",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.008325
+    "METRIC_VALUE": 0.008084,
+    "POP_METRIC_VALUE": 0.013741
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Colusa",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.010189
+    "METRIC_VALUE": 0.010742,
+    "POP_METRIC_VALUE": 0.01209
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Colusa",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.004597
+    "METRIC_VALUE": 0.004319,
+    "POP_METRIC_VALUE": 0.007456
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Colusa",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.383449
+    "METRIC_VALUE": 0.430233,
+    "POP_METRIC_VALUE": 0.580049
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Colusa",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.005716
+    "METRIC_VALUE": 0.005426,
+    "POP_METRIC_VALUE": 0.013794
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Colusa",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.001491
+    "METRIC_VALUE": 0.00155,
+    "POP_METRIC_VALUE": 0.000533
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Colusa",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.337227
+    "METRIC_VALUE": 0.322148,
+    "POP_METRIC_VALUE": 0.372337
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Colusa",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.055293
+    "METRIC_VALUE": 0.054707,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Colusa",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.193713
+    "METRIC_VALUE": 0.162791,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002582
+    "METRIC_VALUE": 0.002555,
+    "POP_METRIC_VALUE": 0.002879
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.158376
+    "METRIC_VALUE": 0.164899,
+    "POP_METRIC_VALUE": 0.153172
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.057555
+    "METRIC_VALUE": 0.05962,
+    "POP_METRIC_VALUE": 0.090403
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.188655
+    "METRIC_VALUE": 0.191068,
+    "POP_METRIC_VALUE": 0.255281
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.014048
+    "METRIC_VALUE": 0.016441,
+    "POP_METRIC_VALUE": 0.040188
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.007452
+    "METRIC_VALUE": 0.007356,
+    "POP_METRIC_VALUE": 0.004545
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.428504
+    "METRIC_VALUE": 0.42518,
+    "POP_METRIC_VALUE": 0.453532
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.078343
+    "METRIC_VALUE": 0.073545,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Contra Costa",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.064485
+    "METRIC_VALUE": 0.059338,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Del Norte",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.062965
+    "METRIC_VALUE": 0.062922,
+    "POP_METRIC_VALUE": 0.068368
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Del Norte",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.025907
+    "METRIC_VALUE": 0.029384,
+    "POP_METRIC_VALUE": 0.0363
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Del Norte",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.005181
+    "METRIC_VALUE": 0.004984,
+    "POP_METRIC_VALUE": 0.032723
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Del Norte",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.076932
+    "METRIC_VALUE": 0.081092,
+    "POP_METRIC_VALUE": 0.18822
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Del Norte",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.025794
+    "METRIC_VALUE": 0.028346,
+    "POP_METRIC_VALUE": 0.039398
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Del Norte",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002027
+    "METRIC_VALUE": 0.001869,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Del Norte",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.654765
+    "METRIC_VALUE": 0.653826,
+    "POP_METRIC_VALUE": 0.634991
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Del Norte",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.03075
+    "METRIC_VALUE": 0.033849,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Del Norte",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.115679
+    "METRIC_VALUE": 0.103728,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.003904
+    "METRIC_VALUE": 0.004152,
+    "POP_METRIC_VALUE": 0.008771
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.051608
+    "METRIC_VALUE": 0.055352,
+    "POP_METRIC_VALUE": 0.039558
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.007556
+    "METRIC_VALUE": 0.007877,
+    "POP_METRIC_VALUE": 0.007285
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.080118
+    "METRIC_VALUE": 0.087833,
+    "POP_METRIC_VALUE": 0.139176
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.008573
+    "METRIC_VALUE": 0.010724,
+    "POP_METRIC_VALUE": 0.0299
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.00382
+    "METRIC_VALUE": 0.003746,
+    "POP_METRIC_VALUE": 0.001343
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.722214
+    "METRIC_VALUE": 0.726913,
+    "POP_METRIC_VALUE": 0.773966
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.065558
+    "METRIC_VALUE": 0.056775,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "El Dorado",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.056649
+    "METRIC_VALUE": 0.046629,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.00509
+    "METRIC_VALUE": 0.005021,
+    "POP_METRIC_VALUE": 0.006458
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.105858
+    "METRIC_VALUE": 0.109923,
+    "POP_METRIC_VALUE": 0.095664
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.028021
+    "METRIC_VALUE": 0.028728,
+    "POP_METRIC_VALUE": 0.048821
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.386159
+    "METRIC_VALUE": 0.398684,
+    "POP_METRIC_VALUE": 0.528642
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.016179
+    "METRIC_VALUE": 0.017169,
+    "POP_METRIC_VALUE": 0.019772
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002019
+    "METRIC_VALUE": 0.002071,
+    "POP_METRIC_VALUE": 0.001213
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.335321
+    "METRIC_VALUE": 0.323926,
+    "POP_METRIC_VALUE": 0.29943
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.072024
+    "METRIC_VALUE": 0.06804,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Fresno",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.049328
+    "METRIC_VALUE": 0.046438,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Glenn",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.01891
+    "METRIC_VALUE": 0.017991,
+    "POP_METRIC_VALUE": 0.016378
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Glenn",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.02243
+    "METRIC_VALUE": 0.023105,
+    "POP_METRIC_VALUE": 0.025156
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Glenn",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.002615
+    "METRIC_VALUE": 0.002557,
+    "POP_METRIC_VALUE": 0.007356
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Glenn",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.311306
+    "METRIC_VALUE": 0.329041,
+    "POP_METRIC_VALUE": 0.406649
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Glenn",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.007644
+    "METRIC_VALUE": 0.008493,
+    "POP_METRIC_VALUE": 0.017801
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Glenn",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.000905
+    "METRIC_VALUE": 0.000913,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Glenn",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.481493
+    "METRIC_VALUE": 0.470137,
+    "POP_METRIC_VALUE": 0.52666
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Glenn",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.103903
+    "METRIC_VALUE": 0.10347,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Glenn",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.050795
+    "METRIC_VALUE": 0.044292,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Humboldt",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.031751
+    "METRIC_VALUE": 0.031992,
+    "POP_METRIC_VALUE": 0.051823
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Humboldt",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.025541
+    "METRIC_VALUE": 0.027422,
+    "POP_METRIC_VALUE": 0.024016
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Humboldt",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.009578
+    "METRIC_VALUE": 0.009957,
+    "POP_METRIC_VALUE": 0.012279
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Humboldt",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.090751
+    "METRIC_VALUE": 0.0946,
+    "POP_METRIC_VALUE": 0.113246
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Humboldt",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.022907
+    "METRIC_VALUE": 0.024055,
+    "POP_METRIC_VALUE": 0.044697
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Humboldt",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.003001
+    "METRIC_VALUE": 0.003295,
+    "POP_METRIC_VALUE": 0.002464
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Humboldt",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.75257
+    "METRIC_VALUE": 0.742575,
+    "POP_METRIC_VALUE": 0.751474
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Humboldt",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.024504
+    "METRIC_VALUE": 0.025015,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Humboldt",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.039397
+    "METRIC_VALUE": 0.041089,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Imperial",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002754
+    "METRIC_VALUE": 0.003371,
+    "POP_METRIC_VALUE": 0.008863
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Imperial",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.008406
+    "METRIC_VALUE": 0.008134,
+    "POP_METRIC_VALUE": 0.012537
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Imperial",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.004326
+    "METRIC_VALUE": 0.004425,
+    "POP_METRIC_VALUE": 0.024277
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Imperial",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.753992
+    "METRIC_VALUE": 0.757409,
+    "POP_METRIC_VALUE": 0.821054
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Imperial",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.001312
+    "METRIC_VALUE": 0.001342,
+    "POP_METRIC_VALUE": 0.006275
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Imperial",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.00065
+    "METRIC_VALUE": 0.000587,
+    "POP_METRIC_VALUE": 0.000539
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Imperial",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.100794
+    "METRIC_VALUE": 0.091259,
+    "POP_METRIC_VALUE": 0.126454
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Imperial",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.081708
+    "METRIC_VALUE": 0.084278,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Imperial",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.046058
+    "METRIC_VALUE": 0.049195,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Inyo",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.012987
+    "METRIC_VALUE": 0.017245,
+    "POP_METRIC_VALUE": 0.097699
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Inyo",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.018813
+    "METRIC_VALUE": 0.019415,
+    "POP_METRIC_VALUE": 0.011663
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Inyo",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.002306
+    "METRIC_VALUE": 0.002056,
+    "POP_METRIC_VALUE": 0.005863
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Inyo",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.135332
+    "METRIC_VALUE": 0.146414,
+    "POP_METRIC_VALUE": 0.218405
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Inyo",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.012866
+    "METRIC_VALUE": 0.013134,
+    "POP_METRIC_VALUE": 0.027022
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Inyo",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002185
+    "METRIC_VALUE": 0.001942,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Inyo",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.733463
+    "METRIC_VALUE": 0.72042,
+    "POP_METRIC_VALUE": 0.639347
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Inyo",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.029372
+    "METRIC_VALUE": 0.028209,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Inyo",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.052676
+    "METRIC_VALUE": 0.051165,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.00438
+    "METRIC_VALUE": 0.003992,
+    "POP_METRIC_VALUE": 0.006581
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.060001
+    "METRIC_VALUE": 0.060677,
+    "POP_METRIC_VALUE": 0.039538
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.03051
+    "METRIC_VALUE": 0.031025,
+    "POP_METRIC_VALUE": 0.054098
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.40399
+    "METRIC_VALUE": 0.426577,
+    "POP_METRIC_VALUE": 0.521455
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.01584
+    "METRIC_VALUE": 0.016389,
+    "POP_METRIC_VALUE": 0.019553
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.003159
+    "METRIC_VALUE": 0.003146,
+    "POP_METRIC_VALUE": 0.001214
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.354967
+    "METRIC_VALUE": 0.341913,
+    "POP_METRIC_VALUE": 0.357562
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.074298
+    "METRIC_VALUE": 0.067885,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kern",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.052857
+    "METRIC_VALUE": 0.048396,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.006129
+    "METRIC_VALUE": 0.006069,
+    "POP_METRIC_VALUE": 0.008519
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.039402
+    "METRIC_VALUE": 0.040041,
+    "POP_METRIC_VALUE": 0.03435
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.026868
+    "METRIC_VALUE": 0.028251,
+    "POP_METRIC_VALUE": 0.063831
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.48175
+    "METRIC_VALUE": 0.486671,
+    "POP_METRIC_VALUE": 0.533641
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.017062
+    "METRIC_VALUE": 0.017925,
+    "POP_METRIC_VALUE": 0.023507
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002952
+    "METRIC_VALUE": 0.002991,
+    "POP_METRIC_VALUE": 0.001954
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.31056
+    "METRIC_VALUE": 0.307207,
+    "POP_METRIC_VALUE": 0.334198
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.050284
+    "METRIC_VALUE": 0.048774,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Kings",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.064994
+    "METRIC_VALUE": 0.06207,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lake",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.018177
+    "METRIC_VALUE": 0.018373,
+    "POP_METRIC_VALUE": 0.025413
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lake",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.017934
+    "METRIC_VALUE": 0.019191,
+    "POP_METRIC_VALUE": 0.012525
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lake",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.014574
+    "METRIC_VALUE": 0.01536,
+    "POP_METRIC_VALUE": 0.018118
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lake",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.187239
+    "METRIC_VALUE": 0.189453,
+    "POP_METRIC_VALUE": 0.200858
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lake",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.014331
+    "METRIC_VALUE": 0.015137,
+    "POP_METRIC_VALUE": 0.034264
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lake",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.001862
+    "METRIC_VALUE": 0.002046,
+    "POP_METRIC_VALUE": 0.001756
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lake",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.69147
+    "METRIC_VALUE": 0.686291,
+    "POP_METRIC_VALUE": 0.707066
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lake",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.023845
+    "METRIC_VALUE": 0.024249,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lake",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.030566
+    "METRIC_VALUE": 0.029902,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lassen",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.01202
+    "METRIC_VALUE": 0.011937,
+    "POP_METRIC_VALUE": 0.027603
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lassen",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.02065
+    "METRIC_VALUE": 0.020852,
+    "POP_METRIC_VALUE": 0.010225
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lassen",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.010017
+    "METRIC_VALUE": 0.010728,
+    "POP_METRIC_VALUE": 0.082996
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lassen",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.090769
+    "METRIC_VALUE": 0.090209,
+    "POP_METRIC_VALUE": 0.178202
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lassen",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.010787
+    "METRIC_VALUE": 0.011484,
+    "POP_METRIC_VALUE": 0.02794
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lassen",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.004931
+    "METRIC_VALUE": 0.00544,
+    "POP_METRIC_VALUE": 0.005169
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lassen",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.695485
+    "METRIC_VALUE": 0.694167,
+    "POP_METRIC_VALUE": 0.667865
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lassen",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.033287
+    "METRIC_VALUE": 0.035811,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Lassen",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.122053
+    "METRIC_VALUE": 0.119371,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002391
+    "METRIC_VALUE": 0.0022,
+    "POP_METRIC_VALUE": 0.001993
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.169554
+    "METRIC_VALUE": 0.165579,
+    "POP_METRIC_VALUE": 0.133994
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.052791
+    "METRIC_VALUE": 0.052988,
+    "POP_METRIC_VALUE": 0.080638
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.329958
+    "METRIC_VALUE": 0.356491,
+    "POP_METRIC_VALUE": 0.498031
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.014502
+    "METRIC_VALUE": 0.014649,
+    "POP_METRIC_VALUE": 0.021157
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.004224
+    "METRIC_VALUE": 0.004099,
+    "POP_METRIC_VALUE": 0.002386
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.287748
+    "METRIC_VALUE": 0.272454,
+    "POP_METRIC_VALUE": 0.261801
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.106945
+    "METRIC_VALUE": 0.101184,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Los Angeles",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.031886
+    "METRIC_VALUE": 0.030355,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.009182
+    "METRIC_VALUE": 0.009077,
+    "POP_METRIC_VALUE": 0.011483
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.028057
+    "METRIC_VALUE": 0.028572,
+    "POP_METRIC_VALUE": 0.017483
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.016619
+    "METRIC_VALUE": 0.016571,
+    "POP_METRIC_VALUE": 0.031585
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.415132
+    "METRIC_VALUE": 0.431822,
+    "POP_METRIC_VALUE": 0.578352
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.009341
+    "METRIC_VALUE": 0.009955,
+    "POP_METRIC_VALUE": 0.01562
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.001533
+    "METRIC_VALUE": 0.001518,
+    "POP_METRIC_VALUE": 0.00083
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.378879
+    "METRIC_VALUE": 0.36998,
+    "POP_METRIC_VALUE": 0.344647
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.089582
+    "METRIC_VALUE": 0.083127,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Madera",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.051673
+    "METRIC_VALUE": 0.049378,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.001383
+    "METRIC_VALUE": 0.001367,
+    "POP_METRIC_VALUE": 0.002425
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.062338
+    "METRIC_VALUE": 0.062477,
+    "POP_METRIC_VALUE": 0.059587
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.013798
+    "METRIC_VALUE": 0.013955,
+    "POP_METRIC_VALUE": 0.027067
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.135418
+    "METRIC_VALUE": 0.14433,
+    "POP_METRIC_VALUE": 0.172476
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.011066
+    "METRIC_VALUE": 0.012891,
+    "POP_METRIC_VALUE": 0.029718
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002631
+    "METRIC_VALUE": 0.00257,
+    "POP_METRIC_VALUE": 0.0018
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.681474
+    "METRIC_VALUE": 0.686485,
+    "POP_METRIC_VALUE": 0.706927
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.064398
+    "METRIC_VALUE": 0.051516,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Marin",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.027494
+    "METRIC_VALUE": 0.024409,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.01479
+    "METRIC_VALUE": 0.014297,
+    "POP_METRIC_VALUE": 0.026066
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.01684
+    "METRIC_VALUE": 0.018268,
+    "POP_METRIC_VALUE": 0.013291
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.005565
+    "METRIC_VALUE": 0.00556,
+    "POP_METRIC_VALUE": 0.005484
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.093425
+    "METRIC_VALUE": 0.104183,
+    "POP_METRIC_VALUE": 0.105491
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.009225
+    "METRIC_VALUE": 0.009399,
+    "POP_METRIC_VALUE": 0.030454
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002489
+    "METRIC_VALUE": 0.002515,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.68297
+    "METRIC_VALUE": 0.677654,
+    "POP_METRIC_VALUE": 0.819214
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.077903
+    "METRIC_VALUE": 0.077045,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Mariposa",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.096793
+    "METRIC_VALUE": 0.091078,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mendocino",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.010225
+    "METRIC_VALUE": 0.011123,
+    "POP_METRIC_VALUE": 0.040573
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mendocino",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.018465
+    "METRIC_VALUE": 0.01912,
+    "POP_METRIC_VALUE": 0.016644
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mendocino",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.004342
+    "METRIC_VALUE": 0.004636,
+    "POP_METRIC_VALUE": 0.007048
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mendocino",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.186988
+    "METRIC_VALUE": 0.200238,
+    "POP_METRIC_VALUE": 0.251703
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mendocino",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.009618
+    "METRIC_VALUE": 0.010528,
+    "POP_METRIC_VALUE": 0.030146
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mendocino",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002171
+    "METRIC_VALUE": 0.002276,
+    "POP_METRIC_VALUE": 0.001227
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mendocino",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.646684
+    "METRIC_VALUE": 0.635169,
+    "POP_METRIC_VALUE": 0.652658
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mendocino",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.053435
+    "METRIC_VALUE": 0.053,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mendocino",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.068072
+    "METRIC_VALUE": 0.06391,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Merced",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.003896
+    "METRIC_VALUE": 0.00398,
+    "POP_METRIC_VALUE": 0.004356
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Merced",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.069186
+    "METRIC_VALUE": 0.069257,
+    "POP_METRIC_VALUE": 0.073185
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Merced",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.018362
+    "METRIC_VALUE": 0.019056,
+    "POP_METRIC_VALUE": 0.034286
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Merced",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.422557
+    "METRIC_VALUE": 0.434924,
+    "POP_METRIC_VALUE": 0.575446
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Merced",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.000642
+    "METRIC_VALUE": 0.000708,
+    "POP_METRIC_VALUE": 0.018452
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Merced",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.003243
+    "METRIC_VALUE": 0.003322,
+    "POP_METRIC_VALUE": 0.001936
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Merced",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.248035
+    "METRIC_VALUE": 0.240253,
+    "POP_METRIC_VALUE": 0.292339
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Merced",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.078251
+    "METRIC_VALUE": 0.078053,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Merced",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.155827
+    "METRIC_VALUE": 0.150446,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Modoc",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.026626
+    "METRIC_VALUE": 0.027122,
+    "POP_METRIC_VALUE": 0.03125
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Modoc",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.022822
+    "METRIC_VALUE": 0.021134,
+    "POP_METRIC_VALUE": 0.009219
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Modoc",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.01065
+    "METRIC_VALUE": 0.010919,
+    "POP_METRIC_VALUE": 0.008022
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Modoc",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.100038
+    "METRIC_VALUE": 0.103558,
+    "POP_METRIC_VALUE": 0.155532
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Modoc",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.011411
+    "METRIC_VALUE": 0.010919,
+    "POP_METRIC_VALUE": 0.023467
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Modoc",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.001902
+    "METRIC_VALUE": 0.002113,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Modoc",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.74439
+    "METRIC_VALUE": 0.740754,
+    "POP_METRIC_VALUE": 0.77251
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Modoc",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.016736
+    "METRIC_VALUE": 0.019725,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Modoc",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.065424
+    "METRIC_VALUE": 0.063755,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-08",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mono",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.003592
+    "METRIC_VALUE": 0.004045,
+    "POP_METRIC_VALUE": 0.014632
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-08",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mono",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.020911
+    "METRIC_VALUE": 0.021294,
+    "POP_METRIC_VALUE": 0.015468
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-08",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mono",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.003079
+    "METRIC_VALUE": 0.00345,
+    "POP_METRIC_VALUE": 0.000251
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-08",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mono",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.257601
+    "METRIC_VALUE": 0.271116,
+    "POP_METRIC_VALUE": 0.290385
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-08",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mono",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.011674
+    "METRIC_VALUE": 0.012491,
+    "POP_METRIC_VALUE": 0.017893
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-08",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mono",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002053
+    "METRIC_VALUE": 0.00226,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-08",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mono",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.672739
+    "METRIC_VALUE": 0.660124,
+    "POP_METRIC_VALUE": 0.661371
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-08",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mono",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.016164
+    "METRIC_VALUE": 0.017012,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-08",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Mono",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.012187
+    "METRIC_VALUE": 0.008208,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Monterey",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002427
+    "METRIC_VALUE": 0.002348,
+    "POP_METRIC_VALUE": 0.003199
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Monterey",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.057505
+    "METRIC_VALUE": 0.055647,
+    "POP_METRIC_VALUE": 0.053232
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Monterey",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.01387
+    "METRIC_VALUE": 0.014048,
+    "POP_METRIC_VALUE": 0.024964
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Monterey",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.496537
+    "METRIC_VALUE": 0.51354,
+    "POP_METRIC_VALUE": 0.591693
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Monterey",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.010434
+    "METRIC_VALUE": 0.010956,
+    "POP_METRIC_VALUE": 0.02291
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Monterey",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.007055
+    "METRIC_VALUE": 0.006835,
+    "POP_METRIC_VALUE": 0.004296
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Monterey",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.315386
+    "METRIC_VALUE": 0.30101,
+    "POP_METRIC_VALUE": 0.299705
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Monterey",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.044312
+    "METRIC_VALUE": 0.044581,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Monterey",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.052473
+    "METRIC_VALUE": 0.051037,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002508
+    "METRIC_VALUE": 0.002548,
+    "POP_METRIC_VALUE": 0.003785
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.065686
+    "METRIC_VALUE": 0.0691,
+    "POP_METRIC_VALUE": 0.070827
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.013349
+    "METRIC_VALUE": 0.014195,
+    "POP_METRIC_VALUE": 0.018068
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.253423
+    "METRIC_VALUE": 0.263344,
+    "POP_METRIC_VALUE": 0.355335
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.008606
+    "METRIC_VALUE": 0.011332,
+    "POP_METRIC_VALUE": 0.022554
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.005123
+    "METRIC_VALUE": 0.005173,
+    "POP_METRIC_VALUE": 0.002317
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.51575
+    "METRIC_VALUE": 0.509782,
+    "POP_METRIC_VALUE": 0.527114
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.070809
+    "METRIC_VALUE": 0.065456,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Napa",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.064747
+    "METRIC_VALUE": 0.059069,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Nevada",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.007813
+    "METRIC_VALUE": 0.007684,
+    "POP_METRIC_VALUE": 0.009484
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Nevada",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.014936
+    "METRIC_VALUE": 0.015289,
+    "POP_METRIC_VALUE": 0.012315
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Nevada",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.003406
+    "METRIC_VALUE": 0.003792,
+    "POP_METRIC_VALUE": 0.004128
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Nevada",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.065399
+    "METRIC_VALUE": 0.072114,
+    "POP_METRIC_VALUE": 0.10015
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Nevada",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.011575
+    "METRIC_VALUE": 0.012415,
+    "POP_METRIC_VALUE": 0.02711
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Nevada",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.001603
+    "METRIC_VALUE": 0.001597,
+    "POP_METRIC_VALUE": 0.001274
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Nevada",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.815689
+    "METRIC_VALUE": 0.812619,
+    "POP_METRIC_VALUE": 0.845539
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Nevada",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.039467
+    "METRIC_VALUE": 0.037345,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Nevada",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.040112
+    "METRIC_VALUE": 0.037145,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.001675
+    "METRIC_VALUE": 0.001697,
+    "POP_METRIC_VALUE": 0.002153
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.221018
+    "METRIC_VALUE": 0.220777,
+    "POP_METRIC_VALUE": 0.181667
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.012639
+    "METRIC_VALUE": 0.012897,
+    "POP_METRIC_VALUE": 0.015438
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.171853
+    "METRIC_VALUE": 0.185903,
+    "POP_METRIC_VALUE": 0.35709
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.014885
+    "METRIC_VALUE": 0.015599,
+    "POP_METRIC_VALUE": 0.026705
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.003751
+    "METRIC_VALUE": 0.003756,
+    "POP_METRIC_VALUE": 0.002883
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.410067
+    "METRIC_VALUE": 0.398822,
+    "POP_METRIC_VALUE": 0.414065
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.089785
+    "METRIC_VALUE": 0.089732,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Orange",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.074327
+    "METRIC_VALUE": 0.070817,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Outside California",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.004316
+    "METRIC_VALUE": 0.004154,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Outside California",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.10167
+    "METRIC_VALUE": 0.103931,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Outside California",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.064439
+    "METRIC_VALUE": 0.064911,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Outside California",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.189998
+    "METRIC_VALUE": 0.203725,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Outside California",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.002296
+    "METRIC_VALUE": 0.002737,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Outside California",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002812
+    "METRIC_VALUE": 0.002988,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Outside California",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.289965
+    "METRIC_VALUE": 0.287131,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Outside California",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.139805
+    "METRIC_VALUE": 0.129209,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Outside California",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.204699
+    "METRIC_VALUE": 0.201212,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.00521
+    "METRIC_VALUE": 0.005079,
+    "POP_METRIC_VALUE": 0.006391
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.09025
+    "METRIC_VALUE": 0.095364,
+    "POP_METRIC_VALUE": 0.066663
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.014678
+    "METRIC_VALUE": 0.015373,
+    "POP_METRIC_VALUE": 0.013192
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.096494
+    "METRIC_VALUE": 0.099218,
+    "POP_METRIC_VALUE": 0.137156
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.012868
+    "METRIC_VALUE": 0.015745,
+    "POP_METRIC_VALUE": 0.031165
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.00551
+    "METRIC_VALUE": 0.005374,
+    "POP_METRIC_VALUE": 0.002008
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.654481
+    "METRIC_VALUE": 0.659764,
+    "POP_METRIC_VALUE": 0.743425
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.073527
+    "METRIC_VALUE": 0.063514,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Placer",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.046983
+    "METRIC_VALUE": 0.040569,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Plumas",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.010134
+    "METRIC_VALUE": 0.010665,
+    "POP_METRIC_VALUE": 0.024573
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Plumas",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.012083
+    "METRIC_VALUE": 0.010783,
+    "POP_METRIC_VALUE": 0.008422
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Plumas",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.005846
+    "METRIC_VALUE": 0.006873,
+    "POP_METRIC_VALUE": 0.008653
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Plumas",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.053397
+    "METRIC_VALUE": 0.054864,
+    "POP_METRIC_VALUE": 0.09362
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Plumas",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.007665
+    "METRIC_VALUE": 0.009006,
+    "POP_METRIC_VALUE": 0.03288
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Plumas",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.00052
+    "METRIC_VALUE": 0.000711,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Plumas",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.817202
+    "METRIC_VALUE": 0.819291,
+    "POP_METRIC_VALUE": 0.831853
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Plumas",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.027024
+    "METRIC_VALUE": 0.027136,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Plumas",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.06613
+    "METRIC_VALUE": 0.060671,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002987
+    "METRIC_VALUE": 0.002938,
+    "POP_METRIC_VALUE": 0.004941
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.080938
+    "METRIC_VALUE": 0.080625,
+    "POP_METRIC_VALUE": 0.060672
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.046706
+    "METRIC_VALUE": 0.047706,
+    "POP_METRIC_VALUE": 0.060149
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.342114
+    "METRIC_VALUE": 0.355588,
+    "POP_METRIC_VALUE": 0.47473
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.012978
+    "METRIC_VALUE": 0.013692,
+    "POP_METRIC_VALUE": 0.022887
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.004281
+    "METRIC_VALUE": 0.00438,
+    "POP_METRIC_VALUE": 0.002736
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.388591
+    "METRIC_VALUE": 0.374027,
+    "POP_METRIC_VALUE": 0.373885
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.083312
+    "METRIC_VALUE": 0.08378,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Riverside",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.038092
+    "METRIC_VALUE": 0.037266,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.00492
+    "METRIC_VALUE": 0.004946,
+    "POP_METRIC_VALUE": 0.005735
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.180764
+    "METRIC_VALUE": 0.189702,
+    "POP_METRIC_VALUE": 0.143746
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.063331
+    "METRIC_VALUE": 0.065981,
+    "POP_METRIC_VALUE": 0.100084
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.125124
+    "METRIC_VALUE": 0.135372,
+    "POP_METRIC_VALUE": 0.231437
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.01371
+    "METRIC_VALUE": 0.018083,
+    "POP_METRIC_VALUE": 0.046488
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.013527
+    "METRIC_VALUE": 0.013516,
+    "POP_METRIC_VALUE": 0.009919
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.415603
+    "METRIC_VALUE": 0.410861,
+    "POP_METRIC_VALUE": 0.462591
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.111536
+    "METRIC_VALUE": 0.093808,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sacramento",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.071487
+    "METRIC_VALUE": 0.067732,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Benito",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002923
+    "METRIC_VALUE": 0.003211,
+    "POP_METRIC_VALUE": 0.004563
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Benito",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.036898
+    "METRIC_VALUE": 0.036177,
+    "POP_METRIC_VALUE": 0.026016
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Benito",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.007487
+    "METRIC_VALUE": 0.007431,
+    "POP_METRIC_VALUE": 0.008085
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Benito",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.408984
+    "METRIC_VALUE": 0.422416,
+    "POP_METRIC_VALUE": 0.574044
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Benito",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.005027
+    "METRIC_VALUE": 0.006086,
+    "POP_METRIC_VALUE": 0.01706
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Benito",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.00385
+    "METRIC_VALUE": 0.004037,
+    "POP_METRIC_VALUE": 0.002121
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Benito",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.286096
+    "METRIC_VALUE": 0.283639,
+    "POP_METRIC_VALUE": 0.36811
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Benito",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.078039
+    "METRIC_VALUE": 0.079021,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Benito",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.170695
+    "METRIC_VALUE": 0.157982,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002972
+    "METRIC_VALUE": 0.002967,
+    "POP_METRIC_VALUE": 0.004096
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.11467
+    "METRIC_VALUE": 0.111862,
+    "POP_METRIC_VALUE": 0.062053
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.057264
+    "METRIC_VALUE": 0.057817,
+    "POP_METRIC_VALUE": 0.084482
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.377084
+    "METRIC_VALUE": 0.392973,
+    "POP_METRIC_VALUE": 0.514832
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.015208
+    "METRIC_VALUE": 0.015674,
+    "POP_METRIC_VALUE": 0.022702
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.004474
+    "METRIC_VALUE": 0.004466,
+    "POP_METRIC_VALUE": 0.002901
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.303492
+    "METRIC_VALUE": 0.291646,
+    "POP_METRIC_VALUE": 0.308934
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.087537
+    "METRIC_VALUE": 0.087158,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Bernardino",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.0373
+    "METRIC_VALUE": 0.035439,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.00367
+    "METRIC_VALUE": 0.003682,
+    "POP_METRIC_VALUE": 0.004553
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.129554
+    "METRIC_VALUE": 0.127435,
+    "POP_METRIC_VALUE": 0.106551
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.026412
+    "METRIC_VALUE": 0.026998,
+    "POP_METRIC_VALUE": 0.04825
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.256066
+    "METRIC_VALUE": 0.271459,
+    "POP_METRIC_VALUE": 0.343737
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.000313
+    "METRIC_VALUE": 0.000102,
+    "POP_METRIC_VALUE": 0.033079
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.006635
+    "METRIC_VALUE": 0.006683,
+    "POP_METRIC_VALUE": 0.004388
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.421881
+    "METRIC_VALUE": 0.404743,
+    "POP_METRIC_VALUE": 0.459441
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.079558
+    "METRIC_VALUE": 0.082633,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Diego",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.075911
+    "METRIC_VALUE": 0.076265,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002298
+    "METRIC_VALUE": 0.002101,
+    "POP_METRIC_VALUE": 0.002386
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.348974
+    "METRIC_VALUE": 0.351212,
+    "POP_METRIC_VALUE": 0.313908
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.036945
+    "METRIC_VALUE": 0.038343,
+    "POP_METRIC_VALUE": 0.051531
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.130935
+    "METRIC_VALUE": 0.141662,
+    "POP_METRIC_VALUE": 0.152504
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.012861
+    "METRIC_VALUE": 0.015197,
+    "POP_METRIC_VALUE": 0.036375
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.004094
+    "METRIC_VALUE": 0.004153,
+    "POP_METRIC_VALUE": 0.003781
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.35954
+    "METRIC_VALUE": 0.356545,
+    "POP_METRIC_VALUE": 0.439515
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.057211
+    "METRIC_VALUE": 0.051265,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Francisco",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.047143
+    "METRIC_VALUE": 0.039522,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.004505
+    "METRIC_VALUE": 0.004577,
+    "POP_METRIC_VALUE": 0.004704
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.152266
+    "METRIC_VALUE": 0.158821,
+    "POP_METRIC_VALUE": 0.141371
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.045711
+    "METRIC_VALUE": 0.047453,
+    "POP_METRIC_VALUE": 0.074157
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.22413
+    "METRIC_VALUE": 0.239606,
+    "POP_METRIC_VALUE": 0.407685
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.002337
+    "METRIC_VALUE": 0.00263,
+    "POP_METRIC_VALUE": 0.034309
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.01143
+    "METRIC_VALUE": 0.011881,
+    "POP_METRIC_VALUE": 0.004936
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.249095
+    "METRIC_VALUE": 0.243678,
+    "POP_METRIC_VALUE": 0.332838
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.147516
+    "METRIC_VALUE": 0.142464,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Joaquin",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.163011
+    "METRIC_VALUE": 0.148891,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.003285
+    "METRIC_VALUE": 0.003315,
+    "POP_METRIC_VALUE": 0.005276
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.029716
+    "METRIC_VALUE": 0.030266,
+    "POP_METRIC_VALUE": 0.032194
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.006751
+    "METRIC_VALUE": 0.007129,
+    "POP_METRIC_VALUE": 0.018693
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.139903
+    "METRIC_VALUE": 0.151656,
+    "POP_METRIC_VALUE": 0.228587
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.010839
+    "METRIC_VALUE": 0.012314,
+    "POP_METRIC_VALUE": 0.02428
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002489
+    "METRIC_VALUE": 0.002503,
+    "POP_METRIC_VALUE": 0.001305
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.572484
+    "METRIC_VALUE": 0.574347,
+    "POP_METRIC_VALUE": 0.689665
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.081369
+    "METRIC_VALUE": 0.07883,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Luis Obispo",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.153165
+    "METRIC_VALUE": 0.139641,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002484
+    "METRIC_VALUE": 0.002241,
+    "POP_METRIC_VALUE": 0.001693
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.287048
+    "METRIC_VALUE": 0.289803,
+    "POP_METRIC_VALUE": 0.252866
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.016031
+    "METRIC_VALUE": 0.016376,
+    "POP_METRIC_VALUE": 0.025516
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.130211
+    "METRIC_VALUE": 0.146697,
+    "POP_METRIC_VALUE": 0.263002
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.012868
+    "METRIC_VALUE": 0.016388,
+    "POP_METRIC_VALUE": 0.036319
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.008991
+    "METRIC_VALUE": 0.00939,
+    "POP_METRIC_VALUE": 0.014393
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.384367
+    "METRIC_VALUE": 0.380149,
+    "POP_METRIC_VALUE": 0.406211
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.103394
+    "METRIC_VALUE": 0.09304,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "San Mateo",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.054607
+    "METRIC_VALUE": 0.045916,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Barbara",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.003265
+    "METRIC_VALUE": 0.00313,
+    "POP_METRIC_VALUE": 0.004234
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Barbara",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.04952
+    "METRIC_VALUE": 0.049082,
+    "POP_METRIC_VALUE": 0.047857
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Barbara",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.011984
+    "METRIC_VALUE": 0.012117,
+    "POP_METRIC_VALUE": 0.017611
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Barbara",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.332117
+    "METRIC_VALUE": 0.348765,
+    "POP_METRIC_VALUE": 0.462315
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Barbara",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.009961
+    "METRIC_VALUE": 0.01063,
+    "POP_METRIC_VALUE": 0.022679
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Barbara",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002947
+    "METRIC_VALUE": 0.002902,
+    "POP_METRIC_VALUE": 0.001764
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Barbara",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.476392
+    "METRIC_VALUE": 0.464,
+    "POP_METRIC_VALUE": 0.443539
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Barbara",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.082594
+    "METRIC_VALUE": 0.080274,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Barbara",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.031219
+    "METRIC_VALUE": 0.0291,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.001996
+    "METRIC_VALUE": 0.002047,
+    "POP_METRIC_VALUE": 0.002387
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.402299
+    "METRIC_VALUE": 0.402523,
+    "POP_METRIC_VALUE": 0.328311
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.017413
+    "METRIC_VALUE": 0.017841,
+    "POP_METRIC_VALUE": 0.023875
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.157559
+    "METRIC_VALUE": 0.167408,
+    "POP_METRIC_VALUE": 0.274217
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.013719
+    "METRIC_VALUE": 0.015842,
+    "POP_METRIC_VALUE": 0.032812
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.005517
+    "METRIC_VALUE": 0.00544,
+    "POP_METRIC_VALUE": 0.003543
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.290088
+    "METRIC_VALUE": 0.288467,
+    "POP_METRIC_VALUE": 0.334854
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.069912
+    "METRIC_VALUE": 0.064847,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Clara",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.041497
+    "METRIC_VALUE": 0.035586,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Cruz",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002502
+    "METRIC_VALUE": 0.002489,
+    "POP_METRIC_VALUE": 0.003817
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Cruz",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.036179
+    "METRIC_VALUE": 0.036191,
+    "POP_METRIC_VALUE": 0.042195
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Cruz",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.006172
+    "METRIC_VALUE": 0.006619,
+    "POP_METRIC_VALUE": 0.009246
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Cruz",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.253153
+    "METRIC_VALUE": 0.269531,
+    "POP_METRIC_VALUE": 0.350803
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Cruz",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.00791
+    "METRIC_VALUE": 0.009337,
+    "POP_METRIC_VALUE": 0.028037
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Cruz",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002217
+    "METRIC_VALUE": 0.002254,
+    "POP_METRIC_VALUE": 0.001141
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Cruz",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.555051
+    "METRIC_VALUE": 0.548954,
+    "POP_METRIC_VALUE": 0.564761
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Cruz",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.085092
+    "METRIC_VALUE": 0.07816,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Santa Cruz",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.051726
+    "METRIC_VALUE": 0.046466,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Shasta",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.021466
+    "METRIC_VALUE": 0.021888,
+    "POP_METRIC_VALUE": 0.02404
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Shasta",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.033854
+    "METRIC_VALUE": 0.036336,
+    "POP_METRIC_VALUE": 0.028005
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Shasta",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.007557
+    "METRIC_VALUE": 0.008073,
+    "POP_METRIC_VALUE": 0.009721
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Shasta",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.059867
+    "METRIC_VALUE": 0.062948,
+    "POP_METRIC_VALUE": 0.096567
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Shasta",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.014879
+    "METRIC_VALUE": 0.015791,
+    "POP_METRIC_VALUE": 0.03631
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Shasta",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002357
+    "METRIC_VALUE": 0.002377,
+    "POP_METRIC_VALUE": 0.001377
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Shasta",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.726678
+    "METRIC_VALUE": 0.727232,
+    "POP_METRIC_VALUE": 0.803981
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Shasta",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.067089
+    "METRIC_VALUE": 0.065001,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Shasta",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.066253
+    "METRIC_VALUE": 0.060354,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-06",
+    "LATEST_ADMIN_DATE": "2021-06-04",
     "REGION": "Sierra",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.004402
+    "METRIC_VALUE": 0.004993,
+    "POP_METRIC_VALUE": 0.001842
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-06",
+    "LATEST_ADMIN_DATE": "2021-06-04",
     "REGION": "Sierra",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.013206
+    "METRIC_VALUE": 0.009272,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-06",
+    "LATEST_ADMIN_DATE": "2021-06-04",
     "REGION": "Sierra",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.002201
+    "METRIC_VALUE": 0.002853,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-06",
+    "LATEST_ADMIN_DATE": "2021-06-04",
     "REGION": "Sierra",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.079237
+    "METRIC_VALUE": 0.082026,
+    "POP_METRIC_VALUE": 0.093923
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-06",
+    "LATEST_ADMIN_DATE": "2021-06-04",
     "REGION": "Sierra",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.009538
+    "METRIC_VALUE": 0.009986,
+    "POP_METRIC_VALUE": 0.009576
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-06",
+    "LATEST_ADMIN_DATE": "2021-06-04",
     "REGION": "Sierra",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0
+    "METRIC_VALUE": 0,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-06",
+    "LATEST_ADMIN_DATE": "2021-06-04",
     "REGION": "Sierra",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.834923
+    "METRIC_VALUE": 0.836662,
+    "POP_METRIC_VALUE": 0.894659
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-06",
+    "LATEST_ADMIN_DATE": "2021-06-04",
     "REGION": "Sierra",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.028613
+    "METRIC_VALUE": 0.028531,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-06",
+    "LATEST_ADMIN_DATE": "2021-06-04",
     "REGION": "Sierra",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.02788
+    "METRIC_VALUE": 0.025678,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Siskiyou",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.016989
+    "METRIC_VALUE": 0.016599,
+    "POP_METRIC_VALUE": 0.036778
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Siskiyou",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.018235
+    "METRIC_VALUE": 0.021851,
+    "POP_METRIC_VALUE": 0.013586
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Siskiyou",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.007543
+    "METRIC_VALUE": 0.008632,
+    "POP_METRIC_VALUE": 0.012355
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Siskiyou",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.079698
+    "METRIC_VALUE": 0.085109,
+    "POP_METRIC_VALUE": 0.123056
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Siskiyou",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.008396
+    "METRIC_VALUE": 0.009718,
+    "POP_METRIC_VALUE": 0.045129
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Siskiyou",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.000656
+    "METRIC_VALUE": 0.000966,
+    "POP_METRIC_VALUE": 0.001963
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Siskiyou",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.699967
+    "METRIC_VALUE": 0.69898,
+    "POP_METRIC_VALUE": 0.767133
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Siskiyou",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.03916
+    "METRIC_VALUE": 0.038148,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Siskiyou",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.129354
+    "METRIC_VALUE": 0.119998,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.004589
+    "METRIC_VALUE": 0.004679,
+    "POP_METRIC_VALUE": 0.004482
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.169711
+    "METRIC_VALUE": 0.172799,
+    "POP_METRIC_VALUE": 0.140592
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.097311
+    "METRIC_VALUE": 0.100761,
+    "POP_METRIC_VALUE": 0.141151
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.153821
+    "METRIC_VALUE": 0.162167,
+    "POP_METRIC_VALUE": 0.262171
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.015317
+    "METRIC_VALUE": 0.022198,
+    "POP_METRIC_VALUE": 0.054288
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.016312
+    "METRIC_VALUE": 0.016135,
+    "POP_METRIC_VALUE": 0.008008
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.37308
+    "METRIC_VALUE": 0.375001,
+    "POP_METRIC_VALUE": 0.389307
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.113891
+    "METRIC_VALUE": 0.09756,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Solano",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.055969
+    "METRIC_VALUE": 0.048701,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.005428
+    "METRIC_VALUE": 0.0054,
+    "POP_METRIC_VALUE": 0.007359
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.040573
+    "METRIC_VALUE": 0.041769,
+    "POP_METRIC_VALUE": 0.039001
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.011896
+    "METRIC_VALUE": 0.012157,
+    "POP_METRIC_VALUE": 0.015655
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.184033
+    "METRIC_VALUE": 0.194763,
+    "POP_METRIC_VALUE": 0.267885
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.009065
+    "METRIC_VALUE": 0.011934,
+    "POP_METRIC_VALUE": 0.027474
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.003714
+    "METRIC_VALUE": 0.003877,
+    "POP_METRIC_VALUE": 0.003054
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.626692
+    "METRIC_VALUE": 0.626832,
+    "POP_METRIC_VALUE": 0.639571
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.080089
+    "METRIC_VALUE": 0.070695,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sonoma",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.03851
+    "METRIC_VALUE": 0.032574,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Stanislaus",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.004823
+    "METRIC_VALUE": 0.005053,
+    "POP_METRIC_VALUE": 0.005275
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Stanislaus",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.063241
+    "METRIC_VALUE": 0.064311,
+    "POP_METRIC_VALUE": 0.049532
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Stanislaus",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.019574
+    "METRIC_VALUE": 0.020046,
+    "POP_METRIC_VALUE": 0.026607
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Stanislaus",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.322454
+    "METRIC_VALUE": 0.333798,
+    "POP_METRIC_VALUE": 0.452553
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Stanislaus",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.00103
+    "METRIC_VALUE": 0.001215,
+    "POP_METRIC_VALUE": 0.027095
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Stanislaus",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.007786
+    "METRIC_VALUE": 0.007855,
+    "POP_METRIC_VALUE": 0.005938
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Stanislaus",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.357618
+    "METRIC_VALUE": 0.351277,
+    "POP_METRIC_VALUE": 0.433
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Stanislaus",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.101095
+    "METRIC_VALUE": 0.102296,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Stanislaus",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.122379
+    "METRIC_VALUE": 0.114151,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.007233
+    "METRIC_VALUE": 0.007419,
+    "POP_METRIC_VALUE": 0.010035
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.223241
+    "METRIC_VALUE": 0.225334,
+    "POP_METRIC_VALUE": 0.147054
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.013148
+    "METRIC_VALUE": 0.012929,
+    "POP_METRIC_VALUE": 0.018782
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.212271
+    "METRIC_VALUE": 0.228841,
+    "POP_METRIC_VALUE": 0.313093
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.020165
+    "METRIC_VALUE": 0.021756,
+    "POP_METRIC_VALUE": 0.034049
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.003146
+    "METRIC_VALUE": 0.003101,
+    "POP_METRIC_VALUE": 0.003099
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.435431
+    "METRIC_VALUE": 0.418058,
+    "POP_METRIC_VALUE": 0.473888
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.055145
+    "METRIC_VALUE": 0.054556,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Sutter",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.030221
+    "METRIC_VALUE": 0.028006,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tehama",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.012306
+    "METRIC_VALUE": 0.012121,
+    "POP_METRIC_VALUE": 0.019768
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tehama",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.015097
+    "METRIC_VALUE": 0.016936,
+    "POP_METRIC_VALUE": 0.01036
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tehama",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.004884
+    "METRIC_VALUE": 0.005303,
+    "POP_METRIC_VALUE": 0.00593
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tehama",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.182112
+    "METRIC_VALUE": 0.189005,
+    "POP_METRIC_VALUE": 0.250005
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tehama",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.008817
+    "METRIC_VALUE": 0.009036,
+    "POP_METRIC_VALUE": 0.028846
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tehama",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.001966
+    "METRIC_VALUE": 0.002056,
+    "POP_METRIC_VALUE": 0.000275
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tehama",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.611735
+    "METRIC_VALUE": 0.611763,
+    "POP_METRIC_VALUE": 0.684817
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tehama",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.068126
+    "METRIC_VALUE": 0.066501,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tehama",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.094957
+    "METRIC_VALUE": 0.087279,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Trinity",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.026912
+    "METRIC_VALUE": 0.026299,
+    "POP_METRIC_VALUE": 0.043456
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Trinity",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.07153
+    "METRIC_VALUE": 0.079759,
+    "POP_METRIC_VALUE": 0.006731
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Trinity",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.002361
+    "METRIC_VALUE": 0.003018,
+    "POP_METRIC_VALUE": 0.003494
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Trinity",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.036119
+    "METRIC_VALUE": 0.039879,
+    "POP_METRIC_VALUE": 0.085464
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Trinity",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.011568
+    "METRIC_VALUE": 0.012072,
+    "POP_METRIC_VALUE": 0.044819
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Trinity",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.001889
+    "METRIC_VALUE": 0.001725,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Trinity",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.786591
+    "METRIC_VALUE": 0.777323,
+    "POP_METRIC_VALUE": 0.816036
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Trinity",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.013456
+    "METRIC_VALUE": 0.015089,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Trinity",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.049575
+    "METRIC_VALUE": 0.044837,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tulare",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.003391
+    "METRIC_VALUE": 0.003227,
+    "POP_METRIC_VALUE": 0.007322
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tulare",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.034549
+    "METRIC_VALUE": 0.034925,
+    "POP_METRIC_VALUE": 0.031549
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tulare",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.00954
+    "METRIC_VALUE": 0.009658,
+    "POP_METRIC_VALUE": 0.012306
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tulare",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.520308
+    "METRIC_VALUE": 0.537418,
+    "POP_METRIC_VALUE": 0.63624
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tulare",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.013963
+    "METRIC_VALUE": 0.014009,
+    "POP_METRIC_VALUE": 0.013833
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tulare",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.002088
+    "METRIC_VALUE": 0.002075,
+    "POP_METRIC_VALUE": 0.000859
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tulare",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.320086
+    "METRIC_VALUE": 0.309918,
+    "POP_METRIC_VALUE": 0.29789
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tulare",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.046981
+    "METRIC_VALUE": 0.043551,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tulare",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.049094
+    "METRIC_VALUE": 0.045219,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tuolumne",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.005027
+    "METRIC_VALUE": 0.005108,
+    "POP_METRIC_VALUE": 0.015327
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tuolumne",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.016575
+    "METRIC_VALUE": 0.017068,
+    "POP_METRIC_VALUE": 0.011674
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tuolumne",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.004031
+    "METRIC_VALUE": 0.004299,
+    "POP_METRIC_VALUE": 0.018743
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tuolumne",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.056519
+    "METRIC_VALUE": 0.058143,
+    "POP_METRIC_VALUE": 0.117496
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tuolumne",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.000951
+    "METRIC_VALUE": 0.000979,
+    "POP_METRIC_VALUE": 0.028407
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tuolumne",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.003578
+    "METRIC_VALUE": 0.003661,
+    "POP_METRIC_VALUE": 0.001059
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tuolumne",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.803768
+    "METRIC_VALUE": 0.798076,
+    "POP_METRIC_VALUE": 0.807294
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tuolumne",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.06535
+    "METRIC_VALUE": 0.067166,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Tuolumne",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.044201
+    "METRIC_VALUE": 0.045501,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-09",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.003274
+    "METRIC_VALUE": 0.003993,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-09",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.096049
+    "METRIC_VALUE": 0.109151,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-09",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.038201
+    "METRIC_VALUE": 0.038602,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-09",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.148439
+    "METRIC_VALUE": 0.177371,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-09",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.012879
+    "METRIC_VALUE": 0.011647,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-09",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.005457
+    "METRIC_VALUE": 0.003661,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-09",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.20716
+    "METRIC_VALUE": 0.203328,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-09",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.136215
+    "METRIC_VALUE": 0.159068,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-09",
+    "LATEST_ADMIN_DATE": "2021-06-06",
     "REGION": "Unknown",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.352325
+    "METRIC_VALUE": 0.293178,
+    "POP_METRIC_VALUE": null
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.002011
+    "METRIC_VALUE": 0.001964,
+    "POP_METRIC_VALUE": 0.002936
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.080682
+    "METRIC_VALUE": 0.079615,
+    "POP_METRIC_VALUE": 0.066418
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.013003
+    "METRIC_VALUE": 0.013358,
+    "POP_METRIC_VALUE": 0.015914
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.336222
+    "METRIC_VALUE": 0.346065,
+    "POP_METRIC_VALUE": 0.432907
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.014625
+    "METRIC_VALUE": 0.014865,
+    "POP_METRIC_VALUE": 0.023269
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.003414
+    "METRIC_VALUE": 0.003384,
+    "POP_METRIC_VALUE": 0.001653
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.46586
+    "METRIC_VALUE": 0.453391,
+    "POP_METRIC_VALUE": 0.456904
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.065893
+    "METRIC_VALUE": 0.066697,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Ventura",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.018289
+    "METRIC_VALUE": 0.020663,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yolo",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.005067
+    "METRIC_VALUE": 0.005057,
+    "POP_METRIC_VALUE": 0.00562
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yolo",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.123192
+    "METRIC_VALUE": 0.13427,
+    "POP_METRIC_VALUE": 0.139012
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yolo",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.017901
+    "METRIC_VALUE": 0.020147,
+    "POP_METRIC_VALUE": 0.024273
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yolo",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.200694
+    "METRIC_VALUE": 0.237272,
+    "POP_METRIC_VALUE": 0.314721
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yolo",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.009577
+    "METRIC_VALUE": 0.012758,
+    "POP_METRIC_VALUE": 0.036635
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yolo",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.005137
+    "METRIC_VALUE": 0.005392,
+    "POP_METRIC_VALUE": 0.004889
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yolo",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.420675
+    "METRIC_VALUE": 0.449533,
+    "POP_METRIC_VALUE": 0.474849
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yolo",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.089887
+    "METRIC_VALUE": 0.076074,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yolo",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.12787
+    "METRIC_VALUE": 0.059498,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yuba",
     "CATEGORY": "American Indian or Alaska Native (AI/AN)",
-    "METRIC_VALUE": 0.011033
+    "METRIC_VALUE": 0.010407,
+    "POP_METRIC_VALUE": 0.016
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yuba",
     "CATEGORY": "Asian American",
-    "METRIC_VALUE": 0.081002
+    "METRIC_VALUE": 0.085181,
+    "POP_METRIC_VALUE": 0.070946
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yuba",
     "CATEGORY": "Black",
-    "METRIC_VALUE": 0.028351
+    "METRIC_VALUE": 0.029501,
+    "POP_METRIC_VALUE": 0.030283
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yuba",
     "CATEGORY": "Latino",
-    "METRIC_VALUE": 0.2208
+    "METRIC_VALUE": 0.233088,
+    "POP_METRIC_VALUE": 0.267237
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yuba",
     "CATEGORY": "Multi-race",
-    "METRIC_VALUE": 0.0162
+    "METRIC_VALUE": 0.018413,
+    "POP_METRIC_VALUE": 0.047157
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yuba",
     "CATEGORY": "Native Hawaiian or Other Pacific Islander (NHPI)",
-    "METRIC_VALUE": 0.005354
+    "METRIC_VALUE": 0.005404,
+    "POP_METRIC_VALUE": 0.003621
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yuba",
     "CATEGORY": "White",
-    "METRIC_VALUE": 0.564592
+    "METRIC_VALUE": 0.550797,
+    "POP_METRIC_VALUE": 0.564757
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yuba",
     "CATEGORY": "Other",
-    "METRIC_VALUE": 0.042735
+    "METRIC_VALUE": 0.040709,
+    "POP_METRIC_VALUE": 0
   },
   {
-    "LATEST_ADMIN_DATE": "2021-05-10",
+    "LATEST_ADMIN_DATE": "2021-06-07",
     "REGION": "Yuba",
     "CATEGORY": "Unknown",
-    "METRIC_VALUE": 0.029933
+    "METRIC_VALUE": 0.026499,
+    "POP_METRIC_VALUE": 0
   }
 ]
