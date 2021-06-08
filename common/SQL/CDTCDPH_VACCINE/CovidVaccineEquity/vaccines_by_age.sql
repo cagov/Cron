@@ -1,45 +1,34 @@
 -- Current vaccine administrations by age group (distinct people)
--- 305 rows
---   by county(REGION) + 'California' + 'Outside California'
---   by age(CATEGORY) (0-17,18-49,50-64/65+)
+-- 300 rows
+--   by county(REGION) + 'California'
+--   by age(CATEGORY) (12-17,18-49,50-64,65+,Unknown)
   -- 6/7/2021 Added population metric value
 with
-ranges as (select * from
-  (values
-   ('12-17', 12,  17),
-   ('18-49',18, 49),
-   ('50-64',50, 64),
-   ('65+',  65, 119)
-  ) as foo (NAME, RMIN, RMAX)
-),
 SortMap as (select * from
   (values
    (1,'12-17',null),
    (2,'18-49',null),
    (3,'50-64',null),
    (4,'65+',null),
-   (5,'Unknown',null)
+   (5,'Unknown Agegroup','Unknown')
   ) as foo (SORT, CATEGORY, REPLACEMENT)
 ),
 GB as ( --Master list of corrected data grouped by region/category
   select
-  coalesce(ranges.NAME,'Unknown') "CATEGORY",
+  RECIP_AGE_GROUP "CATEGORY",
   MIXED_COUNTY "REGION",
-    count(distinct recip_id) "ADMIN_COUNT", --For total people
+    coalesce(count(distinct recip_id),0) "ADMIN_COUNT", --For total people
     max(EST_AGE_12PLUS_POP) as "POP_TOTAL",
     MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
     CA_VACCINE.CA_VACCINE.VW_DERIVED_BASE_RECIPIENTS
   left outer join
-    ranges
-    on RMIN<=RECIP_AGE --changed to RECIP_AGE, no longer calculating by current date.
-    and RMAX>=RECIP_AGE --changed to RECIP_AGE, no longer calculating by current date.
-  left join
     DATA_FROM_WEB.GEOGRAPHIC.VW_EST_COUNTY_POP_BY_AGE_GRP pop
     on pop.county_name=MIXED_COUNTY
-    and pop.AGE_GROUP=coalesce(ranges.NAME,'Unknown')
+    and pop.AGE_GROUP=RECIP_AGE_GROUP
   where
     RECIP_ID IS NOT NULL
+    and REGION <> 'Outside California'
   group by
       REGION,
       CATEGORY
@@ -62,8 +51,8 @@ BD as ( -- Region Totals added to category data
       TA.REGION,
       sm.CATEGORY,
       TA.POP_REGION_TOTAL,
-      coalesce(GB.ADMIN_COUNT,0) "ADMIN_COUNT",
-      coalesce(POP_TOTAL,0) as "POP_COUNT"
+      GB.ADMIN_COUNT,
+      GB.POP_TOTAL "POP_COUNT"
   from
     TA
   cross join
@@ -78,8 +67,8 @@ select
     LATEST_ADMIN_DATE,
     REGION,
     coalesce(sm.REPLACEMENT,sm.CATEGORY) "CATEGORY",
-    ADMIN_COUNT/REGION_TOTAL "METRIC_VALUE",
-    POP_COUNT/POP_REGION_TOTAL "POP_METRIC_VALUE"
+    coalesce(ADMIN_COUNT/REGION_TOTAL,0) "METRIC_VALUE",
+    coalesce(POP_COUNT/POP_REGION_TOTAL,0) "POP_METRIC_VALUE"
 from (
   select 
       *
