@@ -81,10 +81,10 @@ const doCovidVaccineEquity = async () => {
                     data
                 };
 
-                //validateJSON(`${schemaName} failed SQL output validation`,
-                //    result,
-                //    `${schemaPath}${schemaName}/output/schema.json`,
-                //    `${schemaPath}${schemaName}/output/sample.json`);
+                validateJSON(`${schemaName} failed SQL output validation`,
+                    result,
+                    `${schemaPath}${schemaName}/output/schema.json`,
+                    `${schemaPath}${schemaName}/output/sample.json`);
 
                 tree.push(getTreeValue(`${targetPath}${path}`,result));
             }
