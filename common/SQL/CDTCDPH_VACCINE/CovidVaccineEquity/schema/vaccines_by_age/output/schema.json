@@ -7,7 +7,6 @@
     "county": {
       "type": "string",
       "enum": [
-        "Outside California",
         "Unknown",
         "California",
         "Alameda",
@@ -114,6 +113,12 @@
             ]
           },
           "METRIC_VALUE": {
+            "required": true,
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "POP_METRIC_VALUE": {
             "required": true,
             "type": "number",
             "minimum": 0,
