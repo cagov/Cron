@@ -23,6 +23,16 @@
           "Path": "wordpress",
           "Branch": "main"
         }
+      },
+      {
+        "name": "Cannabis",
+        "WordPressUrl": "https://dev-cagov-dcc.pantheonsite.io",
+        "GitHubTarget": {
+          "Owner": "cagov",
+          "Repo": "cannabis.ca.gov",
+          "Path": "wordpress",
+          "Branch": "main"
+        }
       }
     ]
   }
