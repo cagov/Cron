@@ -1,42 +1,38 @@
 const GitHub = require('github-api');
-const githubUser = 'cagov';
-const wordPressUrl = 'https://as-go-covid19-d-001.azurewebsites.net';
-const githubRepo = 'automation-development-target';
-const outputPath = 'wordpress_output';
-//const githubRepo = 'digital.ca.gov';
-//const outputPath = 'wordpress';
-//const wordPressUrl = 'https://live-odi-content-api.pantheonsite.io';
+const endpoints = require('./endpoints.json').data;
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const masterBranch = 'main';
 const commitTitle = 'Wordpress Content Update';
 const { createTreeFromFileMap, PrIfChanged } = require('../common/gitTreeCommon');
-const wordPressApiUrl = `${wordPressUrl}/wp-json/wp/v2/`;
-
 const fetch = require('node-fetch');
 const fetchRetry = require('fetch-retry')(fetch);
 
-const commonMeta = {
+/**
+ * @param {{WordPressUrl: string, GitHubTarget: {Owner: string, Repo: string, Path: string,Branch: string}}} endpoint 
+ * @returns 
+ */
+const commonMeta = endpoint => ({
   api_version: "v2",
   process: {
     source_code: "https://github.com/cagov/cron",
-    source_data: wordPressUrl,
-    deployment_target: `https://github.com/${githubUser}/${githubRepo}/tree/main/${outputPath}`
+    source_data: endpoint.WordPressUrl,
+    deployment_target: `https://github.com/${endpoint.GitHubTarget.Owner}/${endpoint.GitHubTarget.Repo}/tree/main/${endpoint.GitHubTarget.Path}`
   },
   refresh_frequency: "as needed"
-};
+});
 
 /**
  * Call the paged wordpress api
+ * @param {string} wordPressApiUrl WP source URL
  * @param {string} objecttype 
  * @returns {Promise<{
  *    id:number,
  *    date_gmt:string
  * }[]]>}
  */
-const WpApi_GetPagedData = async objecttype => {
+const WpApi_GetPagedData = async (wordPressApiUrl,objecttype) => {
   const fetchquery = `${wordPressApiUrl}${objecttype}?per_page=100&orderby=slug&order=asc`;
 
   let totalpages = 999;
@@ -65,10 +61,11 @@ const cleanupContent = html => html
 
 /**
  * fetches a dictionary object from WP
+ * @param {string} wordPressApiUrl WP source URL
  * @param {string} listname the list to get
  * @returns {Promise<{}>} the dictionary
  */
-const fetchDictionary = async listname => Object.assign({}, ...
+const fetchDictionary = async (wordPressApiUrl,listname) => Object.assign({}, ...
   (await fetchRetry(`${wordPressApiUrl}${listname}?context=embed&hide_empty=true&per_page=100`,
     {method:"Get",retries:3,retryDelay:2000})
     .then(res => res.json()))
@@ -94,8 +91,11 @@ const getWpCommonJsonData = (wpRow,userlist,file_path_html,file_path_json) => ({
   excerpt: wpRow.excerpt.rendered
 });
 
-const startManifest = () => ({
-  meta: commonMeta,
+/**
+ * @param {{WordPressUrl: string, GitHubTarget: {Owner: string, Repo: string, Path: string,Branch: string}}} endpoint 
+ */
+const startManifest = endpoint => ({
+  meta: commonMeta(endpoint),
   data: {
     pages: [],
     posts: []
@@ -103,13 +103,14 @@ const startManifest = () => ({
 });
 
 /**
+ * @param {{WordPressUrl: string, GitHubTarget: {Owner: string, Repo: string, Path: string,Branch: string}}} endpoint 
  * @param {{ date_gmt: string, modified_gmt: string }} data 
  */
-const wrapInFileMeta = data => ({
+const wrapInFileMeta = (endpoint,data) => ({
   meta: {
     created_date: data.date_gmt,
     updated_date: data.modified_gmt,
-    ...commonMeta
+    ...commonMeta(endpoint)
   },
   data
 });
@@ -128,49 +129,53 @@ const covertWpJsonDataToManifestRow = JsonData => {
 
 module.exports = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
-  const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
-  //const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
-  //List of WP categories
-  const categorylist = await fetchDictionary('categories');
-  const taglist = await fetchDictionary('tags');
-  const userlist = await fetchDictionary('users');
+  for(const endpoint of endpoints.projects) {
+    const wordPressApiUrl = `${endpoint.WordPressUrl}/wp-json/wp/v2/`;
+    const gitRepo = await gitModule.getRepo(endpoint.GitHubTarget.Owner,endpoint.GitHubTarget.Repo);
+    //const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
-  const allPosts = await WpApi_GetPagedData('posts');
-  const allPages = await WpApi_GetPagedData('pages');
+    //List of WP categories
+    const categorylist = await fetchDictionary(wordPressApiUrl,'categories');
+    const taglist = await fetchDictionary(wordPressApiUrl,'tags');
+    const userlist = await fetchDictionary(wordPressApiUrl,'users');
 
-  const allFilesMap = new Map();
-  const manifest = startManifest();
-  
-  // POSTS
-  allPosts.forEach(x=>{
-    const jsonData = getWpCommonJsonData(x,userlist,`posts/${x.slug}.html`,`posts/${x.slug}.json`);
-    jsonData.categories = x.categories.map(t=>categorylist[t]);
-    jsonData.tags = x.tags.map(t=>taglist[t]);
+    const allPosts = await WpApi_GetPagedData(wordPressApiUrl,'posts');
+    const allPages = await WpApi_GetPagedData(wordPressApiUrl,'pages');
 
-    allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(jsonData));
-    allFilesMap.set(jsonData.file_path_html,cleanupContent(x.content.rendered));
+    const allFilesMap = new Map();
+    const manifest = startManifest(endpoint);
+    
+    // POSTS
+    allPosts.forEach(x=>{
+      const jsonData = getWpCommonJsonData(x,userlist,`posts/${x.slug}.html`,`posts/${x.slug}.json`);
+      jsonData.categories = x.categories.map(t=>categorylist[t]);
+      jsonData.tags = x.tags.map(t=>taglist[t]);
 
-    manifest.data.posts.push(covertWpJsonDataToManifestRow(jsonData));
-  });
+      allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
+      allFilesMap.set(jsonData.file_path_html,cleanupContent(x.content.rendered));
 
-  // PAGES
-  allPages.forEach(x=>{
-    const jsonData = getWpCommonJsonData(x,userlist,`pages/${x.slug}.html`,`pages/${x.slug}.json`);
-    jsonData.parent = x.parent;
-    jsonData.menu_order = x.menu_order;
+      manifest.data.posts.push(covertWpJsonDataToManifestRow(jsonData));
+    });
 
-    allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(jsonData));
-    allFilesMap.set(jsonData.file_path_html,cleanupContent(x.content.rendered));
+    // PAGES
+    allPages.forEach(x=>{
+      const jsonData = getWpCommonJsonData(x,userlist,`pages/${x.slug}.html`,`pages/${x.slug}.json`);
+      jsonData.parent = x.parent;
+      jsonData.menu_order = x.menu_order;
 
-    manifest.data.pages.push(covertWpJsonDataToManifestRow(jsonData));
-  });
+      allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
+      allFilesMap.set(jsonData.file_path_html,cleanupContent(x.content.rendered));
 
-  allFilesMap.set('manifest.json',manifest);
+      manifest.data.pages.push(covertWpJsonDataToManifestRow(jsonData));
+    });
 
-  const workTree = await createTreeFromFileMap(gitRepo,masterBranch,allFilesMap,outputPath);
+    allFilesMap.set('manifest.json',manifest);
 
-  const HtmlUpdateCount = workTree.filter(x=>x.path.endsWith(".html")).length;
+    const workTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,allFilesMap,endpoint.GitHubTarget.Path);
 
-  await PrIfChanged(gitRepo, masterBranch, workTree, `${commitTitle} (${HtmlUpdateCount} updates)`, committer, true);
+    const HtmlUpdateCount = workTree.filter(x=>x.path.endsWith(".html")).length;
+
+    await PrIfChanged(gitRepo, endpoint.GitHubTarget.Branch, workTree, `${commitTitle} (${HtmlUpdateCount} updates)`, committer, true);
+  }
 };

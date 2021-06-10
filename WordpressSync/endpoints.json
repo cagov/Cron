@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "description": "endpoints config file"
+  },
+  "data": {
+    "projects": [
+      {
+        "name": "Covid 19 website",
+        "WordPressUrl": "https://as-go-covid19-d-001.azurewebsites.net",
+        "GitHubTarget": {
+          "Owner": "cagov",
+          "Repo": "automation-development-target",
+          "Path": "wordpress_output",
+          "Branch": "main"
+        }
+      },
+      {
+        "name": "digital.ca.gov website",
+        "WordPressUrl": "https://live-odi-content-api.pantheonsite.io",
+        "GitHubTarget": {
+          "Owner": "cagov",
+          "Repo": "digital.ca.gov",
+          "Path": "wordpress",
+          "Branch": "main"
+        }
+      }
+    ]
+  }
+}
