@@ -170,5 +170,7 @@ module.exports = async () => {
 
   const workTree = await createTreeFromFileMap(gitRepo,masterBranch,allFilesMap,outputPath);
 
-  await PrIfChanged(gitRepo, masterBranch, workTree, commitTitle, committer, true);
+  const HtmlUpdateCount = workTree.filter(x=>x.path.endsWith(".html")).length;
+
+  await PrIfChanged(gitRepo, masterBranch, workTree, `${commitTitle} (${HtmlUpdateCount} updates)`, committer, true);
 };
