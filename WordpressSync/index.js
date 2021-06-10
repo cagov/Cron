@@ -5,6 +5,7 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const commitTitle = 'Wordpress Content Update';
+const apiPath = '/wp-json/wp/v2/';
 const { createTreeFromFileMap, PrIfChanged } = require('../common/gitTreeCommon');
 const fetch = require('node-fetch');
 const fetchRetry = require('fetch-retry')(fetch);
@@ -15,6 +16,7 @@ const fetchRetry = require('fetch-retry')(fetch);
  */
 const commonMeta = endpoint => ({
   api_version: "v2",
+  api_url: endpoint.WordPressUrl+apiPath,
   process: {
     source_code: "https://github.com/cagov/cron",
     source_data: endpoint.WordPressUrl,
@@ -83,6 +85,8 @@ const getWpCommonJsonData = (wpRow,userlist,file_path_html,file_path_json) => ({
   slug: wpRow.slug,
   title: wpRow.title.rendered,
   author: userlist[wpRow.author],
+  date: wpRow.date,
+  modified: wpRow.modified,
   date_gmt: wpRow.date_gmt,
   modified_gmt: wpRow.modified_gmt,
   wordpress_url: wpRow.link,
@@ -122,6 +126,7 @@ const wrapInFileMeta = (endpoint,data) => ({
  */
 const covertWpJsonDataToManifestRow = JsonData => {
   const manifestRow = {...JsonData};
+  delete manifestRow.modified;
   delete manifestRow.modified_gmt;
   delete manifestRow.excerpt;
   return manifestRow;
@@ -131,7 +136,7 @@ module.exports = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
 
   for(const endpoint of endpoints.projects) {
-    const wordPressApiUrl = `${endpoint.WordPressUrl}/wp-json/wp/v2/`;
+    const wordPressApiUrl = endpoint.WordPressUrl+apiPath;
     const gitRepo = await gitModule.getRepo(endpoint.GitHubTarget.Owner,endpoint.GitHubTarget.Repo);
     //const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
