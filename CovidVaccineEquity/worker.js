@@ -33,6 +33,7 @@ const doCovidVaccineEquity = async () => {
     Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
         const schemaObject = sqlWorkAndSchemas.schema[file];
         const targetJSON = allData[file];
+        //require('fs').writeFileSync(`${file}_sample.json`, JSON.stringify(targetJSON,null,2), 'utf8');
         validateJSON2(`${file} - failed SQL input validation`, targetJSON,schemaObject.schema,schemaObject.passTests,schemaObject.failTests);
     });
 
@@ -48,7 +49,7 @@ const doCovidVaccineEquity = async () => {
     };
 
     /**
-     * @param {{CATEGORY: string,REGION: string,LATEST_ADMIN_DATE: string, METRIC_VALUE: number}[]} dataset
+     * @param {{CATEGORY: string,REGION: string,LATEST_ADMIN_DATE: string, METRIC_VALUE: number, POP_METRIC_VALUE: number}[]} dataset
      * @param {string} schemaName
      * @param {string} path_prefix
      * @param {{mode :string, type :string, path:string,content : string}[]} tree
@@ -68,7 +69,8 @@ const doCovidVaccineEquity = async () => {
                 const path = `${path_prefix+REGION.toLowerCase().replace(/ /g,'')}.json`;
                 const data = rows.map(x=>({
                     CATEGORY:x.CATEGORY,
-                    METRIC_VALUE:x.METRIC_VALUE
+                    METRIC_VALUE:x.METRIC_VALUE,
+                    POP_METRIC_VALUE:x.POP_METRIC_VALUE
                 }));
                 const result = {
                     meta: {

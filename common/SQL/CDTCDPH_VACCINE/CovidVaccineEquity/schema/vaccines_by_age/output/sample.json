@@ -1,29 +1,34 @@
 {
   "meta": {
     "REGION": "Alameda",
-    "LATEST_ADMIN_DATE": "2021-05-04",
-    "PUBLISHED_DATE": "2021-05-05"
+    "LATEST_ADMIN_DATE": "2021-06-07",
+    "PUBLISHED_DATE": "2021-06-08"
   },
   "data": [
     {
       "CATEGORY": "12-17",
-      "METRIC_VALUE": 0.019772
+      "METRIC_VALUE": 0.057945,
+      "POP_METRIC_VALUE": 0.087583
     },
     {
       "CATEGORY": "18-49",
-      "METRIC_VALUE": 0.513312
+      "METRIC_VALUE": 0.510384,
+      "POP_METRIC_VALUE": 0.493987
     },
     {
       "CATEGORY": "50-64",
-      "METRIC_VALUE": 0.248673
+      "METRIC_VALUE": 0.235059,
+      "POP_METRIC_VALUE": 0.219919
     },
     {
       "CATEGORY": "65+",
-      "METRIC_VALUE": 0.218243
+      "METRIC_VALUE": 0.196465,
+      "POP_METRIC_VALUE": 0.19851
     },
     {
       "CATEGORY": "Unknown",
-      "METRIC_VALUE": 0
+      "METRIC_VALUE": 0.000147,
+      "POP_METRIC_VALUE": 0
     }
   ]
 }

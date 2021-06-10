@@ -1,21 +1,24 @@
 {
   "meta": {
     "REGION": "Alameda",
-    "LATEST_ADMIN_DATE": "2021-05-04",
-    "PUBLISHED_DATE": "2021-05-05"
+    "LATEST_ADMIN_DATE": "2021-06-07",
+    "PUBLISHED_DATE": "2021-06-08"
   },
   "data": [
     {
       "CATEGORY": "Female",
-      "METRIC_VALUE": 0.530099
+      "METRIC_VALUE": 0.523124,
+      "POP_METRIC_VALUE": 0.509364
     },
     {
       "CATEGORY": "Male",
-      "METRIC_VALUE": 0.466574
+      "METRIC_VALUE": 0.47358,
+      "POP_METRIC_VALUE": 0.490636
     },
     {
       "CATEGORY": "Unknown/undifferentiated",
-      "METRIC_VALUE": 0.003326
+      "METRIC_VALUE": 0.003296,
+      "POP_METRIC_VALUE": 0
     }
   ]
 }
