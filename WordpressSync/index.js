@@ -148,6 +148,31 @@ module.exports = async () => {
     const allFilesMap = new Map();
     const manifest = startManifest(endpoint);
     
+    // MEDIA
+    const mediaContentPlaceholder = 'TBD : Binary file to be updated in a later step';
+    if(endpoint.GitHubTarget.Media) {
+      manifest.data.media = [];
+      const allMedia = await WpApi_GetPagedData(wordPressApiUrl,'media');
+      const mediaSplitUrl = '/wp-content/uploads/';
+
+      allMedia.forEach(x=>{
+        const jsonData = getWpCommonJsonData(x,userlist,null,`media/${x.media_details.file.replace('.png','.json')}`);
+        delete jsonData.excerpt;
+        delete jsonData.file_path_html;
+  
+        jsonData.sizes = Object.keys(x.media_details.sizes).map(s=>({type:s,path:`media/${x.media_details.sizes[s].source_url.split(mediaSplitUrl)[1]}`,...x.media_details.sizes[s]}));
+        // {...x.media_details.sizes};
+
+        allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
+        //put binary placeholders so they aren't deleted.  Will search for these if an update happens.
+        for (const s of jsonData.sizes) {
+          allFilesMap.set(s.path, mediaContentPlaceholder);
+        }
+  
+        manifest.data.media.push(covertWpJsonDataToManifestRow(jsonData));
+      });
+    }
+
     // POSTS
     const allPosts = await WpApi_GetPagedData(wordPressApiUrl,'posts');
     allPosts.forEach(x=>{
@@ -155,8 +180,21 @@ module.exports = async () => {
       jsonData.categories = x.categories.map(t=>categorylist[t]);
       jsonData.tags = x.tags.map(t=>taglist[t]);
 
+      const HTML = cleanupContent(x.content.rendered);
+      if(manifest.data.media) {
+        jsonData.featured_media = x.featured_media;
+        jsonData.media = [];
+        manifest.data.media.forEach(m=>{
+          m.sizes.forEach(s=>{
+            if(jsonData.featured_media===m.id || HTML.includes(s.source_url)) {
+              jsonData.media.push({id:m.id,type:s.type,path:s.path,source_url:s.source_url,featured:jsonData.featured_media===m.id});
+            }
+          });
+        });
+      }
+
       allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
-      allFilesMap.set(jsonData.file_path_html,cleanupContent(x.content.rendered));
+      allFilesMap.set(jsonData.file_path_html,HTML);
 
       manifest.data.posts.push(covertWpJsonDataToManifestRow(jsonData));
     });
@@ -167,6 +205,9 @@ module.exports = async () => {
       const jsonData = getWpCommonJsonData(x,userlist,`pages/${x.slug}.html`,`pages/${x.slug}.json`);
       jsonData.parent = x.parent;
       jsonData.menu_order = x.menu_order;
+      if(endpoint.GitHubTarget.Media) {
+        jsonData.featured_media = x.featured_media;
+      }
 
       allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
       allFilesMap.set(jsonData.file_path_html,cleanupContent(x.content.rendered));
@@ -174,28 +215,6 @@ module.exports = async () => {
       manifest.data.pages.push(covertWpJsonDataToManifestRow(jsonData));
     });
 
-    // MEDIA
-    const mediaContentPlaceholder = 'TBD : Binary file to be updated in a later step';
-    if(endpoint.GitHubTarget.Media) {
-      manifest.data.media = [];
-      const allMedia = await WpApi_GetPagedData(wordPressApiUrl,'media');
-
-      allMedia.forEach(x=>{
-        const jsonData = getWpCommonJsonData(x,userlist,null,`media/${x.slug}.json`);
-        delete jsonData.excerpt;
-        delete jsonData.file_path_html;
-  
-        jsonData.sizes = {...x.media_details.sizes};
-
-        allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
-        //put binary placeholders so they aren't deleted.  Will search for these if an update happens.
-        for (const s of Object.keys(jsonData.sizes).map(o=>jsonData.sizes[o])) {
-          allFilesMap.set(`media/${s.file}`, mediaContentPlaceholder);
-        }
-  
-        manifest.data.media.push(covertWpJsonDataToManifestRow(jsonData));
-      });
-    }
 
 
     allFilesMap.set('manifest.json',manifest);
@@ -203,12 +222,12 @@ module.exports = async () => {
     let workTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,allFilesMap,endpoint.GitHubTarget.Path);
 
     //Pull in binaries for any media meta changes
-    const updatedBinaries = workTree.filter(x=> x.content!==mediaContentPlaceholder && x.path.includes('media/'));
+    const updatedBinaries = workTree.filter(x=>x.content && x.content!==mediaContentPlaceholder && x.path.includes('media/'));
 
     for (const m of updatedBinaries) {
       const jsonData = JSON.parse(m.content);
 
-      const sizes = Object.keys(jsonData.data.sizes).map(s=>jsonData.data.sizes[s]);
+      const sizes = jsonData.data.sizes;
       for (const s of sizes) {
         console.log(`Downloading...${s.source_url}`);
         const fetchResponse = await fetchRetry(s.source_url,{method:"Get",retries:3,retryDelay:2000});
@@ -217,7 +236,7 @@ module.exports = async () => {
         const blobResult = await gitRepo.createBlob(buffer); //TODO: replace with non base64 upload
 
         //swap in the new blob sha here.  If the sha matches something already there it will be determined on server.
-        const treeNode = workTree.find(x=>x.path===`${endpoint.GitHubTarget.Path}/media/${s.file}`);
+        const treeNode = workTree.find(x=>x.path===`${endpoint.GitHubTarget.Path}/${s.path}`);
         delete treeNode.content;
         treeNode.sha = blobResult.data.sha;
       }
