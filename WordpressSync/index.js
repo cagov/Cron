@@ -175,6 +175,7 @@ module.exports = async () => {
     });
 
     // MEDIA
+    const mediaContentPlaceholder = 'TBD';
     if(endpoint.GitHubTarget.Media) {
       manifest.data.media = [];
       const allMedia = await WpApi_GetPagedData(wordPressApiUrl,'media');
@@ -185,11 +186,11 @@ module.exports = async () => {
         delete jsonData.file_path_html;
   
         jsonData.sizes = {...x.media_details.sizes};
-        jsonData.foo=2;
 
         allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
+        //put binary placeholders so they aren't deleted.  Will search for these if an update happens.
         for (const s of Object.keys(jsonData.sizes).map(o=>jsonData.sizes[o])) {
-          allFilesMap.set(`media/${s.file}`, null);
+          allFilesMap.set(`media/${s.file}`, mediaContentPlaceholder);
         }
   
         manifest.data.media.push(covertWpJsonDataToManifestRow(jsonData));
@@ -199,12 +200,11 @@ module.exports = async () => {
 
     allFilesMap.set('manifest.json',manifest);
 
-    const workTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,allFilesMap,endpoint.GitHubTarget.Path);
+    let workTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,allFilesMap,endpoint.GitHubTarget.Path);
 
     //Pull in binaries for any media meta changes
-    const updatedBinaries = workTree.filter(x=>x.content!=='' && x.path.includes('media/'));
-    const mode = '100644'; //code for tree blob
-    const type = 'blob';
+    const updatedBinaries = workTree.filter(x=> x.content!==mediaContentPlaceholder && x.path.includes('media/'));
+
     for (const m of updatedBinaries) {
       const jsonData = JSON.parse(m.content);
 
@@ -213,16 +213,17 @@ module.exports = async () => {
         const fetchResponse = await fetchRetry(s.source_url,{method:"Get",retries:3,retryDelay:2000});
         const blob = await fetchResponse.arrayBuffer();
         const buffer = Buffer.from(blob);
-        const blobResult = await gitRepo.createBlob(buffer);
-        
-        workTree.push({
-          path: `${endpoint.GitHubTarget.Path}/media/${s.file}`,
-          sha: blobResult.data.sha,
-          mode,
-          type
-        });
+        const blobResult = await gitRepo.createBlob(buffer); //TODO: replace with non base64 upload
+
+        //swap in the new blob sha here.  If the sha matches something already there it will be determined on server.
+        const treeNode = workTree.find(x=>x.path===`${endpoint.GitHubTarget.Path}/media/${s.file}`);
+        delete treeNode.content;
+        treeNode.sha = blobResult.data.sha;
       }
     }
+
+    //Remove any leftover binary placeholders...
+    workTree = workTree.filter(x=>x.content !== mediaContentPlaceholder);
 
     const HtmlUpdateCount = workTree.filter(x=>x.path.endsWith(".html")).length;
 
