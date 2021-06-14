@@ -21,7 +21,8 @@
           "Owner": "cagov",
           "Repo": "digital.ca.gov",
           "Path": "wordpress",
-          "Branch": "main"
+          "Branch": "main",
+          "Media": true
         }
       },
       {

@@ -92,7 +92,7 @@ const getWpCommonJsonData = (wpRow,userlist,file_path_html,file_path_json) => ({
   wordpress_url: wpRow.link,
   file_path_html,
   file_path_json,
-  excerpt: wpRow.excerpt.rendered
+  excerpt: wpRow.excerpt ? wpRow.excerpt.rendered : null
 });
 
 /**
@@ -145,13 +145,11 @@ module.exports = async () => {
     const taglist = await fetchDictionary(wordPressApiUrl,'tags');
     const userlist = await fetchDictionary(wordPressApiUrl,'users');
 
-    const allPosts = await WpApi_GetPagedData(wordPressApiUrl,'posts');
-    const allPages = await WpApi_GetPagedData(wordPressApiUrl,'pages');
-
     const allFilesMap = new Map();
     const manifest = startManifest(endpoint);
     
     // POSTS
+    const allPosts = await WpApi_GetPagedData(wordPressApiUrl,'posts');
     allPosts.forEach(x=>{
       const jsonData = getWpCommonJsonData(x,userlist,`posts/${x.slug}.html`,`posts/${x.slug}.json`);
       jsonData.categories = x.categories.map(t=>categorylist[t]);
@@ -164,6 +162,7 @@ module.exports = async () => {
     });
 
     // PAGES
+    const allPages = await WpApi_GetPagedData(wordPressApiUrl,'pages');
     allPages.forEach(x=>{
       const jsonData = getWpCommonJsonData(x,userlist,`pages/${x.slug}.html`,`pages/${x.slug}.json`);
       jsonData.parent = x.parent;
@@ -175,9 +174,52 @@ module.exports = async () => {
       manifest.data.pages.push(covertWpJsonDataToManifestRow(jsonData));
     });
 
+    // MEDIA
+    if(endpoint.GitHubTarget.Media) {
+      const allMedia = await WpApi_GetPagedData(wordPressApiUrl,'media');
+
+      allMedia.forEach(x=>{
+        const jsonData = getWpCommonJsonData(x,userlist,null,`media/${x.slug}.json`);
+        delete jsonData.excerpt;
+        delete jsonData.file_path_html;
+  
+        jsonData.sizes = {...x.media_details.sizes};
+
+        jsonData.foo=1;
+
+        allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
+  
+        manifest.data.pages.push(covertWpJsonDataToManifestRow(jsonData));
+      });
+    }
+
+
     allFilesMap.set('manifest.json',manifest);
 
     const workTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,allFilesMap,endpoint.GitHubTarget.Path);
+
+    //Pull in binaries for any media meta changes
+    const updatedBinaries = workTree.filter(x=>x.path.includes('media/'));
+    const mode = '100644'; //code for tree blob
+    const type = 'blob';
+    for (const m of updatedBinaries) {
+      const jsonData = JSON.parse(m.content);
+
+      const sizes = Object.keys(jsonData.data.sizes).map(s=>jsonData.data.sizes[s]);
+      for (const s of sizes) {
+        const fetchResponse = await fetchRetry(s.source_url,{method:"Get",retries:3,retryDelay:2000});
+        const blob = await fetchResponse.arrayBuffer();
+        const buffer = Buffer.from(blob);
+        const blobResult = await gitRepo.createBlob(buffer);
+        
+        workTree.push({
+          path: `${endpoint.GitHubTarget.Path}/${s.file}`,
+          sha: blobResult.data.sha,
+          mode,
+          type
+        });
+      }
+    }
 
     const HtmlUpdateCount = workTree.filter(x=>x.path.endsWith(".html")).length;
 
