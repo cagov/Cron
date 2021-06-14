@@ -176,6 +176,7 @@ module.exports = async () => {
 
     // MEDIA
     if(endpoint.GitHubTarget.Media) {
+      manifest.data.media = [];
       const allMedia = await WpApi_GetPagedData(wordPressApiUrl,'media');
 
       allMedia.forEach(x=>{
@@ -184,12 +185,14 @@ module.exports = async () => {
         delete jsonData.file_path_html;
   
         jsonData.sizes = {...x.media_details.sizes};
-
-        jsonData.foo=1;
+        jsonData.foo=2;
 
         allFilesMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
+        for (const s of Object.keys(jsonData.sizes).map(o=>jsonData.sizes[o])) {
+          allFilesMap.set(`media/${s.file}`, null);
+        }
   
-        manifest.data.pages.push(covertWpJsonDataToManifestRow(jsonData));
+        manifest.data.media.push(covertWpJsonDataToManifestRow(jsonData));
       });
     }
 
@@ -199,7 +202,7 @@ module.exports = async () => {
     const workTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,allFilesMap,endpoint.GitHubTarget.Path);
 
     //Pull in binaries for any media meta changes
-    const updatedBinaries = workTree.filter(x=>x.path.includes('media/'));
+    const updatedBinaries = workTree.filter(x=>x.content!=='' && x.path.includes('media/'));
     const mode = '100644'; //code for tree blob
     const type = 'blob';
     for (const m of updatedBinaries) {
@@ -213,7 +216,7 @@ module.exports = async () => {
         const blobResult = await gitRepo.createBlob(buffer);
         
         workTree.push({
-          path: `${endpoint.GitHubTarget.Path}/${s.file}`,
+          path: `${endpoint.GitHubTarget.Path}/media/${s.file}`,
           sha: blobResult.data.sha,
           mode,
           type

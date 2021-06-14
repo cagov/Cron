@@ -36,7 +36,7 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
   const type = 'blob';
 
   for (const [key,value] of filesMap) {
-    let content = typeof value === 'string' ? value : JSON.stringify(value,null,2);
+    let content = typeof value === 'string' ? value : value ? JSON.stringify(value,null,2) : '';
     let existingFile = referenceTree.find(x=>x.path===key);
     if(existingFile) {
       existingFile.found=true;
