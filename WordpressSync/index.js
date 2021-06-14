@@ -175,7 +175,7 @@ module.exports = async () => {
     });
 
     // MEDIA
-    const mediaContentPlaceholder = 'TBD';
+    const mediaContentPlaceholder = 'TBD : Binary file to be updated in a later step';
     if(endpoint.GitHubTarget.Media) {
       manifest.data.media = [];
       const allMedia = await WpApi_GetPagedData(wordPressApiUrl,'media');
@@ -210,6 +210,7 @@ module.exports = async () => {
 
       const sizes = Object.keys(jsonData.data.sizes).map(s=>jsonData.data.sizes[s]);
       for (const s of sizes) {
+        console.log(`Downloading...${s.source_url}`);
         const fetchResponse = await fetchRetry(s.source_url,{method:"Get",retries:3,retryDelay:2000});
         const blob = await fetchResponse.arrayBuffer();
         const buffer = Buffer.from(blob);
