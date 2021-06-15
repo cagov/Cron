@@ -2,7 +2,6 @@
 const { Values } = require('../local.settings.json');
 Object.keys(Values).forEach(x=>process.env[x]=Values[x]); //Load local settings file for testing
 
-const { doWeeklyUpdatePrs } = require('../CovidWeeklyTierUpdate/doUpdate');
 const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker');
 const { doAutoApprover } = require('../CovidTranslationPrApproval/AutoApprover');
 const { doHealthCheck } = require('../CovidSiteHealth/worker');
@@ -21,10 +20,6 @@ const { doCovidEquityData } = require('../CovidEquityData/worker');
 //const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 //const notifyChannel = 'C01DBP67MSQ';
 
-const masterbranch='master', stagingbranch='staging';
-//const masterbranch='synctest3', stagingbranch='synctest3_staging';
-const mergetargets = [masterbranch,stagingbranch];
-
 const readline = require("readline");
 const rl = readline.createInterface({
     input: process.stdin,
@@ -40,11 +35,7 @@ const doWork = async opt => {
         break;
     case '3':
         console.log("Running doTranslationPrUpdate");
-        await doTranslationPrUpdate(masterbranch);
-        break;
-    case '4':
-        console.log("Running doWeeklyUpdatePrs");
-        await doWeeklyUpdatePrs(mergetargets);
+        await doTranslationPrUpdate('master');
         break;
     case '6':
         console.log("Running doHealthCheck");
@@ -101,7 +92,6 @@ const doWork = async opt => {
         console.log("1. Run CovidEquityData");
         console.log("2. Run doDailyStatsPr");
         console.log("3. Run doTranslationPrUpdate");
-        console.log("4. Run doWeeklyUpdatePrs");
         console.log("q. quit");
         rl.question("Your choice> ", doWork);
         rl.on("close", () => {
