@@ -136,6 +136,7 @@ module.exports = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
 
   for(const endpoint of endpoints.projects) {
+    console.log(`Checking endpoint for ${endpoint.name}`);
     const wordPressApiUrl = endpoint.WordPressUrl+apiPath;
     const gitRepo = await gitModule.getRepo(endpoint.GitHubTarget.Owner,endpoint.GitHubTarget.Repo);
     //const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
