@@ -51,22 +51,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DIRECT doWeeklyUpdatePrs",
-      "program": "index",
-      "args": ["4:doWeeklyUpdatePrs"],
-      "cwd": "${workspaceRoot}/sandbox"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Debug DIRECT CovidNewsFeed",
-      "program": "index",
-      "args": ["5:CovidNewsFeed"],
-      "cwd": "${workspaceRoot}/sandbox"
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "Debug DIRECT CovidVaccineEquity",
       "program": "index",
       "args": ["8:doCovidVaccineEquity"],
@@ -121,8 +105,6 @@
         "1:CovidEquityData",
         "2:doDailyStatsPr",
         "3:doTranslationPrUpdate",
-        "4:doWeeklyUpdatePrs",
-        "5:CovidNewsFeed",
         "6:doHealthCheck",
         "7:doCovidStateDashboarV2",
         "8:doCovidVaccineEquity",
