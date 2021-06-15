@@ -1,6 +1,6 @@
 # Date pipeline for vaccine equity charts
 
-This service is used to retrieve data to populate the vaccination by race/ethnicity, age, gener charts the <a href="https://covid19.ca.gov/vaccination-progress-data/">vaccination dashboard</a>
+This service is used to retrieve data to populate the vaccination by race/ethnicity, age, gender charts the <a href="https://covid19.ca.gov/vaccination-progress-data/">vaccination dashboard</a>
 
 - Data is retrieved from snowflake
 - Data is not published before the statewide coordinated daily stats release time 9:30am daily
