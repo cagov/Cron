@@ -22,7 +22,7 @@
           "Repo": "digital.ca.gov",
           "Path": "wordpress",
           "Branch": "main",
-          "Media": true
+          "SyncMedia": true
         }
       },
       {

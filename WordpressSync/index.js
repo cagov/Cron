@@ -151,7 +151,7 @@ module.exports = async () => {
     
     // MEDIA
     const mediaContentPlaceholder = 'TBD : Binary file to be updated in a later step';
-    if(endpoint.GitHubTarget.Media) {
+    if(endpoint.GitHubTarget.SyncMedia) {
       manifest.data.media = [];
       const allMedia = await WpApi_GetPagedData(wordPressApiUrl,'media');
       const mediaSplitUrl = '/wp-content/uploads/';
@@ -206,7 +206,7 @@ module.exports = async () => {
       const jsonData = getWpCommonJsonData(x,userlist,`pages/${x.slug}.html`,`pages/${x.slug}.json`);
       jsonData.parent = x.parent;
       jsonData.menu_order = x.menu_order;
-      if(endpoint.GitHubTarget.Media) {
+      if(endpoint.GitHubTarget.SyncMedia) {
         jsonData.featured_media = x.featured_media;
       }
 
@@ -215,7 +215,6 @@ module.exports = async () => {
 
       manifest.data.pages.push(covertWpJsonDataToManifestRow(jsonData));
     });
-
 
 
     allFilesMap.set('manifest.json',manifest);
