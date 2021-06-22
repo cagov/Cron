@@ -6,34 +6,39 @@
     "projects": [
       {
         "name": "Covid 19 website",
+        "enabled": true,
         "WordPressUrl": "https://as-go-covid19-d-001.azurewebsites.net",
         "GitHubTarget": {
           "Owner": "cagov",
           "Repo": "automation-development-target",
           "Branch": "main",
-          "Path": "wordpress_output"
-
+          "PostPath": "wordpress_output/posts",
+          "PagePath": "wordpress_output/pages"
         }
       },
       {
         "name": "digital.ca.gov website",
+        "enabled": false,
         "WordPressUrl": "https://live-odi-content-api.pantheonsite.io",
         "GitHubTarget": {
           "Owner": "cagov",
           "Repo": "digital.ca.gov",
           "Branch": "main",
-          "Path": "wordpress",
-          "SyncMedia": true
+          "PostPath": "wordpress/posts",
+          "PagePath": "wordpress/pages",
+          "SyncMedia": false
         }
       },
       {
         "name": "Cannabis",
+        "enabled": false,
         "WordPressUrl": "https://dev-cagov-dcc.pantheonsite.io",
         "GitHubTarget": {
           "Owner": "cagov",
           "Repo": "cannabis.ca.gov",
           "Branch": "main",
-          "Path": "wordpress"
+          "PostPath": "wordpress/posts",
+          "PagesPath": "wordpress/pages"
         }
       }
     ]
