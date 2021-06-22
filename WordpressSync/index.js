@@ -163,8 +163,13 @@ module.exports = async () => {
         const jsonData = getWpCommonJsonData(x,userlist);
         delete jsonData.excerpt;
   
-        jsonData.sizes = Object.keys(x.media_details.sizes).map(s=>({type:s,path:x.media_details.sizes[s].source_url.split(mediaSplitUrl)[1],...x.media_details.sizes[s]}));
+        jsonData.sizes = Object.keys(x.media_details.sizes).map(s=>({
+          type:s,
+          path:x.media_details.sizes[s].source_url.split(mediaSplitUrl)[1],
+          ...x.media_details.sizes[s]}));
         // {...x.media_details.sizes};
+
+        jsonData.sizes.sort((a,b)=>b.width-a.width); //Big first
 
         mediaMap.set(x.media_details.file.replace('.png','.json'),wrapInFileMeta(endpoint,jsonData));
         //put binary placeholders so they aren't deleted.  Will search for these if an update happens.
