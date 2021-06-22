@@ -228,9 +228,7 @@ module.exports = async () => {
               if(featured || source_url_match) {
                 jsonData.media.push({
                   id:m.data.id,
-                  type:s.type,
-                  path:s.path,
-                  source_url:s.source_url,
+                  ...s,
                   source_url_match,
                   featured
                 });
