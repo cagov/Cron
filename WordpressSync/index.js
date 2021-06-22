@@ -184,6 +184,8 @@ module.exports = async () => {
           const fetchResponse = await fetchRetry(sizeJson.source_url,{method:"Get",retries:3,retryDelay:2000});
           const blob = await fetchResponse.arrayBuffer();
           const buffer = Buffer.from(blob);
+
+          //TODO: could check the hash and see if its there before attempting an upload
           const blobResult = await gitRepo.createBlob(buffer); //TODO: replace with non base64 upload
 
           //swap in the new blob sha here.  If the sha matches something already there it will be determined on server.
@@ -198,6 +200,46 @@ module.exports = async () => {
       await PrIfChanged(gitRepo, endpoint.GitHubTarget.Branch, mediaTree, `${commitTitleMedia} (${mediaTree.length} updates)`, committer, true);
     }
     
+    /**
+     * Places the media section if SyncMedia is on
+     * @param {{}} jsonData 
+     * @param {{}} WpRow 
+     * @param {string} HTML 
+     */
+    const addMediaSection = (jsonData,WpRow,HTML) => {
+      if(endpoint.GitHubTarget.SyncMedia) {
+        if(WpRow.featured_media) {
+          jsonData.featured_media = WpRow.featured_media;
+        }
+
+        jsonData.media = [];
+        mediaMap.forEach(m=>{
+          //Look at media JSON only
+          if(m.data && m.data.sizes) {
+            m.data.sizes.forEach(s=>{
+              const source_url_match = HTML.includes(s.source_url);
+              const featured = jsonData.featured_media===m.data.id;
+              
+              if(featured || source_url_match) {
+                jsonData.media.push({
+                  id:m.data.id,
+                  type:s.type,
+                  path:s.path,
+                  source_url:s.source_url,
+                  source_url_match,
+                  featured
+                });
+              }
+            });
+          }
+        });
+
+        //Remove empty media array
+        if (!jsonData.media.length) {
+          delete jsonData.media;
+        }
+      }
+    };
     
     // POSTS
     const allPosts = await WpApi_GetPagedData(wordPressApiUrl,'posts');
@@ -207,19 +249,8 @@ module.exports = async () => {
       jsonData.tags = x.tags.map(t=>taglist[t]);
 
       const HTML = cleanupContent(x.content.rendered);
-      /*
-      if(endpoint.GitHubTarget.SyncMedia) {
-        jsonData.featured_media = x.featured_media;
-        jsonData.media = [];
-        mediaMap.forEach(m=>{
-          m.sizes.forEach(s=>{
-            if(jsonData.featured_media===m.id || HTML.includes(s.source_url)) {
-              jsonData.media.push({id:m.id,type:s.type,path:s.path,source_url:s.source_url,featured:jsonData.featured_media===m.id});
-            }
-          });
-        });
-      }
-      */
+    
+      addMediaSection(jsonData,x,HTML);
 
       postMap.set(`${x.slug}.json`,wrapInFileMeta(endpoint,jsonData));
       postMap.set(`${x.slug}.html`,HTML);
@@ -235,12 +266,13 @@ module.exports = async () => {
       const jsonData = getWpCommonJsonData(x,userlist);
       jsonData.parent = x.parent;
       jsonData.menu_order = x.menu_order;
-      if(endpoint.GitHubTarget.SyncMedia) {
-        jsonData.featured_media = x.featured_media;
-      }
+
+      const HTML = cleanupContent(x.content.rendered);
+
+      addMediaSection(jsonData,x,HTML);
 
       pagesMap.set(`${x.slug}.json`,wrapInFileMeta(endpoint,jsonData));
-      pagesMap.set(`${x.slug}.html`,cleanupContent(x.content.rendered));
+      pagesMap.set(`${x.slug}.html`,HTML);
     });
 
     const pagesTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,pagesMap,endpoint.GitHubTarget.PagePath);
