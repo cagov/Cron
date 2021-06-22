@@ -176,21 +176,18 @@ module.exports = async () => {
       let mediaTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,mediaMap,endpoint.GitHubTarget.MediaPath);
    
       //Pull in binaries for any media meta changes
-      const updatedBinaries = mediaTree.filter(x=>x.content && x.content!==mediaContentPlaceholder);
-
-      for (const m of updatedBinaries) {
-        const jsonData = JSON.parse(m.content);
-
-        const sizes = jsonData.data.sizes;
-        for (const s of sizes) {
-          console.log(`Downloading...${s.source_url}`);
-          const fetchResponse = await fetchRetry(s.source_url,{method:"Get",retries:3,retryDelay:2000});
+      for (const mediaTreeSizes of mediaTree
+        .filter(x=>x.content && x.content!==mediaContentPlaceholder)
+        .map(mt=>JSON.parse(mt.content).data.sizes)) {
+        for (const sizeJson of mediaTreeSizes) {
+          console.log(`Downloading...${sizeJson.source_url}`);
+          const fetchResponse = await fetchRetry(sizeJson.source_url,{method:"Get",retries:3,retryDelay:2000});
           const blob = await fetchResponse.arrayBuffer();
           const buffer = Buffer.from(blob);
           const blobResult = await gitRepo.createBlob(buffer); //TODO: replace with non base64 upload
 
           //swap in the new blob sha here.  If the sha matches something already there it will be determined on server.
-          const treeNode = mediaTree.find(x=>x.path===`${endpoint.GitHubTarget.MediaPath}/${s.path}`);
+          const treeNode = mediaTree.find(x=>x.path===`${endpoint.GitHubTarget.MediaPath}/${sizeJson.path}`);
           delete treeNode.content;
           treeNode.sha = blobResult.data.sha;
         }
