@@ -6,6 +6,7 @@ const committer = {
 };
 const commitTitlePosts = 'Wordpress Posts Update';
 const commitTitlePages = 'Wordpress Pages Update';
+const commitTitleMedia = 'Wordpress Media Update';
 const apiPath = '/wp-json/wp/v2/';
 const { createTreeFromFileMap, PrIfChanged } = require('../common/gitTreeCommon');
 const fetch = require('node-fetch');
@@ -150,9 +151,8 @@ module.exports = async () => {
 
     const postMap = new Map();
     const pagesMap = new Map();
-    //const mediaMap = endpoint.GitHubTarget.SyncMedia ? new Map() : null;
+    const mediaMap = endpoint.GitHubTarget.SyncMedia ? new Map() : null;
     
-    /*
     // MEDIA
     const mediaContentPlaceholder = 'TBD : Binary file to be updated in a later step';
     if(endpoint.GitHubTarget.SyncMedia) {
@@ -160,22 +160,48 @@ module.exports = async () => {
       const mediaSplitUrl = '/wp-content/uploads/';
 
       allMedia.forEach(x=>{
-        const jsonData = getWpCommonJsonData(x,userlist,null,`media/${x.media_details.file.replace('.png','.json')}`);
+        const jsonData = getWpCommonJsonData(x,userlist);
         delete jsonData.excerpt;
-        delete jsonData.file_path_html;
   
-        jsonData.sizes = Object.keys(x.media_details.sizes).map(s=>({type:s,path:`media/${x.media_details.sizes[s].source_url.split(mediaSplitUrl)[1]}`,...x.media_details.sizes[s]}));
+        jsonData.sizes = Object.keys(x.media_details.sizes).map(s=>({type:s,path:x.media_details.sizes[s].source_url.split(mediaSplitUrl)[1],...x.media_details.sizes[s]}));
         // {...x.media_details.sizes};
 
-        mediaMap.set(jsonData.file_path_json,wrapInFileMeta(endpoint,jsonData));
+        mediaMap.set(x.media_details.file.replace('.png','.json'),wrapInFileMeta(endpoint,jsonData));
         //put binary placeholders so they aren't deleted.  Will search for these if an update happens.
         for (const s of jsonData.sizes) {
           mediaMap.set(s.path, mediaContentPlaceholder);
         }
       });
-    }
-    */
 
+      let mediaTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,mediaMap,endpoint.GitHubTarget.MediaPath);
+   
+      //Pull in binaries for any media meta changes
+      const updatedBinaries = mediaTree.filter(x=>x.content && x.content!==mediaContentPlaceholder);
+
+      for (const m of updatedBinaries) {
+        const jsonData = JSON.parse(m.content);
+
+        const sizes = jsonData.data.sizes;
+        for (const s of sizes) {
+          console.log(`Downloading...${s.source_url}`);
+          const fetchResponse = await fetchRetry(s.source_url,{method:"Get",retries:3,retryDelay:2000});
+          const blob = await fetchResponse.arrayBuffer();
+          const buffer = Buffer.from(blob);
+          const blobResult = await gitRepo.createBlob(buffer); //TODO: replace with non base64 upload
+
+          //swap in the new blob sha here.  If the sha matches something already there it will be determined on server.
+          const treeNode = mediaTree.find(x=>x.path===`${endpoint.GitHubTarget.MediaPath}/${s.path}`);
+          delete treeNode.content;
+          treeNode.sha = blobResult.data.sha;
+        }
+      }
+      //Remove any leftover binary placeholders...
+      mediaTree = mediaTree.filter(x=>x.content !== mediaContentPlaceholder);
+      
+      await PrIfChanged(gitRepo, endpoint.GitHubTarget.Branch, mediaTree, `${commitTitleMedia} (${mediaTree.length} updates)`, committer, true);
+    }
+    
+    
     // POSTS
     const allPosts = await WpApi_GetPagedData(wordPressApiUrl,'posts');
     allPosts.forEach(x=>{
@@ -222,33 +248,5 @@ module.exports = async () => {
 
     const pagesTree = await createTreeFromFileMap(gitRepo,endpoint.GitHubTarget.Branch,pagesMap,endpoint.GitHubTarget.PagePath);
     await PrIfChanged(gitRepo, endpoint.GitHubTarget.Branch, pagesTree, `${commitTitlePages} (${pagesTree.filter(x=>x.path.endsWith(".html")).length} updates)`, committer, true);
-
-
-    /*
-    //Pull in binaries for any media meta changes
-    const updatedBinaries = workTree.filter(x=>x.content && x.content!==mediaContentPlaceholder && x.path.includes('media/'));
-
-    for (const m of updatedBinaries) {
-      const jsonData = JSON.parse(m.content);
-
-      const sizes = jsonData.data.sizes;
-      for (const s of sizes) {
-        console.log(`Downloading...${s.source_url}`);
-        const fetchResponse = await fetchRetry(s.source_url,{method:"Get",retries:3,retryDelay:2000});
-        const blob = await fetchResponse.arrayBuffer();
-        const buffer = Buffer.from(blob);
-        const blobResult = await gitRepo.createBlob(buffer); //TODO: replace with non base64 upload
-
-        //swap in the new blob sha here.  If the sha matches something already there it will be determined on server.
-        const treeNode = workTree.find(x=>x.path===`${endpoint.GitHubTarget.Path}/${s.path}`);
-        delete treeNode.content;
-        treeNode.sha = blobResult.data.sha;
-      }
-    }
-    //Remove any leftover binary placeholders...
-    workTree = workTree.filter(x=>x.content !== mediaContentPlaceholder);
-    */
-    
-    
   }
 };

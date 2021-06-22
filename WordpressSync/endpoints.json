@@ -6,7 +6,7 @@
     "projects": [
       {
         "name": "Covid 19 website",
-        "enabled": true,
+        "enabled": false,
         "WordPressUrl": "https://as-go-covid19-d-001.azurewebsites.net",
         "GitHubTarget": {
           "Owner": "cagov",
@@ -18,7 +18,7 @@
       },
       {
         "name": "digital.ca.gov website",
-        "enabled": false,
+        "enabled": true,
         "WordPressUrl": "https://live-odi-content-api.pantheonsite.io",
         "GitHubTarget": {
           "Owner": "cagov",
@@ -26,7 +26,8 @@
           "Branch": "main",
           "PostPath": "wordpress/posts",
           "PagePath": "wordpress/pages",
-          "SyncMedia": false
+          "SyncMedia": true,
+          "MediaPath": "wordpress/media"
         }
       },
       {
