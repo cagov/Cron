@@ -10,8 +10,9 @@
         "GitHubTarget": {
           "Owner": "cagov",
           "Repo": "automation-development-target",
-          "Path": "wordpress_output",
-          "Branch": "main"
+          "Branch": "main",
+          "Path": "wordpress_output"
+
         }
       },
       {
@@ -20,8 +21,8 @@
         "GitHubTarget": {
           "Owner": "cagov",
           "Repo": "digital.ca.gov",
-          "Path": "wordpress",
           "Branch": "main",
+          "Path": "wordpress",
           "SyncMedia": true
         }
       },
@@ -31,8 +32,8 @@
         "GitHubTarget": {
           "Owner": "cagov",
           "Repo": "cannabis.ca.gov",
-          "Path": "wordpress",
-          "Branch": "main"
+          "Branch": "main",
+          "Path": "wordpress"
         }
       }
     ]

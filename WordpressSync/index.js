@@ -36,6 +36,7 @@ const commonMeta = endpoint => ({
  */
 const WpApi_GetPagedData = async (wordPressApiUrl,objecttype) => {
   const fetchquery = `${wordPressApiUrl}${objecttype}?per_page=100&orderby=slug&order=asc`;
+  console.log(`querying Wordpress API - ${fetchquery}`);
 
   let totalpages = 999;
 
@@ -80,20 +81,45 @@ const fetchDictionary = async (wordPressApiUrl,listname) => Object.assign({}, ..
  * @param {string} file_path_html
  * @param {string} file_path_json 
  */
-const getWpCommonJsonData = (wpRow,userlist,file_path_html,file_path_json) => ({
-  id: wpRow.id,
-  slug: wpRow.slug,
-  title: wpRow.title.rendered,
-  author: userlist[wpRow.author],
-  date: wpRow.date,
-  modified: wpRow.modified,
-  date_gmt: wpRow.date_gmt,
-  modified_gmt: wpRow.modified_gmt,
-  wordpress_url: wpRow.link,
-  file_path_html,
-  file_path_json,
-  excerpt: wpRow.excerpt ? wpRow.excerpt.rendered : null
-});
+const getWpCommonJsonData = (wpRow,userlist,file_path_html,file_path_json) => 
+  getNonBlankValues(
+    {...wpRow,
+      title: wpRow.title.rendered,
+      author: userlist[wpRow.author],
+      wordpress_url: wpRow.link,
+      file_path_html,
+      file_path_json,
+      excerpt: wpRow.excerpt ? wpRow.excerpt.rendered : null
+    },
+    [
+      'id',
+      'slug',
+      'title',
+      'author',
+      'date',
+      'modified',
+      'date_gmt',
+      'modified_gmt',
+      'meta',
+      'template',
+      'wordpress_url',
+      'file_path_html',
+      'file_path_json',
+      'excerpt'
+    ]);
+
+/**
+ * returns an object filled with the non null keys of another object
+ * @param {{}} fromObject the object to get things out of
+ * @param {[string]} keys what to pull in from the other object
+ */
+const getNonBlankValues = (fromObject,keys) => {
+  let result = {};
+  keys.filter(k=>fromObject[k] && (!Array.isArray(fromObject[k]) || fromObject[k].length)).forEach(k=> {
+      result[k] = fromObject[k];
+  });
+  return result;
+};
 
 /**
  * @param {{WordPressUrl: string, GitHubTarget: {Owner: string, Repo: string, Path: string,Branch: string}}} endpoint 
@@ -125,7 +151,7 @@ const wrapInFileMeta = (endpoint,data) => ({
  * @returns manifestRow
  */
 const covertWpJsonDataToManifestRow = JsonData => {
-  const manifestRow = {...JsonData};
+  const manifestRow = {...JsonData}; //copy
   delete manifestRow.modified;
   delete manifestRow.modified_gmt;
   delete manifestRow.excerpt;
