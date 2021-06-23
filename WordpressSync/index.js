@@ -129,7 +129,6 @@ const wrapInFileMeta = (endpoint,data) => ({
   meta: {
     created_date: data.date_gmt,
     updated_date: data.modified_gmt,
-    foo:1,
     ...commonMeta(endpoint)
   },
   data
