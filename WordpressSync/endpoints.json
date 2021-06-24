@@ -1,5 +1,7 @@
 {
+  "$schema": "./endpoints.schema.json",
   "meta": {
+    "title": "endpoints config file",
     "description": "endpoints config file"
   },
   "data": {
