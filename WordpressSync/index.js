@@ -30,7 +30,7 @@ const commonMeta = endpoint => ({
 /**
  * Call the paged wordpress api
  * @param {string} wordPressApiUrl WP source URL
- * @param {string} objecttype 
+ * @param {string} objecttype page/posts/media etc
  * @returns {Promise<{
  *    id:number,
  *    date_gmt:string
@@ -170,7 +170,9 @@ module.exports = async () => {
 
         jsonData.sizes.sort((a,b)=>b.width-a.width); //Big first
 
+        //TODO: make replace use other image types, consider PDF
         mediaMap.set(x.media_details.file.replace('.png','.json'),wrapInFileMeta(endpoint,jsonData));
+
         //put binary placeholders so they aren't deleted.  Will search for these if an update happens.
         for (const s of jsonData.sizes) {
           mediaMap.set(s.path, mediaContentPlaceholder);
