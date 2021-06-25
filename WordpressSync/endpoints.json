@@ -8,7 +8,7 @@
     "projects": [
       {
         "name": "Covid 19 website",
-        "enabled": true,
+        "enabled": false,
         "WordPressUrl": "https://as-go-covid19-d-001.azurewebsites.net",
         "GitHubTarget": {
           "Owner": "cagov",
@@ -34,7 +34,7 @@
       },
       {
         "name": "Cannabis",
-        "enabled": true,
+        "enabled": false,
         "WordPressUrl": "https://dev-cagov-dcc.pantheonsite.io",
         "GitHubTarget": {
           "Owner": "cagov",

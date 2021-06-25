@@ -8,7 +8,7 @@ const commitTitlePosts = 'Wordpress Posts Update';
 const commitTitlePages = 'Wordpress Pages Update';
 const commitTitleMedia = 'Wordpress Media Update';
 const apiPath = '/wp-json/wp/v2/';
-const { createTreeFromFileMap, PrIfChanged } = require('../common/gitTreeCommon');
+const { createTreeFromFileMap, PrIfChanged, gitHubBlobPredictShaFromBuffer } = require('../common/gitTreeCommon');
 const fetch = require('node-fetch');
 const fetchRetry = require('fetch-retry')(fetch);
 
@@ -138,7 +138,7 @@ module.exports = async () => {
   const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
 
   for(const endpoint of endpoints.projects.filter(x=>x.enabled)) {
-    console.log(`Checking endpoint for ${endpoint.name}`);
+    console.log(`*** Checking endpoint for ${endpoint.name} ***`);
     const wordPressApiUrl = endpoint.WordPressUrl+apiPath;
     const gitRepo = await gitModule.getRepo(endpoint.GitHubTarget.Owner,endpoint.GitHubTarget.Repo);
     //const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
@@ -189,13 +189,24 @@ module.exports = async () => {
           const blob = await fetchResponse.arrayBuffer();
           const buffer = Buffer.from(blob);
 
-          //TODO: could check the hash and see if its there before attempting an upload
-          const blobResult = await gitRepo.createBlob(buffer); //TODO: replace with non base64 upload
+          let sha = gitHubBlobPredictShaFromBuffer(buffer);
+          const ok404 = (Error,Data) => {
+            if(Error) {
+              if(Error.response.status!==404) throw Error;
+            }
+            return Data;
+          };
+          const exists = await gitRepo._request('HEAD', `/repos/${gitRepo.__fullname}/git/blobs/${sha}`,null, ok404);
+          if(!exists) {
+            console.log('adding new file');
+            const blobResult = await gitRepo.createBlob(buffer);
+            sha = blobResult.data.sha; //should be the same, but just in case
+          }
 
           //swap in the new blob sha here.  If the sha matches something already there it will be determined on server.
           const treeNode = mediaTree.find(x=>x.path===`${endpoint.GitHubTarget.MediaPath}/${sizeJson.path}`);
           delete treeNode.content;
-          treeNode.sha = blobResult.data.sha;
+          treeNode.sha = sha ;
         }
       }
       //Remove any leftover binary placeholders...
