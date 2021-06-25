@@ -11,10 +11,23 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sha1 = require('sha1');
 /**
  * Returns a Github equivalent sha hash for any given content
+ * see https://git-scm.com/book/en/v2/Git-Internals-Git-Objects
  * @param {string} content string content to hash
  * @returns SHA Hash that would be used on Github for the given content
  */
 const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}\0${content}`);
+
+/**
+ * Returns a Github equivalent sha hash for any given content
+ * see https://git-scm.com/book/en/v2/Git-Internals-Git-Objects
+ * @param {Buffer} buffer buffer to hash
+ * @returns SHA Hash that would be used on Github for the given content
+ */
+ const gitHubBlobPredictShaFromBuffer = buffer => sha1(Buffer.concat([
+     Buffer.from(`blob ${buffer.byteLength}\0`, 'utf8'),
+     buffer
+    ]))
+  ;  
 
 /**
  * Creates a gitHub Tree array, skipping duplicates based on the outputpath
@@ -152,5 +165,7 @@ module.exports = {
   todayDateString,
   todayTimeString,
   nowPacTime,
-  sleep
+  sleep,
+  gitHubBlobPredictSha,
+  gitHubBlobPredictShaFromBuffer
 };
