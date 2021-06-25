@@ -87,7 +87,7 @@
       "program": "index",
       "args": ["temp:TEMP"],
       "cwd": "${workspaceRoot}/sandbox"
-    }
+    },
   ],
   "inputs": [
     {
