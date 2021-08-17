@@ -18,20 +18,14 @@
         "type": "number",
         "minimum": -1000000,
         "maximum": 1000000
-      },
+      }
     },
     "additionalProperties": false,
     "properties": {
-      "meta": {
-        "type":"object"
-      },
-      DATE,AREA,AREA_TYPE,
-      UNVAX_CASES_EPDATE,UNVAX_HOSP_EPDATE,UNVAX_DEATH_DOD,
-      BREAKTHROUGH_CASES_EPDATE,BREAKTHROUGH_HOSP_EPDATE,BREAKTHROUGH_DEATH_DOD,
-      VAX_DENOM,UNVAX_DENOM,
-      UNVAX_CASE_RATE,UNVAX_HOSP_RATE,UNVAX_DEATH_RATE,
-      BREAKTHROUGH_CASE_RATE,BREAKTHROUGH_HOSP_RATE,BREAKTHROUGH_DEATH_RATE      
-      "data": {
+       "meta": {
+         "type":"object"
+       },
+       "data": {
             "type":"object",
             "required": [
               "DATE",
@@ -48,7 +42,7 @@
               "UNVAX_CASE_RATE",
                   "UNVAX_HOSP_RATE",
                   "UNVAX_DEATH_RATE",
-            "BREAKTHROUGH_CASE_RATE",
+              "BREAKTHROUGH_CASE_RATE",
                   "BREAKTHROUGH_HOSP_RATE",
                   "BREAKTHROUGH_DEATH_RATE"
                 ],
@@ -57,36 +51,76 @@
               "DATE":{
                 "$ref": "#/definitions/date-YYYY-MM-DD"
               },
-              "LATEST_TOTAL_CONFIRMED_CASES":{
+              "AREA":{
+                "type": "string",
+                "enum": [
+                    "California"
+                ]
+              },
+              "AREA_TYPE":{
+                "type": "string",
+                "enum": [
+                    "State"
+                ]
+              },
+              "UNVAX_CASES_EPDATE":{
                 "type": "integer",
-                "minimum": 999999,
                 "maximum": 99999999
               },
-              "NEWLY_REPORTED_CASES":{
+              "UNVAX_HOSP_EPDATE":{
                 "type": "integer",
                 "maximum": 99999999
               },
-              "LATEST_PCT_CH_CASES_REPORTED_1_DAY":{
-                "type": "number"
+              "UNVAX_DEATH_DOD":{
+                "type": "integer",
+                "maximum": 99999999
               },
-              "LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS":{
+              "BREAKTHROUGH_CASES_EPDATE":{
+                "type": "integer",
+                "maximum": 99999999
+              },
+              "BREAKTHROUGH_HOSP_EPDATE":{
+                "type": "integer",
+                "maximum": 99999999
+              },
+              "BREAKTHROUGH_DEATH_DOD":{
+                "type": "integer",
+                "maximum": 99999999
+              },
+              "VAX_DENOM":{
+                "type": "integer",
+                "maximum": 99999999
+              },
+              "UNVAX_DENOM":{
+                "type": "integer",
+                "maximum": 99999999
+              },
+              "UNVAX_CASE_RATE":{
                 "type": "number",
-                "minimum": 0,
+                "maximum": 10000
+              },
+              "UNVAX_HOSP_RATE":{
+                "type": "number",
                 "maximum": 100000
               },
-              "LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS":{
-                "type":"number"
+              "UNVAX_DEATH_RATE":{
+                "type": "number",
+                "maximum": 100000
               },
-              "NEWLY_REPORTED_CASES_LAST_7_DAYS":{
-                "type": "integer",
-                "maximum": 99999999
+              "BREAKTHROUGH_CASE_RATE":{
+                "type": "number",
+                "maximum": 10000
+              },
+              "BREAKTHROUGH_HOSP_RATE":{
+                "type": "number",
+                "maximum": 100000
+              },
+              "BREAKTHROUGH_DEATH_RATE":{
+                "type": "number",
+                "maximum": 100000
               }
             }
-          },
-
-            }
-          }
         }
-      }
+      
     }
-  }
+}
