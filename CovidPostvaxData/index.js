@@ -10,7 +10,7 @@ module.exports = async function (context, myTimer) {
   try {
     slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every day @ 7:45am)`)).json()).ts;
 
-    const PrResult = await doCovidStateDashboarV2();
+    const PrResult = await doCovidPostvaxData();
 
     if(PrResult) {
       const prMessage = `Daily Postvax data ready\n${PrResult.html_url}`;
