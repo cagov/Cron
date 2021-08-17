@@ -16,13 +16,19 @@ const getData_daily_postvax_data = async () => {
 
   // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
 
-  // FORMULATE JSON HERE...
+  // FILTER JSON HERE - remove fields we don't want
+  let filtered_recs = statResults.postvax_data.map(r => {
+    delete r.AREA;
+    delete r.AREA_TYPE;
+    return r;
+  });
 
+  // pull a subset of fields  here...
   let json = {
       meta: {
         PUBLISHED_DATE: "1900-01-01"
       },
-      data: statResults.postvax_data
+      data: filtered_recs
   };
 
   // For now, don't bother validating until we get data into a form we really like...

@@ -75,9 +75,12 @@ const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
         json.meta = {};
     }
     json.meta.PUBLISHED_DATE = todayDateString();
-    json.meta.cases_sample = 100000;
-    json.meta.hosp_sample = 1000000;
-    json.meta.deaths_sample = 1000000;
+    json.meta.AREA = 'California';
+    json.meta.AREA_TYPE = 'State';
+
+    json.meta.CASES_SAMPLE_SIZE = 100000;
+    json.meta.HOSP_SAMPLE_SIZE = 1000000;
+    json.meta.DEATHS_SAMPLE_SIZE = 1000000;
 
     if(JSON.stringify(json)===JSON.stringify(targetcontent)) {
         console.log('data matched - no need to update');
