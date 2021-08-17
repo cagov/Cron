@@ -10,7 +10,7 @@ const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { doCovidAutoBuilder } = require('../CovidAutoBuilder/worker');
 const { doCovidStateDashboardTables } = require('../CovidStateDashboardTables/worker');
-const { doCovidPostvaxDatar } = require('../CovidPostvaxData/worker');
+const { doCovidPostvaxData } = require('../CovidPostvaxData/worker');
 //
 //const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 
