@@ -1,0 +1,92 @@
+{
+    "definitions": {
+      "date-YYYY-MM-DD":{
+        "type":"string",
+        "pattern":"^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+      },
+      "integer-zero-to-everyone":{
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 99999999
+      },
+      "100k-report-rate": {
+        "type": "number",
+        "minimum": -100000,
+        "maximum": 100000
+      },
+      "1m-report-rate": {
+        "type": "number",
+        "minimum": -1000000,
+        "maximum": 1000000
+      },
+    },
+    "additionalProperties": false,
+    "properties": {
+      "meta": {
+        "type":"object"
+      },
+      DATE,AREA,AREA_TYPE,
+      UNVAX_CASES_EPDATE,UNVAX_HOSP_EPDATE,UNVAX_DEATH_DOD,
+      BREAKTHROUGH_CASES_EPDATE,BREAKTHROUGH_HOSP_EPDATE,BREAKTHROUGH_DEATH_DOD,
+      VAX_DENOM,UNVAX_DENOM,
+      UNVAX_CASE_RATE,UNVAX_HOSP_RATE,UNVAX_DEATH_RATE,
+      BREAKTHROUGH_CASE_RATE,BREAKTHROUGH_HOSP_RATE,BREAKTHROUGH_DEATH_RATE      
+      "data": {
+            "type":"object",
+            "required": [
+              "DATE",
+              "AREA",
+              "AREA_TYPE",
+              "UNVAX_CASES_EPDATE",
+                  "UNVAX_HOSP_EPDATE",
+                  "UNVAX_DEATH_DOD",
+              "BREAKTHROUGH_CASES_EPDATE",
+                  "BREAKTHROUGH_HOSP_EPDATE",
+                  "BREAKTHROUGH_DEATH_DOD",
+              "VAX_DENOM",
+              "UNVAX_DENOM",
+              "UNVAX_CASE_RATE",
+                  "UNVAX_HOSP_RATE",
+                  "UNVAX_DEATH_RATE",
+            "BREAKTHROUGH_CASE_RATE",
+                  "BREAKTHROUGH_HOSP_RATE",
+                  "BREAKTHROUGH_DEATH_RATE"
+                ],
+            "additionalProperties": false,
+            "properties": {
+              "DATE":{
+                "$ref": "#/definitions/date-YYYY-MM-DD"
+              },
+              "LATEST_TOTAL_CONFIRMED_CASES":{
+                "type": "integer",
+                "minimum": 999999,
+                "maximum": 99999999
+              },
+              "NEWLY_REPORTED_CASES":{
+                "type": "integer",
+                "maximum": 99999999
+              },
+              "LATEST_PCT_CH_CASES_REPORTED_1_DAY":{
+                "type": "number"
+              },
+              "LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS":{
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100000
+              },
+              "LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS":{
+                "type":"number"
+              },
+              "NEWLY_REPORTED_CASES_LAST_7_DAYS":{
+                "type": "integer",
+                "maximum": 99999999
+              }
+            }
+          },
+
+            }
+          }
+        }
+      }
+    }
+  }
