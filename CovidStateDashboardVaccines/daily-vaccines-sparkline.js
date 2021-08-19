@@ -7,11 +7,23 @@ const schemaTestGoodFilePath = "../SQL/CDTCDPH_VACCINE/statedashboard-vaccines/s
 const schemaTestBadFilePath = "../SQL/CDTCDPH_VACCINE/statedashboard-vaccines/schema/tests/output/fail/";
 
 const getData_daily_vaccines_sparkline = async () => {
-  const statResults = await queryDataset(
+  const sparklineResults = await queryDataset(
       {
-        sparkline_data: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/sparkline'),
+        data: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/sparkline'),
       }
       ,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
+  );
+  const fullyvaxedResults = await queryDataset(
+    {
+      data: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/fullyvaxed'),
+    }
+    ,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
+  );
+  const populationResults = await queryDataset(
+    {
+      data: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/eligiblepopulation'),
+    }
+    ,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
   );
 
   // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
@@ -19,16 +31,34 @@ const getData_daily_vaccines_sparkline = async () => {
   // FILTER JSON HERE - remove fields we don't want
 
   // pull a subset of fields  here...
-  let mapped_sparkline_data = statResults.sparkline_data.map(r => {
+  let mapped_sparkline_data = sparklineResults.data.map(r => {
     return {DATE:r.ADMIN_DATE, VALUE:r.COUNT};
   });
+
+  let avg_records = [];
+  mapped_sparkline_data.forEach((rec,i) => {
+      let sum = 0;
+      for (let j = i; j < i+7; ++j) {
+        sum += j < mapped_sparkline_data.length? mapped_sparkline_data[j].VALUE : 0;
+      }
+      avg_records.push({DATE:rec.DATE,VALUE:sum/7.0});
+  });
+
+
+  // console.log("fullyvaxedResults",fullyvaxedResults);
+  // console.log("populationResults",populationResults);
 
   let json = {
       meta: {
         PUBLISHED_DATE: "1900-01-01",
         coverage: "California"
       },
-      data: { 
+      data: {
+        population: {
+          FULLY_VAXED: fullyvaxedResults.data[0].FULLY_VACCINATED,
+          ELIGIBLE_POPULATION: populationResults.data[0].ELIGIBLE_POPULATION,
+          FULLY_VAXED_RATIO: fullyvaxedResults.data[0].FULLY_VACCINATED / populationResults.data[0].ELIGIBLE_POPULATION
+        },
         time_series: {
           VACCINE_DOSES: {
             DATE_RANGE: {
@@ -36,10 +66,19 @@ const getData_daily_vaccines_sparkline = async () => {
               MAXIMUM: mapped_sparkline_data[0].DATE
             },
             VALUES: mapped_sparkline_data
+          },
+          VACCINE_DOSES_7DAYAVG: {
+            DATE_RANGE: {
+              MINIMUM: avg_records[avg_records.length-1].DATE,
+              MAXIMUM: avg_records[0].DATE
+            },
+            VALUES: avg_records
           }
         }
       }
   };
+
+  // console.log("Computed json",json);
 
   // For now, don't bother validating until we get data into a form we really like...
   // validateJSON(`${path} failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
