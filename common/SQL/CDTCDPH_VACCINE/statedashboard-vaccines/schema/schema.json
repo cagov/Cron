@@ -1,0 +1,36 @@
+{
+    "definitions": {
+      "date-YYYY-MM-DD":{
+        "type":"string",
+        "pattern":"^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+      },
+      "integer-zero-to-everyone":{
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 99999999
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+       "meta": {
+         "type":"object"
+       },
+       "data": {
+            "type":"object",
+            "required": [
+              "ADMIN_DATE",
+              "COUNT"
+              ],
+            "additionalProperties": false,
+            "properties": {
+              "ADMIN_DATE":{
+                "$ref": "#/definitions/date-YYYY-MM-DD"
+              },
+              "COUNT":{
+                "type": "integer",
+                "maximum": 99999999
+              }
+            }
+        }
+    }
+}
