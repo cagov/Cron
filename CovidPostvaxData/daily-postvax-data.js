@@ -17,9 +17,17 @@ const getData_daily_postvax_data = async () => {
   // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
 
   // FILTER JSON HERE - remove fields we don't want
+  const fields_to_remove = ['AREA','AREA_TYPE','FILE_PATH','SF_LOAD_TIMESTAMP']
   let filtered_recs = statResults.postvax_data.map(r => {
-    delete r.AREA;
-    delete r.AREA_TYPE;
+      fields_to_remove.forEach(f => {
+        if (f in r) {
+            delete r[f];
+        }
+      });
+    // delete r.AREA;
+    // delete r.AREA_TYPE;
+    // delete r.FILE_PATH;
+    // delete r.SF_LOAD_TIMESTAMP;
     return r;
   });
 
