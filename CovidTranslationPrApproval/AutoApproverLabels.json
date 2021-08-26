@@ -8,6 +8,16 @@
     "timeLabels":
     [
       {
+        "label":"Publish at 8:40 a.m. ☀️",
+        "hour":8,
+        "minute":40
+      },
+      {
+        "label":"Publish at 8:50 a.m. ☀️",
+        "hour":8,
+        "minute":50
+      },
+      {
         "label":"Publish at 9 a.m. ☀️",
         "hour":9,
         "minute":0
