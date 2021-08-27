@@ -1,7 +1,7 @@
 const { getData_daily_vaccines_sparkline } = require('./daily-vaccines-sparkline');
 
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment','Publish at 9 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Publish at 8:40 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const committer = {
