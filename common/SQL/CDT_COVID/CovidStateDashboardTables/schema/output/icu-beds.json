@@ -104,7 +104,7 @@
               "properties": {
                 "TOTAL": {
                   "required": true,
-                  "type": "integer",
+                  "type": "integer"
                 },
                 "CHANGE": {
                   "required": true,
