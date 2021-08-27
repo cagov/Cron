@@ -105,7 +105,6 @@
                 "TOTAL": {
                   "required": true,
                   "type": "integer",
-                  "minimum": 0
                 },
                 "CHANGE": {
                   "required": true,
