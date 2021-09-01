@@ -83,6 +83,14 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Debug DIRECT CovidPostvaxData",
+      "program": "index",
+      "args": ["14:CovidPostvaxData"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Debug DIRECT TEMP",
       "program": "index",
       "args": ["temp:TEMP"],
