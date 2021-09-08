@@ -34,6 +34,28 @@ const doCovidVaccinesSparklineData = async () => {
     }
     jsonData.meta.PUBLISHED_DATE = todayDateString();
 
+    // compute 7-day daily average from available data with 7-day delay
+    const pending_date = jsonData.data.time_series.VACCINE_DOSES.VALUES[6].DATE;
+    const vaxList = jsonData.data.time_series.VACCINE_DOSES.VALUES;
+    let summedDosesCount = 0;
+    let parse_state = 0;
+    let summed_days = 0;
+    for (let i = 0; i < vaxList.length; ++i) {
+        if (parse_state == 0) {
+            if (vaxList[i].DATE == pending_date) {
+                parse_state = 1;
+            }
+        } else {
+            summedDosesCount += vaxList[i].VALUE;
+            summed_days += 1;
+        }
+        if (summed_days == 7) {
+            break;
+        }
+    }
+    // console.log("SUMMED VACCINE DOSES",summedDosesCount, summed_days, vaxList.length);
+    jsonData.data.time_series.VACCINE_DOSES.DOSES_DAILY_AVERAGE = summedDosesCount / summed_days;
+
     const fileMap = new Map();
     
     fileMap.set(fileName,jsonData);
