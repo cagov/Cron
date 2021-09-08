@@ -91,6 +91,14 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Debug DIRECT doCovidVaccinesSparklineData",
+      "program": "index",
+      "args": ["15:doCovidVaccinesSparklineData"],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Debug DIRECT TEMP",
       "program": "index",
       "args": ["temp:TEMP"],
