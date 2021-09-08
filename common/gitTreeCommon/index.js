@@ -1,4 +1,5 @@
-const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
+// @ts-check
+const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
 /**
@@ -11,10 +12,33 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const sha1 = require('sha1');
 /**
  * Returns a Github equivalent sha hash for any given content
+ * see https://git-scm.com/book/en/v2/Git-Internals-Git-Objects
  * @param {string} content string content to hash
  * @returns SHA Hash that would be used on Github for the given content
  */
 const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}\0${content}`);
+
+/**
+ * Returns a Github equivalent sha hash for any given content
+ * see https://git-scm.com/book/en/v2/Git-Internals-Git-Objects
+ * @param {Buffer} buffer buffer to hash
+ * @returns SHA Hash that would be used on Github for the given content
+ */
+ const gitHubBlobPredictShaFromBuffer = buffer => sha1(Buffer.concat([
+     Buffer.from(`blob ${buffer.byteLength}\0`, 'utf8'),
+     buffer
+    ]))
+  ;
+
+/**
+ * @typedef {Object} GithubTreeRow
+ * @property {string} path
+ * @property {string} mode usually '100644'
+ * @property {string} type usually 'blob'
+ * @property {string} [sha]
+ * @property {string} [content]
+ * @returns 
+ */
 
 /**
  * Creates a gitHub Tree array, skipping duplicates based on the outputpath
@@ -22,13 +46,21 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
  * @param {string} masterBranch usually "master" or "main"
  * @param {Map<string,any>} filesMap contains the data to push
  * @param {string} outputPath the root path for all files
- * @returns 
+ * @param {boolean} [cleanoutputPath] true to delete all unmatched files in outputPath
  */
- const createTreeFromFileMap = async (gitRepo, masterBranch, filesMap, outputPath) => {
-  const rootTree = await gitRepo.getSha(masterBranch,outputPath.split('/')[0]);
-  const referenceTreeSha = rootTree.data.find(f=>f.path===outputPath).sha;
-  const referenceTree = await gitRepo.getTree(`${referenceTreeSha}?recursive=true`);
+ const createTreeFromFileMap = async (gitRepo, masterBranch, filesMap, outputPath, cleanoutputPath) => {
+  const pathRootTree = outputPath.split('/').slice(0,-1).join('/'); //gets the parent folder to the output path
 
+  /** @type {GithubTreeRow[]} */
+  const rootTree = (await gitRepo.getSha(masterBranch,pathRootTree)).data;
+  const referenceTreeRow = rootTree.find(f=>f.path===outputPath);
+
+  /** @type {GithubTreeRow[]} */
+  const referenceTree = referenceTreeRow 
+    ? (await gitRepo.getTree(`${referenceTreeRow.sha}?recursive=true`)).data.tree.filter((/** @type { GithubTreeRow } */ x)=>x.type==='blob')
+    : [];
+
+  /** @type {GithubTreeRow[]} */
   const targetTree = [];
   //Tree parts...
   //https://docs.github.com/en/free-pro-team@latest/rest/reference/git#create-a-tree
@@ -36,16 +68,35 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
   const type = 'blob';
 
   for (const [key,value] of filesMap) {
-      let content = JSON.stringify(value,null,2);
-      let existingFile = referenceTree.data.tree.find(x=>x.path===key);
+    let existingFile = referenceTree.find(x=>x.path===key);
+    if(existingFile) {
+      existingFile['found']=true;
+    }
+    if(value) {
+      //ignoring files with null value
+      let content = typeof value === 'string' ? value : JSON.stringify(value,null,2);
+
       if(!existingFile || existingFile.sha !== gitHubBlobPredictSha(content)) {
         targetTree.push({
           path: `${outputPath}/${key}`,
-          content, 
-          mode, 
+          content,
+          mode,
           type
         });
       }
+    }
+  }
+
+  if(cleanoutputPath) {
+    //process deletes
+    for (const delme of referenceTree.filter(x=>!x['found'])) {
+      targetTree.push({
+        path: `${outputPath}/${delme.path}`,
+        mode, 
+        type,
+        sha : null //will trigger a delete
+      });
+    }
   }
 
   return targetTree;
@@ -55,14 +106,14 @@ const gitHubBlobPredictSha = content => sha1(`blob ${Buffer.byteLength(content)}
  *  return a new PR if the tree has changes
  * @param {*} gitRepo from github-api
  * @param {string} masterBranch usually "master" or "main"
- * @param {{}[]} tree from createTreeFromFileMap
+ * @param {GithubTreeRow[]} tree from createTreeFromFileMap
  * @param {string} PrTitle the name of the new branch to create
  * @param {{name:string,email:string}} committer Github Name/Email
+ * @param {boolean} [commit_only] true if skipping the PR process and just making a commit
  * @returns {Promise<{html_url:string;number:number,head:{ref:string}}>} the new PR
  */
-const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer) => {
+const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer,commit_only) => {
   if(!tree.length) {
-    console.log(`No tree changes for - ${PrTitle}`);
     return null;
   }
 
@@ -93,6 +144,7 @@ const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer) => {
   for(let treePart of treeParts) {
       rowCount += treePart.length;
       console.log(`Creating tree for ${PrTitle} - ${rowCount}/${totalRows} items`);
+
       createTreeResult = await gitRepo.createTree(treePart,createTreeResult.data.sha);
   }
 
@@ -103,7 +155,14 @@ const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer) => {
   //Compare the proposed commit with the trunk (master) branch
   const compare = await gitRepo.compareBranches(baseSha,commitSha);
   if (compare.data.files.length) {
-      console.log(`${compare.data.files.length} changes.`);
+    console.log(`${compare.data.files.length} changes.`);
+
+    if(commit_only) {
+      console.log(`Commit created - ${commitResult.data.html_url}`);
+      await gitRepo.updateHead(`heads/${masterBranch}`,commitSha);
+      
+      return null;
+    } else {
       //Create a new branch and assign this commit to it, return the new branch.
       await gitRepo.createBranch(masterBranch,newBranchName);
       await gitRepo.updateHead(`heads/${newBranchName}`,commitSha);
@@ -118,7 +177,7 @@ const PrIfChanged = async (gitRepo, masterBranch, tree, PrTitle,committer) => {
       console.log(`PR created - ${Pr.html_url}`);
 
       return Pr;
-
+    }
   } else {
       console.log('no changes');
       return null;
@@ -131,5 +190,7 @@ module.exports = {
   todayDateString,
   todayTimeString,
   nowPacTime,
-  sleep
+  sleep,
+  gitHubBlobPredictSha,
+  gitHubBlobPredictShaFromBuffer
 };
