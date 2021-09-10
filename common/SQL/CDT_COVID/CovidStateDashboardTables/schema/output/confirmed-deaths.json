@@ -126,8 +126,12 @@
                 "POPULATION": {
                   "required": true,
                   "type": "integer"
+                },
+                "DEATHS_DAILY_AVERAGE": {
+                  "required": true,
+                  "type": "number"
                 }
-              }
+             }
             }
           }
         },

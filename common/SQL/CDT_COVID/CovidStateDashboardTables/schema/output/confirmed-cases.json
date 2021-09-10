@@ -126,6 +126,10 @@
                 "POPULATION": {
                   "required": true,
                   "type": "integer"
+                },
+                "CASES_DAILY_AVERAGE": {
+                  "required": true,
+                  "type": "number"
                 }
               }
             }
