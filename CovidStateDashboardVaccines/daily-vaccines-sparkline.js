@@ -9,12 +9,14 @@ const getData_daily_vaccines_sparkline = async () => {
   const sqlWork = {
     sparklineResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/sparkline'),
     fullyvaxedResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/fullyvaxed'),
+    totalvaxedResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/totalvaxed'),
     populationResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/eligiblepopulation')
   }
   
   const {
     sparklineResults,
     fullyvaxedResults,
+    totalvaxedResults,
     populationResults
   } = await queryDataset(sqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
 
@@ -39,7 +41,10 @@ const getData_daily_vaccines_sparkline = async () => {
 
   // console.log("fullyvaxedResults",fullyvaxedResults);
   // console.log("populationResults",populationResults);
-
+  let eligible_pop = populationResults[0].ELIGIBLE_POPULATION;
+  let fully_vaxed = fullyvaxedResults[0].FULLY_VACCINATED;
+  let total_vaxed = totalvaxedResults[0].TOTAL_VACCINATED;
+  let partially_vaxed = total_vaxed - fully_vaxed;
   let json = {
       meta: {
         PUBLISHED_DATE: "1900-01-01",
@@ -47,9 +52,13 @@ const getData_daily_vaccines_sparkline = async () => {
       },
       data: {
         population: {
-          FULLY_VAXED: fullyvaxedResults[0].FULLY_VACCINATED,
-          ELIGIBLE_POPULATION: populationResults[0].ELIGIBLE_POPULATION,
-          FULLY_VAXED_RATIO: fullyvaxedResults[0].FULLY_VACCINATED / populationResults[0].ELIGIBLE_POPULATION
+          ELIGIBLE_POPULATION: eligible_pop,
+          TOTAL_VAXED: total_vaxed,
+          FULLY_VAXED: fully_vaxed,
+          PARTIALLY_VAXED: partially_vaxed,
+          TOTAL_VAXED_RATIO: total_vaxed / eligible_pop,
+          FULLY_VAXED_RATIO: fully_vaxed / eligible_pop,
+          PARTIALLY_VAXED_RATIO: partially_vaxed / eligible_pop
         },
         time_series: {
           VACCINE_DOSES: {

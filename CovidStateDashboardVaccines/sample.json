@@ -5,9 +5,13 @@
     },
     "data": {
       "population": {
-        "FULLY_VAXED": 22887432,
         "ELIGIBLE_POPULATION": 33937903,
-        "FULLY_VAXED_RATIO": 0.6743914613699026
+        "TOTAL_VAXED": 26403083,
+        "FULLY_VAXED": 22887432,
+        "PARTIALLY_VAXED": 3515651,
+        "TOTAL_VAXED_RATIO": 0.77,
+        "FULLY_VAXED_RATIO": 0.67,
+        "PARTIALLY_VAXED_RATIO": 0.10
       },
       "time_series": {
         "VACCINE_DOSES": {
