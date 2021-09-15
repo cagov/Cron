@@ -100,7 +100,8 @@
       "REPORTED_TESTS",
       "AVG_TEST_RATE_PER_100K_7_DAYS",
       "AVG_TEST_REPORT_RATE_PER_100K_7_DAYS",
-      "TEST_POSITIVITY_RATE_7_DAYS"
+      "TEST_POSITIVITY_RATE_7_DAYS",
+      "DAILY_TEST_POSITIVITY_RATE"
     ],
     "additionalProperties": false,
     "properties": {
@@ -175,6 +176,18 @@
         ]
       },
       "TEST_POSITIVITY_RATE_7_DAYS": {
+        "oneOf": [
+          {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "DAILY_TEST_POSITIVITY_RATE": {
         "oneOf": [
           {
             "type": "number",

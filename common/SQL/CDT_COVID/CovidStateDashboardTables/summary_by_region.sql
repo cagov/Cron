@@ -22,6 +22,7 @@ select
     SUM(LATEST_PCT_CH_TOTAL_TESTS_REPORTED_1_DAY) "new_tests_reported_delta_1_day",
 
     SUM(LATEST_POSITIVITY_RATE_7_DAYS) "test_positivity_7_days",
+    SUM(DAILY_TEST_POSITIVITY_RATE) "daily_test_positivity_rate",
     SUM(LATEST_INCREASE_POSITIVITY_RATE_7_DAYS) "test_positivity_7_days_delta_7_days"
 from
     COVID.PRODUCTION.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS

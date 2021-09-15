@@ -277,6 +277,7 @@ const doCovidStateDashboardTables = async () => {
                     latest: {
                         POSITIVITY_RATE: {
                             test_positivity_7_days: summary_by_region.test_positivity_7_days,
+                            daily_test_positivity_rate: summary_by_region.daily_test_positivity_rate,
                             test_positivity_7_days_delta_7_days: summary_by_region.test_positivity_7_days_delta_7_days,
                             TESTING_UNCERTAINTY_PERIOD: summary_by_region.TESTING_UNCERTAINTY_PERIOD,
                             POPULATION: summary_by_region.POPULATION
@@ -284,6 +285,7 @@ const doCovidStateDashboardTables = async () => {
                     },
                     time_series: {
                         TEST_POSITIVITY_RATE_7_DAYS: getDateValueRows(rows_by_region,'TEST_POSITIVITY_RATE_7_DAYS'),
+                        DAILY_TEST_POSITIVITY_RATE: getDateValueRows(rows_by_region,'DAILY_TEST_POSITIVITY_RATE'),
                         TOTAL_TESTS: getDateValueRows(rows_by_region,'TOTAL_TESTS')
                     }
                 }
