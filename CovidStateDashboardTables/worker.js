@@ -277,7 +277,6 @@ const doCovidStateDashboardTables = async () => {
                     latest: {
                         POSITIVITY_RATE: {
                             test_positivity_7_days: summary_by_region.test_positivity_7_days,
-                            daily_test_positivity_rate: summary_by_region.daily_test_positivity_rate,
                             test_positivity_7_days_delta_7_days: summary_by_region.test_positivity_7_days_delta_7_days,
                             TESTING_UNCERTAINTY_PERIOD: summary_by_region.TESTING_UNCERTAINTY_PERIOD,
                             POPULATION: summary_by_region.POPULATION

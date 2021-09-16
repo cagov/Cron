@@ -103,7 +103,6 @@
       "new_tests_reported",
       "new_tests_reported_delta_1_day",
       "test_positivity_7_days",
-      "daily_test_positivity_rate",
       "test_positivity_7_days_delta_7_days"
     ],
     "additionalProperties": false,
@@ -160,9 +159,6 @@
         "type": "number"
       },
       "test_positivity_7_days": {
-        "$ref": "#/definitions/number-non-neg"
-      },
-      "daily_test_positivity_rate": {
         "$ref": "#/definitions/number-non-neg"
       },
       "test_positivity_7_days_delta_7_days": {
