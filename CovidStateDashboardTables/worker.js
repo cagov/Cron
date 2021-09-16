@@ -284,6 +284,7 @@ const doCovidStateDashboardTables = async () => {
                     },
                     time_series: {
                         TEST_POSITIVITY_RATE_7_DAYS: getDateValueRows(rows_by_region,'TEST_POSITIVITY_RATE_7_DAYS'),
+                        DAILY_TEST_POSITIVITY_RATE: getDateValueRows(rows_by_region,'DAILY_TEST_POSITIVITY_RATE'),
                         TOTAL_TESTS: getDateValueRows(rows_by_region,'TOTAL_TESTS')
                     }
                 }

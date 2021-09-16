@@ -217,7 +217,52 @@
                   }
                 }
               }
-            }
+            },
+            "DAILY_TEST_POSITIVITY_RATE": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "DATE_RANGE": {
+                  "required": true,
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "MINIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    },
+                    "MAXIMUM": {
+                      "required": true,
+                      "$ref": "#/definitions/date-YYYY-MM-DD"
+                    }
+                  }
+                },
+                "VALUES": {
+                  "required": true,
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 300,
+                  "maxItems": 900,
+                  "items": {
+                    "required": true,
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "DATE": {
+                        "required": true,
+                        "$ref": "#/definitions/date-YYYY-MM-DD"
+                      },
+                      "VALUE": {
+                        "required": true,
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }  
           }
         }
       }
