@@ -24,10 +24,6 @@ const getData_daily_postvax_data = async () => {
             delete r[f];
         }
       });
-    // delete r.AREA;
-    // delete r.AREA_TYPE;
-    // delete r.FILE_PATH;
-    // delete r.SF_LOAD_TIMESTAMP;
     return r;
   });
 
