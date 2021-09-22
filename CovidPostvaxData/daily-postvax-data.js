@@ -1,7 +1,6 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 
-const path = 'data/dashboard/postvax/california.json';
 const schemaFileName = "../SQL/CDT_COVID/postvax-data/schema/schema.json";
 const schemaTestGoodFilePath = "../SQL/CDT_COVID/postvax-data/schema/tests/output/pass/";
 const schemaTestBadFilePath = "../SQL/CDT_COVID/postvax-data/schema/tests/output/fail/";
@@ -38,7 +37,7 @@ const getData_daily_postvax_data = async () => {
   // For now, don't bother validating until we get data into a form we really like...
   // validateJSON(`${path} failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
-  return {path, json};
+  return json;
 };
 
 module.exports = {
