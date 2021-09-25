@@ -12,7 +12,7 @@ const gitHubCommitter = {
 const treePath = 'data/dashboard/postvax';
 const fileName = 'california.json';
 const stagingBranch = 'CovidStateDashboardPostvax_Staging';
-const preproductionBranch = 'preproduction';
+const targetBranch = 'preproduction';
 
 /**
  * Check to see if we need stats update PRs, make them if we do.
@@ -46,8 +46,8 @@ const doCovidPostvaxData = async () => {
     await PrIfChanged(gitRepo, stagingBranch, stagingTree, prTitle, gitHubCommitter, true);
 
     //Production will be PRs
-    const mainTree = await createTreeFromFileMap(gitRepo, preproductionBranch, fileMap, treePath);
-    const Pr = await PrIfChanged(gitRepo, preproductionBranch, mainTree, prTitle, gitHubCommitter, false);
+    const mainTree = await createTreeFromFileMap(gitRepo, targetBranch, fileMap, treePath);
+    const Pr = await PrIfChanged(gitRepo, targetBranch, mainTree, prTitle, gitHubCommitter, false);
 
     if(Pr) {
         //Label the Pr
