@@ -12,7 +12,7 @@ const gitHubCommitter = {
 const treePath = 'data/dashboard/vaccines';
 const fileName = 'sparkline.json';
 const stagingBranch = 'CovidStateDashboardVaccines_Sparkline_Staging';
-const mainBranch = 'main';
+const targetBranch = 'preproduction';
 
 /**
  * Check to see if we need stats update PRs, make them if we do.
@@ -65,8 +65,8 @@ const doCovidVaccinesSparklineData = async () => {
     await PrIfChanged(gitRepo, stagingBranch, stagingTree, prTitle, gitHubCommitter, true);
 
     //Production will be PRs
-    const mainTree = await createTreeFromFileMap(gitRepo, mainBranch, fileMap, treePath);
-    const Pr = await PrIfChanged(gitRepo, mainBranch, mainTree, prTitle, gitHubCommitter, false);
+    const mainTree = await createTreeFromFileMap(gitRepo, targetBranch, fileMap, treePath);
+    const Pr = await PrIfChanged(gitRepo, targetBranch, mainTree, prTitle, gitHubCommitter, false);
 
     if(Pr) {
         //Label the Pr
