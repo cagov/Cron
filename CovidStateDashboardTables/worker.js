@@ -2,14 +2,14 @@ const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment','Publish at 8:50 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Publish at 8:40 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const masterBranch = 'main';
+const targetBranch = 'preproduction'
 const stagingBranch = 'CovidStateDashboardTables_Staging';
 const doInputValidation = true;
 const doOutputValidation = true;
@@ -292,7 +292,7 @@ const doCovidStateDashboardTables = async () => {
         } //if(summary_by_region.length)
     });
 
-    const workTree = await createTreeFromFileMap(gitRepo,masterBranch,allFilesMap,outputPath);
+    const workTree = await createTreeFromFileMap(gitRepo,targetBranch,allFilesMap,outputPath);
 
     if(doOutputValidation) {
         //Validate tree output
@@ -316,7 +316,7 @@ const doCovidStateDashboardTables = async () => {
     for (let PrInfo of PrInfoList) {
         let filterTree = workTree.filter(t=>PrInfo.folders.some(f=>t.path.startsWith(`${outputPath}/${f}`)));
 
-        let Pr = await PrIfChanged(gitRepo, masterBranch, filterTree, `${todayDateString()} ${PrInfo.title}`, committer);
+        let Pr = await PrIfChanged(gitRepo, targetBranch, filterTree, `${todayDateString()} ${PrInfo.title}`, committer);
         if(Pr) {    
             //Label the Pr
             await gitIssues.editIssue(Pr.number,{
@@ -330,7 +330,7 @@ const doCovidStateDashboardTables = async () => {
     //Merge all the PRs into a single branch for staging
     if(PrList.length) {
         await gitRepo.deleteRef(`heads/${stagingBranch}`);
-        await gitRepo.createBranch(masterBranch,stagingBranch);
+        await gitRepo.createBranch(targetBranch,stagingBranch);
         
         for (let Pr of PrList) {
             await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/merges`, {

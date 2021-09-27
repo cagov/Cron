@@ -2,14 +2,14 @@ const { getData_daily_stats_v2 } = require('./daily-stats-v2');
 const { getData_infections_by_group } = require('./infections-by-group');
 
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment','Publish at 9 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Publish at 8:50 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const masterBranch = 'main';
+const targetBranch = 'preproduction';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
@@ -70,7 +70,7 @@ const processFilesForPr = async (fileData, gitRepo, prTitle) => {
  */
 const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
     const branchName = Pr ? Pr.head.ref : `auto-${prTitle.replace(/ /g,'-')}-${todayDateString()}-${todayTimeString()}`;
-    const targetcontent = (await gitRepo.getContents(Pr ? Pr.head.ref : masterBranch,path,true)).data;
+    const targetcontent = (await gitRepo.getContents(Pr ? Pr.head.ref : targetBranch,path,true)).data;
 
     //Add publishedDate
     if(!json.meta) {
@@ -84,7 +84,7 @@ const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
         console.log('data changed - updating');
 
         if(!Pr) {
-            await gitRepo.createBranch(masterBranch,branchName);
+            await gitRepo.createBranch(targetBranch,branchName);
         }
         const commitMessage = `Update ${path.split("/").pop()}`;
         await gitRepo.writeFile(branchName, path, JSON.stringify(json,null,2), commitMessage, {committer,encode:true});
@@ -94,7 +94,7 @@ const createPrForChange = async (gitRepo, Pr, path, json, prTitle) => {
             Pr = (await gitRepo.createPullRequest({
                 title: prTitle,
                 head: branchName,
-                base: masterBranch
+                base: targetBranch
             }))
             .data;
         }
