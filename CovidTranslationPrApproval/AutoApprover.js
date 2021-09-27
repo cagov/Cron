@@ -1,7 +1,6 @@
 const GitHub = require('github-api'); //https://github-tools.github.io/github/docs/3.2.3/Repository.html
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
-const masterbranch = 'main';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const moment = require('moment'); // https://momentjs.com/docs/#/use-it/node-js/
@@ -32,7 +31,7 @@ const doAutoApprover = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
-    
+
     moment.tz.setDefault(dataTimeZone); //So important when using Moment.JS
 
     const ActiveLabels = AutoApproverLabels.timeLabels
@@ -44,11 +43,7 @@ const doAutoApprover = async () => {
 
     for (const ActiveLabel of ActiveLabels) {
         //Mark any Prs with the time publish label as publish asap
-        const PrsTimeReady = (await gitRepo.listPullRequests(
-            {
-                base : masterbranch
-            }
-            ))
+        const PrsTimeReady = (await gitRepo.listPullRequests())
             .data
             .filter(p=>
                 !p.draft //ignore drafts
@@ -74,7 +69,6 @@ const doAutoApprover = async () => {
 
     const Prs = (await gitRepo.listPullRequests(
         {
-            base : masterbranch,
             direction : 'desc' //Newest ones first
         }
         ))
