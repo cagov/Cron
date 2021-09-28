@@ -10,14 +10,16 @@ const getData_daily_vaccines_sparkline = async () => {
     sparklineResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/sparkline'),
     fullyvaxedResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/fullyvaxed'),
     totalvaxedResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/totalvaxed'),
-    populationResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/eligiblepopulation')
+    populationResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/eligiblepopulation'),
+    dailyaverageResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/dailyaverage')
   }
   
   const {
     sparklineResults,
     fullyvaxedResults,
     totalvaxedResults,
-    populationResults
+    populationResults,
+    dailyaverageResults
   } = await queryDataset(sqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
 
 
@@ -44,6 +46,7 @@ const getData_daily_vaccines_sparkline = async () => {
   let eligible_pop = populationResults[0].ELIGIBLE_POPULATION;
   let fully_vaxed = fullyvaxedResults[0].FULLY_VACCINATED;
   let total_vaxed = totalvaxedResults[0].TOTAL_VACCINATED;
+  let daily_average = dailyaverageResults[0].DAILY_AVG;
   let partially_vaxed = total_vaxed - fully_vaxed;
   let json = {
       meta: {
@@ -58,7 +61,8 @@ const getData_daily_vaccines_sparkline = async () => {
           PARTIALLY_VAXED: partially_vaxed,
           TOTAL_VAXED_RATIO: total_vaxed / eligible_pop,
           FULLY_VAXED_RATIO: fully_vaxed / eligible_pop,
-          PARTIALLY_VAXED_RATIO: partially_vaxed / eligible_pop
+          PARTIALLY_VAXED_RATIO: partially_vaxed / eligible_pop,
+          DAILY_AVERAGE: daily_average
         },
         time_series: {
           VACCINE_DOSES: {
