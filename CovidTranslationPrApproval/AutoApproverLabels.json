@@ -8,9 +8,24 @@
     "timeLabels":
     [
       {
+        "label":"Publish at 8:30 a.m. ☀️",
+        "hour":8,
+        "minute":30
+      },
+      {
+        "label":"Publish at 8:35 a.m. ☀️",
+        "hour":8,
+        "minute":35
+      },
+      {
         "label":"Publish at 8:40 a.m. ☀️",
         "hour":8,
         "minute":40
+      },
+      {
+        "label":"Publish at 8:45 a.m. ☀️",
+        "hour":8,
+        "minute":45
       },
       {
         "label":"Publish at 8:50 a.m. ☀️",
@@ -18,9 +33,19 @@
         "minute":50
       },
       {
+        "label":"Publish at 8:55 a.m. ☀️",
+        "hour":8,
+        "minute":55
+      },
+      {
         "label":"Publish at 9 a.m. ☀️",
         "hour":9,
         "minute":0
+      },
+      {
+        "label":"Publish at 9:05 a.m. ☀️",
+        "hour":9,
+        "minute":5
       },
       {
         "label":"Publish at 9:10 a.m. ☀️",
@@ -31,6 +56,11 @@
         "label":"Publish at 9:15 a.m. ☀️",
         "hour":9,
         "minute":15
+      },
+      {
+        "label":"Publish at 9:20 a.m. ☀️",
+        "hour":9,
+        "minute":20
       },
       {
         "label":"Publish at 10 a.m. ☀️",
