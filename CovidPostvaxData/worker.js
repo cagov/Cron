@@ -2,7 +2,7 @@ const { getData_daily_postvax_data } = require('./daily-postvax-data');
 
 const GitHub = require('github-api');
 const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
-const PrLabels = ['Automatic Deployment','Publish at 8:45 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Publish at 8:30 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const gitHubCommitter = {

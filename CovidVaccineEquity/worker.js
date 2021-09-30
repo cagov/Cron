@@ -1,14 +1,14 @@
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment','Publish at 9:15 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Publish at 8:35 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const masterBranch = 'main';
+const targetBranch = 'preproduction';
 const sqlRootPath = "../SQL/CDTCDPH_VACCINE/CovidVaccineEquity/";
 const schemaPath = `${sqlRootPath}schema/`;
 const targetPath = 'data/vaccine-equity/';
@@ -97,7 +97,7 @@ const doCovidVaccineEquity = async () => {
 
     //function to return a new branch if the tree has changes
     const branchIfChanged = async (tree, branch, commitName) => {
-        const refResult = await gitRepo.getRef(`heads/${masterBranch}`);
+        const refResult = await gitRepo.getRef(`heads/${targetBranch}`);
         const baseSha = refResult.data.object.sha;
 
         console.log(`Creating tree for ${commitName}`);
@@ -110,7 +110,7 @@ const doCovidVaccineEquity = async () => {
         if (compare.data.files.length) {
             console.log(`${compare.data.files.length} changes.`);
             //Create a new branch and assign this commit to it, return the new branch.
-            await gitRepo.createBranch(masterBranch,branch);
+            await gitRepo.createBranch(targetBranch,branch);
             return await gitRepo.updateHead(`heads/${branch}`,commitSha);
         } else {
             console.log('no changes');
@@ -123,7 +123,7 @@ const doCovidVaccineEquity = async () => {
         const Pr = (await gitRepo.createPullRequest({
             title: PrTitle,
             head: BranchName,
-            base: masterBranch
+            base: targetBranch
         }))
         .data;
 

@@ -1,7 +1,7 @@
 const { queryDataset, getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment','Publish at 8:50 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Publish at 8:35 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const committer = {
