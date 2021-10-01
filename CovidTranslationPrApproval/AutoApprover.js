@@ -66,7 +66,7 @@ const doAutoApprover = async () => {
     // @ts-ignore
     moment.tz.setDefault(dataTimeZone); //So important when using Moment.JS
 
-
+    
     let PrList = await getPrList(gitRepo);
     //Look for rollups
     const PrRollUpList = PrList
@@ -103,6 +103,10 @@ const doAutoApprover = async () => {
             await gitIssues.editIssue(newPr.number,{
                 labels
             });
+
+            //Created wait and refresh
+            await sleep(5000);
+            PrList = await getPrList(gitRepo);
         }
         
         //Add the old Pr link to the body of the rollup issue
@@ -113,7 +117,7 @@ const doAutoApprover = async () => {
         //Close the old issue
         await gitIssues.editIssue(Pr.number,{
             state: 'closed',
-            body: Pr.body + '\n\nRolled into ' + existingRollupPr.html_url
+            body: Pr.body||'' + '\n\nRolled into ' + existingRollupPr.html_url
         });
 
     }
