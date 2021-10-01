@@ -81,7 +81,7 @@ const doAutoApprover = async () => {
         if(!existingRollupPr) {
             //create a branch for rollup
             const newBranchName = `${Pr.head.ref}-rollup-${new Date().valueOf()}`;
-            const newHead = await gitRepo.createBranch(Pr.head.ref,newBranchName);
+            await gitRepo.createBranch(Pr.head.ref,newBranchName);
 
             /** @type {{html_url:string;number:number,body:string,head:{ref:string}}} */
             const newPr = (await gitRepo.createPullRequest({
@@ -93,15 +93,20 @@ const doAutoApprover = async () => {
             .data;
 
             existingRollupPr = newPr;
-        }
 
-        let labels = Pr.labels
-            .map(x=>x.name)//Preserve existing labels!!!
-            .filter(x=>x!==addToRollUptag && x!==rollUptag);
-        labels.push(rollUptag);
+            let labels = Pr.labels
+                .map(x=>x.name) //Preserve original labels from first Pr
+                .filter(x=>x!==addToRollUptag && x!==rollUptag);
+
+            labels.push(rollUptag);
         
+            await gitIssues.editIssue(newPr.number,{
+                labels
+            });
+        }
+        
+        //Add the old Pr link to the body of the rollup issue
         await gitIssues.editIssue(existingRollupPr.number,{
-            labels,
             body: existingRollupPr.body + '\n\n' + Pr.title + ' - ' + Pr.html_url
         });
 
