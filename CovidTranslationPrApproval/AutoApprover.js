@@ -39,7 +39,7 @@ const getPrList = async gitRepo => {
         !p.draft //ignore drafts
         &&securityGroups.includes(p.author_association) //Security
     );
-}
+};
 
 /**
  * Check to see if we need stats update PRs, make them if we do.
@@ -85,7 +85,7 @@ const doAutoApprover = async () => {
 
             /** @type {{html_url:string;number:number,body:string,head:{ref:string}}} */
             const newPr = (await gitRepo.createPullRequest({
-                title: Pr.title + ' Rollup',
+                title: `${Pr.title} Rollup`,
                 head: newBranchName,
                 base: Pr.base.ref,
                 body: '*This PR is a Rollup of multiple PRs...*\n\n'
@@ -111,13 +111,13 @@ const doAutoApprover = async () => {
         
         //Add the old Pr link to the body of the rollup issue
         await gitIssues.editIssue(existingRollupPr.number,{
-            body: existingRollupPr.body + '\n\n' + Pr.title + ' - ' + Pr.html_url
+            body: `${existingRollupPr.body}\n\n${Pr.title} - ${Pr.html_url}`
         });
 
         //Close the old issue
         await gitIssues.editIssue(Pr.number,{
             state: 'closed',
-            body: Pr.body||'' + '\n\nRolled into ' + existingRollupPr.html_url
+            body: `${Pr.body||''}\n\nRolled into ${existingRollupPr.html_url}`
         });
 
     }
