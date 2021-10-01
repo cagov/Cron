@@ -76,7 +76,7 @@ const doAutoApprover = async () => {
     for (const Pr of PrRollUpList) {
         //See if there is a target roll up already
         /** @type {{number:number,body:string,html_url:string}} */
-        let existingRollupPr = PrList.find(x=>x.labels.some(s=>s.name===rollUptag));
+        let existingRollupPr = PrList.find(x=>x.base.ref===Pr.base.ref && x.labels.some(s=>s.name===rollUptag));
 
         if(!existingRollupPr) {
             //create a branch for rollup
