@@ -19,8 +19,8 @@ const rollUptag = 'Rollup';
  * @typedef {Object} PrRow
  * @property {string} html_url
  * @property {string} title
- * @property {number} number usually '100644'
- * @property {[{name:string}]} labels usually 'blob'
+ * @property {number} number
+ * @property {[{name:string}]} labels
  * @property {boolean} draft
  * @property {string} author_association
  * @property {{ref:string}} base
@@ -32,13 +32,15 @@ const rollUptag = 'Rollup';
 /**
  * @param {*} gitRepo 
  */
-const getPrList = async gitRepo => {
-    return /** @type PrRow[] */ ((await gitRepo.listPullRequests())
-    .data)
-    .filter(p=>
-        !p.draft //ignore drafts
-        &&securityGroups.includes(p.author_association) //Security
-    );
+ const getPrList = async gitRepo => {
+     /** @type PrRow[] */
+    const purePrs = (await gitRepo.listPullRequests()).data;
+
+    return purePrs
+        .filter(p=>
+            !p.draft //ignore drafts
+            &&securityGroups.includes(p.author_association) //Security
+        );
 };
 
 /**
