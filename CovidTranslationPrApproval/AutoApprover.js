@@ -16,24 +16,24 @@ const addToRollUptag = 'Add to Rollup';
 const rollUptag = 'Rollup';
 
 /**
- * @typedef {Object} PrRow
- * @property {string} html_url
- * @property {string} title
- * @property {number} number
- * @property {[{name:string}]} labels
- * @property {boolean} draft
- * @property {string} author_association
- * @property {{ref:string}} base
- * @property {{ref:string}} head
- * @property {string} body
+ * @typedef {object} PrRow
+ * @property {string} html_url PR html link
+ * @property {string} title PR title
+ * @property {number} number PR number
+ * @property {{name:string}[]} labels list of PR labels
+ * @property {boolean} draft true for draft PR
+ * @property {string} author_association security groups
+ * @property {{ref:string}} base PR branch base
+ * @property {{ref:string}} head PR branch head
+ * @property {string} body PR issue body
  * @returns 
  */
 
 /**
- * @param {*} gitRepo 
+ * @param {*} gitRepo from Github API
  */
  const getPrList = async gitRepo => {
-     /** @type PrRow[] */
+     /** @type {PrRow[]} */
     const purePrs = (await gitRepo.listPullRequests()).data;
 
     return purePrs
@@ -45,7 +45,8 @@ const rollUptag = 'Rollup';
 
 /**
  * Check to see if we need stats update PRs, make them if we do.
- * @returns {Promise<{approvals: string[],skips: string[],labels: string[]}>}
+ * 
+ * @returns {Promise<{approvals: string[],skips: string[],labels: string[]}>} Report
  */
 const doAutoApprover = async () => {
     let report = {
