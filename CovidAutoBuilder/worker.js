@@ -159,38 +159,62 @@ const force_build = async() => {
 
 const doCovidAutoBuilder = async () => {
     let needsBuild = false;
+    let successfulPass = false;
+    const maximumPasses = 10;
+    let numberPasses = 0;
+    let errorEncountered = '';
+    let shownDoses = 0;
+   
+    while (!successfulPass) {
+        try {
+            console.log("Looking at home page");
+            const site = await fetchHTML(homePageToCheck);
+            const value = site(mySelector).text();
+        
+            shownDoses = parseInt(value.split(',').join(''));
+            console.log("Shown Doses", shownDoses);
 
-    console.log("Looking at home page");
-    const site = await fetchHTML(homePageToCheck);
-    let value = site(mySelector).text();
-
-    const shownDoses = parseInt(value.split(',').join(''));
-    console.log("Shown Doses", shownDoses);
-    if (shownDoses > 0) {
-        await fetchRetry(srcJSONFile,{method:"Get",retries:3,retryDelay:2000})
-        .then(res => res.json())
-        .then(json => {
-            const jsonDoses = json.data.vaccinations.CUMMULATIVE_DAILY_DOSES_ADMINISTERED;
-            console.log("JSON doses",jsonDoses);
-            if (jsonDoses == shownDoses) {
-                console.log("Values match, no building needed");
-                needsBuild = testing_mode? true : false;
+            if (shownDoses > 0) {
+                // this is our most common source of error - FetchError caused by HTML result due to file being inaccessible temporarily
+                await fetchRetry(srcJSONFile,{method:"Get",retries:3,retryDelay:2000})
+                .then(res => res.json())
+                .then(json => {
+                    const jsonDoses = json.data.vaccinations.CUMMULATIVE_DAILY_DOSES_ADMINISTERED;
+                    console.log("JSON doses",jsonDoses);
+                    if (jsonDoses == shownDoses) {
+                        console.log("Values match, no building needed");
+                        needsBuild = testing_mode? true : false;
+                    }
+                    else {
+                        if (jsonDoses < shownDoses) {
+                            errorEncountered = "JSON Doses is lower than what is on website!";
+                        }
+                        console.log("Values do not match, build may be needed");
+                        needsBuild = true;
+                    }
+                });
+            } else {
+                console.log("VaccinesAdmin is 0, likely a parsing issue, report it");
+                errorEncountered = 'Failed to parse Vaccines from home page!';                
             }
-            else {
-                if (jsonDoses < shownDoses) {
-                    throw "JSON Doses is lower than what is on website!";
-                }
-                console.log("Values do not match, build may be needed");
-                needsBuild = true;
-            }
-        });
-        if (needsBuild) {
-            console.log("Will force a github build here")
-            await force_build();
+            successfulPass = true;
         }
-    } else {
-        console.log("VaccinesAdmin is 0, likely a parsing issue, report it");
-        throw "Failed to parse Vaccines from home page!";
+        catch (error) {
+            // most errors (typically network errors) will be fixed by waiting 6 seconds and trying again
+            if (numberPasses < maximumPasses) {
+                if (error.name == 'FetchError') {
+                    console.log("Fetch Error happened");
+                }
+                await sleep(6*1000);
+                numberPasses += 1;
+            } else {
+                console.log("Exceeded maximum errors",maximumPasses);
+                throw error;
+            }
+        }
+    }
+    if (errorEncountered !== '') {
+        throw errorEncountered;
     }
     return needsBuild;
 };
