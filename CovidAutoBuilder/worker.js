@@ -180,7 +180,7 @@ const doCovidAutoBuilder = async () => {
 
             if (shownDoses > 0) {
                 // this is our most common source of error - FetchError caused by HTML result due to file being inaccessible temporarily
-                await fetchRetry(srcJSONFile,{method:"Get",retries:3,retryDelay:2000})
+                await fetchRetry(srcJSONFile+'?x='+Math.random(),{method:"Get",retries:3,retryDelay:2000})
                 .then(res => res.json())
                 .then(json => {
                     const jsonDoses = json.data.vaccinations.CUMMULATIVE_DAILY_DOSES_ADMINISTERED;
