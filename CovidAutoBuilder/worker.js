@@ -168,6 +168,10 @@ const doCovidAutoBuilder = async () => {
     while (!successfulPass) {
         try {
             console.log("Looking at home page");
+            // testing code
+            // if (numberPasses < 11) {
+            //     throw "Testing error handling";
+            // }
             const site = await fetchHTML(homePageToCheck);
             const value = site(mySelector).text();
         
@@ -204,6 +208,8 @@ const doCovidAutoBuilder = async () => {
             if (numberPasses < maximumPasses) {
                 if (error.name == 'FetchError') {
                     console.log("Fetch Error happened");
+                } else {
+                    console.log("Error: " + error);
                 }
                 await sleep(6*1000);
                 numberPasses += 1;
