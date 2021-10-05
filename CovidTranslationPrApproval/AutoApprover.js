@@ -15,7 +15,7 @@ const dataTimeZone = 'America/Los_Angeles';
 const AutoApproverLabels = require('./AutoApproverLabels.json').data;
 const labelPublishASAP = AutoApproverLabels.specialLabels.PublishASAP;
 const labelDoNotPublish = AutoApproverLabels.specialLabels.DoNotPublish;
-const securityGroups = ['OWNER','CONTRIBUTOR','COLLABORATOR'];
+const securityGroups = ['OWNER', 'CONTRIBUTOR', 'COLLABORATOR'];
 const addToRollUptag = 'Add to Rollup';
 const rollUptag = 'Rollup';
 
@@ -37,14 +37,14 @@ const rollUptag = 'Rollup';
 /**
  * @param {*} gitRepo from Github API
  */
- const getPrList = async gitRepo => {
-     /** @type {PrRow[]} */
+const getPrList = async gitRepo => {
+    /** @type {PrRow[]} */
     const purePrs = (await gitRepo.listPullRequests()).data;
 
     return purePrs
-        .filter(p=>
+        .filter(p =>
             !p.draft //ignore drafts
-            &&securityGroups.includes(p.author_association) //Security
+            && securityGroups.includes(p.author_association) //Security
         );
 };
 
@@ -67,96 +67,95 @@ const doAutoApprover = async () => {
 
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     // @ts-ignore
-    const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
+    const gitRepo = await gitModule.getRepo(githubUser, githubRepo);
     // @ts-ignore
-    const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
+    const gitIssues = await gitModule.getIssues(githubUser, githubRepo);
 
     // @ts-ignore
     moment.tz.setDefault(dataTimeZone); //So important when using Moment.JS
 
-    
+
     let PrList = await getPrList(gitRepo);
     //Look for rollups
     const PrRollUpList = PrList
-    .filter(p=>
-        p.labels.some(s=>s.name===addToRollUptag) //Only incude marked for rollup
-    );
+        .filter(p =>
+            p.labels.some(s => s.name === addToRollUptag) //Only incude marked for rollup
+        );
     for (const Pr of PrRollUpList) {
         //See if there is a target roll up already
         /** @type {PrRow} */
-        let existingRollupPr = PrList.find(x=>x.base.ref===Pr.base.ref && x.labels.some(s=>s.name===rollUptag));
-
-        if(existingRollupPr) {
-            //merge into the branch
-            //TODO:
-
-let baseSha = existingRollupPr.head.sha;
-
-  //Compare the proposed commit with the trunk (master) branch
-  /** @type {{data:{files:{filename:string,sha:string}[]}}} */
-  const compare = await gitRepo.compareBranches(baseSha,Pr.head.sha);
-  if (compare.data.files.length) {
-    console.log(`${compare.data.files.length} changes.`);
-
-    const updateTree = compare.data.files.map(x=>({
-        path: x.filename,
-        mode: '100644',
-        type: 'blob',
-        sha: x.sha
-    }));
-
-    /** @type {{data:{sha:string}}} */
-    const createTreeResult = await gitRepo.createTree(updateTree,baseSha);
-    const treeSha = createTreeResult.data.sha;
-    //Create a commit the maps to all the tree changes
-    /** @type {{data:{sha:string,html_url:string}}} */
-    const commitResult = await gitRepo.commit(baseSha,treeSha,'my commit',committer);
-    const commitSha = commitResult.data.sha;
-
-
-    await gitRepo.updateHead(`heads/${existingRollupPr.head.ref}`,commitSha);
-  }
-
-
-
-
-
-
-        } else {
+        let existingRollupPr = PrList.find(x => x.base.ref === Pr.base.ref && x.labels.some(s => s.name === rollUptag));
+        const MakeNewPr = !existingRollupPr;
+        let rollupBranchName = `${Pr.head.ref}-rollup-${new Date().valueOf()}`;
+        let RollupBranchSha = '';
+        if (MakeNewPr) {
             //create a branch for rollup
-            const newBranchName = `${Pr.head.ref}-rollup-${new Date().valueOf()}`;
-            await gitRepo.createBranch(Pr.head.ref,newBranchName);
+            /** @type {{data:{object:{sha:string}}}} */
+            const newBranch = await gitRepo.createBranch(Pr.base.ref, rollupBranchName);
+            RollupBranchSha = newBranch.data.object.sha;
+        } else {
+            rollupBranchName = existingRollupPr.head.ref;
+            RollupBranchSha = existingRollupPr.head.sha;
+        }
 
+        //merge into the branch
+        let baseSha = RollupBranchSha;
+
+        //Compare the proposed commit with the rollup PR branch
+        /** @type {{data:{files:{filename:string,sha:string}[]}}} */
+        const compare = await gitRepo.compareBranches(baseSha, Pr.head.sha);
+        if (compare.data.files.length) {
+            console.log(`${compare.data.files.length} changes.`);
+
+            const updateTree = compare.data.files.map(x => ({
+                path: x.filename,
+                mode: '100644',
+                type: 'blob',
+                sha: x.sha
+            }));
+
+            /** @type {{data:{sha:string}}} */
+            const createTreeResult = await gitRepo.createTree(updateTree, baseSha);
+            const treeSha = createTreeResult.data.sha;
+            //Create a commit the maps to all the tree changes
+            /** @type {{data:{sha:string,html_url:string}}} */
+            const commitResult = await gitRepo.commit(baseSha, treeSha, `Rollup ${Pr.title}`, committer);
+            const commitSha = commitResult.data.sha;
+
+
+            await gitRepo.updateHead(`heads/${rollupBranchName}`, commitSha);
+        }
+
+        if(MakeNewPr) {
             /** @type {PrRow} */
-            const newPr = (await gitRepo.createPullRequest({
+            existingRollupPr = (await gitRepo.createPullRequest({
                 title: `${Pr.title} Rollup`,
-                head: newBranchName,
+                head: rollupBranchName,
                 base: Pr.base.ref,
                 body: '*This PR is a Rollup of multiple PRs...*\n\n'
             }))
-            .data;
-
-            existingRollupPr = newPr;
+                .data;
         }
 
+
         //merge labels
-        let labels = [...Pr.labels.map(x=>x.name),...existingRollupPr.labels.map(x=>x.name)]
-             //Preserve original labels from first Pr
-            .filter(x=>x!==addToRollUptag && x!==rollUptag);
+        let labels = [...Pr.labels.map(x => x.name), ...existingRollupPr.labels.map(x => x.name)]
+            //Preserve original labels from first Pr
+            .filter(x => x !== addToRollUptag && x !== rollUptag);
 
         labels.push(rollUptag);
 
-        await gitIssues.editIssue(existingRollupPr.number,{
+        await gitIssues.editIssue(existingRollupPr.number, {
             labels: [...new Set(labels)] //removes dupes
         });
-        
+
         //Add the old Pr link to the body of the rollup issue
-        await gitIssues.editIssue(existingRollupPr.number,{
+        await gitIssues.editIssue(existingRollupPr.number, {
             body: `${existingRollupPr.body || ''}\n\n${Pr.title} - ${Pr.html_url}\n\n${Pr.body || ''}\n\n`
         });
 
         //Close the old issue
-        await gitIssues.editIssue(Pr.number,{
+        await gitIssues.editIssue(Pr.number, {
             state: 'closed',
             body: `${Pr.body || ''}\n\nRolled into ${existingRollupPr.html_url}`
         });
@@ -171,11 +170,13 @@ let baseSha = existingRollupPr.head.sha;
 
 
     const ActiveLabels = AutoApproverLabels.timeLabels
-        .map(x=>({label:x.label,diff:moment()
-            .diff(moment().startOf('day')
-            .add(x.hour, 'hours')
-            .add(x.minute, 'minutes'),'minutes')}))
-            .filter(x=>x.diff>0 && x.diff<15);
+        .map(x => ({
+            label: x.label, diff: moment()
+                .diff(moment().startOf('day')
+                    .add(x.hour, 'hours')
+                    .add(x.minute, 'minutes'), 'minutes')
+        }))
+        .filter(x => x.diff > 0 && x.diff < 15);
 
 
     //refresh for tag fixing
@@ -184,17 +185,17 @@ let baseSha = existingRollupPr.head.sha;
     for (const ActiveLabel of ActiveLabels) {
         //Mark any Prs with the time publish label as publish asap
         const PrsTimeReady = PrList
-            .filter(p=>
-                p.labels.some(s=>s.name===ActiveLabel.label)
+            .filter(p =>
+                p.labels.some(s => s.name === ActiveLabel.label)
             );
 
         //Time is up.  Mark it for publishing (in case we miss it this pass)
         for (const Pr of PrsTimeReady) {
             //Add label to Pr
-            let labels = Pr.labels.map(x=>x.name); //Preserve existing labels!!!
+            let labels = Pr.labels.map(x => x.name); //Preserve existing labels!!!
             if (!labels.includes(labelPublishASAP)) {
                 labels.push(labelPublishASAP);
-                await gitIssues.editIssue(Pr.number,{
+                await gitIssues.editIssue(Pr.number, {
                     labels
                 });
                 report.labels.push(Pr.html_url);
@@ -206,9 +207,9 @@ let baseSha = existingRollupPr.head.sha;
 
     //refresh for approval
     PrList = (await getPrList(gitRepo))
-        .filter(p=>
-            p.labels.some(s=>s.name===labelPublishASAP) //Only incude marked for publishing
-            &&!p.labels.some(s=>s.name===labelDoNotPublish) //Hard exclude DoNots (Stop button)
+        .filter(p =>
+            p.labels.some(s => s.name === labelPublishASAP) //Only incude marked for publishing
+            && !p.labels.some(s => s.name === labelDoNotPublish) //Hard exclude DoNots (Stop button)
         );
 
     for (const prlist of PrList) {
@@ -216,7 +217,7 @@ let baseSha = existingRollupPr.head.sha;
         const pr = (await gitRepo.getPullRequest(`${prlist.number}?cachebust=${new Date().valueOf()}`)).data;
         if (pr.mergeable) {
             //Approve the PR
-            await gitRepo.mergePullRequest(pr.number,{
+            await gitRepo.mergePullRequest(pr.number, {
                 merge_method: 'squash'
             });
 
@@ -234,5 +235,5 @@ let baseSha = existingRollupPr.head.sha;
 };
 
 module.exports = {
-  doAutoApprover
+    doAutoApprover
 };
