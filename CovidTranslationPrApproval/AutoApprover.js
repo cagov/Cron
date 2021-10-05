@@ -1,7 +1,7 @@
 //@ts-check
 const GitHub = require('github-api'); //https://github-tools.github.io/github/docs/3.2.3/Repository.html
 const githubUser = 'cagov';
-const githubRepo = 'automation-development-target'; // 'covid-static-data';
+const githubRepo = 'covid-static-data';
 const committer = {
     name: process.env["GITHUB_NAME"],
     email: process.env["GITHUB_EMAIL"]
@@ -82,28 +82,28 @@ const doAutoApprover = async () => {
             p.labels.some(s => s.name === addToRollUptag) //Only incude marked for rollup
         );
     for (const Pr of PrRollUpList) {
+        const mainTargetBranch = Pr.base.ref;
+
         //See if there is a target roll up already
         /** @type {PrRow} */
-        let existingRollupPr = PrList.find(x => x.base.ref === Pr.base.ref && x.labels.some(s => s.name === rollUptag));
+        let existingRollupPr = PrList.find(x => x.base.ref === mainTargetBranch && x.labels.some(s => s.name === rollUptag));
         const MakeNewPr = !existingRollupPr;
-        let rollupBranchName = `${Pr.head.ref}-rollup-${new Date().valueOf()}`;
-        let RollupBranchSha = '';
+        const RollupPrTitle = `${moment().format('YYYY-MM-DD')}-Rollup`;
+        let rollupBranchName = `${RollupPrTitle}-${new Date().valueOf()}`;
+        let rollupBranchSha = '';
         if (MakeNewPr) {
             //create a branch for rollup
             /** @type {{data:{object:{sha:string}}}} */
-            const newBranch = await gitRepo.createBranch(Pr.base.ref, rollupBranchName);
-            RollupBranchSha = newBranch.data.object.sha;
+            const newBranch = await gitRepo.createBranch(mainTargetBranch, rollupBranchName);
+            rollupBranchSha = newBranch.data.object.sha;
         } else {
             rollupBranchName = existingRollupPr.head.ref;
-            RollupBranchSha = existingRollupPr.head.sha;
+            rollupBranchSha = existingRollupPr.head.sha;
         }
-
-        //merge into the branch
-        let baseSha = RollupBranchSha;
 
         //Compare the proposed commit with the rollup PR branch
         /** @type {{data:{files:{filename:string,sha:string}[]}}} */
-        const compare = await gitRepo.compareBranches(baseSha, Pr.head.sha);
+        const compare = await gitRepo.compareBranches(rollupBranchSha, Pr.head.sha);
         if (compare.data.files.length) {
             console.log(`${compare.data.files.length} changes.`);
 
@@ -115,11 +115,11 @@ const doAutoApprover = async () => {
             }));
 
             /** @type {{data:{sha:string}}} */
-            const createTreeResult = await gitRepo.createTree(updateTree, baseSha);
+            const createTreeResult = await gitRepo.createTree(updateTree, rollupBranchSha);
             const treeSha = createTreeResult.data.sha;
             //Create a commit the maps to all the tree changes
             /** @type {{data:{sha:string,html_url:string}}} */
-            const commitResult = await gitRepo.commit(baseSha, treeSha, `Rollup ${Pr.title}`, committer);
+            const commitResult = await gitRepo.commit(rollupBranchSha, treeSha, `Rollup > ${Pr.title}`, committer);
             const commitSha = commitResult.data.sha;
 
 
@@ -129,10 +129,10 @@ const doAutoApprover = async () => {
         if(MakeNewPr) {
             /** @type {PrRow} */
             existingRollupPr = (await gitRepo.createPullRequest({
-                title: `${Pr.title} Rollup`,
+                title: RollupPrTitle,
                 head: rollupBranchName,
-                base: Pr.base.ref,
-                body: '*This PR is a Rollup of multiple PRs...*\n\n'
+                base: mainTargetBranch,
+                body: '**This PR is a Rollup of multiple PRs**\n\n'
             }))
                 .data;
         }
@@ -151,20 +151,20 @@ const doAutoApprover = async () => {
 
         //Add the old Pr link to the body of the rollup issue
         await gitIssues.editIssue(existingRollupPr.number, {
-            body: `${existingRollupPr.body || ''}\n\n${Pr.title} - ${Pr.html_url}\n\n${Pr.body || ''}\n\n`
+            body: `${existingRollupPr.body || ''}\n\n*${Pr.title} - ${Pr.html_url}*\n\n\`\`\`${Pr.body || ''}\`\`\`\n\n`
         });
 
         //Close the old issue
         await gitIssues.editIssue(Pr.number, {
             state: 'closed',
-            body: `${Pr.body || ''}\n\nRolled into ${existingRollupPr.html_url}`
+            body: `${Pr.body || ''}\n\n*Rolled into ${existingRollupPr.html_url}*`
         });
 
         //Delete the old PR branch
         await gitRepo.deleteRef(`heads/${Pr.head.ref}`);
 
         //Created wait and refresh
-        await sleep(2000);
+        await sleep(5000);
         PrList = await getPrList(gitRepo);
     }
 
