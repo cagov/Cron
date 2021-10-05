@@ -14,13 +14,20 @@ module.exports = async function (context, myTimer) {
 
     if(PrResult) {
       const prMessage = `Daily Vaccines sparkline data ready\n${PrResult.html_url}`;
-      await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
-      await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
-      await slackBotChatPost(notifyChannel, prMessage);
+      try {
+        await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
+        await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
+        await slackBotChatPost(notifyChannel, prMessage);
+      } catch (error) {
+        // ignore slack reporting API errors, who cares!
+      }
     }
-
-    await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
-    await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
+    try {
+      await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
+      await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
+    } catch (error) {
+        // ignore slack reporting API errors, who cares!
+    }
   } catch (e) {
     await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
 
