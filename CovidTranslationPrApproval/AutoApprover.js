@@ -1,4 +1,3 @@
-//@ts-check
 const GitHub = require('github-api'); //https://github-tools.github.io/github/docs/3.2.3/Repository.html
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
@@ -50,8 +49,7 @@ const getPrList = async gitRepo => {
 
 /**
  * Check to see if we need stats update PRs, make them if we do.
- * 
- * @returns {Promise<{approvals: string[],skips: string[],labels: string[]}>} Report
+ * @returns {Promise<{approvals: string[],skips: string[],labels: string[]}>}
  */
 const doAutoApprover = async () => {
     let report = {
@@ -71,7 +69,6 @@ const doAutoApprover = async () => {
     // @ts-ignore
     const gitIssues = await gitModule.getIssues(githubUser, githubRepo);
 
-    // @ts-ignore
     moment.tz.setDefault(dataTimeZone); //So important when using Moment.JS
 
 
@@ -178,10 +175,6 @@ const doAutoApprover = async () => {
         }))
         .filter(x => x.diff > 0 && x.diff < 15);
 
-
-    //refresh for tag fixing
-    PrList = await getPrList(gitRepo);
-
     for (const ActiveLabel of ActiveLabels) {
         //Mark any Prs with the time publish label as publish asap
         const PrsTimeReady = PrList
@@ -211,7 +204,6 @@ const doAutoApprover = async () => {
             p.labels.some(s => s.name === labelPublishASAP) //Only incude marked for publishing
             && !p.labels.some(s => s.name === labelDoNotPublish) //Hard exclude DoNots (Stop button)
         );
-
     for (const prlist of PrList) {
         //get the full pr detail
         const pr = (await gitRepo.getPullRequest(`${prlist.number}?cachebust=${new Date().valueOf()}`)).data;
