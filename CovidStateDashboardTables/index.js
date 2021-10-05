@@ -12,18 +12,21 @@ module.exports = async function (context, myTimer) {
     const PrResults = await doCovidStateDashboardTables();
 
     if(PrResults) {
-      await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
-
+      try {
+        await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
+      } catch (errorSlackError) {}
       for (let Pr of PrResults) {
-        await slackBotReplyPost(debugChannel, slackPostTS, Pr.html_url);
-        //removing notifications until final deployment
-        //await slackBotChatPost(notifyChannel, Pr.html_url);
+        try {
+          await slackBotReplyPost(debugChannel, slackPostTS, Pr.html_url);
+        } catch (errorSlackError) {}
       }
     }
 
-    await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
-    await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
-  } catch (e) {
+    try {
+      await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
+      await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
+    } catch (errorSlackError) {}
+} catch (e) {
     await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
 
     if(slackPostTS) {
