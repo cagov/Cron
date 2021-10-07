@@ -2,14 +2,14 @@ const { getData_daily_stats_v2 } = require('./daily-stats-v2');
 const { getData_infections_by_group } = require('./infections-by-group');
 
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment','Publish at 8:50 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:20 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const targetBranch = 'preproduction';
+const targetBranch = 'main';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});

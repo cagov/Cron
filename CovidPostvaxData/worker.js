@@ -2,7 +2,7 @@ const { getData_daily_postvax_data } = require('./daily-postvax-data');
 
 const GitHub = require('github-api');
 const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
-const PrLabels = ['Automatic Deployment','Publish at 8:30 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:20 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const gitHubCommitter = {
@@ -12,7 +12,7 @@ const gitHubCommitter = {
 const treePath = 'data/dashboard/postvax';
 const fileName = 'california.json';
 const stagingBranch = 'CovidStateDashboardPostvax_Staging';
-const targetBranch = 'preproduction';
+const targetBranch = 'main';
 
 /**
  * Check to see if we need stats update PRs, make them if we do.

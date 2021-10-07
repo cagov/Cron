@@ -2,7 +2,7 @@ const { getData_daily_vaccines_sparkline } = require('./daily-vaccines-sparkline
 
 const GitHub = require('github-api');
 const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
-const PrLabels = ['Automatic Deployment','Publish at 8:40 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:20 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const gitHubCommitter = {
@@ -12,7 +12,7 @@ const gitHubCommitter = {
 const treePath = 'data/dashboard/vaccines';
 const fileName = 'sparkline.json';
 const stagingBranch = 'CovidStateDashboardVaccines_Sparkline_Staging';
-const targetBranch = 'preproduction';
+const targetBranch = 'main';
 
 /**
  * Check to see if we need stats update PRs, make them if we do.
