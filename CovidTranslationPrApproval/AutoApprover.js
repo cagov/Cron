@@ -192,10 +192,9 @@ const doAutoApprover = async () => {
                     labels
                 });
                 report.labels.push(Pr.html_url);
+                await sleep(5000); //let label application apply
             }
         }
-
-        await sleep(5000); //let label application apply
     }
 
     //refresh for approval
@@ -217,6 +216,7 @@ const doAutoApprover = async () => {
 
             report.approvals.push(pr.html_url);
 
+            //Whoa...30 seconds???
             await sleep(30000); //Wait after any approval so the next Pr can update
         } else {
             report.skips.push(pr.html_url); //report PR not mergeable
