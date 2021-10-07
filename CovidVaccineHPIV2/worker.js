@@ -1,14 +1,14 @@
 const { queryDataset, getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment','Publish at 8:35 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:20 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const targetBranch = 'preproduction';
+const targetBranch = 'main';
 const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/vaccine_hpi_v2/';
 const targetPath = 'data/vaccine-hpi/v2/';
 const targetFileName = 'vaccine-hpi.json';

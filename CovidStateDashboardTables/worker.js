@@ -2,14 +2,14 @@ const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment','Publish at 8:40 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:20 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const targetBranch = 'preproduction'
+const targetBranch = 'main'
 const stagingBranch = 'CovidStateDashboardTables_Staging';
 const doInputValidation = true;
 const doOutputValidation = true;
