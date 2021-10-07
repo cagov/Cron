@@ -197,6 +197,10 @@ const doCovidAutoBuilder = async () => {
                         needsBuild = true;
                     }
                 });
+                if (needsBuild) {
+                    console.log("FORCING A BUILD");
+                    await force_build();
+                }
             } else {
                 console.log("VaccinesAdmin is 0, likely a parsing issue, report it");
                 errorEncountered = 'Failed to parse Vaccines from home page!';                
