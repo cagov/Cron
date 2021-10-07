@@ -148,13 +148,13 @@ const doAutoApprover = async () => {
 
         //Add the old Pr link to the body of the rollup issue
         await gitIssues.editIssue(existingRollupPr.number, {
-            body: `${existingRollupPr.body || ''}\n\n*${Pr.title} - ${Pr.html_url}*\n\n\`\`\`${Pr.body || ''}\`\`\`\n\n`
+            body: `${existingRollupPr.body || ''}- ${Pr.html_url}\n`
         });
 
         //Close the old issue
         await gitIssues.editIssue(Pr.number, {
             state: 'closed',
-            body: `${Pr.body || ''}\n\n*Rolled into ${existingRollupPr.html_url}*`
+            body: `${Pr.body || ''}\n\n**This PR was rolled into the following PR**\n\n-${existingRollupPr.html_url}`
         });
 
         //Delete the old PR branch
@@ -192,10 +192,9 @@ const doAutoApprover = async () => {
                     labels
                 });
                 report.labels.push(Pr.html_url);
+                await sleep(5000); //let label application apply
             }
         }
-
-        await sleep(5000); //let label application apply
     }
 
     //refresh for approval
@@ -217,6 +216,7 @@ const doAutoApprover = async () => {
 
             report.approvals.push(pr.html_url);
 
+            //Whoa...30 seconds???
             await sleep(30000); //Wait after any approval so the next Pr can update
         } else {
             report.skips.push(pr.html_url); //report PR not mergeable
