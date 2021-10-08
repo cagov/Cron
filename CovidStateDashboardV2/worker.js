@@ -2,7 +2,7 @@ const { getData_daily_stats_v2 } = require('./daily-stats-v2');
 const { getData_infections_by_group } = require('./infections-by-group');
 
 const GitHub = require('github-api');
-const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:20 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:15 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const committer = {

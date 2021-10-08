@@ -2,7 +2,7 @@ const { getData_daily_vaccines_sparkline } = require('./daily-vaccines-sparkline
 
 const GitHub = require('github-api');
 const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
-const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:20 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:15 a.m. ☀️'];
 const githubUser = 'cagov';
 const githubRepo = 'covid-static-data';
 const gitHubCommitter = {
