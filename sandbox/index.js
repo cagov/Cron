@@ -9,7 +9,9 @@ const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { doCovidAutoBuilder } = require('../CovidAutoBuilder/worker');
-const { doCovidStateDashboardTables } = require('../CovidStateDashboardTables/worker');
+const { doCovidStateDashboardTablesCasesDeaths } = require('../CovidStateDashboardTablesCasesDeaths/worker');
+const { doCovidStateDashboardTablesHospitals } = require('../CovidStateDashboardTablesHospitals/worker');
+const { doCovidStateDashboardTablesTests } = require('../CovidStateDashboardTablesTests/worker');
 const { doCovidPostvaxData } = require('../CovidPostvaxData/worker');
 const { doCovidVaccinesSparklineData } = require('../CovidStateDashboardVaccines/worker');
 //
@@ -64,8 +66,8 @@ const doWork = async opt => {
         await doAutoApprover();
         break;
     case '13':
-        console.log("Running doCovidStateDashboardTables");
-        await doCovidStateDashboardTables();
+        console.log("Running doCovidStateDashboardTables (CasesDeaths)");
+        await doCovidStateDashboardTablesCasesDeaths();
         break;
     case '14':
         console.log("Running doCovidPostvaxData");
@@ -74,6 +76,14 @@ const doWork = async opt => {
     case '15':
         console.log("Running doCovidVaccinesSparklineData");
         await doCovidVaccinesSparklineData();
+        break;
+    case '16':
+        console.log("Running doCovidStateDashboardTables (Hospitals)");
+        await doCovidStateDashboardTablesHospitals();
+        break;
+    case '17':
+        console.log("Running doCovidStateDashboardTables (Tests)");
+        await doCovidStateDashboardTablesTests();
         break;
     case 'temp':
         //Put some temporary code here

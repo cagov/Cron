@@ -19,20 +19,6 @@ const regionList = ["California","Alameda","Alpine","Amador","Butte","Calaveras"
 
 const PrInfoList = [
     {
-        title : "Covid Dashboard Tables - Tests",
-        folders : [
-            "total-tests",
-            "positivity-rate"
-        ]
-    },
-    {
-        title : "Covid Dashboard Tables - Patients",
-        folders : [
-            "patients",
-            "icu-beds"
-        ]
-    },
-    {
         title : "Covid Dashboard Tables - Cases/Deaths",
         folders : [
             "confirmed-cases",
@@ -60,7 +46,7 @@ const getDateValueRows = (dataset, valueColumnName) => {
     };
 };
 
-const doCovidStateDashboardTables = async () => {
+const doCovidStateDashboardTablesCasesDeaths = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
@@ -82,62 +68,6 @@ const doCovidStateDashboardTables = async () => {
 
     regionList.forEach(myRegion=>{
         let regionFileName = myRegion.toLowerCase().replace(/ /g,'_');
-        let hospitals_and_icus_byRegion = allData.hospitals_and_icus.filter(f=>f.REGION===myRegion);
-
-        if(hospitals_and_icus_byRegion.length) {
-            const latestData = hospitals_and_icus_byRegion[0];
-
-            allFilesMap.set(`patients/${regionFileName}.json`,
-            {
-                meta:{
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data:{
-                    latest:{
-                        HOSPITALIZED_PATIENTS: {
-                            TOTAL:latestData.HOSPITALIZED_PATIENTS,
-                            CHANGE:latestData.HOSPITALIZED_PATIENTS_CHANGE,
-                            CHANGE_FACTOR:latestData.HOSPITALIZED_PATIENTS_CHANGE_FACTOR,
-                            POPULATION:latestData.POPULATION
-                        },
-                        ICU_PATIENTS: {
-                            TOTAL:latestData.ICU_PATIENTS,
-                            CHANGE:latestData.ICU_PATIENTS_CHANGE,
-                            CHANGE_FACTOR:latestData.ICU_PATIENTS_CHANGE_FACTOR,
-                            POPULATION:latestData.POPULATION
-                        }
-                    },
-                    time_series: {
-                        HOSPITALIZED_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS'),
-                        ICU_PATIENTS: getDateValueRows(hospitals_and_icus_byRegion,'ICU_PATIENTS'),
-                        HOSPITALIZED_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'HOSPITALIZED_PATIENTS_14_DAY_AVG'),
-                        ICU_PATIENTS_14_DAY_AVG: getDateValueRows(hospitals_and_icus_byRegion,'ICU_PATIENTS_14_DAY_AVG')
-                    }
-                }
-            });
-
-            allFilesMap.set(`icu-beds/${regionFileName}.json`,
-            {
-                meta:{
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data:{
-                    latest:{
-                        ICU_BEDS: {
-                            TOTAL:latestData.ICU_AVAILABLE_BEDS,
-                            CHANGE:latestData.ICU_AVAILABLE_BEDS_CHANGE,
-                            CHANGE_FACTOR:latestData.ICU_AVAILABLE_BEDS_CHANGE_FACTOR,
-                            POPULATION:latestData.POPULATION
-                        }
-                    },
-                    time_series: {
-                        ICU_BEDS: getDateValueRows(hospitals_and_icus_byRegion,'ICU_AVAILABLE_BEDS')
-                    }
-                }
-            });
-        } //if(hospitals_and_icus_byRegion.length>0)
 
         let summary_by_region = allData.summary_by_region.find(f=>f.REGION===myRegion);
         let rows_by_region = allData.cases_deaths_tests_rows.filter(f=>f.REGION===myRegion);
@@ -163,9 +93,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             }
             let CASES_DAILY_AVERAGE = summed_days > 0? sumCasesCount / summed_days : NaN;
-            // if(myRegion == 'California') {
-            //     console.log("CASES DAILY AVG",CASES_DAILY_AVERAGE,myRegion,summed_days,pending_dateC);
-            // }
+
             // precompute daily average deaths for last 7 non-pending days - jbum
             let sumDeathsCount = 0;
             let CONFIRMED_DEATHS_DEATH_DATE = getDateValueRows(rows_by_region,'DEATHS')
@@ -242,53 +170,6 @@ const doCovidStateDashboardTables = async () => {
                 }
             });
 
-            allFilesMap.set(`total-tests/${regionFileName}.json`,
-            {
-                meta: {
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data: {
-                    latest: {
-                        TOTAL_TESTS: {
-                            total_tests_performed: summary_by_region.total_tests_performed,
-                            new_tests_reported: summary_by_region.new_tests_reported,
-                            new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
-                            TESTING_UNCERTAINTY_PERIOD: summary_by_region.TESTING_UNCERTAINTY_PERIOD,
-                            POPULATION: summary_by_region.POPULATION
-                        }
-                    },
-                    time_series: {
-                        TOTAL_TESTS: getDateValueRows(rows_by_region,'TOTAL_TESTS'),
-                        REPORTED_TESTS: getDateValueRows(rows_by_region,'REPORTED_TESTS'),
-                        AVG_TEST_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_RATE_PER_100K_7_DAYS'),
-                        AVG_TEST_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region,'AVG_TEST_REPORT_RATE_PER_100K_7_DAYS')
-                    }
-                }
-            });
-
-            allFilesMap.set(`positivity-rate/${regionFileName}.json`,
-            {
-                meta: {
-                    PUBLISHED_DATE: todayDateString(),
-                    coverage: myRegion
-                },
-                data: {
-                    latest: {
-                        POSITIVITY_RATE: {
-                            test_positivity_7_days: summary_by_region.test_positivity_7_days,
-                            test_positivity_7_days_delta_7_days: summary_by_region.test_positivity_7_days_delta_7_days,
-                            TESTING_UNCERTAINTY_PERIOD: summary_by_region.TESTING_UNCERTAINTY_PERIOD,
-                            POPULATION: summary_by_region.POPULATION
-                        }
-                    },
-                    time_series: {
-                        TEST_POSITIVITY_RATE_7_DAYS: getDateValueRows(rows_by_region,'TEST_POSITIVITY_RATE_7_DAYS'),
-                        DAILY_TEST_POSITIVITY_RATE: getDateValueRows(rows_by_region,'DAILY_TEST_POSITIVITY_RATE'),
-                        TOTAL_TESTS: getDateValueRows(rows_by_region,'TOTAL_TESTS')
-                    }
-                }
-            });
         } //if(summary_by_region.length)
     });
 
@@ -346,5 +227,5 @@ const doCovidStateDashboardTables = async () => {
 
 
 module.exports = {
-    doCovidStateDashboardTables
+    doCovidStateDashboardTablesCasesDeaths
 };
