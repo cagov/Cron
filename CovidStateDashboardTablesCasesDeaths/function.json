@@ -1,0 +1,10 @@
+{
+  "bindings": [
+    {
+      "name": "CovidStateDashboardTablesCasesDeaths",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 15 14 * * *"
+    }
+  ]
+}
