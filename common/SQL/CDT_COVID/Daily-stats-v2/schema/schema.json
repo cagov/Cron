@@ -127,8 +127,7 @@
             },
             "LATEST_TOTAL_TESTS_PERFORMED":{
               "type": "integer",
-              "minimum": 9999,
-              "maximum": 99999999
+              "minimum": 9999
             },
             "LATEST_PCT_CH_TOTAL_TESTS_REPORTED_1_DAY":{
               "type": "number"
