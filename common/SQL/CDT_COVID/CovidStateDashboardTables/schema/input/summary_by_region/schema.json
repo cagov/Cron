@@ -150,7 +150,8 @@
         "$ref": "#/definitions/number-non-neg"
       },
       "total_tests_performed": {
-        "$ref": "#/definitions/integer-zero-to-everyone"
+        "type": "integer",
+        "minimum": 0
       },
       "new_tests_reported": {
         "type": "integer"
