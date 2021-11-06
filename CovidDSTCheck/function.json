@@ -1,0 +1,10 @@
+{
+  "bindings": [
+    {
+      "name": "CovidDSTCheck",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 0 0,6,12,18 * * *"
+    }
+  ]
+}
