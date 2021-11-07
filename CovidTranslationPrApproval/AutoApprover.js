@@ -167,6 +167,10 @@ const doAutoApprover = async () => {
 
 
     const ActiveLabels = AutoApproverLabels.timeLabels
+        // jbum: The following moment() code contains a subtle bug which causes misfirings on the two Sundays of the year
+        // when DST happens.  The expression moment().startOf('day') will produce a timestamp from before DST kicked in.
+        // adding a fixed number of hours to that (passing 2am when DST kicks in) will produce a time that is 1 hour different
+        // than desired
         .map(x => ({
             label: x.label, diff: moment()
                 .diff(moment().startOf('day')
