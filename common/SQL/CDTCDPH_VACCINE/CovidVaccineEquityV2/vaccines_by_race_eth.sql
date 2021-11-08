@@ -25,7 +25,7 @@ GB as ( --Master list of corrected data grouped by region/category
     MAX(EST_AGE_5PLUS_POP) as "POP_TOTAL",
     MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
-    CA_VACCINE.CA_VACCINE.VW_DERIVED_BASE_RECIPIENTS
+    CA_VACCINE_UAT.CA_VACCINE.VW_DERIVED_BASE_RECIPIENTS
   left outer join
     DATA_FROM_WEB_DEV.GEOGRAPHIC.VW_EST_COUNTY_POP_BY_RACE_ETH pop
     on pop.county_name=MIXED_COUNTY 
