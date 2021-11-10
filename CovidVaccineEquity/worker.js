@@ -9,21 +9,21 @@ const committer = {
   email: process.env["GITHUB_EMAIL"]
 };
 const targetBranch = 'main';
-const sqlRootPath = "../SQL/CDTCDPH_VACCINE/CovidVaccineEquityV2/";
+const sqlRootPath = "../SQL/CDTCDPH_VACCINE/CovidVaccineEquity/";
 const schemaPath = `${sqlRootPath}schema/`;
-const targetPath = 'data/vaccine-equity/v2/';
+const targetPath = 'data/vaccine-equity/';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
 
-const doCovidVaccineEquityV2 = async () => {
+const doCovidVaccineEquity = async () => {
     const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
     const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
     const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
 
     const branchPrefix = 'data-';
-    const BranchName = `${branchPrefix}${todayDateString()}-${todayTimeString()}-vaccineequityv2`;
+    const BranchName = `${branchPrefix}${todayDateString()}-${todayTimeString()}-vaccineequity`;
     const CommitText = 'Update Vaccine Equity Data';
     const PrTitle = `${todayDateString()} Vaccine Equity`;
 
@@ -139,5 +139,5 @@ const doCovidVaccineEquityV2 = async () => {
 };
 
 module.exports = {
-    doCovidVaccineEquityV2
+    doCovidVaccineEquity
 };
