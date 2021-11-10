@@ -1,16 +1,17 @@
 -- Current vaccine administrations by age group (distinct people)
--- 300 rows
+-- 360 rows
 --   by county(REGION) + 'California'
---   by age(CATEGORY) (12-17,18-49,50-64,65+,Unknown)
+--   by age(CATEGORY) (5-11,12-17,18-49,50-64,65+,Unknown)
   -- 6/7/2021 Added population metric value
 with
 SortMap as (select * from
   (values
-   (1,'12-17',null),
-   (2,'18-49',null),
-   (3,'50-64',null),
-   (4,'65+',null),
-   (5,'Unknown Agegroup','Unknown')
+   (1,'5-11',null),
+   (2,'12-17',null),
+   (3,'18-49',null),
+   (4,'50-64',null),
+   (5,'65+',null),
+   (6,'Unknown Agegroup','Unknown')
   ) as foo (SORT, CATEGORY, REPLACEMENT)
 ),
 GB as ( --Master list of corrected data grouped by region/category
@@ -18,7 +19,7 @@ GB as ( --Master list of corrected data grouped by region/category
   RECIP_AGE_GROUP "CATEGORY",
   MIXED_COUNTY "REGION",
     coalesce(count(distinct recip_id),0) "ADMIN_COUNT", --For total people
-    max(EST_AGE_12PLUS_POP) as "POP_TOTAL",
+    max(EST_AGE_5PLUS_POP) as "POP_TOTAL",
     MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
     CA_VACCINE.CA_VACCINE.VW_DERIVED_BASE_RECIPIENTS

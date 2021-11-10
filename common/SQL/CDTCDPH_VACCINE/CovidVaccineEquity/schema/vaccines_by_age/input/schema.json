@@ -72,8 +72,8 @@
   },
   "type": "array",
   "uniqueItems": true,
-  "minItems": 300,
-  "maxItems": 300,
+  "minItems": 360,
+  "maxItems": 360,
   "items": {
     "type": "object",
     "required": [
@@ -94,6 +94,7 @@
       "CATEGORY": {
         "type": "string",
         "enum": [
+          "5-11",
           "12-17",
           "18-49",
           "50-64",

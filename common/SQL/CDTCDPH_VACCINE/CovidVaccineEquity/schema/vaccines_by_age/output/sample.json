@@ -6,6 +6,11 @@
   },
   "data": [
     {
+      "CATEGORY": "5-11",
+      "METRIC_VALUE": 0.057945,
+      "POP_METRIC_VALUE": 0.087583
+    },
+    {
       "CATEGORY": "12-17",
       "METRIC_VALUE": 0.057945,
       "POP_METRIC_VALUE": 0.087583

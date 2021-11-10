@@ -16,7 +16,7 @@ GB as ( --Master list of corrected data grouped by region/category
     RECIP_SEX "CATEGORY",
     MIXED_COUNTY "REGION", -- ####replacing old REGION code below
     coalesce(count(distinct recip_id),0) "ADMIN_COUNT", --For total people
-    max(EST_AGE_12PLUS_POP) as "POP_TOTAL",
+    max(EST_AGE_5PLUS_POP) as "POP_TOTAL",
     MAX(case when DATE(DS2_ADMIN_DATE)>DATE(GETDATE()) then NULL else DATE(DS2_ADMIN_DATE) end) "LATEST_ADMIN_DATE"
   from
     CA_VACCINE.CA_VACCINE.VW_DERIVED_BASE_RECIPIENTS
