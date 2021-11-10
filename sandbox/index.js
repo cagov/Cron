@@ -6,7 +6,7 @@ const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker'
 const { doAutoApprover } = require('../CovidTranslationPrApproval/AutoApprover');
 const { doHealthCheck } = require('../CovidSiteHealth/worker');
 const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
-const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
+const { doCovidVaccineEquityV2 } = require('../CovidVaccineEquityV2/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { doCovidAutoBuilder } = require('../CovidAutoBuilder/worker');
 const { doCovidStateDashboardTables } = require('../CovidStateDashboardTables/worker');
@@ -48,8 +48,9 @@ const doWork = async opt => {
         await doCovidStateDashboarV2();
         break;
     case '8':
-        console.log("Running doCovidVaccineEquity");
-        await doCovidVaccineEquity();
+        console.log("Running doCovidVaccineEquityV2");
+        // await doCovidVaccineEquity();
+        await doCovidVaccineEquityV2();
         break;
     case '10':
         console.log("Running doCovidVaccineHPIV2");

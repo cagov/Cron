@@ -1,0 +1,10 @@
+{
+  "bindings": [
+    {
+      "name": "CovidVaccineEquityV2",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 0 16 * * Wed"
+    }
+  ]
+}
