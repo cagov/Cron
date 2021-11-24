@@ -74,8 +74,7 @@
           },
           "VACCINATED_RATIO": {
             "type": "number",
-            "minimum": 0,
-            "maximum": 1
+            "minimum": 0
           },
           "PARTIALLY_VACCINATED_RATIO": {
             "type": "number",
