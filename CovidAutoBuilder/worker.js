@@ -15,7 +15,7 @@ const committer = {
 };
 const masterBranch = 'master';
 const homePageToCheck = 'https://covid19.ca.gov/';
-const srcJSONFile = 'https://files.covid19.ca.gov/data/daily-stats-v2.json';
+const srcJSONFile = 'https://data.covid19.ca.gov/data/daily-stats-v2.json';
 const mySelector = 'div#total-vaccines-number strong';
 const build_json_path = 'pages/_data/auto-builder.json';
 
