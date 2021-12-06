@@ -1,0 +1,10 @@
+{
+    "bindings": [
+      {
+        "name": "CovidVariantsData",
+        "type": "timerTrigger",
+        "direction": "in",
+        "schedule": "0 35 15 * * Thu"
+      }
+    ]
+  }
