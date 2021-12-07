@@ -27,16 +27,16 @@ const doCovidPostvaxData = async () => {
 
     const jsonData =  await getData_daily_postvax_data();
 
-    if(!jsonData.meta) {
-        jsonData.meta = {};
-    }
-    jsonData.meta.PUBLISHED_DATE = todayDateString();
-    jsonData.meta.AREA = 'California';
-    jsonData.meta.AREA_TYPE = 'State';
+    // if(!jsonData.meta) {
+    //     jsonData.meta = {};
+    // }
+    // jsonData.meta.PUBLISHED_DATE = todayDateString();
+    // jsonData.meta.AREA = 'California';
+    // jsonData.meta.AREA_TYPE = 'State';
 
-    jsonData.meta.CASES_SAMPLE_SIZE = 100000;
-    jsonData.meta.HOSP_SAMPLE_SIZE = 1000000;
-    jsonData.meta.DEATHS_SAMPLE_SIZE = 1000000;
+    // jsonData.meta.CASES_SAMPLE_SIZE = 100000;
+    // jsonData.meta.HOSP_SAMPLE_SIZE = 1000000;
+    // jsonData.meta.DEATHS_SAMPLE_SIZE = 1000000;
 
     const fileMap = new Map();
 
