@@ -5,9 +5,8 @@
         "pattern":"^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
       },
       "percentage_array": {
-        "required": true,
         "type": "object",
-        "required": ["VALUES"],
+        "required": true,
         "properties": {
           "VALUES": {
             "type": "array",
@@ -33,9 +32,8 @@
         }                  
       },
       "posinteger_array": {
-        "required": true,
         "type": "object",
-        "required": ["VALUES"],
+        "required": true,
         "properties": {
           "VALUES": {
             "type": "array",
@@ -64,11 +62,7 @@
     "properties": {
         "meta": {
           "type":"object",
-          "required": [
-            "PUBLISHED_DATE",
-            "REPORT_DATE",
-            "VARIANTS"
-          ],
+          "required": true,
           "properties": {
             "PUBLISHED_DATE": {
               "required": true,
@@ -86,46 +80,12 @@
         },
         "data": {
             "type":"object",
-            "required": [ "time_series" ],
+            "required": true,
             "additionalProperties": false,
             "properties": {
               "time_series":{
                 "type": "object",
-                "required": [
-                  "All_Specimens-Sequenced",
-
-                  "Alpha_Percentage",
-                  "Alpha_Specimens-Sequenced",
-                  "Alpha_Percentage-Average",
-
-                  "Beta_Percentage",
-                  "Beta_Specimens-Sequenced",
-                  "Beta_Percentage-Average",
-
-                  "Delta_Percentage",
-                  "Delta_Specimens-Sequenced",
-                  "Delta_Percentage-Average",
-
-                  "Gamma_Percentage",
-                  "Gamma_Specimens-Sequenced",
-                  "Gamma_Percentage-Average",
-
-                  "Lambda_Percentage",
-                  "Lambda_Specimens-Sequenced",
-                  "Lambda_Percentage-Average",
-
-                  "Mu_Percentage",
-                  "Mu_Specimens-Sequenced",
-                  "Mu_Percentage-Average",
-
-                  "Omicron_Percentage",
-                  "Omicron_Specimens-Sequenced",
-                  "Omicron_Percentage-Average",
-
-                  "Other_Percentage",
-                  "Other_Specimens-Sequenced",
-                  "Other_Percentage-Average"
-                ],
+                "required": true,
                 "properties": {
                   "All_Specimens-Sequenced": {
                     "required": true,
