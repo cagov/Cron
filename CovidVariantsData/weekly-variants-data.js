@@ -3,8 +3,8 @@ const { validateJSON } = require('../common/schemaTester');
 const { todayDateString } = require('../common/gitTreeCommon');
 
 const schemaFileName = "../SQL/CDT_COVID/variants-data/schema/schema.json";
-const schemaTestGoodFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/output/pass/";
-const schemaTestBadFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/output/fail/";
+const schemaTestGoodFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/pass/";
+const schemaTestBadFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/fail/";
 
 const getData_weekly_variants_data = async () => {
   const statResults = await queryDataset(
