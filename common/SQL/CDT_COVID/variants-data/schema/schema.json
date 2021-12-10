@@ -1,202 +1,208 @@
 {
-    "definitions": {
-      "date-YYYY-MM-DD":{
-        "type":"string",
-        "pattern":"^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
-      },
-      "percentage_array": {
-        "type": "object",
-        "required": true,
-        "properties": {
-          "VALUES": {
-            "type": "array",
-            "uniqueItems": true,
-            "items": {
-              "required": true,
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "DATE": {
-                  "required": true,
-                  "$ref": "#/definitions/date-YYYY-MM-DD"
-                },
-                "VALUE": {
-                  "required": true,
-                  "type": "number",
-                  "minimum": 0,
-                  "maximum": 100
-                }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "date-YYYY-MM-DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "percentage_array": {
+      "type": "object",
+      "required": ["VALUES"],
+      "properties": {
+        "VALUES": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 316,
+          "maxItems": 4000,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["DATE", "VALUE"],
+            "properties": {
+              "DATE": {
+                "$ref": "#/definitions/date-YYYY-MM-DD"
+              },
+              "VALUE": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
               }
             }
           }
-        }                  
-      },
-      "posinteger_array": {
-        "type": "object",
-        "required": true,
-        "properties": {
-          "VALUES": {
-            "type": "array",
-            "uniqueItems": true,
-            "items": {
-              "required": true,
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "DATE": {
-                  "required": true,
-                  "$ref": "#/definitions/date-YYYY-MM-DD"
-                },
-                "VALUE": {
-                  "required": true,
-                  "type": "integer",
-                  "minimum": 0
-                }
-              }
-            }
-          }
-        }                  
+        }
       }
     },
-    "additionalProperties": false,
-    "properties": {
-        "meta": {
-          "type":"object",
-          "required": true,
-          "properties": {
-            "PUBLISHED_DATE": {
-              "required": true,
-              "$ref": "#/definitions/date-YYYY-MM-DD"
-            },
-            "REPORT_DATE": {
-              "required": true,
-              "$ref": "#/definitions/date-YYYY-MM-DD"
-            },
-            "VARIANTS": {
-              "required": true,
-              "type": "array"
-            }
-          }
-        },
-        "data": {
-            "type":"object",
-            "required": true,
+    "posinteger_array": {
+      "type": "object",
+      "required": ["VALUES"],
+      "properties": {
+        "VALUES": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 322,
+          "maxItems": 4000,
+          "items": {
+            "type": "object",
             "additionalProperties": false,
+            "required": ["DATE", "VALUE"],
             "properties": {
-              "time_series":{
-                "type": "object",
-                "required": true,
-                "properties": {
-                  "All_Specimens-Sequenced": {
-                    "required": true,
-                    "$ref": "#/definitions/posinteger_array"
-                  },
-                  "Alpha_Specimens-Sequenced": {
-                    "required": true,
-                    "$ref": "#/definitions/posinteger_array"
-                  },
-                  "Alpha_Percentage": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-                  "Alpha_Percentage-Average": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-
-                  "Beta_Specimens-Sequenced": {
-                    "required": true,
-                    "$ref": "#/definitions/posinteger_array"
-                  },
-                  "Beta_Percentage": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-                  "Beta_Percentage-Average": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-
-                  "Delta_Specimens-Sequenced": {
-                    "required": true,
-                    "$ref": "#/definitions/posinteger_array"
-                  },
-                  "Delta_Percentage": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-                  "Delta_Percentage-Average": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-
-                  "Gamma_Specimens-Sequenced": {
-                    "required": true,
-                    "$ref": "#/definitions/posinteger_array"
-                  },
-                  "Gamma_Percentage": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-                  "Gamma_Percentage-Average": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-
-                  "Lambda_Specimens-Sequenced": {
-                    "required": true,
-                    "$ref": "#/definitions/posinteger_array"
-                  },
-                  "Lambda_Percentage": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-                  "Lambda_Percentage-Average": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-
-                  "Mu_Specimens-Sequenced": {
-                    "required": true,
-                    "$ref": "#/definitions/posinteger_array"
-                  },
-                  "Mu_Percentage": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-                  "Mu_Percentage-Average": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-
-                  "Omicron_Specimens-Sequenced": {
-                    "required": true,
-                    "$ref": "#/definitions/posinteger_array"
-                  },
-                  "Omicron_Percentage": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-                  "Omicron_Percentage-Average": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-
-                  "Other_Specimens-Sequenced": {
-                    "required": true,
-                    "$ref": "#/definitions/posinteger_array"
-                  },
-                  "Other_Percentage": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  },
-                  "Other_Percentage-Average": {
-                    "required": true,
-                    "$ref": "#/definitions/percentage_array"
-                  }
-                }
+              "DATE": {
+                "$ref": "#/definitions/date-YYYY-MM-DD"
+              },
+              "VALUE": {
+                "type": "integer",
+                "minimum": 0
               }
             }
+          }
         }
+      }
     }
+  },
+  "additionalProperties": false,
+  "required": ["meta", "data"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "refer back to the schema to help with troublshooting samples",
+      "examples": ["../.././schema.json"]
+    },
+    "meta": {
+      "type": "object",
+      "required": ["PUBLISHED_DATE", "REPORT_DATE", "VARIANTS"],
+      "properties": {
+        "PUBLISHED_DATE": {
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        },
+        "REPORT_DATE": {
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        },
+        "VARIANTS": {
+          "type": "array"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["time_series"],
+      "properties": {
+        "time_series": {
+          "type": "object",
+          "required": [
+            "All_Specimens-Sequenced",
+            "Alpha_Specimens-Sequenced",
+            "Alpha_Percentage",
+            "Alpha_Percentage-Average",
+            "Beta_Specimens-Sequenced",
+            "Beta_Percentage",
+            "Beta_Percentage-Average",
+            "Delta_Specimens-Sequenced",
+            "Delta_Percentage",
+            "Delta_Percentage-Average",
+            "Gamma_Specimens-Sequenced",
+            "Gamma_Percentage",
+            "Gamma_Percentage-Average",
+            "Lambda_Specimens-Sequenced",
+            "Lambda_Percentage",
+            "Lambda_Percentage-Average",
+            "Mu_Specimens-Sequenced",
+            "Mu_Percentage",
+            "Mu_Percentage-Average",
+            "Omicron_Specimens-Sequenced",
+            "Omicron_Percentage",
+            "Omicron_Percentage-Average",
+            "Other_Specimens-Sequenced",
+            "Other_Percentage",
+            "Other_Percentage-Average"
+          ],
+          "properties": {
+            "All_Specimens-Sequenced": {
+              "$ref": "#/definitions/posinteger_array"
+            },
+
+            "Alpha_Specimens-Sequenced": {
+              "$ref": "#/definitions/posinteger_array"
+            },
+            "Alpha_Percentage": {
+              "$ref": "#/definitions/percentage_array"
+            },
+            "Alpha_Percentage-Average": {
+              "$ref": "#/definitions/percentage_array"
+            },
+
+            "Beta_Specimens-Sequenced": {
+              "$ref": "#/definitions/posinteger_array"
+            },
+            "Beta_Percentage": {
+              "$ref": "#/definitions/percentage_array"
+            },
+            "Beta_Percentage-Average": {
+              "$ref": "#/definitions/percentage_array"
+            },
+
+            "Delta_Specimens-Sequenced": {
+              "$ref": "#/definitions/posinteger_array"
+            },
+            "Delta_Percentage": {
+              "$ref": "#/definitions/percentage_array"
+            },
+            "Delta_Percentage-Average": {
+              "$ref": "#/definitions/percentage_array"
+            },
+
+            "Gamma_Specimens-Sequenced": {
+              "$ref": "#/definitions/posinteger_array"
+            },
+            "Gamma_Percentage": {
+              "$ref": "#/definitions/percentage_array"
+            },
+            "Gamma_Percentage-Average": {
+              "$ref": "#/definitions/percentage_array"
+            },
+
+            "Lambda_Specimens-Sequenced": {
+              "$ref": "#/definitions/posinteger_array"
+            },
+            "Lambda_Percentage": {
+              "$ref": "#/definitions/percentage_array"
+            },
+            "Lambda_Percentage-Average": {
+              "$ref": "#/definitions/percentage_array"
+            },
+
+            "Mu_Specimens-Sequenced": {
+              "$ref": "#/definitions/posinteger_array"
+            },
+            "Mu_Percentage": {
+              "$ref": "#/definitions/percentage_array"
+            },
+            "Mu_Percentage-Average": {
+              "$ref": "#/definitions/percentage_array"
+            },
+
+            "Omicron_Specimens-Sequenced": {
+              "$ref": "#/definitions/posinteger_array"
+            },
+            "Omicron_Percentage": {
+              "$ref": "#/definitions/percentage_array"
+            },
+            "Omicron_Percentage-Average": {
+              "$ref": "#/definitions/percentage_array"
+            },
+
+            "Other_Specimens-Sequenced": {
+              "$ref": "#/definitions/posinteger_array"
+            },
+            "Other_Percentage": {
+              "$ref": "#/definitions/percentage_array"
+            },
+            "Other_Percentage-Average": {
+              "$ref": "#/definitions/percentage_array"
+            }
+          }
+        }
+      }
+    }
+  }
 }

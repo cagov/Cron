@@ -96,6 +96,16 @@
       "args": ["15:doCovidVaccinesSparklineData"],
       "cwd": "${workspaceRoot}/sandbox"
     },
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "Debug DIRECT doCovidVariantsData",
+          "program": "index",
+          "args": [
+            "16:doCovidVariantsData"
+          ],
+          "cwd": "${workspaceRoot}/sandbox"
+        },
     {
       "type": "node",
       "request": "launch",
