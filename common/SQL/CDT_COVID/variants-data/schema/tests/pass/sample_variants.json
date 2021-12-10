@@ -1,4 +1,5 @@
 {
+  "$schema": "../.././schema.json",
   "meta": {
     "PUBLISHED_DATE": "2021-12-06",
     "REPORT_DATE": "2021-12-01",
