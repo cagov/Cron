@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cagov/github-tree-push": "^0.1.0",
     "axios": "^0.21.2",
     "calibre": "^3.2.0",
     "cheerio": "*",
