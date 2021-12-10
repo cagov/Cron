@@ -19,9 +19,9 @@ const doCovidVariantsData = async () => {
     const gitToken = process.env["GITHUB_TOKEN"];
     const prTitle = `${todayDateString()} Variants Data Update`;
 
-    const jsonData = await getData_weekly_variants_data();
+    const jsonData =  await getData_weekly_variants_data();
 
-    if (!jsonData.meta) {
+    if(!jsonData.meta) {
         jsonData.meta = {};
     }
     jsonData.meta.PUBLISHED_DATE = todayDateString();
