@@ -78,7 +78,13 @@
           "$ref": "#/definitions/date-YYYY-MM-DD"
         },
         "VARIANTS": {
-          "type": "array"
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 8,
+          "maxItems": 100,
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
