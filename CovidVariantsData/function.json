@@ -4,7 +4,7 @@
         "name": "CovidVariantsData",
         "type": "timerTrigger",
         "direction": "in",
-        "schedule": "0 35 15 * * Thu"
+        "schedule": "0 */10 * * * *"
       }
     ]
   }
