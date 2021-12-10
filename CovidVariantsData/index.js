@@ -12,8 +12,8 @@ module.exports = async function (context, myTimer) {
 
     const PrResult = await doCovidVariantsData();
 
-    if(PrResult) {
-      const prMessage = `Weekly Variants data ready\n${PrResult.html_url}`;
+    if (PrResult.Pull_Request_URL) {
+      const prMessage = `Weekly Variants data ready\n${PrResult.Pull_Request_URL}`;
       await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
       await slackBotChatPost(notifyChannel, prMessage);
