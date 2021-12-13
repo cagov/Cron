@@ -10,7 +10,7 @@ const committer = {
 };
 const targetBranch = 'main';
 const SnowFlakeSqlPath = 'CDTCDPH_VACCINE/vaccine_hpi_v2/';
-const targetPath = 'data/vaccine-hpi/v2/';
+const targetPath = 'data/vaccine-hpi/';
 const targetFileName = 'vaccine-hpi.json';
 const schemaPath = `../SQL/${SnowFlakeSqlPath}schema/`;
 
