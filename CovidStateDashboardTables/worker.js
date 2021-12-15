@@ -305,25 +305,24 @@ const doCovidStateDashboardTables = async () => {
         } //if(summary_by_region.length)
     });
 
-    //const workTree = await createTreeFromFileMap(gitRepo, targetBranch, allFilesMap, githubPath);
-    /*
-        if (doOutputValidation) {
-            //Validate tree output
-            console.log(`Validating ${workTree.length} output files`);
-            for (let treeRow of workTree) {
-                let fileName = treeRow.path.replace(`${githubPath}/`, '');
-                let rootFolder = fileName.split('/')[0];
-                let content = allFilesMap.get(fileName);
-                let schema = sqlWorkAndSchemas.outputSchema.find(f => rootFolder === f.name);
-    
-                if (schema) {
-                    validateJSON2(`${fileName} failed validation`, content, schema.json);
-                } else {
-                    throw new Error(`Missing validator for ${fileName}.`);
-                }
+    if (doOutputValidation) {
+        //Validate tree output
+        console.log(`Validating ${allFilesMap.size} output files.`);
+
+        for (let [fileName, content] of allFilesMap) {
+            let rootFolder = fileName.split('/')[0];
+            let schema = sqlWorkAndSchemas.outputSchema.find(f => rootFolder === f.name);
+
+            if (schema) {
+                validateJSON2(`${fileName} failed validation`, content, schema.json);
+            } else {
+                throw new Error(`Missing validator for ${fileName}.`);
             }
         }
-    */
+
+        console.log(`Validation of output complete.`);
+    }
+
     /** @type {TreePushTreeOptions} */
     let defaultTreeOptions = {
         repo: githubRepo,
@@ -334,8 +333,9 @@ const doCovidStateDashboardTables = async () => {
     };
 
     //Filter the tree and create Prs
-    /** @type {Promise<TreeFileRunStats>[]} */
-    let promises = [];
+    /** @type {TreeFileRunStats[]} */
+    const resultStats = [];
+
     for (let PrInfo of PrInfoList) {
         /** @type {TreePushTreeOptions} */
         let options_main = {
@@ -366,11 +366,9 @@ const doCovidStateDashboardTables = async () => {
             treeObject_staging.syncFile(f, json);
         });
 
-        promises.push(treeObject_main.treePush());
-        promises.push(treeObject_staging.treePush());
+        resultStats.push(await treeObject_main.treePush());
+        resultStats.push(await treeObject_staging.treePush());
     }
-
-    const resultStats = await Promise.all(promises);
 
     let PrList = resultStats.filter(r => r.Pull_Request_URL).map(r => r.Pull_Request_URL);
 
