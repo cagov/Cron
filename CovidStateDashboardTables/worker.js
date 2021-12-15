@@ -4,13 +4,12 @@ const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester'
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
-//const PrLabels = ['Automatic Deployment', 'Add to Rollup', 'Publish at 9:15 a.m. ☀️'];
-const PrLabels = ['Do not publish 🚫'];
+const PrLabels = ['Automatic Deployment', 'Add to Rollup', 'Publish at 9:15 a.m. ☀️'];
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
 const githubPath = 'data/dashboard';
-const targetBranch = 'carter_dev_statedashcron_main'
-const stagingBranch = 'carter_dev_statedashcron_staging';
+const targetBranch = 'main'
+const stagingBranch = 'CovidStateDashboardTables_Staging';
 const doInputValidation = false;
 const doOutputValidation = true;
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
@@ -351,6 +350,7 @@ const doCovidStateDashboardTables = async () => {
                 }
             }
         };
+        /** @type {TreePushTreeOptions} */
         let options_staging = {
             ...defaultTreeOptions,
             commit_message: PrInfo.title,
