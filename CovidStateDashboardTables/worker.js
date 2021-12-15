@@ -14,6 +14,7 @@ const stagingBranch = 'carter_dev_statedashcron_staging';
 const doInputValidation = false;
 const doOutputValidation = true;
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTables/';
+const stagingOnly = false; //Set to true to only work on staging
 
 const getGitHubToken = () => {
     const token = process.env["GITHUB_TOKEN"];
@@ -367,7 +368,7 @@ const doCovidStateDashboardTables = async () => {
         });
 
         resultStats.push(await treeObject_staging.treePush());
-        resultStats.push(await treeObject_main.treePush());
+        if (!stagingOnly) resultStats.push(await treeObject_main.treePush());
     }
 
     let PrList = resultStats.filter(r => r.Pull_Request_URL).map(r => r.Pull_Request_URL);
