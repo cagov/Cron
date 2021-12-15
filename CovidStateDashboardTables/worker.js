@@ -366,8 +366,8 @@ const doCovidStateDashboardTables = async () => {
             treeObject_staging.syncFile(f, json);
         });
 
-        resultStats.push(await treeObject_main.treePush());
         resultStats.push(await treeObject_staging.treePush());
+        resultStats.push(await treeObject_main.treePush());
     }
 
     let PrList = resultStats.filter(r => r.Pull_Request_URL).map(r => r.Pull_Request_URL);
