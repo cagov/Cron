@@ -1,15 +1,10 @@
 const { getData_daily_postvax_data } = require('./daily-postvax-data');
 
-const GitHub = require('github-api');
-const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
+const { GitHubTreePush } = require("@cagov/github-tree-push");
 const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:15 a.m. ☀️'];
-const githubUser = 'cagov';
+const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
-const gitHubCommitter = {
-  name: process.env["GITHUB_NAME"],
-  email: process.env["GITHUB_EMAIL"]
-};
-const treePath = 'data/dashboard/postvax';
+const githubPath = 'data/dashboard/postvax';
 const fileName = 'california.json';
 const stagingBranch = 'CovidStateDashboardPostvax_Staging';
 const targetBranch = 'main';
@@ -19,44 +14,44 @@ const targetBranch = 'main';
  * @returns The PR created if changes were made
  */
 const doCovidPostvaxData = async () => {
-    const gitModule = new GitHub({ token: process.env["GITHUB_TOKEN"] });
-    const gitRepo = await gitModule.getRepo(githubUser,githubRepo);
-    const gitIssues = await gitModule.getIssues(githubUser,githubRepo);
-
+    const gitToken = process.env["GITHUB_TOKEN"];
     const prTitle = `${todayDateString()} Postvax Data Update`;
 
     const jsonData =  await getData_daily_postvax_data();
 
-    // if(!jsonData.meta) {
-    //     jsonData.meta = {};
-    // }
-    // jsonData.meta.PUBLISHED_DATE = todayDateString();
-    // jsonData.meta.AREA = 'California';
-    // jsonData.meta.AREA_TYPE = 'State';
+    const stagingTree = new GitHubTreePush(gitToken, {
+        owner: githubOwner,
+        repo: githubRepo,
+        path: githubPath,
+        base: stagingBranch,
+        removeOtherFiles: true,
+        commit_message: prTitle,
+        pull_request: false
+    });
 
-    // jsonData.meta.CASES_SAMPLE_SIZE = 100000;
-    // jsonData.meta.HOSP_SAMPLE_SIZE = 1000000;
-    // jsonData.meta.DEATHS_SAMPLE_SIZE = 1000000;
+    stagingTree.syncFile(fileName, jsonData);
+    await stagingTree.treePush();
 
-    const fileMap = new Map();
+    const mainTree = new GitHubTreePush(gitToken, {
+        owner: githubOwner,
+        repo: githubRepo,
+        path: githubPath,
+        base: targetBranch,
+        removeOtherFiles: true,
+        commit_message: prTitle,
+        pull_request: true,
+        pull_request_options: {
+            title: prTitle,
+            issue_options: {
+                labels: PrLabels
+            }
+        }
+    });
 
-    fileMap.set(fileName,jsonData);
-    //Staging will be direct commits
-    const stagingTree = await createTreeFromFileMap(gitRepo, stagingBranch, fileMap, treePath);
-    await PrIfChanged(gitRepo, stagingBranch, stagingTree, prTitle, gitHubCommitter, true);
+    mainTree.syncFile(fileName, jsonData);
+    const mainResult = await mainTree.treePush();
 
-    //Production will be PRs
-    const mainTree = await createTreeFromFileMap(gitRepo, targetBranch, fileMap, treePath);
-    const Pr = await PrIfChanged(gitRepo, targetBranch, mainTree, prTitle, gitHubCommitter, false);
-
-    if(Pr) {
-        //Label the Pr
-        await gitIssues.editIssue(Pr.number,{
-            labels: PrLabels
-        });
-    }
-
-    return Pr;
+    return mainResult;
 };
 
 module.exports = {
