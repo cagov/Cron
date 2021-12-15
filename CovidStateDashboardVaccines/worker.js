@@ -7,10 +7,6 @@ const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: 
 const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:15 a.m. ☀️'];
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
-const gitHubCommitter = {
-  name: process.env["GITHUB_NAME"],
-  email: process.env["GITHUB_EMAIL"]
-};
 const githubPath = 'data/dashboard/vaccines';
 const fileName = 'sparkline.json';
 const stagingBranch = 'CovidStateDashboardVaccines_Sparkline_Staging';
