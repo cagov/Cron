@@ -10,10 +10,10 @@ module.exports = async function (context, myTimer) {
   try {
     slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every day @ 7:05am)`)).json()).ts;
 
-    const PrResult = await doCovidVaccinesSparklineData();
+    const TreeRunResults = await doCovidVaccinesSparklineData();
 
-    if(PrResult) {
-      const prMessage = `Daily Vaccines sparkline data ready\n${PrResult.html_url}`;
+    if(TreeRunResults.Pull_Request_URL) {
+      const prMessage = `Daily Vaccines sparkline data ready\n${TreeRunResults.Pull_Request_URL}`;
       await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
       await slackBotChatPost(notifyChannel, prMessage);

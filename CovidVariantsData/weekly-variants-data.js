@@ -23,7 +23,7 @@ const getData_weekly_variants_data = async () => {
   let variants_series_nomdict = {};
   statResults.variants_data.forEach( (rec) => {
     variants_series_nomdict[rec.VARIANT_NAME + '_' + rec.METRIC_NAME.replace(' ','-')] = 1;
-    if (rec.VARIANT_NAME != 'All') {
+    if (rec.VARIANT_NAME != 'All' && rec.VARIANT_NAME != 'Total') {
       variants_nomdict[rec.VARIANT_NAME] = 1;
     }
   });
@@ -50,24 +50,24 @@ const getData_weekly_variants_data = async () => {
   });
 
   // Compute 7-day Averages
-  const days_to_average = 7;
+  // const days_to_average = 7;
 
-  variant_noms.forEach( (vname) => {
-    const tseries_name = vname + '_Percentage-Average';
-    const tseries_source = vname + '_Percentage';
-    const source_series = variant_series[tseries_source]['VALUES'];
-    let tdata = [];
-    for (let i = days_to_average-1; i < source_series.length; ++i) {
-      let sum = 0;
-      for (let j = 0; j < days_to_average; ++j) {
-        sum += source_series[i-j].VALUE;
-      }
-      let avg = sum / days_to_average;
-      avg = Math.floor(avg*100) / 100; // just 2 digits of precision
-      tdata.push({DATE:source_series[i].DATE, VALUE: avg});
-    }
-    variant_series[tseries_name] = {VALUES: tdata};
-  });
+  // variant_noms.forEach( (vname) => {
+  //   const tseries_name = vname + '_Percentage-Average';
+  //   const tseries_source = vname + '_Percentage';
+  //   const source_series = variant_series[tseries_source]['VALUES'];
+  //   let tdata = [];
+  //   for (let i = days_to_average-1; i < source_series.length; ++i) {
+  //     let sum = 0;
+  //     for (let j = 0; j < days_to_average; ++j) {
+  //       sum += source_series[i-j].VALUE;
+  //     }
+  //     let avg = sum / days_to_average;
+  //     avg = Math.floor(avg*100) / 100; // just 2 digits of precision
+  //     tdata.push({DATE:source_series[i].DATE, VALUE: avg});
+  //   }
+  //   variant_series[tseries_name] = {VALUES: tdata};
+  // });
 
   // produce final output json block...
   let json = {
