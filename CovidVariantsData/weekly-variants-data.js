@@ -82,7 +82,7 @@ const getData_weekly_variants_data = async () => {
   };
 
   // Minimal validation for now (but some validation!)
-  // validateJSON(`Variants failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
+  validateJSON(`Variants failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
   return json;
 };

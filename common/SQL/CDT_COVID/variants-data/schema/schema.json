@@ -57,7 +57,34 @@
           }
         }
       }
+    },
+    "posnumber_array": {
+      "type": "object",
+      "required": ["VALUES"],
+      "properties": {
+        "VALUES": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 322,
+          "maxItems": 4000,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["DATE", "VALUE"],
+            "properties": {
+              "DATE": {
+                "$ref": "#/definitions/date-YYYY-MM-DD"
+              },
+              "VALUE": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
     }
+
   },
   "additionalProperties": false,
   "required": ["meta", "data"],
@@ -96,114 +123,140 @@
         "time_series": {
           "type": "object",
           "required": [
-            "All_Specimens-Sequenced",
-            "Alpha_Specimens-Sequenced",
+            "Alpha_Cases",
+            "Alpha_Cases,-7-day average",
             "Alpha_Percentage",
-            "Alpha_Percentage-Average",
-            "Beta_Specimens-Sequenced",
+            "Alpha_Percentage,-7-day average",
+            "Beta_Cases",
+            "Beta_Cases,-7-day average",
             "Beta_Percentage",
-            "Beta_Percentage-Average",
-            "Delta_Specimens-Sequenced",
+            "Beta_Percentage,-7-day average",
+            "Delta_Cases",
+            "Delta_Cases,-7-day average",
             "Delta_Percentage",
-            "Delta_Percentage-Average",
-            "Gamma_Specimens-Sequenced",
+            "Delta_Percentage,-7-day average",
+            "Gamma_Cases",
+            "Gamma_Cases,-7-day average",
             "Gamma_Percentage",
-            "Gamma_Percentage-Average",
-            "Lambda_Specimens-Sequenced",
+            "Gamma_Percentage,-7-day average",
+            "Lambda_Cases",
+            "Lambda_Cases,-7-day average",
             "Lambda_Percentage",
-            "Lambda_Percentage-Average",
-            "Mu_Specimens-Sequenced",
+            "Lambda_Percentage,-7-day average",
+            "Mu_Cases",
+            "Mu_Cases,-7-day average",
             "Mu_Percentage",
-            "Mu_Percentage-Average",
-            "Omicron_Specimens-Sequenced",
+            "Mu_Percentage,-7-day average",
+            "Omicron_Cases",
+            "Omicron_Cases,-7-day average",
             "Omicron_Percentage",
-            "Omicron_Percentage-Average",
-            "Other_Specimens-Sequenced",
+            "Omicron_Percentage,-7-day average",
+            "Other_Cases",
+            "Other_Cases,-7-day average",
             "Other_Percentage",
-            "Other_Percentage-Average"
+            "Other_Percentage,-7-day average"
           ],
           "properties": {
-            "All_Specimens-Sequenced": {
+            "Alpha_Cases": {
               "$ref": "#/definitions/posinteger_array"
             },
-
-            "Alpha_Specimens-Sequenced": {
-              "$ref": "#/definitions/posinteger_array"
+            "Alpha_Cases,-7-day average": {
+              "$ref": "#/definitions/posnumber_array"
             },
             "Alpha_Percentage": {
               "$ref": "#/definitions/percentage_array"
             },
-            "Alpha_Percentage-Average": {
+            "Alpha_Percentage,-7-day average": {
               "$ref": "#/definitions/percentage_array"
             },
 
-            "Beta_Specimens-Sequenced": {
+            "Beta_Cases": {
               "$ref": "#/definitions/posinteger_array"
+            },
+            "Beta_Cases,-7-day average": {
+              "$ref": "#/definitions/posnumber_array"
             },
             "Beta_Percentage": {
               "$ref": "#/definitions/percentage_array"
             },
-            "Beta_Percentage-Average": {
+            "Beta_Percentage,-7-day average": {
               "$ref": "#/definitions/percentage_array"
             },
 
-            "Delta_Specimens-Sequenced": {
+            "Delta_Cases": {
               "$ref": "#/definitions/posinteger_array"
+            },
+            "Delta_Cases,-7-day average": {
+              "$ref": "#/definitions/posnumber_array"
             },
             "Delta_Percentage": {
               "$ref": "#/definitions/percentage_array"
             },
-            "Delta_Percentage-Average": {
+            "Delta_Percentage,-7-day average": {
               "$ref": "#/definitions/percentage_array"
             },
 
-            "Gamma_Specimens-Sequenced": {
+            "Gamma_Cases": {
               "$ref": "#/definitions/posinteger_array"
+            },
+            "Gamma_Cases,-7-day average": {
+              "$ref": "#/definitions/posnumber_array"
             },
             "Gamma_Percentage": {
               "$ref": "#/definitions/percentage_array"
             },
-            "Gamma_Percentage-Average": {
+            "Gamma_Percentage,-7-day average": {
               "$ref": "#/definitions/percentage_array"
             },
 
-            "Lambda_Specimens-Sequenced": {
+            "Lambda_Cases": {
               "$ref": "#/definitions/posinteger_array"
+            },
+            "Lambda_Cases,-7-day average": {
+              "$ref": "#/definitions/posnumber_array"
             },
             "Lambda_Percentage": {
               "$ref": "#/definitions/percentage_array"
             },
-            "Lambda_Percentage-Average": {
+            "Lambda_Percentage,-7-day average": {
               "$ref": "#/definitions/percentage_array"
             },
 
-            "Mu_Specimens-Sequenced": {
+            "Mu_Cases": {
               "$ref": "#/definitions/posinteger_array"
+            },
+            "Mu_Cases,-7-day average": {
+              "$ref": "#/definitions/posnumber_array"
             },
             "Mu_Percentage": {
               "$ref": "#/definitions/percentage_array"
             },
-            "Mu_Percentage-Average": {
+            "Mu_Percentage,-7-day average": {
               "$ref": "#/definitions/percentage_array"
             },
 
-            "Omicron_Specimens-Sequenced": {
+            "Omicron_Cases": {
               "$ref": "#/definitions/posinteger_array"
+            },
+            "Omicron_Cases,-7-day average": {
+              "$ref": "#/definitions/posnumber_array"
             },
             "Omicron_Percentage": {
               "$ref": "#/definitions/percentage_array"
             },
-            "Omicron_Percentage-Average": {
+            "Omicron_Percentage,-7-day average": {
               "$ref": "#/definitions/percentage_array"
             },
-
-            "Other_Specimens-Sequenced": {
+            "Other_Cases": {
               "$ref": "#/definitions/posinteger_array"
+            },
+            "Other_Cases,-7-day average": {
+              "$ref": "#/definitions/posnumber_array"
             },
             "Other_Percentage": {
               "$ref": "#/definitions/percentage_array"
             },
-            "Other_Percentage-Average": {
+            "Other_Percentage,-7-day average": {
               "$ref": "#/definitions/percentage_array"
             }
           }
