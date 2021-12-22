@@ -103,7 +103,7 @@ const doCovidStateDashboardTables = async () => {
             allFilesMap.set(`patients/${regionFileName}.json`,
                 {
                     meta: {
-                        // PUBLISHED_DATE: todayDateString(),
+                        PUBLISHED_DATE: todayDateString(),
                         coverage: myRegion
                     },
                     data: {
@@ -133,7 +133,7 @@ const doCovidStateDashboardTables = async () => {
             allFilesMap.set(`icu-beds/${regionFileName}.json`,
                 {
                     meta: {
-                        // PUBLISHED_DATE: todayDateString(),
+                        PUBLISHED_DATE: todayDateString(),
                         coverage: myRegion
                     },
                     data: {
@@ -204,7 +204,7 @@ const doCovidStateDashboardTables = async () => {
             allFilesMap.set(`confirmed-cases/${regionFileName}.json`,
                 {
                     meta: {
-                        // PUBLISHED_DATE: todayDateString(),
+                        PUBLISHED_DATE: todayDateString(),
                         coverage: myRegion
                     },
                     data: {
@@ -231,7 +231,7 @@ const doCovidStateDashboardTables = async () => {
             allFilesMap.set(`confirmed-deaths/${regionFileName}.json`,
                 {
                     meta: {
-                        // PUBLISHED_DATE: todayDateString(),
+                        PUBLISHED_DATE: todayDateString(),
                         coverage: myRegion
                     },
                     data: {
@@ -258,7 +258,7 @@ const doCovidStateDashboardTables = async () => {
             allFilesMap.set(`total-tests/${regionFileName}.json`,
                 {
                     meta: {
-                        // PUBLISHED_DATE: todayDateString(),
+                        PUBLISHED_DATE: todayDateString(),
                         coverage: myRegion
                     },
                     data: {
@@ -283,7 +283,7 @@ const doCovidStateDashboardTables = async () => {
             allFilesMap.set(`positivity-rate/${regionFileName}.json`,
                 {
                     meta: {
-                        // PUBLISHED_DATE: todayDateString(),
+                        PUBLISHED_DATE: todayDateString(),
                         coverage: myRegion
                     },
                     data: {

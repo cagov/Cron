@@ -77,6 +77,10 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "PUBLISHED_DATE": {
+          "required": true,
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        },
         "coverage": {
           "required": true,
           "$ref": "#/definitions/county"
