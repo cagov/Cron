@@ -1,6 +1,7 @@
 const { getData_daily_postvax_data } = require('./daily-postvax-data');
 
 const { GitHubTreePush } = require("@cagov/github-tree-push");
+const { todayDateString, todayTimeString, sleep } = require('../common/gitTreeCommon');
 const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:15 a.m. ☀️'];
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
