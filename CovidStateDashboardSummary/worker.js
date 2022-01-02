@@ -42,7 +42,7 @@ const doCovidStateDashboardSummary = async () => {
         path: githubPath,
         base: stagingBranch,
         removeOtherFiles: false,
-        commit_message: prTitle,
+        commit_message: prTitle + " (staging)",
         pull_request: false
     });
     for (let drec of datasets) {
