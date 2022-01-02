@@ -5,7 +5,7 @@ Object.keys(Values).forEach(x=>process.env[x]=Values[x]); //Load local settings 
 const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker');
 const { doAutoApprover } = require('../CovidTranslationPrApproval/AutoApprover');
 const { doHealthCheck } = require('../CovidSiteHealth/worker');
-const { doCovidStateDashboarV2 } = require('../CovidStateDashboardV2/worker');
+const { doCovidStateDashboardSummary } = require('../CovidStateDashboardSummary/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { doCovidAutoBuilder } = require('../CovidAutoBuilder/worker');
@@ -45,8 +45,8 @@ const doWork = async opt => {
         await doHealthCheck();
         break;
     case '7':
-        console.log("Running doCovidStateDashboarV2");
-        await doCovidStateDashboarV2();
+        console.log("Running doCovidStateDashboardSummary"); // formerly DashboardV2
+        await doCovidStateDashboardSummary();
         break;
     case '8':
         console.log("Running doCovidVaccineEquity");

@@ -1,7 +1,8 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
+const { todayDateString } = require('../common/gitTreeCommon');
 
-const path = 'data/infections-by-group/infections-by-group-california.json';
+const path = 'infections-by-group/infections-by-group-california.json';
 const schemaPath = "../SQL/CDT_COVID/Infections-by-group/schema/";
 const schemaFileName = `${schemaPath}output/schema.json`;
 const schemaTestGoodFilePath = `${schemaPath}output/tests/pass`;
@@ -22,7 +23,7 @@ const getData_infections_by_group = async () => {
 
   const json = {
       meta: {
-        PUBLISHED_DATE : "1900-01-01",
+        PUBLISHED_DATE : todayDateString(),
         METRIC_VALUE_VALID_RANGE : {
           MINIMUM:0, 
           MAXIMUM:100  

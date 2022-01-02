@@ -27,9 +27,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DIRECT doCovidStateDashboarV2",
+      "name": "Debug DIRECT doCovidStateDashboardSummary",
       "program": "index",
-      "args": ["7:doCovidStateDashboarV2"],
+      "args": ["7:doCovidStateDashboardSummary"],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -124,7 +124,7 @@
         "2:doDailyStatsPr",
         "3:doTranslationPrUpdate",
         "6:doHealthCheck",
-        "7:doCovidStateDashboarV2",
+        "7:doCovidStateDashboardSummary",
         "8:doCovidVaccineEquity",
         "9:doCovidVaccineHPI",
         "10:doCovidVaccineHPIV2"
