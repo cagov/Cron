@@ -1,5 +1,6 @@
 const { getData_daily_stats_v2 } = require('./daily-stats-v2');
 const { getData_infections_by_group } = require('./infections-by-group');
+const { todayDateString } = require('../common/gitTreeCommon');
 
 // const { createTreeFromFileMap, PrIfChanged, todayDateString } = require('../common/gitTreeCommon');
 // const GitHub = require('github-api');
@@ -18,10 +19,6 @@ const githubPath = 'data';
 const stagingBranch = 'CovidStateDashboard_Summary_Staging';
 const targetBranch = 'main';
 
-const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
-const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
-const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-
 /**
  * Check to see if we need stats update PRs, make them if we do.
  * @returns The PR created if changes were made
@@ -35,7 +32,7 @@ const doCovidStateDashboardSummary = async () => {
     const prTitle = `${todayDateString()} Dashboard Summary Update`;
 
     const datasets = [
-        // await getData_infections_by_group(),
+        await getData_infections_by_group(),
         await getData_daily_stats_v2()
     ];
 
@@ -44,7 +41,7 @@ const doCovidStateDashboardSummary = async () => {
         repo: githubRepo,
         path: githubPath,
         base: stagingBranch,
-        removeOtherFiles: true,
+        removeOtherFiles: false,
         commit_message: prTitle,
         pull_request: false
     });
@@ -58,7 +55,7 @@ const doCovidStateDashboardSummary = async () => {
         repo: githubRepo,
         path: githubPath,
         base: targetBranch,
-        removeOtherFiles: true,
+        removeOtherFiles: false,
         commit_message: prTitle,
         pull_request: true,
         pull_request_options: {

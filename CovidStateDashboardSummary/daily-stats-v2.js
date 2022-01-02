@@ -1,5 +1,6 @@
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
+const { todayDateString } = require('../common/gitTreeCommon');
 const roundNumber = (number, fractionDigits=3) => {
   const roundscale = Math.pow(10,fractionDigits);
   return Math.round(Number.parseFloat(number)*roundscale)/roundscale;
@@ -31,7 +32,7 @@ const getData_daily_stats_v2 = async () => {
 
   const json = {
       meta: {
-        PUBLISHED_DATE: "1900-01-01"
+        PUBLISHED_DATE: todayDateString()
       },
       data: {
           cases: {
