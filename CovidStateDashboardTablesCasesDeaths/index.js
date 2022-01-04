@@ -1,4 +1,4 @@
-const { doCovidStateDashboardTables } = require('./worker');
+const { doCovidStateDashboardTablesCasesDeaths } = require('./worker');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
 //const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
@@ -9,7 +9,7 @@ module.exports = async function (context, myTimer) {
   try {
     slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every day @ 7:20am)`)).json()).ts;
 
-    const PrResults = await doCovidStateDashboardTables();
+    const PrResults = await doCovidStateDashboardTablesCasesDeaths();
 
     if(PrResults) {
       await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
