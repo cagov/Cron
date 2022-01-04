@@ -21,6 +21,7 @@ const fetch = require("fetch-retry")(require("node-fetch/lib"), {
 
 
 const { Validator, Schema } = require('jsonschema'); //https://www.npmjs.com/package/jsonschema
+const { ValidatorResultError } = require("jsonschema/lib/helpers");
 
 /** @type {Map<string,Schema>} */
 const schemaCache = new Map();
@@ -63,22 +64,15 @@ module.exports = async function (context, req) {
     }
 
     try {
-
-
-
-
         //POST
         /** @type {SchemaInput[]} */
         const input = req.body.input;
-
-
 
         const v = new Validator();
 
         const schemaUrls = [...new Set(input.map(i => i.schema_url))];
 
         const schemaPromises = [];
-
 
         schemaUrls.forEach(async u => {
             if (!schemaCache.has(u)) {
@@ -92,13 +86,37 @@ module.exports = async function (context, req) {
 
         await Promise.all(schemaPromises);
 
+        for (let i of input) {
+            try {
+                v.validate(i.content, schemaCache.get(i.schema_url), { throwFirst: true });
+            } catch (e) {
+                if (e instanceof ValidatorResultError) {
+                    /** @type {ValidatorResultError} */
+                    // @ts-ignore
+                    const r = e;
+                    const e1 = r.errors[0];
+                    const body = {
+                        name: i.name,
+                        message: e1.stack
+                    }
+                    if (typeof (e1.instance) === "string") {
+                        body.value = e1.instance;
+                    }
+                    if (e1.path.length) {
+                        body.path = e1.path.join('/');
+                    }
 
-        input.forEach(i => {
-            const out = v.validate(i.content, schemaCache.get(i.schema_url));
+                    context.res = {
+                        body
 
-            const x = 1;
-        });
-
+                    };
+                    return
+                } else {
+                    //Non validation error
+                    throw e;
+                }
+            }
+        };
 
         context.res = {
             status: 204 //OK - No content
