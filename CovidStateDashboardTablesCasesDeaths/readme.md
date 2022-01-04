@@ -1,6 +1,6 @@
 # Date pipeline for covid19.ca.gov state dashboard
 
-This service is used to retrieve data to populate the top 10 charts the <a href="https://covid19.ca.gov/state-dashboard/">state dashboard</a>
+This service is used to retrieve data to populate the cases and deaths charts on the <a href="https://covid19.ca.gov/state-dashboard/">state dashboard</a>
 
 - Data is retrieved from snowflake
 - Data is not published before the statewide coordinated daily stats release time 9:30am daily
