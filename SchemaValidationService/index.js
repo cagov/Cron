@@ -14,11 +14,29 @@ const slackBotGetToken = () => {
     return token;
 };
 
+const fetch = require("fetch-retry")(require("node-fetch/lib"), {
+    retries: 3,
+    retryDelay: 2000
+});
+
+
+const { Validator, Schema } = require('jsonschema'); //https://www.npmjs.com/package/jsonschema
+
+/** @type {Map<string,Schema>} */
+const schemaCache = new Map();
+
 /**
  * @typedef {object} Response
  * @property {number} [status]
  * @property {*} [body]
  * @property {{"Content-Type":string}} [headers]
+ */
+
+/**
+ * @typedef {object} SchemaInput
+ * @property {string} name
+ * @property {string} schema_url
+ * @property {*} content
  */
 
 /**
@@ -36,11 +54,51 @@ module.exports = async function (context, req) {
         return;
     }
 
-    //POST
-
-
+    if (!req.body) {
+        context.res = {
+            body: `POST body missing.`,
+            status: 422
+        };
+        return;
+    }
 
     try {
+
+
+
+
+        //POST
+        /** @type {SchemaInput[]} */
+        const input = req.body.input;
+
+
+
+        const v = new Validator();
+
+        const schemaUrls = [...new Set(input.map(i => i.schema_url))];
+
+        const schemaPromises = [];
+
+
+        schemaUrls.forEach(async u => {
+            if (!schemaCache.has(u)) {
+                schemaPromises
+                    .push(fetch(u)
+                        .then(async r => {
+                            schemaCache.set(u, await r.json())
+                        }));
+            }
+        });
+
+        await Promise.all(schemaPromises);
+
+
+        input.forEach(i => {
+            const out = v.validate(i.content, schemaCache.get(i.schema_url));
+
+            const x = 1;
+        });
+
 
         context.res = {
             status: 204 //OK - No content
