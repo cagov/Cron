@@ -11,9 +11,22 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Debug DIRECT SchemaValidationService",
+      "program": "debug.js",
+      "args": [
+        "1"
+      ],
+      "cwd": "${workspaceRoot}/SchemaValidationService",
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Debug sandbox",
       "program": "index",
-      "args": ["${input:sandboxCodeSelection}"],
+      "args": [
+        "${input:sandboxCodeSelection}"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -21,7 +34,9 @@
       "request": "launch",
       "name": "Debug DIRECT doHealthCheck",
       "program": "index",
-      "args": ["6:doHealthCheck"],
+      "args": [
+        "6:doHealthCheck"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -29,7 +44,9 @@
       "request": "launch",
       "name": "Debug DIRECT doCovidStateDashboardSummary",
       "program": "index",
-      "args": ["7:doCovidStateDashboardSummary"],
+      "args": [
+        "7:doCovidStateDashboardSummary"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -37,7 +54,9 @@
       "request": "launch",
       "name": "Debug DIRECT CovidEquityData",
       "program": "index",
-      "args": ["1:CovidEquityData"],
+      "args": [
+        "1:CovidEquityData"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -45,7 +64,9 @@
       "request": "launch",
       "name": "Debug DIRECT doTranslationPrUpdate",
       "program": "index",
-      "args": ["3:doTranslationPrUpdate"],
+      "args": [
+        "3:doTranslationPrUpdate"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -53,7 +74,9 @@
       "request": "launch",
       "name": "Debug DIRECT CovidVaccineEquity",
       "program": "index",
-      "args": ["8:doCovidVaccineEquity"],
+      "args": [
+        "8:doCovidVaccineEquity"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -61,7 +84,9 @@
       "request": "launch",
       "name": "Debug DIRECT CovidVaccineHPIV2",
       "program": "index",
-      "args": ["10:doCovidVaccineHPIV2"],
+      "args": [
+        "10:doCovidVaccineHPIV2"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -69,7 +94,9 @@
       "request": "launch",
       "name": "Debug DIRECT AutoApprover",
       "program": "index",
-      "args": ["12:AutoApprover"],
+      "args": [
+        "12:AutoApprover"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -77,7 +104,9 @@
       "request": "launch",
       "name": "Debug DIRECT CovidStateDashboardTables",
       "program": "index",
-      "args": ["13:CovidStateDashboardTables"],
+      "args": [
+        "13:CovidStateDashboardTables"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -85,7 +114,9 @@
       "request": "launch",
       "name": "Debug DIRECT CovidPostvaxData",
       "program": "index",
-      "args": ["14:CovidPostvaxData"],
+      "args": [
+        "14:CovidPostvaxData"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
     {
@@ -93,25 +124,29 @@
       "request": "launch",
       "name": "Debug DIRECT doCovidVaccinesSparklineData",
       "program": "index",
-      "args": ["15:doCovidVaccinesSparklineData"],
+      "args": [
+        "15:doCovidVaccinesSparklineData"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
-        {
-          "type": "node",
-          "request": "launch",
-          "name": "Debug DIRECT doCovidVariantsData",
-          "program": "index",
-          "args": [
-            "16:doCovidVariantsData"
-          ],
-          "cwd": "${workspaceRoot}/sandbox"
-        },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug DIRECT doCovidVariantsData",
+      "program": "index",
+      "args": [
+        "16:doCovidVariantsData"
+      ],
+      "cwd": "${workspaceRoot}/sandbox"
+    },
     {
       "type": "node",
       "request": "launch",
       "name": "Debug DIRECT TEMP",
       "program": "index",
-      "args": ["temp:TEMP"],
+      "args": [
+        "temp:TEMP"
+      ],
       "cwd": "${workspaceRoot}/sandbox"
     },
   ],
