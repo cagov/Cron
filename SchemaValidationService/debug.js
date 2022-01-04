@@ -15,7 +15,7 @@ const input = [
     },
     {
         name: "File 2",
-        schema_url: "https://raw.githubusercontent.com/cagov/Cron/c4abfbbe1beeb139fd8ca76b0d9faef5e71d143a/SchemaValidationService/testSchema.json",
+        schema_url: "https://raw.githubusercontent.com/cagov/Cron/c4abfbbe1beeb139fd8ca76b0d9faef5e71d143a/SchemaValidationService/testSchema.jsono",
         content: require("./testData.json")
     }
 ];

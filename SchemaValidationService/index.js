@@ -79,7 +79,15 @@ module.exports = async function (context, req) {
                 schemaPromises
                     .push(fetch(u)
                         .then(async r => {
-                            schemaCache.set(u, await r.json())
+                            if (r.ok) {
+                                schemaCache.set(u, await r.json())
+                            } else {
+                                const body = await r.text();
+
+                                throw new Error(
+                                    `${r.status} - ${r.statusText} - ${r.url} - ${body}`
+                                );
+                            }
                         }));
             }
         });
