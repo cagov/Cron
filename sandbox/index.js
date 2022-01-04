@@ -9,7 +9,9 @@ const { doCovidStateDashboardSummary } = require('../CovidStateDashboardSummary/
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { doCovidAutoBuilder } = require('../CovidAutoBuilder/worker');
-const { doCovidStateDashboardTables } = require('../CovidStateDashboardTables/worker');
+const { doCovidStateDashboardTablesCasesDeaths } = require('../CovidStateDashboardTablesCasesDeaths/worker');
+const { doCovidStateDashboardTablesHospitals } = require('../CovidStateDashboardTablesHospitals/worker');
+const { doCovidStateDashboardTablesTests } = require('../CovidStateDashboardTablesTests/worker');
 const { doCovidPostvaxData } = require('../CovidPostvaxData/worker');
 const { doCovidVariantsData } = require('../CovidVariantsData/worker');
 const { doCovidVaccinesSparklineData } = require('../CovidStateDashboardVaccines/worker');
@@ -64,9 +66,17 @@ const doWork = async opt => {
         console.log("Running doAutoApprover");
         await doAutoApprover();
         break;
-    case '13':
-        console.log("Running doCovidStateDashboardTables");
-        await doCovidStateDashboardTables();
+    case '13a':
+        console.log("Running doCovidStateDashboardTablesCasesDeaths");
+        await doCovidStateDashboardTablesCasesDeaths();
+        break;
+    case '13b':
+        console.log("Running doCovidStateDashboardTablesHospitals");
+        await doCovidStateDashboardTablesCasesHospitals();
+        break;
+    case '13c':
+        console.log("Running doCovidStateDashboardTablesTests");
+        await doCovidStateDashboardTablesCasesTests();
         break;
     case '14':
         console.log("Running doCovidPostvaxData");
