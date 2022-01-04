@@ -72,11 +72,11 @@ const doWork = async opt => {
         break;
     case '13b':
         console.log("Running doCovidStateDashboardTablesHospitals");
-        await doCovidStateDashboardTablesCasesHospitals();
+        await doCovidStateDashboardTablesHospitals();
         break;
     case '13c':
         console.log("Running doCovidStateDashboardTablesTests");
-        await doCovidStateDashboardTablesCasesTests();
+        await doCovidStateDashboardTablesTests();
         break;
     case '14':
         console.log("Running doCovidPostvaxData");
