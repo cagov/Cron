@@ -70,27 +70,27 @@ module.exports = async function (context, req) {
 
         const v = new Validator();
 
-        const schemaUrls = [...new Set(input.map(i => i.schema_url))];
+        const schemaUrls = [...new Set(input.map(i => i.schema_url))]
+            .filter(u => !schemaCache.has(u));
 
-        const schemaPromises = [];
+        const schemaPromises = schemaUrls
+            .map(u =>
+                fetch(u)
+                    .then(async r => {
+                        if (r.ok) {
+                            //ok request.  Set the cache (Will throw a new error here if the json is bad).
+                            schemaCache.set(u, await r.json())
+                        } else {
+                            //Some sort of connection error
+                            const body = await r.text();
 
-        schemaUrls.forEach(async u => {
-            if (!schemaCache.has(u)) {
-                schemaPromises
-                    .push(fetch(u)
-                        .then(async r => {
-                            if (r.ok) {
-                                schemaCache.set(u, await r.json())
-                            } else {
-                                const body = await r.text();
+                            throw new Error(
+                                `${r.status} - ${r.statusText} - ${r.url} - ${body}`
+                            );
+                        }
+                    })
+            );
 
-                                throw new Error(
-                                    `${r.status} - ${r.statusText} - ${r.url} - ${body}`
-                                );
-                            }
-                        }));
-            }
-        });
 
         await Promise.all(schemaPromises);
 
@@ -114,9 +114,9 @@ module.exports = async function (context, req) {
                         body.path = e1.path.join('/');
                     }
 
+                    //Return a 200 response with the validation error in the body.
                     context.res = {
                         body
-
                     };
                     return
                 } else {
@@ -126,6 +126,7 @@ module.exports = async function (context, req) {
             }
         };
 
+        //Validation passed, nothing to report
         context.res = {
             status: 204 //OK - No content
         };

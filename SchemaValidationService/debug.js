@@ -9,13 +9,17 @@ const { SchemaInput } = require("./index");
 /** @type {SchemaInput[]} */
 const input = [
     {
+        name: "PreLoading Schema",
+        schema_url: "https://raw.githubusercontent.com/cagov/Cron/c4abfbbe1beeb139fd8ca76b0d9faef5e71d143a/SchemaValidationService/testSchema.json"
+    },
+    {
         name: "File 1",
         schema_url: "https://raw.githubusercontent.com/cagov/Cron/c4abfbbe1beeb139fd8ca76b0d9faef5e71d143a/SchemaValidationService/testSchema.json",
         content: require("./testData.json")
     },
     {
         name: "File 2",
-        schema_url: "https://raw.githubusercontent.com/cagov/Cron/c4abfbbe1beeb139fd8ca76b0d9faef5e71d143a/SchemaValidationService/testSchema.jsono",
+        schema_url: "https://raw.githubusercontent.com/cagov/Cron/c4abfbbe1beeb139fd8ca76b0d9faef5e71d143a/SchemaValidationService/testSchema.json",
         content: require("./testData.json")
     }
 ];
