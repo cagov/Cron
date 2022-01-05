@@ -112,6 +112,17 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Debug DIRECT CovidStateDashboardTablesTests",
+      "program": "debug.js",
+      "args": [
+        "1"
+      ],
+      "cwd": "${workspaceRoot}/CovidStateDashboardTablesTests",
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Debug DIRECT CovidPostvaxData",
       "program": "index",
       "args": [

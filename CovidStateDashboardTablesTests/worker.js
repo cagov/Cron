@@ -60,13 +60,29 @@ const getDateValueRows = (dataset, valueColumnName) => {
     };
 };
 
-const doCovidStateDashboardTablesTests = async () => {
+const SlackConnector = require("@cagov/slack-connector");
+
+/**
+ * Does a slack reply if slack is defined
+ * @param {SlackConnector | undefined} slack
+ * @param {string} message
+ */
+const slackIfConnected = async (slack, message) =>  slack ? slack.Reply(message) : null;
+
+/**
+ * 
+ * @param {SlackConnector} [slack] 
+ */
+const doCovidStateDashboardTablesTests = async (slack) => {
     const token = getGitHubToken();
 
+    await slackIfConnected(slack, 'Scanning for schemas...');
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath, 'schema/input/[file]/schema.json', 'schema/input/[file]/sample.json', 'schema/input/[file]/fail/', 'schema/output/');
 
+    await slackIfConnected(slack, 'Running queries...');
     const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork, process.env["SNOWFLAKE_CDT_COVID"]);
     if (doInputValidation) {
+        await slackIfConnected(slack, 'Validating input...');
         Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
             const schemaObject = sqlWorkAndSchemas.schema[file];
             const targetJSON = allData[file];
@@ -75,6 +91,8 @@ const doCovidStateDashboardTablesTests = async () => {
             validateJSON2(`${file} - failed SQL input validation`, targetJSON, schemaObject.schema, schemaObject.passTests, schemaObject.failTests);
         });
     }
+
+    await slackIfConnected(slack, 'Converting Data...');
 
     /** @type {Map<string,*>} */
     let allFilesMap = new Map();
@@ -136,6 +154,7 @@ const doCovidStateDashboardTablesTests = async () => {
     });
 
     if (doOutputValidation) {
+        await slackIfConnected(slack, 'Validating Output...');
         //Validate tree output
         console.log(`Validating ${allFilesMap.size} output files.`);
 
@@ -197,8 +216,12 @@ const doCovidStateDashboardTablesTests = async () => {
             treeObject_staging.syncFile(f, json);
         });
 
+        await slackIfConnected(slack, 'Pushing Staging...');
         resultStats.push(await treeObject_staging.treePush());
-        if (!stagingOnly) resultStats.push(await treeObject_main.treePush());
+        if (!stagingOnly) {
+            await slackIfConnected(slack, 'Pushing Main...');
+            resultStats.push(await treeObject_main.treePush());
+        }
     }
 
     let PrList = resultStats.filter(r => r.Pull_Request_URL).map(r => r.Pull_Request_URL);
