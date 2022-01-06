@@ -182,7 +182,7 @@ const validateJSON_Async = async (errorMessagePrefix, targetJSON, schemaJSON) =>
   async_validator(targetJSON, schemaJSON)
     .then(primaryResult => {
       if (primaryResult.errors.length) {
-        logAndError(`${errorMessagePrefix} - ${validateJSON_getMessage(primaryResult.errors[0])}`);
+        throw new Error(`${errorMessagePrefix} - ${validateJSON_getMessage(primaryResult.errors[0])}`);
       }
     });
 
