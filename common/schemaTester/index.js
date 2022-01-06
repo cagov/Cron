@@ -179,8 +179,8 @@ const validateJSON2 = (errorMessagePrefix, targetJSON, schemaJSON, testGoodFiles
  * @param {threadWork[]} work An array of work to process
  * @param {number} max_threads Number of threads to process work.  Too many threads creates overhead.
  */
-const validateJSON_Async = async (errorMessagePrefix, work, max_threads) => new Promise(function (resolve, reject) {
-  return async_validator(work, max_threads)
+const validateJSON_Async = async (errorMessagePrefix, work, max_threads) => new Promise(async (resolve, reject) =>
+  async_validator(work, max_threads)
     .then(results => {
       results.forEach(result => {
         if (result.result.errors.length) {
@@ -189,10 +189,9 @@ const validateJSON_Async = async (errorMessagePrefix, work, max_threads) => new 
           return;
         }
       });
-
       resolve();
     })
-});
+);
 
 /**
  * Logs an error message before throwing the message as an Error
