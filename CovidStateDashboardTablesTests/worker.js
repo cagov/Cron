@@ -1,6 +1,6 @@
 //@ts-check
 const { queryDataset } = require('../common/snowflakeQuery');
-const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
+const { validateJSON_Async, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -67,7 +67,7 @@ const SlackConnector = require("@cagov/slack-connector");
  * @param {SlackConnector | undefined} slack
  * @param {string} message
  */
-const slackIfConnected = async (slack, message) =>  slack ? slack.Reply(message) : null;
+const slackIfConnected = async (slack, message) => slack ? slack.Reply(message) : null;
 
 /**
  * 
@@ -157,20 +157,28 @@ const doCovidStateDashboardTablesTests = async (slack) => {
         await slackIfConnected(slack, 'Validating Output...');
         //Validate tree output
         console.log(`Validating ${allFilesMap.size} output files.`);
+        const promises = [];
 
         for (let [fileName, content] of allFilesMap) {
             let rootFolder = fileName.split('/')[0];
             let schema = sqlWorkAndSchemas.outputSchema.find(f => rootFolder === f.name);
 
             if (schema) {
-                validateJSON2(`${fileName} failed validation`, content, schema.json);
+                //validateJSON2(`${fileName} failed validation`, content, schema.json);
+                //await validateJSON_Async(`${fileName} failed validation`, content, schema.json);
+                promises.push(validateJSON_Async(`${fileName} failed validation`, content, schema.json));
+                //validateJSON2(`${fileName} failed validation`, content, schema.json);
             } else {
                 throw new Error(`Missing validator for ${fileName}.`);
             }
         }
 
+        await Promise.all(promises);
+
         console.log(`Validation of output complete.`);
     }
+
+    throw new Error("STOP");
 
     /** @type {TreePushTreeOptions} */
     let defaultTreeOptions = {
