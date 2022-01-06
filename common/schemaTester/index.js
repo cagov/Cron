@@ -178,13 +178,17 @@ const validateJSON2 = (errorMessagePrefix, targetJSON, schemaJSON, testGoodFiles
  * @param {{}} targetJSON JSON object to validate, null if just checking tests
  * @param {{}} schemaJSON JSON schema to use for validation
  */
-const validateJSON_Async = async (errorMessagePrefix, targetJSON, schemaJSON) =>
-  async_validator(targetJSON, schemaJSON)
+const validateJSON_Async = async (errorMessagePrefix, targetJSON, schemaJSON) => new Promise(function (resolve, reject) {
+  return async_validator(targetJSON, schemaJSON)
     .then(primaryResult => {
       if (primaryResult.errors.length) {
-        throw new Error(`${errorMessagePrefix} - ${validateJSON_getMessage(primaryResult.errors[0])}`);
+        const message = `${errorMessagePrefix} - ${validateJSON_getMessage(primaryResult.errors[0])}`;
+        reject(message);
+      } else {
+        resolve();
       }
-    });
+    })
+});
 
 /**
  * Logs an error message before throwing the message as an Error

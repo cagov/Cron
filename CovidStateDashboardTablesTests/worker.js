@@ -173,12 +173,15 @@ const doCovidStateDashboardTablesTests = async (slack) => {
             }
         }
 
-        await Promise.all(promises);
+        await Promise.all(promises)
+            .catch(reason => {
+                throw new Error(reason);
+            });
 
         console.log(`Validation of output complete.`);
     }
 
-    throw new Error("STOP");
+    //throw new Error("STOP");
 
     /** @type {TreePushTreeOptions} */
     let defaultTreeOptions = {
