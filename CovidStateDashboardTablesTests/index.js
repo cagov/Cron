@@ -26,7 +26,7 @@ module.exports = async function (context) {
   const slack = new SlackConnector(slackBotGetToken(), debugChannel, {username:slackBotName});
 
   try {
-    await slack.Chat(`${appName} (Every weedday @ 7:30am)`);
+    await slack.Chat(`${appName} (Every weekday @ 7:30am)`);
     const PrResults = await doCovidStateDashboardTablesTests(slack);
 
     if(PrResults) {
