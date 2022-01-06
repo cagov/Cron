@@ -1,47 +1,93 @@
 //@ts-check
 
 const moment = require("moment");
-let totalcount = { totalcount: 0 }
+
 const {
-  Worker, isMainThread, parentPort, workerData
+  Worker, isMainThread, parentPort, threadId
 } = require('worker_threads');
+
+const { Validator, ValidatorResult } = require('jsonschema'); //https://www.npmjs.com/package/jsonschema
+
+/**
+ * @typedef {object} threadWork
+ * @property {string} name
+ * @property { {} } targetJSON 
+ * @property { {} } schemaJSON 
+ */
+
+/**
+ * @typedef {object} threadResult
+ * @property {number} threadId
+ * @property {string} name
+ * @property {ValidatorResult} result
+ */
 
 if (isMainThread) {
   /**
-   * @param { {} } targetJSON 
-   * @param { {} } schemaJSON 
+   * validates a list of work on mutliple threads
+   * @param {threadWork[]} work 
+   * @param {number} max_threads 
+   * @returns {Promise<threadResult[]>}
    */
-  module.exports = (targetJSON, schemaJSON) =>
+  module.exports = (work, max_threads) =>
     new Promise((resolve, reject) => {
-      const worker = new Worker(__filename, {
-        workerData: { targetJSON, schemaJSON, mycount: totalcount.totalcount++ }
-      });
-      worker.on('message', resolve);
-      worker.on('error', reject);
-      worker.on('exit', code => {
-        if (code !== 0)
-          reject(new Error(`Worker stopped with exit code ${code}`));
-      });
+      let threadTotal = Math.min(work.length, max_threads);
+
+      const expectedResults = work.length;
+
+      /** @type {threadResult[]} */
+      let results = [];
+
+      for (let i = 0; i < threadTotal; i++) {
+        let worker = new Worker(__filename);
+
+        let workHandler = (/** @type {threadResult} */ m) => {
+          if (m) {
+            results.push(m);
+          }
+
+          worker.postMessage(work.pop()); //null work will tell the worker to exit
+
+          if (results.length === expectedResults) {
+            resolve(results);
+          }
+        };
+
+        worker.on('online', workHandler);
+        worker.on('message', workHandler);
+        worker.on('error', reject);
+        worker.on('exit', code => {
+          if (code !== 0)
+            reject(new Error(`Worker stopped with exit code ${code}`));
+        });
+      }
     })
 
 } else {
-  /** @type {{ targetJSON:*, schemaJSON:*, mycount:number}} */
-  const { targetJSON, schemaJSON, mycount } = workerData;
+  parentPort.on("message", (/** @type {threadWork} */ mywork) => {
+    if (mywork) {
+      //console.log(`validating ${mywork.name} on ${threadId}`);
 
-  console.log(`validating ${mycount}`);
+      let v = new Validator();
 
-  const Validator = require('jsonschema').Validator; //https://www.npmjs.com/package/jsonschema
-  const v = new Validator();
+      //Reparse to simplify any Javascript objects like dates
+      Date.prototype.toJSON = function () {
+        return moment(this).format('YYYY-MM-DD')
+      }
 
-  //Reparse to simplify any Javascript objects like dates
+      let targetObject = JSON.parse(JSON.stringify(mywork.targetJSON));
 
-  Date.prototype.toJSON = function () {
-    return moment(this).format('YYYY-MM-DD')
-  }
+      /** @type {threadResult} */
+      let resultData = {
+        threadId,
+        name: mywork.name,
+        result: v.validate(targetObject, mywork.schemaJSON)
+      }
 
-  const primaryResult = v.validate(JSON.parse(JSON.stringify(targetJSON)), schemaJSON);
-
-  parentPort.postMessage(primaryResult);
-
-  console.log(`validating ${mycount} Complete`);
+      //console.log(`validating ${mywork.name} on ${threadId}...complete`);
+      parentPort.postMessage(resultData);
+    } else {
+      process.exit(); //nothing to do...ok to stop thread
+    }
+  });
 }

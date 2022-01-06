@@ -1,7 +1,7 @@
 //@ts-check
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON_Async, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
-const { threadWork } = require('../common/schemaTester/async_validator2');
+const { threadWork } = require('../common/schemaTester/async_validator');
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -167,10 +167,6 @@ const doCovidStateDashboardTablesTests = async (slack) => {
             let schema = sqlWorkAndSchemas.outputSchema.find(f => rootFolder === f.name);
 
             if (schema) {
-                //validateJSON2(`${fileName} failed validation`, content, schema.json);
-                //await validateJSON_Async(`${fileName} failed validation`, content, schema.json);
-                //promises.push(validateJSON_Async(`${fileName} failed validation`, content, schema.json));
-                //validateJSON2(`${fileName} failed validation`, content, schema.json);
                 /** @type {threadWork} */
                 let newWork = {
                     name: fileName,
@@ -184,14 +180,14 @@ const doCovidStateDashboardTablesTests = async (slack) => {
             }
         }
 
-        await validateJSON_Async("failed validation", workForValidation)
+        await validateJSON_Async("failed validation", workForValidation, 6)
             .catch(reason => {
                 throw new Error(reason);
             });
 
         console.log(`Validation of output complete.`);
     }
-    console.log('planned stop here'); return; throw new Error("STOP");
+    //console.log('planned stop here'); return; throw new Error("STOP");
 
     /** @type {TreePushTreeOptions} */
     let defaultTreeOptions = {
