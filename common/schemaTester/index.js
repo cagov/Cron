@@ -1,6 +1,7 @@
 const fs = require('fs');
 
-const async_validator = require('./async_validator');
+const async_validator = require('./async_validator2');
+const { threadWork } = require('./async_validator2');;
 
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
@@ -175,18 +176,20 @@ const validateJSON2 = (errorMessagePrefix, targetJSON, schemaJSON, testGoodFiles
 /**
  * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
  * @param {string} errorMessagePrefix Will display in front of error messages
- * @param {{}} targetJSON JSON object to validate, null if just checking tests
- * @param {{}} schemaJSON JSON schema to use for validation
+ * @param {threadWork[]} work 
  */
-const validateJSON_Async = async (errorMessagePrefix, targetJSON, schemaJSON) => new Promise(function (resolve, reject) {
-  return async_validator(targetJSON, schemaJSON)
-    .then(primaryResult => {
-      if (primaryResult.errors.length) {
-        const message = `${errorMessagePrefix} - ${validateJSON_getMessage(primaryResult.errors[0])}`;
-        reject(message);
-      } else {
-        resolve();
-      }
+const validateJSON_Async = async (errorMessagePrefix, work) => new Promise(function (resolve, reject) {
+  return async_validator(work, 8)
+    .then(results => {
+
+      results.forEach(result => {
+        if (result.result.errors.length) {
+          const message = `${errorMessagePrefix} - ${result.name} - ${validateJSON_getMessage(result.result.errors[0])}`;
+          reject(message);
+        }
+      });
+
+      resolve();
     })
 });
 
