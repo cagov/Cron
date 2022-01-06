@@ -1,3 +1,4 @@
+//@ts-check
 const { doCovidStateDashboardTablesTests } = require('./worker');
 const SlackConnector = require("@cagov/slack-connector");
 const slackBotName = "Covid State Dashboard Tables - Tests"
@@ -32,8 +33,8 @@ module.exports = async function (context) {
     if(PrResults) {
       await slack.Top.ReactionAdd('package');
 
-      for (let Pr of PrResults) {
-        await slack.Reply(Pr.html_url);
+      for (let PrUrl of PrResults) {
+        await slack.Reply(PrUrl);
       }
     }
 
