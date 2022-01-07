@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "definitions": {
+    "date-YYYY-MM-DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "integer-zero-to-everyone": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 99999999
+    },
+    "number-non-neg": {
+      "type": "number",
+      "minimum": 0
+    },
+    "county": {
+      "type": "string",
+      "enum": [
+        "California",
+        "Alameda",
+        "Alpine",
+        "Amador",
+        "Butte",
+        "Calaveras",
+        "Colusa",
+        "Contra Costa",
+        "Del Norte",
+        "El Dorado",
+        "Fresno",
+        "Glenn",
+        "Humboldt",
+        "Imperial",
+        "Inyo",
+        "Kern",
+        "Kings",
+        "Lake",
+        "Lassen",
+        "Los Angeles",
+        "Madera",
+        "Marin",
+        "Mariposa",
+        "Mendocino",
+        "Merced",
+        "Modoc",
+        "Mono",
+        "Monterey",
+        "Napa",
+        "Nevada",
+        "Orange",
+        "Placer",
+        "Plumas",
+        "Riverside",
+        "Sacramento",
+        "San Benito",
+        "San Bernardino",
+        "San Diego",
+        "San Francisco",
+        "San Joaquin",
+        "San Luis Obispo",
+        "San Mateo",
+        "Santa Barbara",
+        "Santa Clara",
+        "Santa Cruz",
+        "Shasta",
+        "Sierra",
+        "Siskiyou",
+        "Solano",
+        "Sonoma",
+        "Stanislaus",
+        "Sutter",
+        "Tehama",
+        "Trinity",
+        "Tulare",
+        "Tuolumne",
+        "Ventura",
+        "Yolo",
+        "Yuba"
+      ]
+    }
+  },
+  "type": "array",
+  "uniqueItems": true,
+  "minItems": 59,
+  "maxItems": 59,
+  "items": {
+    "type": "object",
+    "required": [
+      "REGION",
+      "DATE",
+      "POPULATION",
+      "TESTING_UNCERTAINTY_PERIOD",
+      "total_tests_performed",
+      "new_tests_reported",
+      "new_tests_reported_delta_1_day",
+      "test_positivity_7_days",
+      "test_positivity_7_days_delta_7_days"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "REGION": {
+        "$ref": "#/definitions/county"
+      },
+      "DATE": {
+        "$ref": "#/definitions/date-YYYY-MM-DD"
+      },
+      "POPULATION": {
+        "$ref": "#/definitions/integer-zero-to-everyone"
+      },
+      "TESTING_UNCERTAINTY_PERIOD": {
+        "$ref": "#/definitions/date-YYYY-MM-DD"
+      },
+      "total_tests_performed": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "new_tests_reported": {
+        "type": "integer"
+      },
+      "new_tests_reported_delta_1_day": {
+        "type": "number"
+      },
+      "test_positivity_7_days": {
+        "$ref": "#/definitions/number-non-neg"
+      },
+      "test_positivity_7_days_delta_7_days": {
+        "type": "number"
+      }
+    }
+  }
+}

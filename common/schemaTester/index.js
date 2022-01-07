@@ -1,5 +1,8 @@
 const fs = require('fs');
 
+const async_validator = require('./async_validator');
+const { threadWork } = require('./async_validator');
+
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
 
@@ -65,7 +68,8 @@ const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, Fai
 };
 
 
-const validateJSON_getMessage = err => `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
+const validateJSON_getMessage = err =>
+  `${err.stack} (${err.name}).\nValue = ${JSON.stringify(err.instance).substring(0, 50)}`;
 
 const validateJSON_getJsonFiles = path => 
 (
@@ -170,6 +174,26 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
 };
 
 /**
+ * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
+ * @param {string} errorMessagePrefix Will display in front of error messages
+ * @param {threadWork[]} work An array of work to process
+ * @param {number} max_threads Number of threads to process work.  Too many threads creates overhead.
+ */
+ const validateJSON_Async = async (errorMessagePrefix, work, max_threads) => new Promise(async (resolve, reject) =>
+ async_validator(work, max_threads)
+   .then(results => {
+     results.forEach(result => {
+       if (result.result.errors.length) {
+         const message = `${errorMessagePrefix} - ${result.name} - ${validateJSON_getMessage(result.result.errors[0])}`;
+         reject(message);
+         return;
+       }
+     });
+     resolve();
+   })
+);
+
+/**
  * Logs an error message before throwing the message as an Error
  * @param {string} message Error message to display
  */
@@ -178,8 +202,25 @@ const logAndError  = message => {
   throw new Error(message);
 };
 
+/**
+ * Returns an array separated into smaller arrays
+ * @param {*[]} array
+ * @param {number} chunk
+ */
+const splitArrayIntoChunks = (array, chunk) => {
+  let results = [];
+
+  for (let i = 0, j = array.length; i < j; i += chunk) {
+    results.push(array.slice(i, i + chunk));
+  }
+
+  return results;
+}
+
 module.exports = {
   validateJSON,
   validateJSON2,
-  getSqlWorkAndSchemas
+  validateJSON_Async,
+  getSqlWorkAndSchemas,
+  splitArrayIntoChunks
 };
