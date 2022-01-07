@@ -69,7 +69,8 @@ const getSqlWorkAndSchemas = (sqlPath, schemaPathFormat, PassTestPathFormat, Fai
 };
 
 
-const validateJSON_getMessage = err => `'${JSON.stringify(err.instance)}' ${err.message}. Location - ${err.path.toString()}`;
+const validateJSON_getMessage = err =>
+  `${err.stack} (${err.name}).\nValue = ${JSON.stringify(err.instance).substring(0, 50)}`;
 
 const validateJSON_getJsonFiles = path =>
   (
@@ -202,9 +203,25 @@ const logAndError = message => {
   throw new Error(message);
 };
 
+/**
+ * Returns an array separated into smaller arrays
+ * @param {*[]} array
+ * @param {number} chunk
+ */
+const splitArrayIntoChunks = (array, chunk) => {
+  let results = [];
+
+  for (let i = 0, j = array.length; i < j; i += chunk) {
+    results.push(array.slice(i, i + chunk));
+  }
+
+  return results;
+}
+
 module.exports = {
   validateJSON,
   validateJSON2,
   validateJSON_Async,
-  getSqlWorkAndSchemas
+  getSqlWorkAndSchemas,
+  splitArrayIntoChunks
 };
