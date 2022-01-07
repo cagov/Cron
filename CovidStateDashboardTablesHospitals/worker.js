@@ -4,7 +4,7 @@ const { validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester'
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
-const PrLabels = ['Automatic Deployment', /* 'Add to Rollup', */ 'Publish at 9:15 a.m. ☀️'];
+const PrLabels = ['Automatic Deployment', 'Add to Rollup', 'Publish at 9:15 a.m. ☀️'];
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
 const githubPath = 'data/dashboard';
