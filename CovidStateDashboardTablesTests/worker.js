@@ -68,7 +68,7 @@ const SlackConnector = require("@cagov/slack-connector");
  * @param {SlackConnector | undefined} slack
  * @param {string} message
  */
-const slackIfConnected = async (slack, message) => slack ? slack.Reply(message) : null;
+const slackIfConnected = async (slack, message) =>  slack ? slack.Reply(message) : null;
 
 /**
  * 
