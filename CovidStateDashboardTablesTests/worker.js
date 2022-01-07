@@ -1,6 +1,6 @@
 //@ts-check
 const { queryDataset } = require('../common/snowflakeQuery');
-const { validateJSON_Async, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
+const { validateJSON_Async, splitArrayIntoChunks, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const { threadWork } = require('../common/schemaTester/async_validator');
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
@@ -11,9 +11,9 @@ const githubRepo = 'covid-static-data';
 const githubPath = 'data/dashboard';
 const targetBranch = 'main'
 const stagingBranch = 'CovidStateDashboardTables_Staging';
-const doInputValidation = false;
+const doInputValidation = true;
 const doOutputValidation = true;
-const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTablesCasesDeathsTests/';
+const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTablesTests/';
 const stagingOnly = false; //Set to true to only work on staging
 
 const regionList = ["California", "Alameda", "Alpine", "Amador", "Butte", "Calaveras", "Colusa", "Contra Costa", "Del Norte", "El Dorado", "Fresno", "Glenn", "Humboldt", "Imperial", "Inyo", "Kern", "Kings", "Lake", "Lassen", "Los Angeles", "Madera", "Marin", "Mariposa", "Mendocino", "Merced", "Modoc", "Mono", "Monterey", "Napa", "Nevada", "Orange", "Placer", "Plumas", "Riverside", "Sacramento", "San Benito", "San Bernardino", "San Diego", "San Francisco", "San Joaquin", "San Luis Obispo", "San Mateo", "Santa Barbara", "Santa Clara", "Santa Cruz", "Shasta", "Sierra", "Siskiyou", "Solano", "Sonoma", "Stanislaus", "Sutter", "Tehama", "Trinity", "Tulare", "Tuolumne", "Ventura", "Yolo", "Yuba"];
@@ -84,13 +84,32 @@ const doCovidStateDashboardTablesTests = async (slack) => {
     const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork, process.env["SNOWFLAKE_CDT_COVID"]);
     if (doInputValidation) {
         await slackIfConnected(slack, 'Validating input...');
+        /** @type {threadWork[]} */
+        const workForValidation = [];
         Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
             const schemaObject = sqlWorkAndSchemas.schema[file];
             const targetJSON = allData[file];
             //require('fs').writeFileSync(`${file}_sample.json`, JSON.stringify(targetJSON,null,2), 'utf8');
-            console.log(`Validating - ${file}`);
-            validateJSON2(`${file} - failed SQL input validation`, targetJSON, schemaObject.schema, schemaObject.passTests, schemaObject.failTests);
+
+            splitArrayIntoChunks(targetJSON, 100).forEach((a, i) => {
+                /** @type {threadWork} */
+                let newWork = {
+                    name: file + i,
+                    schemaJSON: schemaObject.schema,
+                    targetJSON: a
+                };
+
+                workForValidation.push(newWork)
+            })
+
         });
+        console.log(`Validating input...`);
+        await validateJSON_Async("failed validation", workForValidation, 6)
+            .catch(reason => {
+                throw new Error(reason);
+            });
+
+        console.log(`Validating input...done`);
     }
 
     await slackIfConnected(slack, 'Converting Data...');
@@ -102,7 +121,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
         let regionFileName = myRegion.toLowerCase().replace(/ /g, '_');
 
         let summary_by_region = allData.summary_by_region.find(f => f.REGION === myRegion);
-        let rows_by_region = allData.cases_deaths_tests_rows.filter(f => f.REGION === myRegion);
+        let rows_by_region = allData.tests_rows.filter(f => f.REGION === myRegion);
         if (summary_by_region && rows_by_region.length) {
             allFilesMap.set(`total-tests/${regionFileName}.json`,
                 {
