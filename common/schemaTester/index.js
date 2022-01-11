@@ -191,6 +191,9 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
      });
      resolve();
    })
+   .catch(reason => {
+    reject(reason);
+  })
 );
 
 /**
