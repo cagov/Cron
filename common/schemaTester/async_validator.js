@@ -33,6 +33,10 @@ if (isMainThread) {
     new Promise((resolve, reject) => {
       let threadTotal = Math.min(work.length, max_threads);
 
+      if (!threadTotal) {
+        reject('No work to do.');
+      }
+
       const expectedResults = work.length;
 
       /** @type {threadResult[]} */
