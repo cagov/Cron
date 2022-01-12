@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const async_validator = require('./async_validator');
-const { threadWork } = require('./async_validator');
+const async_validator = require('./async_thread');
+const {threadResult, threadWork} = require('./async_custom');
 
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
@@ -177,7 +177,8 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
  * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
  * @param {string} errorMessagePrefix Will display in front of error messages
  * @param {threadWork[]} work An array of work to process
- * @param {number} max_threads Number of threads to process work.  Too many threads creates overhead.
+ * @param {number} [max_threads] Number of threads to process work.  Too many threads creates overhead.  Blank to detect.
+ * @returns {Promise<threadResult[]>}
  */
  const validateJSON_Async = async (errorMessagePrefix, work, max_threads) => new Promise(async (resolve, reject) =>
  async_validator(work, max_threads)
