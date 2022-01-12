@@ -104,7 +104,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
 
         });
         console.log(`Validating input...`);
-        await validateJSON_Async("failed validation", workForValidation, 6)
+        await validateJSON_Async("failed validation", workForValidation)
             .catch(reason => {
                 throw new Error(reason);
             });
