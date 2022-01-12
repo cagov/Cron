@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const async_validator = require('./async_validator');
-const { threadWork } = require('./async_validator');
+const async_validator = require('./async_thread');
+const { threadWork } = require('./async_custom');
 
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/

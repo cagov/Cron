@@ -1,7 +1,7 @@
 //@ts-check
 const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON_Async, splitArrayIntoChunks, getSqlWorkAndSchemas } = require('../common/schemaTester');
-const { threadWork } = require('../common/schemaTester/async_validator');
+const { threadWork } = require('../common/schemaTester/async_custom');
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
