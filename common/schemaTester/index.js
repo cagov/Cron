@@ -3,6 +3,11 @@ const fs = require('fs');
 const async_validator = require('./async_thread');
 const {threadResult, threadWork} = require('./async_custom');
 
+const fetch = require("fetch-retry")(require("node-fetch/lib"), {
+  retries: 3,
+  retryDelay: 2000
+});
+
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
 
@@ -198,6 +203,49 @@ const validateJSON = (errorMessagePrefix, targetJSON, schemafilePath, testGoodFi
 );
 
 /**
+ * @typedef {object} ValidationServiceWorkRow
+ * @property {string} name
+ * @property {*} content
+ */
+
+/**
+ * @typedef {object} ValidationServiceBody
+ * @property {Schema} schema
+ * @property {ValidationServiceWorkRow[]} work
+ */
+const remoteValidatorURL = "https://kzg1dzzr6f.execute-api.us-west-1.amazonaws.com/default/jsonValidator";
+/**
+ * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
+ * @param {string} errorMessagePrefix Will display in front of error messages
+ * @param {ValidationServiceWorkRow[]} work An array of work to process
+ */
+ const validateJSON_Remote = async (errorMessagePrefix, schema, work) => new Promise(async (resolve, reject) => {
+   /** @type {ValidationServiceBody} */
+  const bodyJSON = {
+    schema,
+    work
+  };
+
+  const bodyBase64 = Buffer.from(JSON.stringify(bodyJSON), 'utf-8').toString('base64');
+
+  const bodylength = Buffer.byteLength(bodyBase64);
+  if(bodylength>5000000) {
+    console.log(`Sending ${bodyJSON.work.length} work items with a request size of ${bodylength} bytes. 6MB max!`);
+  }
+
+  return fetch(remoteValidatorURL,{method:"POST", body:bodyBase64})
+    .then(async result=>{
+      if(result.status!==204) {
+        const text = await result.text();
+        reject(errorMessagePrefix + ':' + text);
+      }
+    
+      resolve();
+    })
+ });
+
+
+/**
  * Logs an error message before throwing the message as an Error
  * @param {string} message Error message to display
  */
@@ -225,6 +273,7 @@ module.exports = {
   validateJSON,
   validateJSON2,
   validateJSON_Async,
+  validateJSON_Remote,
   getSqlWorkAndSchemas,
   splitArrayIntoChunks
 };

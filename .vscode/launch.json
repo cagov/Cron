@@ -11,17 +11,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug DIRECT SchemaValidationService",
-      "program": "debug.js",
-      "args": [
-        "3"
-      ],
-      "cwd": "${workspaceRoot}/SchemaValidationService",
-      "outputCapture": "std"
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "Debug sandbox",
       "program": "index",
       "args": [
