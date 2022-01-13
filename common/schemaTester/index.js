@@ -219,7 +219,7 @@ const remoteValidatorURL = "https://kzg1dzzr6f.execute-api.us-west-1.amazonaws.c
  * @param {string} errorMessagePrefix Will display in front of error messages
  * @param {ValidationServiceWorkRow[]} work An array of work to process
  */
- const validateJSON_Remote = async (errorMessagePrefix, schema, work) => {
+ const validateJSON_Remote = async (errorMessagePrefix, schema, work) => new Promise(async (resolve, reject) => {
    /** @type {ValidationServiceBody} */
   const bodyJSON = {
     schema,
@@ -228,12 +228,21 @@ const remoteValidatorURL = "https://kzg1dzzr6f.execute-api.us-west-1.amazonaws.c
 
   const bodyBase64 = Buffer.from(JSON.stringify(bodyJSON), 'utf-8').toString('base64');
 
-  const result = await fetch(remoteValidatorURL,{method:"POST", body:bodyBase64});
-
-  if(result.status!==204) {
-    const x =1;
+  const bodylength = Buffer.byteLength(bodyBase64);
+  if(bodylength>5000000) {
+    console.log(`Sending ${bodyJSON.work.length} work items with a request size of ${bodylength} bytes. 6MB max!`);
   }
- };
+
+  return fetch(remoteValidatorURL,{method:"POST", body:bodyBase64})
+    .then(async result=>{
+      if(result.status!==204) {
+        const text = await result.text();
+        reject(errorMessagePrefix + ':' + text);
+      }
+    
+      resolve();
+    })
+ });
 
 
 /**

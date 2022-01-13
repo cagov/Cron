@@ -1,7 +1,6 @@
 //@ts-check
 const { queryDataset } = require('../common/snowflakeQuery');
-const { validateJSON_Async, splitArrayIntoChunks, getSqlWorkAndSchemas, validateJSON_Remote, ValidationServiceWorkRow } = require('../common/schemaTester');
-const { threadWork } = require('../common/schemaTester/async_custom');
+const { splitArrayIntoChunks, getSqlWorkAndSchemas, validateJSON_Remote, ValidationServiceWorkRow } = require('../common/schemaTester');
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -180,35 +179,37 @@ const doCovidStateDashboardTablesTests = async (slack) => {
     if (doOutputValidation) {
         await slackIfConnected(slack, 'Validating Output...');
         //Validate tree output
-        console.log(`Validating ${allFilesMap.size} output files.`);
+        let promises = [];
 
-        /** @type {threadWork[]} */
-        const workForValidation = [];
+        for(let outputSchema of sqlWorkAndSchemas.outputSchema) {
+            /** @type {ValidationServiceWorkRow[]} */
+            const workForValidation = [];
 
-        for (let [fileName, content] of allFilesMap) {
-            let rootFolder = fileName.split('/')[0];
-            let schema = sqlWorkAndSchemas.outputSchema.find(f => rootFolder === f.name);
+            for (let [fileName, content] of allFilesMap) {
+                let rootFolder = fileName.split('/')[0];
 
-            if (schema) {
-                /** @type {threadWork} */
-                let newWork = {
-                    name: fileName,
-                    schemaJSON: schema.json,
-                    targetJSON: content
-                };
+                if(outputSchema.name===rootFolder) {
+                    /** @type {ValidationServiceWorkRow} */
+                    let newWork = {
+                        name: fileName,
+                        content
+                    };
 
-                workForValidation.push(newWork)
-            } else {
-                throw new Error(`Missing validator for ${fileName}.`);
+                    workForValidation.push(newWork)
+                }
             }
+            splitArrayIntoChunks(workForValidation, 30).forEach(a => {
+                promises.push(validateJSON_Remote("failed validation", outputSchema.json, a));
+            })
         }
 
-        await validateJSON_Async("failed validation", workForValidation)
+        console.log(`Validating output...${allFilesMap.size} files...`);
+        await Promise.all(promises)
             .catch(reason => {
                 throw new Error(reason);
             });
 
-        console.log(`Validation of output complete.`);
+        console.log(`Validating output...done`);
     }
     //console.log('planned stop here'); return; throw new Error("STOP");
 
