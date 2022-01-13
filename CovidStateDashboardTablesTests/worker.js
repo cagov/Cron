@@ -1,6 +1,6 @@
 //@ts-check
 const { queryDataset } = require('../common/snowflakeQuery');
-const { validateJSON_Async, splitArrayIntoChunks, getSqlWorkAndSchemas } = require('../common/schemaTester');
+const { validateJSON_Async, splitArrayIntoChunks, getSqlWorkAndSchemas, validateJSON_Remote, ValidationServiceWorkRow } = require('../common/schemaTester');
 const { threadWork } = require('../common/schemaTester/async_custom');
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
@@ -57,7 +57,7 @@ const getDateValueRows = (dataset, valueColumnName) => {
         },
         VALUES: dataset
             .filter(f => f.DATE >= MINIMUM && f.DATE <= MAXIMUM)
-            .map(m => ({ DATE: m.DATE, VALUE: m[valueColumnName] ?? 0 }))
+            .map(m => ({ DATE: m.DATE+'yo', VALUE: m[valueColumnName] ?? 0 }))
     };
 };
 
@@ -84,27 +84,33 @@ const doCovidStateDashboardTablesTests = async (slack) => {
     const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork, process.env["SNOWFLAKE_CDT_COVID"]);
     if (doInputValidation) {
         await slackIfConnected(slack, 'Validating input...');
-        /** @type {threadWork[]} */
-        const workForValidation = [];
-        Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
+
+        let promises = [];
+
+        for(let file of Object.keys(sqlWorkAndSchemas.schema)) {
+
+
             const schemaObject = sqlWorkAndSchemas.schema[file];
             const targetJSON = allData[file];
             //require('fs').writeFileSync(`${file}_sample.json`, JSON.stringify(targetJSON,null,2), 'utf8');
 
-            splitArrayIntoChunks(targetJSON, 100).forEach((a, i) => {
-                /** @type {threadWork} */
+            splitArrayIntoChunks(targetJSON, 500).forEach((a, i) => {
+                /** @type {ValidationServiceWorkRow[]} */
+                const workForValidation = [];
+
+                /** @type {ValidationServiceWorkRow} */
                 let newWork = {
                     name: file + i,
-                    schemaJSON: schemaObject.schema,
-                    targetJSON: a
+                    content: a
                 };
 
                 workForValidation.push(newWork)
-            })
 
-        });
+                promises.push(validateJSON_Remote("failed validation", schemaObject, workForValidation));
+            })
+        }
         console.log(`Validating input...`);
-        await validateJSON_Async("failed validation", workForValidation)
+        await Promise.all(promises)
             .catch(reason => {
                 throw new Error(reason);
             });
@@ -112,6 +118,9 @@ const doCovidStateDashboardTablesTests = async (slack) => {
         console.log(`Validating input...done`);
     }
 
+    process.exit();
+    return;
+    throw new Error('stop here');
     await slackIfConnected(slack, 'Converting Data...');
 
     /** @type {Map<string,*>} */
