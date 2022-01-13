@@ -57,7 +57,7 @@ const getDateValueRows = (dataset, valueColumnName) => {
         },
         VALUES: dataset
             .filter(f => f.DATE >= MINIMUM && f.DATE <= MAXIMUM)
-            .map(m => ({ DATE: m.DATE+'yo', VALUE: m[valueColumnName] ?? 0 }))
+            .map(m => ({ DATE: m.DATE, VALUE: m[valueColumnName] ?? 0 }))
     };
 };
 
@@ -88,13 +88,11 @@ const doCovidStateDashboardTablesTests = async (slack) => {
         let promises = [];
 
         for(let file of Object.keys(sqlWorkAndSchemas.schema)) {
-
-
-            const schemaObject = sqlWorkAndSchemas.schema[file];
+            const schemaObject = sqlWorkAndSchemas.schema[file].schema;
             const targetJSON = allData[file];
             //require('fs').writeFileSync(`${file}_sample.json`, JSON.stringify(targetJSON,null,2), 'utf8');
 
-            splitArrayIntoChunks(targetJSON, 500).forEach((a, i) => {
+            splitArrayIntoChunks(targetJSON, 5000).forEach((a, i) => {
                 /** @type {ValidationServiceWorkRow[]} */
                 const workForValidation = [];
 
@@ -118,9 +116,6 @@ const doCovidStateDashboardTablesTests = async (slack) => {
         console.log(`Validating input...done`);
     }
 
-    process.exit();
-    return;
-    throw new Error('stop here');
     await slackIfConnected(slack, 'Converting Data...');
 
     /** @type {Map<string,*>} */
