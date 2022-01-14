@@ -226,14 +226,14 @@ const remoteValidatorURL = "https://kzg1dzzr6f.execute-api.us-west-1.amazonaws.c
     work
   };
 
-  const bodyBase64 = Buffer.from(JSON.stringify(bodyJSON), 'utf-8').toString('base64');
+  const body = JSON.stringify(bodyJSON);
 
-  const bodylength = Buffer.byteLength(bodyBase64);
+  const bodylength = Buffer.byteLength(body);
   if(bodylength>5000000) {
     console.log(`Sending ${bodyJSON.work.length} work items with a request size of ${bodylength} bytes. 6MB max!`);
   }
 
-  return fetch(remoteValidatorURL,{method:"POST", body:bodyBase64})
+  return fetch(remoteValidatorURL,{method:"POST", body, headers: {'Content-Type': 'application/json'}})
     .then(async result=>{
       if(result.status!==204) {
         const text = await result.text();
