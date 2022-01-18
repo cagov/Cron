@@ -139,7 +139,7 @@
           {
             "type": "number",
             "minimum": 0,
-            "maximum": 100000
+            "maximum": 150000
           },
           {
             "type": "null"
@@ -191,7 +191,7 @@
           {
             "type": "number",
             "minimum": 0,
-            "maximum": 100000
+            "maximum": 150000
           },
           {
             "type": "null"
