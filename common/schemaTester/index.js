@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const async_validator = require('./async_thread');
 const { threadResult, threadWork } = require('./async_custom');
-const remoteValidatorURL = "https://nfbx27vd92.execute-api.us-west-1.amazonaws.com/default/jsonValidator";
+const remoteValidatorURL = "https://yl4d3ia3u8.execute-api.us-west-1.amazonaws.com/default";
 
 const fetch = require("fetch-retry")(require("node-fetch/lib"), {
   retries: 3,
@@ -220,8 +220,9 @@ const validateJSON_Async = async (errorMessagePrefix, work, max_threads) => new 
  * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
  * @param {string} errorMessagePrefix Will display in front of error messages
  * @param {ValidationServiceWorkRow[]} work An array of work to process
+ * @param {string} api_key API key for validator
  */
-const validateJSON_Remote = async (errorMessagePrefix, schema, work) => new Promise(async (resolve, reject) => {
+const validateJSON_Remote = async (errorMessagePrefix, schema, work, api_key) => new Promise(async (resolve, reject) => {
   /** @type {ValidationServiceBody} */
   const bodyJSON = {
     schema,
@@ -235,7 +236,7 @@ const validateJSON_Remote = async (errorMessagePrefix, schema, work) => new Prom
     console.log(`Sending ${bodyJSON.work.length} work items with a request size of ${bodylength} bytes. 6MB max!`);
   }
 
-  return fetch(remoteValidatorURL, { method: "POST", body, headers: { 'Content-Type': 'application/json' } })
+  return fetch(remoteValidatorURL, { method: "POST", body, headers: { 'x-api-key': api_key, 'Content-Type': 'application/json' } })
     .then(async result => {
       if (result.status !== 204) {
         const text = await result.text();

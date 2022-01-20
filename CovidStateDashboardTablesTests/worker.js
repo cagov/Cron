@@ -31,6 +31,20 @@ const getGitHubToken = () => {
     return token;
 };
 
+const getValidatorApiKey = () => {
+    const token = process.env["JSON_VALIDATOR_API_KEY"];
+
+    if (!token) {
+        //developers that don't set the creds can still use the rest of the code
+        console.error(
+            `You need local.settings.json to contain "JSON_VALIDATOR_API_KEY" to use Validator features.`
+        );
+        return;
+    }
+
+    return token;
+};
+
 const PrInfoList = [
     {
         title: "Covid Dashboard Tables - Tests",
@@ -103,7 +117,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
 
                 workForValidation.push(newWork)
 
-                promises.push(validateJSON_Remote("failed validation", schemaObject, workForValidation));
+                promises.push(validateJSON_Remote("failed validation", schemaObject, workForValidation, getValidatorApiKey()));
             })
         }
         console.log(`Validating input...`);
@@ -199,7 +213,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
                 }
             }
             splitArrayIntoChunks(workForValidation, 40).forEach(a => {
-                promises.push(validateJSON_Remote("failed validation", outputSchema.json, a));
+                promises.push(validateJSON_Remote("failed validation", outputSchema.json, a, getValidatorApiKey()));
             })
         }
 
