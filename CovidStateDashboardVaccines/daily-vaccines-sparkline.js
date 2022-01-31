@@ -11,15 +11,17 @@ const getData_daily_vaccines_sparkline = async () => {
     fullyvaxedResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/fullyvaxed'),
     totalvaxedResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/totalvaxed'),
     populationResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/eligiblepopulation'),
-    dailyaverageResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/dailyaverage')
+    dailyaverageResults: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/dailyaverage'),
+    resultsVaccines: getSQL('CDTCDPH_VACCINE/Vaccines'),
   }
-  
+
   const {
     sparklineResults,
     fullyvaxedResults,
     totalvaxedResults,
     populationResults,
-    dailyaverageResults
+    dailyaverageResults,
+    resultsVaccines
   } = await queryDataset(sqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
 
 
@@ -48,12 +50,17 @@ const getData_daily_vaccines_sparkline = async () => {
   let total_vaxed = totalvaxedResults[0].TOTAL_VACCINATED;
   let daily_average = dailyaverageResults[0].DAILY_AVG;
   let partially_vaxed = total_vaxed - fully_vaxed;
+  let rowVaccines = resultsVaccines[0];
   let json = {
       meta: {
         PUBLISHED_DATE: "1900-01-01",
         coverage: "California"
       },
       data: {
+        summary: {
+          DATE: mapped_sparkline_data[0].DATE,
+          CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMMULATIVE_DAILY_DOSES_ADMINISTERED
+        },
         population: {
           ELIGIBLE_POPULATION: eligible_pop,
           TOTAL_VAXED: total_vaxed,
