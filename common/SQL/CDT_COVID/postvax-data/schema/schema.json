@@ -71,94 +71,20 @@
               "additionalProperties": false,
               "required": [
                 "DATE",
-                "UNVAX_CASES_EPDATE",
-                    "UNVAX_HOSP_EPDATE",
-                    "UNVAX_ICU_EPDATE",
-                    "UNVAX_DEATH_DOD",
-                "BREAKTHROUGH_CASES_EPDATE",
-                    "BREAKTHROUGH_HOSP_EPDATE",
-                    "BREAKTHROUGH_ICU_EPDATE",
-                    "BREAKTHROUGH_DEATH_DOD",
-                "PARTIAL_CASES_EPDATE",
-                  "PARTIAL_HOSP_EPDATE",
-                  "PARTIAL_ICU_EPDATE",
-                  "PARTIAL_DEATH_DOD",
-                "VAX_DENOM",
-                  "UNVAX_DENOM",
-                  "PARTIAL_DENOM",
                 "UNVAX_CASE_RATE",
                     "UNVAX_HOSP_RATE",
-                    "UNVAX_ICU_RATE",
                     "UNVAX_DEATH_DOD_RATE",
-                "BREAKTHROUGH_CASE_RATE",
-                    "BREAKTHROUGH_HOSP_RATE",
-                    "BREAKTHROUGH_ICU_RATE",
-                    "BREAKTHROUGH_DEATH_DOD_RATE",
-                "PARTIAL_CASE_RATE",
-                    "PARTIAL_HOSP_RATE",
-                    "PARTIAL_ICU_RATE",
-                    "PARTIAL_DEATH_DOD_RATE",
+                    "VAX_CASE_RATE",
+                    "VAX_HOSP_RATE",
+                    "VAX_DEATH_DOD_RATE",
+                    "BOOST_CASE_RATE",
+                    "BOOST_HOSP_RATE",
+                    "BOOST_DEATH_DOD_RATE",
                 "REPORT_DATE"
               ],
               "properties": {
                 "DATE":{
                   "$ref": "#/definitions/date-YYYY-MM-DD"
-                },
-                "AREA":{
-                  "type": "string",
-                  "const": "California"
-                },
-                "AREA_TYPE":{
-                  "type": "string",
-                  "const": "State"
-                },
-                "UNVAX_CASES_EPDATE":{
-                  "$ref": "#/definitions/100k-report-rate"
-                },
-                "UNVAX_HOSP_EPDATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "UNVAX_ICU_EPDATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "UNVAX_DEATH_DOD":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "BREAKTHROUGH_CASES_EPDATE":{
-                  "$ref": "#/definitions/100k-report-rate"
-                },
-                "BREAKTHROUGH_HOSP_EPDATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "BREAKTHROUGH_ICU_EPDATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "BREAKTHROUGH_DEATH_DOD":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "PARTIAL_CASES_EPDATE":{
-                  "$ref": "#/definitions/100k-report-rate"
-                },
-                "PARTIAL_HOSP_EPDATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "PARTIAL_ICU_EPDATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "PARTIAL_DEATH_DOD":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "VAX_DENOM":{
-                  "type": "integer",
-                  "maximum": 99999999
-                },
-                "UNVAX_DENOM":{
-                  "type": "integer",
-                  "maximum": 99999999
-                },
-                "PARTIAL_DENOM":{
-                  "type": "integer",
-                  "maximum": 99999999
                 },
                 "UNVAX_CASE_RATE":{
                   "$ref": "#/definitions/100k-report-rate"
@@ -166,34 +92,25 @@
                 "UNVAX_HOSP_RATE":{
                   "$ref": "#/definitions/1m-report-rate"
                 },
-                "UNVAX_ICU_RATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
                 "UNVAX_DEATH_DOD_RATE":{
                   "$ref": "#/definitions/1m-report-rate"
                 },
-                "BREAKTHROUGH_CASE_RATE":{
+                "VAX_CASE_RATE":{
                   "$ref": "#/definitions/100k-report-rate"
                 },
-                "BREAKTHROUGH_HOSP_RATE":{
+                "VAX_HOSP_RATE":{
                   "$ref": "#/definitions/1m-report-rate"
                 },
-                "BREAKTHROUGH_ICU_RATE":{
+                "VAX_DEATH_DOD_RATE":{
                   "$ref": "#/definitions/1m-report-rate"
                 },
-                "BREAKTHROUGH_DEATH_DOD_RATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "PARTIAL_CASE_RATE":{
+                "BOOST_CASE_RATE":{
                   "$ref": "#/definitions/100k-report-rate"
                 },
-                "PARTIAL_HOSP_RATE":{
+                "BOOST_HOSP_RATE":{
                   "$ref": "#/definitions/1m-report-rate"
                 },
-                "PARTIAL_ICU_RATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "PARTIAL_DEATH_DOD_RATE":{
+                "BOOST_DEATH_DOD_RATE":{
                   "$ref": "#/definitions/1m-report-rate"
                 },
                 "REPORT_DATE":{

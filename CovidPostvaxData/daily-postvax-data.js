@@ -31,7 +31,7 @@ const getData_daily_postvax_data = async () => {
   };
 
   // For now, don't bother validating until we get data into a form we really like...
-  // validateJSON(`Postvax data failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
+  validateJSON(`Postvax data failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
   return json;
 };
