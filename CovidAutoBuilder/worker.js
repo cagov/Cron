@@ -3,37 +3,18 @@ const GitHub = require('github-api');
 const PrLabels = ['Automatic Deployment'];
 const githubUser = 'cagov';
 const githubRepo = 'covid19';
-// const puppeteer = require("puppeteer");
-const axios = require("axios")
-const cheerio = require("cheerio")
- const fetch = require('node-fetch');
-var fetchRetry = require('fetch-retry')(fetch);
 
 const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
 const masterBranch = 'master';
-const homePageToCheck = 'https://covid19.ca.gov/';
-const srcJSONFile = 'https://data.covid19.ca.gov/data/daily-stats-v2.json';
-const mySelector = 'div#total-vaccines-number strong';
 const build_json_path = 'pages/_data/auto-builder.json';
 
 const nowPacTime = options => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
 const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 const todayTimeStringUnprocessed = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'});
 const todayTimeString = () => nowPacTime({hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}).replace(/:/g,'-');
-const testing_mode = false; // forces a build
-
-/**
- * Pull a URL, parse the content and return it.
- * @param {string} url 
- * @returns Parsed data.
- */
-async function fetchHTML(url) {
-    const { data } = await axios.get(url);
-    return cheerio.load(data);
-}
 
 /**
  * Loop through the filedata and put all the changes in one PR
@@ -158,63 +139,19 @@ const force_build = async() => {
 };
 
 const doCovidAutoBuilder = async () => {
-    let needsBuild = false;
     let successfulPass = false;
     const maximumPasses = 10;
     let numberPasses = 0;
-    let errorEncountered = '';
-    let shownDoses = 0;
    
     while (!successfulPass) {
         try {
-            console.log("Looking at home page");
-            // testing code
-            // if (numberPasses < 11) {
-            //     throw "Testing error handling";
-            // }
-            const site = await fetchHTML(homePageToCheck);
-            const value = site(mySelector).text();
-        
-            shownDoses = parseInt(value.split(',').join(''));
-            console.log("Shown Doses", shownDoses);
-
-            if (shownDoses > 0) {
-                // this is our most common source of error - FetchError caused by HTML result due to file being inaccessible temporarily
-                await fetchRetry(srcJSONFile+'?x='+Math.random(),{method:"Get",retries:3,retryDelay:2000})
-                .then(res => res.json())
-                .then(json => {
-                    const jsonDoses = json.data.vaccinations.CUMMULATIVE_DAILY_DOSES_ADMINISTERED;
-                    console.log("JSON doses",jsonDoses);
-                    if (jsonDoses == shownDoses) {
-                        console.log("Values match, no building needed");
-                        needsBuild = testing_mode? true : false;
-                    }
-                    else {
-                        if (jsonDoses < shownDoses) {
-                            errorEncountered = "JSON Doses is lower than what is on website!";
-                        }
-                        console.log("Values do not match, build may be needed");
-                        needsBuild = true;
-                    }
-                });
-                if (needsBuild) {
-                    console.log("FORCING A BUILD");
-                    await force_build();
-                }
-            } else {
-                console.log("VaccinesAdmin is 0, likely a parsing issue, report it");
-                errorEncountered = 'Failed to parse Vaccines from home page!';                
-            }
+            await force_build();
             successfulPass = true;
         }
         catch (error) {
             // most errors (typically network errors) will be fixed by waiting 6 seconds and trying again
             if (numberPasses < maximumPasses) {
-                if (error.name == 'FetchError') {
-                    console.log("Fetch Error happened");
-                } else {
-                    console.log("Error: " + error);
-                }
+                console.log("Error: " + error);
                 await sleep(6*1000);
                 numberPasses += 1;
             } else {
@@ -223,10 +160,7 @@ const doCovidAutoBuilder = async () => {
             }
         }
     }
-    if (errorEncountered !== '') {
-        throw errorEncountered;
-    }
-    return needsBuild;
+    return successfulPass;
 };
 
 module.exports = {
