@@ -14,8 +14,6 @@ const getData_daily_postvax_data = async () => {
       ,process.env["SNOWFLAKE_CDT_COVID"]
   );
 
-  // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
-
   const report_date = statResults.postvax_data[0].REPORT_DATE;
 
   // pull a subset of fields  here...
