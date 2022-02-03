@@ -25,7 +25,7 @@ const getData_daily_vaccines_sparkline = async () => {
   } = await queryDataset(sqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
 
 
-  // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
+  validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
 
   // FILTER JSON HERE - remove fields we don't want
 
