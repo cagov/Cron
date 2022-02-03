@@ -1,4 +1,5 @@
 {
+    "$schema": "http://json-schema.org/draft-07/schema",
     "definitions": {
       "date-YYYY-MM-DD":{
         "type":"string",
@@ -51,7 +52,6 @@
             "type": "array",
             "uniqueItems": true,
             "items": {
-              "required": true,
               "type": "object",
               "additionalProperties": false,
               "required": [
