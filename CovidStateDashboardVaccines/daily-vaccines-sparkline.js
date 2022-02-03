@@ -2,8 +2,8 @@ const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 
 const schemaFileName = "../SQL/CDTCDPH_VACCINE/statedashboard-vaccines/schema/schema.json";
-const schemaTestGoodFilePath = "../SQL/CDTCDPH_VACCINE/statedashboard-vaccines/schema/tests/output/pass/";
-const schemaTestBadFilePath = "../SQL/CDTCDPH_VACCINE/statedashboard-vaccines/schema/tests/output/fail/";
+const schemaTestGoodFilePath = "../SQL/CDTCDPH_VACCINE/statedashboard-vaccines/schema/tests/pass/";
+const schemaTestBadFilePath = "../SQL/CDTCDPH_VACCINE/statedashboard-vaccines/schema/tests/fail/";
 
 const getData_daily_vaccines_sparkline = async () => {
   const sqlWork = {
@@ -92,8 +92,7 @@ const getData_daily_vaccines_sparkline = async () => {
 
   // console.log("Computed json",json);
 
-  // For now, don't bother validating until we get data into a form we really like...
-  // validateJSON(`${path} failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
+  validateJSON(`Vaccination data failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
   return json;
 };

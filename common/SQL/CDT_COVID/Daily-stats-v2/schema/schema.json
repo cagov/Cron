@@ -22,8 +22,7 @@
         "deaths",
         "tests",
         "hospitalizations",
-        "icu",
-        "vaccinations"
+        "icu"
       ],
       "additionalProperties": false,
       "properties": {
@@ -244,24 +243,6 @@
             },
             "ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS":{
               "type":"integer"
-            }
-          }
-        },
-        "vaccinations": {
-          "type":"object",
-          "required":[
-            "DATE",
-            "CUMMULATIVE_DAILY_DOSES_ADMINISTERED"
-          ],
-          "additionalProperties": false,
-          "properties": {
-            "DATE":{
-              "$ref": "#/definitions/date-YYYY-MM-DD"
-            },
-            "CUMMULATIVE_DAILY_DOSES_ADMINISTERED": {
-              "type": "integer",
-              "minimum": 199999,
-              "maximum": 999999999
             }
           }
         }

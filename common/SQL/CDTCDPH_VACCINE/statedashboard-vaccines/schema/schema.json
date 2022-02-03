@@ -8,29 +8,163 @@
         "type": "integer",
         "minimum": 0,
         "maximum": 99999999
+      },
+      "integer-zero-to-billion":{
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1000000000
+      },
+      "integer-zero-to-million":{
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1000000
+      },
+      "number-ratio":{
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "vax-data-series":{
+        "type": "object",
+        "required": [
+          "DATE_RANGE",
+          "VALUES"
+        ],
+        "properties": {
+          "DATE_RANGE": {
+            "type": "object",
+            "required": [
+              "MINIMUM",
+              "MAXIMUM"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "MINIMUM": {
+                "$ref": "#/definitions/date-YYYY-MM-DD"
+              },
+              "MAXIMUM": {
+                "$ref": "#/definitions/date-YYYY-MM-DD"
+              }
+            }
+          },
+          "VALUES": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "DATE",
+                "VALUE"
+              ],
+              "properties": {
+                "DATE": {
+                  "$ref": "#/definitions/date-YYYY-MM-DD"
+                },
+                "VALUE": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 10000000
+                }
+              }
+            }
+          }
+        }
       }
     },
     "additionalProperties": false,
     "properties": {
-       "meta": {
-         "type":"object"
-       },
-       "data": {
-            "type":"object",
-            "required": [
-              "ADMIN_DATE",
-              "COUNT"
-              ],
-            "additionalProperties": false,
-            "properties": {
-              "ADMIN_DATE":{
-                "$ref": "#/definitions/date-YYYY-MM-DD"
+
+      "meta": {
+          "type":"object",
+          "required": [
+            "PUBLISHED_DATE",
+            "coverage"
+          ]
+      },
+      "data": {
+          "type":"object",
+          "required": [
+            "summary",
+            "population",
+            "time_series"
+          ],
+          "additionalProperties": false,
+          "properties": {
+              "summary": {
+                "type":"object",
+                "required": [
+                  "DATE",
+                  "CUMMULATIVE_DAILY_DOSES_ADMINISTERED"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "DATE": {
+                    "$ref": "#/definitions/date-YYYY-MM-DD"
+                  },
+                  "CUMMULATIVE_DAILY_DOSES_ADMINISTERED": {
+                    "$ref": "#/definitions/integer-zero-to-billion"
+                  }
+                }
               },
-              "COUNT":{
-                "type": "integer",
-                "maximum": 99999999
+              "population": {
+                "type":"object",
+                "required": [
+                  "ELIGIBLE_POPULATION",
+                  "TOTAL_VAXED",
+                  "FULLY_VAXED",
+                  "PARTIALLY_VAXED",
+                  "TOTAL_VAXED_RATIO",
+                  "FULLY_VAXED_RATIO",
+                  "PARTIALLY_VAXED_RATIO",
+                  "DAILY_AVERAGE"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "ELIGIBLE_POPULATION": {
+                    "$ref": "#/definitions/integer-zero-to-everyone"
+                  },
+                  "TOTAL_VAXED": {
+                    "$ref": "#/definitions/integer-zero-to-everyone"
+                  },
+                  "FULLY_VAXED": {
+                    "$ref": "#/definitions/integer-zero-to-everyone"
+                  },
+                  "PARTIALLY_VAXED": {
+                    "$ref": "#/definitions/integer-zero-to-everyone"
+                  },
+                  "TOTAL_VAXED_RATIO": {
+                    "$ref": "#/definitions/number-ratio"
+                  },
+                  "FULLY_VAXED_RATIO": {
+                    "$ref": "#/definitions/number-ratio"
+                  },
+                  "PARTIALLY_VAXED_RATIO": {
+                    "$ref": "#/definitions/number-ratio"
+                  },
+                  "DAILY_AVERAGE": {
+                    "$ref": "#/definitions/integer-zero-to-million"
+                  }
+                }
+              },
+              "time_series": {
+                "type":"object",
+                "additionalProperties": false,
+                "required": [
+                  "VACCINE_DOSES",
+                  "VACCINE_DOSES_7DAYAVG"
+                ],
+                "properties": {
+                  "VACCINE_DOSES": {
+                    "$ref": "#/definitions/vax-data-series"
+                  },
+                  "VACCINE_DOSES_7DAYAVG": {
+                    "$ref": "#/definitions/vax-data-series"
+                  }
+                }
               }
-            }
-        }
+          }
+      }
     }
 }

@@ -19,16 +19,16 @@ const getData_daily_stats_v2 = async () => {
       }
       ,process.env["SNOWFLAKE_CDT_COVID"]
   );
-  const resultsVaccines = await queryDataset(
-      getSQL('CDTCDPH_VACCINE/Vaccines'),
-      process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
-  );
+//   const resultsVaccines = await queryDataset(
+//       getSQL('CDTCDPH_VACCINE/Vaccines'),
+//       process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
+//   );
 
-  validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
+//   validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
   
   const row = statResults.metrics[0];
   const rowHospitals = statResults.hospitalizations[0];
-  const rowVaccines = resultsVaccines[0];
+//   const rowVaccines = resultsVaccines[0];
 
   const json = {
       meta: {
@@ -85,11 +85,11 @@ const getData_daily_stats_v2 = async () => {
               ICU_SUSPECTED_COVID_PATIENTS_DAILY : rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_DAILY,
               ICU_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG : roundNumber(100.0*rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_DAILYPCTCHG,6),
               ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS : rowHospitals.ICU_SUSPECTED_COVID_PATIENTS_LAST14DAYS
-          },
-          vaccinations: {
-              DATE : rowHospitals.SF_LOAD_TIMESTAMP,
-              CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMMULATIVE_DAILY_DOSES_ADMINISTERED
           }
+        //   vaccinations: {
+        //       DATE : rowHospitals.SF_LOAD_TIMESTAMP,
+        //       CUMMULATIVE_DAILY_DOSES_ADMINISTERED : rowVaccines.CUMMULATIVE_DAILY_DOSES_ADMINISTERED
+        //   }
       }
   };
 
