@@ -4,11 +4,6 @@ const async_validator = require('./async_thread');
 const { threadResult, threadWork } = require('./async_custom');
 const remoteValidatorURL = "https://nfbx27vd92.execute-api.us-west-1.amazonaws.com/default/jsonValidator";
 
-const fetch = require("fetch-retry")(require("node-fetch/lib"), {
-  retries: 3,
-  retryDelay: 2000
-});
-
 //https://json-schema.org/understanding-json-schema/
 //https://www.jsonschemavalidator.net/
 
