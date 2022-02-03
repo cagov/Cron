@@ -2,7 +2,8 @@ const fs = require('fs');
 
 const async_validator = require('./async_thread');
 const { threadResult, threadWork } = require('./async_custom');
-const remoteValidatorURL = "https://yl4d3ia3u8.execute-api.us-west-1.amazonaws.com/default";
+const { workerData } = require('worker_threads');
+const remoteValidatorURL = "https://yl4d3ia3u8.execute-api.us-west-1.amazonaws.com/default/json-validation-service";
 
 const fetch = require("fetch-retry")(require("node-fetch/lib"), {
   retries: 3,
@@ -179,9 +180,40 @@ const validateJSON2 = (errorMessagePrefix, targetJSON, schemaJSON, testGoodFiles
     }
   }
 };
+/**
+ * Validates the JSON using a remote service if api key is specified, otherwise do it local.  Throws an exception on failed validation.
+ * @param {string} errorMessagePrefix Will display in front of error messages
+ * @param {Schema} schema The Schema to use when validating
+ * @param {ValidationServiceWorkRow[]} work An array of work to process
+ * @param {string} [remote_service_api_key] API key for validator.  Null to use local.
+ */
+const validateJSON_Remote_Or_Async = (errorMessagePrefix, schema, work, remote_service_api_key) => {
+  if (remote_service_api_key) {
+    return validateJSON_Remote(errorMessagePrefix, schema, work, remote_service_api_key);
+  } else {
+    //fall back to local validation if the api key is missing
+
+    /** @type {threadWork[]} */
+    const workList = [];
+
+    for (const iWork of work) {
+      /** @type {threadWork} */
+      const newWork = {
+        name: iWork.name,
+        schemaJSON: schema,
+        targetJSON: iWork.content
+      };
+
+      workList.push(newWork);
+    }
+    console.log('No remote API key, validating with local Async.')
+
+    return validateJSON_Async(errorMessagePrefix, workList);
+  }
+}
 
 /**
- * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
+ * Validates the JSON using a local service.  Throws an exception on failed validation.
  * @param {string} errorMessagePrefix Will display in front of error messages
  * @param {threadWork[]} work An array of work to process
  * @param {number} [max_threads] Number of threads to process work.  Too many threads creates overhead.  Blank to detect.
@@ -217,12 +249,13 @@ const validateJSON_Async = async (errorMessagePrefix, work, max_threads) => new 
  */
 
 /**
- * Tests (Bad and Good) a JSON schema and then validates the data.  Throws an exception on failed validation.
+ * Validates the JSON using a remote service.  Throws an exception on failed validation.
  * @param {string} errorMessagePrefix Will display in front of error messages
+ * @param {Schema} schema The Schema to use when validating
  * @param {ValidationServiceWorkRow[]} work An array of work to process
- * @param {string} api_key API key for validator
+ * @param {string} remote_service_api_key API key for validator.
  */
-const validateJSON_Remote = async (errorMessagePrefix, schema, work, api_key) => new Promise(async (resolve, reject) => {
+const validateJSON_Remote = async (errorMessagePrefix, schema, work, remote_service_api_key) => new Promise(async (resolve, reject) => {
   /** @type {ValidationServiceBody} */
   const bodyJSON = {
     schema,
@@ -236,7 +269,7 @@ const validateJSON_Remote = async (errorMessagePrefix, schema, work, api_key) =>
     console.log(`Sending ${bodyJSON.work.length} work items with a request size of ${bodylength} bytes. 6MB max!`);
   }
 
-  return fetch(remoteValidatorURL, { method: "POST", body, headers: { 'x-api-key': api_key, 'Content-Type': 'application/json' } })
+  return fetch(remoteValidatorURL, { method: "POST", body, headers: { 'x-api-key': remote_service_api_key, 'Content-Type': 'application/json' } })
     .then(async result => {
       if (result.status !== 204) {
         const text = await result.text();
@@ -277,6 +310,7 @@ module.exports = {
   validateJSON2,
   validateJSON_Async,
   validateJSON_Remote,
+  validateJSON_Remote_Or_Async,
   getSqlWorkAndSchemas,
   splitArrayIntoChunks
 };

@@ -1,6 +1,6 @@
 //@ts-check
 const { queryDataset } = require('../common/snowflakeQuery');
-const { splitArrayIntoChunks, getSqlWorkAndSchemas, validateJSON_Remote, ValidationServiceWorkRow } = require('../common/schemaTester');
+const { splitArrayIntoChunks, getSqlWorkAndSchemas, validateJSON_Remote_Or_Async, ValidationServiceWorkRow } = require('../common/schemaTester');
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -32,17 +32,8 @@ const getGitHubToken = () => {
 };
 
 const getValidatorApiKey = () => {
-    const token = process.env["JSON_VALIDATOR_API_KEY"];
+    return null; // process.env["JSON_VALIDATOR_API_KEY"];
 
-    if (!token) {
-        //developers that don't set the creds can still use the rest of the code
-        console.error(
-            `You need local.settings.json to contain "JSON_VALIDATOR_API_KEY" to use Validator features.`
-        );
-        return;
-    }
-
-    return token;
 };
 
 const PrInfoList = [
@@ -81,7 +72,7 @@ const SlackConnector = require("@cagov/slack-connector");
  * @param {SlackConnector | undefined} slack
  * @param {string} message
  */
-const slackIfConnected = async (slack, message) =>  slack ? slack.Reply(message) : null;
+const slackIfConnected = async (slack, message) => slack ? slack.Reply(message) : null;
 
 /**
  * 
@@ -100,7 +91,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
 
         let promises = [];
 
-        for(let file of Object.keys(sqlWorkAndSchemas.schema)) {
+        for (let file of Object.keys(sqlWorkAndSchemas.schema)) {
             const schemaObject = sqlWorkAndSchemas.schema[file].schema;
             const targetJSON = allData[file];
             //require('fs').writeFileSync(`${file}_sample.json`, JSON.stringify(targetJSON,null,2), 'utf8');
@@ -117,7 +108,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
 
                 workForValidation.push(newWork)
 
-                promises.push(validateJSON_Remote("failed validation", schemaObject, workForValidation, getValidatorApiKey()));
+                promises.push(validateJSON_Remote_Or_Async("failed validation", schemaObject, workForValidation, getValidatorApiKey()));
             })
         }
         console.log(`Validating input...`);
@@ -195,14 +186,14 @@ const doCovidStateDashboardTablesTests = async (slack) => {
         //Validate tree output
         let promises = [];
 
-        for(let outputSchema of sqlWorkAndSchemas.outputSchema) {
+        for (let outputSchema of sqlWorkAndSchemas.outputSchema) {
             /** @type {ValidationServiceWorkRow[]} */
             const workForValidation = [];
 
             for (let [fileName, content] of allFilesMap) {
                 let rootFolder = fileName.split('/')[0];
 
-                if(outputSchema.name===rootFolder) {
+                if (outputSchema.name === rootFolder) {
                     /** @type {ValidationServiceWorkRow} */
                     let newWork = {
                         name: fileName,
@@ -213,7 +204,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
                 }
             }
             splitArrayIntoChunks(workForValidation, 40).forEach(a => {
-                promises.push(validateJSON_Remote("failed validation", outputSchema.json, a, getValidatorApiKey()));
+                promises.push(validateJSON_Remote_Or_Async("failed validation", outputSchema.json, a, getValidatorApiKey()));
             })
         }
 
@@ -225,7 +216,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
 
         console.log(`Validating output...done`);
     }
-    //console.log('planned stop here'); return; throw new Error("STOP");
+    console.log('planned stop here'); return; throw new Error("STOP");
 
     /** @type {TreePushTreeOptions} */
     let defaultTreeOptions = {
