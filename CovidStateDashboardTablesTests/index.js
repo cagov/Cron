@@ -1,5 +1,7 @@
 //@ts-check
 const { doCovidStateDashboardTablesTests } = require('./worker');
+const { isIdleDay } = require('../common/timeOffCheck');
+
 const SlackConnector = require("@cagov/slack-connector");
 const slackBotName = "Covid State Dashboard Tables - Tests"
 
@@ -28,18 +30,23 @@ module.exports = async function (context) {
 
   try {
     await slack.Chat(`${appName} (Every weekday @ 7:30am)`);
-    const PrResults = await doCovidStateDashboardTablesTests(slack);
 
-    if(PrResults) {
-      await slack.Top.ReactionAdd('package');
+    if (isIdleDay({weekends_off:true, holidays_off:true})) {
+      await slack.Reply(`${appName} snoozed (weekend or holiday)`);
+      await slack.Top.ReactionAdd('zzz');
+    } else {
+      const PrResults = await doCovidStateDashboardTablesTests(slack);
 
-      for (let PrUrl of PrResults) {
-        await slack.Reply(PrUrl);
+      if(PrResults) {
+        await slack.Top.ReactionAdd('package');
+
+        for (let PrUrl of PrResults) {
+          await slack.Reply(PrUrl);
+        }
       }
+      await slack.Reply(`${appName} finished`);
+      await slack.Top.ReactionAdd('white_check_mark');
     }
-
-    await slack.Reply(`${appName} finished`);
-    await slack.Top.ReactionAdd('white_check_mark');
   } catch (e) {
     await slack.Reply(`${appName} ERROR!`);
     await slack.Error(e,`${appName} finished`);
