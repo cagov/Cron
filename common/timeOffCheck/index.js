@@ -24,7 +24,7 @@ const isIdleDay = ({weekends_off = true, holidays_off = true}) => {
         return true;
     }
     return false;
-});
+};
 
 
 module.exports = {
