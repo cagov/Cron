@@ -1,6 +1,8 @@
 
 const { doCovidVaccinesSparklineData } = require('./worker');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
+const { isIdleDay } = require('../common/timeOffCheck');
+
 const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
 
@@ -10,17 +12,22 @@ module.exports = async function (context, myTimer) {
   try {
     slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every weekday @ 7:05am)`)).json()).ts;
 
-    const TreeRunResults = await doCovidVaccinesSparklineData();
-
-    if(TreeRunResults.Pull_Request_URL) {
-      const prMessage = `Daily vaccines sparkline data ready\n${TreeRunResults.Pull_Request_URL}`;
-      await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
-      await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
-      await slackBotChatPost(notifyChannel, prMessage);
+    if (isIdleDay({weekends_off:true, holidays_off:true})) {
+      await slackBotReplyPost(debugChannel, slackPostTS,`${appName} snoozed (weekend or holiday)`);
+      await slackBotReactionAdd(debugChannel, slackPostTS, 'zzz');
     }
+    else {
+      const TreeRunResults = await doCovidVaccinesSparklineData();
 
-    await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
-    await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
+      if(TreeRunResults.Pull_Request_URL) {
+        const prMessage = `Daily vaccines sparkline data ready\n${TreeRunResults.Pull_Request_URL}`;
+        await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
+        await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
+        await slackBotChatPost(notifyChannel, prMessage);
+      }
+      await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
+      await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
+    }
   } catch (e) {
     await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
 
