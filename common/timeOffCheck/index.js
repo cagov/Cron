@@ -1,5 +1,6 @@
 
-const { todayDateString } = require('../common/gitTreeCommon');
+const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", {timeZone: "America/Los_Angeles", ...options});
+const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: '2-digit'});
 
 const cron_holidays = [
             '2022-02-21', // presidents day
