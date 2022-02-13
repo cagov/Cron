@@ -13,7 +13,7 @@ module.exports = async function (context, myTimer) {
     const PrResult = await doCovidAutoBuilder();
 
     if(PrResult) {
-      const prMessage = `Data has been updated. Building covid19.\n`;
+      const prMessage = `Building covid19.\n`;
       let slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName}: ${prMessage}`)).json()).ts;
       await slackBotReactionAdd(debugChannel, slackPostTS, 'building_construction');
       // await slackBotChatPost(notifyChannel, prMessage);
