@@ -218,7 +218,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
 
         console.log(`Validating output...done`);
     }
-    console.log('planned stop here'); return; throw new Error("STOP");
+    //console.log('planned stop here'); return; throw new Error("STOP");
 
     /** @type {TreePushTreeOptions} */
     let defaultTreeOptions = {
