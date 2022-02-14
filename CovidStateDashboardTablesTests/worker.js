@@ -32,7 +32,7 @@ const getGitHubToken = () => {
 };
 
 const getValidatorApiKey = () => {
-    return null; // process.env["JSON_VALIDATOR_API_KEY"];
+    return process.env["JSON_VALIDATOR_API_KEY"];
 
 };
 
@@ -96,7 +96,8 @@ const doCovidStateDashboardTablesTests = async (slack) => {
             const targetJSON = allData[file];
             //require('fs').writeFileSync(`${file}_sample.json`, JSON.stringify(targetJSON,null,2), 'utf8');
 
-            splitArrayIntoChunks(targetJSON, 5000).forEach((a, i) => {
+            // Splitting large query into smaller size to keep submissions under 6k
+            splitArrayIntoChunks(targetJSON, 20000).forEach((a, i) => {
                 /** @type {ValidationServiceWorkRow[]} */
                 const workForValidation = [];
 

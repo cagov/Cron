@@ -2,7 +2,6 @@ const fs = require('fs');
 
 const async_validator = require('./async_thread');
 const { threadResult, threadWork } = require('./async_custom');
-const { workerData } = require('worker_threads');
 const remoteValidatorURL = "https://yl4d3ia3u8.execute-api.us-west-1.amazonaws.com/default/json-validation-service";
 
 const fetch = require("fetch-retry")(require("node-fetch/lib"), {
@@ -266,8 +265,10 @@ const validateJSON_Remote = async (errorMessagePrefix, schema, work, remote_serv
 
   const bodylength = Buffer.byteLength(body);
   if (bodylength > 5000000) {
-    console.log(`Sending ${bodyJSON.work.length} work items with a request size of ${bodylength} bytes. 6MB max!`);
+    console.warn(`Sending ${bodyJSON.work.length} work items with a request size of ${bodylength} bytes. 6MB max!`);
   }
+
+  console.log(`Remote Validation - ${work.length} rows, ${bodylength} bytes.`);
 
   return fetch(remoteValidatorURL, { method: "POST", body, headers: { 'x-api-key': remote_service_api_key, 'Content-Type': 'application/json' } })
     .then(async result => {
