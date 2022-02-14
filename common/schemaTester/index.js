@@ -274,7 +274,7 @@ const validateJSON_Remote = async (errorMessagePrefix, schema, work, remote_serv
     .then(async result => {
       if (result.status !== 204) {
         const text = await result.text();
-        reject(errorMessagePrefix + ':' + text);
+        reject(`${errorMessagePrefix}:${result.status}:${text}`);
       }
 
       resolve();
@@ -306,6 +306,34 @@ const splitArrayIntoChunks = (array, chunk) => {
   return results;
 }
 
+/**
+ * Returns an array separated into smaller arrays
+ * @param {*[]} array
+ * @param {number} targetSize
+ */
+const splitArrayIntoChunks_BySize = (array, targetSize) => {
+  let results = [[]];
+  let resultSize = 0;
+  let resultIndex = 0;
+
+  for (let i = 0; i < array.length; i++) {
+    let rowData = array[i];
+    resultRowSize = Buffer.byteLength(JSON.stringify(rowData));
+
+    if (resultSize + resultRowSize >= targetSize) {
+      //too big, start another result
+      results.push([]);
+      resultIndex += 1;
+      resultSize = 0;
+    }
+
+    results[resultIndex].push(rowData);
+    resultSize += resultRowSize;
+  }
+
+  return results;
+}
+
 module.exports = {
   validateJSON,
   validateJSON2,
@@ -313,5 +341,6 @@ module.exports = {
   validateJSON_Remote,
   validateJSON_Remote_Or_Async,
   getSqlWorkAndSchemas,
-  splitArrayIntoChunks
+  splitArrayIntoChunks,
+  splitArrayIntoChunks_BySize
 };

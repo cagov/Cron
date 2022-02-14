@@ -1,6 +1,6 @@
 //@ts-check
 const { queryDataset } = require('../common/snowflakeQuery');
-const { splitArrayIntoChunks, getSqlWorkAndSchemas, validateJSON_Remote_Or_Async, ValidationServiceWorkRow } = require('../common/schemaTester');
+const { splitArrayIntoChunks_BySize, getSqlWorkAndSchemas, validateJSON_Remote_Or_Async, ValidationServiceWorkRow } = require('../common/schemaTester');
 const { GitHubTreePush, TreePushTreeOptions, TreeFileRunStats } = require("@cagov/github-tree-push");
 const nowPacTime = (/** @type {Intl.DateTimeFormatOptions} */ options) => new Date().toLocaleString("en-CA", { timeZone: "America/Los_Angeles", ...options });
 const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -14,6 +14,7 @@ const doInputValidation = true;
 const doOutputValidation = true;
 const sqlRootPath = '../SQL/CDT_COVID/CovidStateDashboardTablesTests/';
 const stagingOnly = false; //Set to true to only work on staging
+const removeValidationRequestSize = 4000000;
 
 const regionList = ["California", "Alameda", "Alpine", "Amador", "Butte", "Calaveras", "Colusa", "Contra Costa", "Del Norte", "El Dorado", "Fresno", "Glenn", "Humboldt", "Imperial", "Inyo", "Kern", "Kings", "Lake", "Lassen", "Los Angeles", "Madera", "Marin", "Mariposa", "Mendocino", "Merced", "Modoc", "Mono", "Monterey", "Napa", "Nevada", "Orange", "Placer", "Plumas", "Riverside", "Sacramento", "San Benito", "San Bernardino", "San Diego", "San Francisco", "San Joaquin", "San Luis Obispo", "San Mateo", "Santa Barbara", "Santa Clara", "Santa Cruz", "Shasta", "Sierra", "Siskiyou", "Solano", "Sonoma", "Stanislaus", "Sutter", "Tehama", "Trinity", "Tulare", "Tuolumne", "Ventura", "Yolo", "Yuba"];
 
@@ -97,7 +98,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
             //require('fs').writeFileSync(`${file}_sample.json`, JSON.stringify(targetJSON,null,2), 'utf8');
 
             // Splitting large query into smaller size to keep submissions under 6k
-            splitArrayIntoChunks(targetJSON, 20000).forEach((a, i) => {
+            splitArrayIntoChunks_BySize(targetJSON, removeValidationRequestSize).forEach((a, i) => {
                 /** @type {ValidationServiceWorkRow[]} */
                 const workForValidation = [];
 
@@ -204,7 +205,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
                     workForValidation.push(newWork)
                 }
             }
-            splitArrayIntoChunks(workForValidation, 40).forEach(a => {
+            splitArrayIntoChunks_BySize(workForValidation, removeValidationRequestSize).forEach(a => {
                 promises.push(validateJSON_Remote_Or_Async("failed validation", outputSchema.json, a, getValidatorApiKey()));
             })
         }
