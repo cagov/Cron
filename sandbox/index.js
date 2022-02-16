@@ -86,11 +86,15 @@ const doWork = async opt => {
         console.log("Running doCovidVaccinesSparklineData");
         await doCovidVaccinesSparklineData();
         break;
-    case '16':
+    case '16main':
         console.log("Running doCovidVariantsData");
-        await doCovidVariantsData();
+        await doCovidVariantsData(false);
         break;
-    case 'temp':
+    case '16preview':
+        console.log("Running doCovidVariantsDataPreview");
+        await doCovidVariantsData(true);
+        break;
+        case 'temp':
         //Put some temporary code here
         console.log("Running Temp code");
         

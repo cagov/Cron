@@ -1,0 +1,10 @@
+{
+    "bindings": [
+      {
+        "name": "CovidVariantsDataPreview",
+        "type": "timerTrigger",
+        "direction": "in",
+        "schedule": "0 0 21-23 * * Wed"
+      }
+    ]
+  }
