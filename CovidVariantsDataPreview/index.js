@@ -1,5 +1,5 @@
 
-const { doCovidVariantsData } = require('./worker');
+const { doCovidVariantsData } = require('../CovidVariantsData/worker'); // this piggy-backs off of CovidVariantsData
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
 const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
@@ -8,9 +8,9 @@ module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   let slackPostTS = null;
   try {
-    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Thursday @ 7:55am)`)).json()).ts;
+    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Wednesday @ 1pm,2pm,3pm)`)).json()).ts;
 
-    const TreeRunResults = await doCovidVariantsData(false);
+    const TreeRunResults = await doCovidVariantsData(true);
 
     if (TreeRunResults.Pull_Request_URL) {
       const prMessage = `Weekly Variants data ready\n${TreeRunResults.Pull_Request_URL}`;
