@@ -18,7 +18,7 @@ const cron_holidays = [
 const isIdleDay = ({weekends_off = true, holidays_off = true}) => {
     const todayDateStr = todayDateString();
     const dayOfWeekIdx = (new Date()).getDay(); // sunday is zero
-    if (holidays_off && todayDateStr in cron_holidays) {
+    if (holidays_off && cron_holidays.includes(todayDateStr)) {
         return true;
     }
     if (weekends_off && (dayOfWeekIdx == 0 || dayOfWeekIdx == 6)) {
