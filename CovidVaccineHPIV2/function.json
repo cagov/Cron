@@ -4,7 +4,7 @@
       "name": "CovidVaccineHPIV2",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 5 16 * * Wed"
+      "schedule": "0 5 15 * * Wed"
     }
   ]
 }
