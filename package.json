@@ -27,7 +27,7 @@
     "moment": "^2.29.1",
     "node-fetch": "^2.6.7",
     "sha1": "^1.1.1",
-    "snowflake-sdk": "^1.5.3",
+    "snowflake-sdk": "^1.6.8",
     "xlsx": "^0.17.0"
   }
 }
