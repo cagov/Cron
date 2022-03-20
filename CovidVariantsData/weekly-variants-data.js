@@ -11,7 +11,7 @@ const getData_weekly_variants_data = async () => {
       {
           variants_data: getSQL('CDT_COVID/variants-data/Variants'),
       }
-      ,process.env["SNOWFLAKE_CDT_COVID"]
+      ,process.env["SNOWFLAKE_CDT_COVID_OAUTH"]
   );
 
   // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');

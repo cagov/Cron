@@ -80,7 +80,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath, 'schema/input/[file]/schema.json', 'schema/input/[file]/sample.json', 'schema/input/[file]/fail/', 'schema/output/');
 
     await slackIfConnected(slack, 'Running queries...');
-    const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork, process.env["SNOWFLAKE_CDT_COVID"]);
+    const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork, process.env["SNOWFLAKE_CDT_COVID_OAUTH"]);
     if (doInputValidation) {
         await slackIfConnected(slack, 'Validating input...');
 

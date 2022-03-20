@@ -45,19 +45,6 @@ const queryDataset = async (sqlWork, connection) => {
         ConnectionOptionsObj.authenticator = 'OAUTH';
         ConnectionOptionsObj.client_session_keep_alive = true;
         ConnectionOptionsObj.max_connection_pool = 20;
-
-        // ConnectionsOptionsObj = {
-        //     'account':ConnectionOptionsObj.account,
-        //     'schema':ConnectionOptionsObj.schema,
-        //     'database':ConnectionOptionsObj.database,
-        //     'warehouse':ConnectionOptionsObj.warehouse,
-        //     'role':ConnectionOptionsObj.role,
-        //     'username':ConnectionOptionsObj.username, // not used...
-        //     'authenticator':'oauth',
-        //     'token':token,
-        //     'client_session_keep_alive':"True",
-        //     'max_connection_pool':20
-        // };
     }
 
     console.log("Getting Connection");
@@ -113,6 +100,12 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
     });
 });
 
+/**
+ * Fetches an OAuth token using the supplied connection parameters.
+ * @param {*} ConnectionOptionsObj 
+ * @returns 
+ */
+
 const getToken = async (ConnectionOptionsObj) => {
     const AUTH_GRANT_TYPE = 'password';
     const SCOPE_URL = "https://1ac25458-542c-4ecb-8105-36c15005b656/session:role-any";
@@ -135,9 +128,7 @@ const getToken = async (ConnectionOptionsObj) => {
     }
     const payload = elems.join('&');
 
-    // note: this payload is working if the console-output is pasted into my python script
-    // or to CURL, however when using javascript/fetch it produces an error that 'grant_type' is missing.
-    // console.log("Fetching Token, payload =", payload);
+    // note: the token service does NOT appear to support application/json for the payload.
     return fetch(TOKEN_URL, {
           method: "POST",
           headers: HEADERS,

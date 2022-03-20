@@ -13,7 +13,7 @@ const getData_infections_by_group = async () => {
       {
           infections_by_group : getSQL('CDT_COVID/Infections-by-group/infections-by-group')
       }
-      ,process.env["SNOWFLAKE_CDT_COVID"]
+      ,process.env["SNOWFLAKE_CDT_COVID_OAUTH"]
   );
 
   const arrayResultMap = m => ({CATEGORY:m.CATEGORY,METRIC_VALUE:m.METRIC_VALUE});
