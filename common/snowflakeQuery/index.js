@@ -1,5 +1,7 @@
 const fs = require('fs');
 const snowflake = require('snowflake-sdk');
+// const fetchRetry = require('fetch-retry')(require('node-fetch'), {retries:3,retryDelay:2000});
+const fetch = require('node-fetch');
 //https://docs.snowflake.com/en/user-guide/nodejs-driver.html
 
 /**
@@ -27,7 +29,43 @@ const queryDataset = async (sqlWork, connection) => {
         throw new Error('connection is required : use getDatabaseConnection.');
     }
 
-    const activeConnection = getDatabaseConnection(connection); //Will return the same connection if it is already one
+
+    var ConnectionOptionsObj = typeof connection === 'string' ? JSON.parse(connection) : connection;
+
+    // if oauth param is in there, get a token and set up oauth params first...
+    if ('client_id' in ConnectionOptionsObj) {
+        console.log("Obtaining OAuth Token");
+        const token = await getToken(ConnectionOptionsObj);
+        if (token) {
+            console.log("Token obtained");
+        }
+
+        // reset parameters for OAuth connection
+        ConnectionOptionsObj.token = token;
+        ConnectionOptionsObj.authenticator = 'OAUTH';
+        ConnectionOptionsObj.client_session_keep_alive = true;
+        ConnectionOptionsObj.max_connection_pool = 20;
+
+        // ConnectionsOptionsObj = {
+        //     'account':ConnectionOptionsObj.account,
+        //     'schema':ConnectionOptionsObj.schema,
+        //     'database':ConnectionOptionsObj.database,
+        //     'warehouse':ConnectionOptionsObj.warehouse,
+        //     'role':ConnectionOptionsObj.role,
+        //     'username':ConnectionOptionsObj.username, // not used...
+        //     'authenticator':'oauth',
+        //     'token':token,
+        //     'client_session_keep_alive':"True",
+        //     'max_connection_pool':20
+        // };
+    }
+
+    console.log("Getting Connection");
+
+    const activeConnection = getDatabaseConnection(ConnectionOptionsObj); //Will return the same connection if it is already one
+
+    console.log("Got Connection");
+
 
     const singleResult = typeof sqlWork === 'string';
     const queries = singleResult ? {RESULT1 : sqlWork} : sqlWork;
@@ -58,6 +96,7 @@ const queryDataset = async (sqlWork, connection) => {
  * @param {string} sqlText Query to execute
  */
 const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject) => {
+    console.log("Getting DB Promise");
     connection.execute({
         sqlText,
         complete: function(err, stmt, rows) {
@@ -74,6 +113,41 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
     });
 });
 
+const getToken = async (ConnectionOptionsObj) => {
+    const AUTH_GRANT_TYPE = 'password';
+    const SCOPE_URL = "https://1ac25458-542c-4ecb-8105-36c15005b656/session:role-any";
+    const TOKEN_URL = "https://login.microsoftonline.com/1f311b51-f6d9-4153-9bac-55e0ef9641b8/oauth2/v2.0/token";
+    const   HEADERS = {
+        'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8',
+        'User-Agent': 'Fetch/ODI'
+    };
+
+    // dict payload
+    const dict_payload = {
+        grant_type:AUTH_GRANT_TYPE,
+        client_id:ConnectionOptionsObj.client_id,
+        username:ConnectionOptionsObj.username,
+        password:ConnectionOptionsObj.password,
+        scope:SCOPE_URL};
+    var elems = [];
+    for (var key in dict_payload) { // doing this to ensure correct encoding...
+        elems.push(encodeURIComponent(key) + '=' + encodeURIComponent(dict_payload[key]));
+    }
+    const payload = elems.join('&');
+
+    // note: this payload is working if the console-output is pasted into my python script
+    // or to CURL, however when using javascript/fetch it produces an error that 'grant_type' is missing.
+    // console.log("Fetching Token, payload =", payload);
+    return fetch(TOKEN_URL, {
+          method: "POST",
+          headers: HEADERS,
+          body: payload,
+              })
+        .then((response) => response.json())
+        .then((data) => { return data.access_token; } );
+ };
+
+
 /**
  * Returns a configured snowflake.Connection
  * @param {string|snowflake.ConnectionOptions|snowflake.Connection} ConnectionOptions a connection string OR an object with connection info
@@ -81,8 +155,10 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
  * @example 
  * let conn = getDatabaseConnection({account:"MYACCOUNT", warehouse:"MYWAREHOUSE", username:"MYUSER", password:"12345"});
  */
-const getDatabaseConnection = ConnectionOptions => {
-    const ConnectionOptionsObj = typeof ConnectionOptions === 'string' ? JSON.parse(ConnectionOptions) : ConnectionOptions;
+
+
+const getDatabaseConnection = (ConnectionOptions) => {
+    var ConnectionOptionsObj = typeof ConnectionOptions === 'string' ? JSON.parse(ConnectionOptions) : ConnectionOptions;
     if(ConnectionOptionsObj.connect) { //already a connection
         return ConnectionOptionsObj;
     }
