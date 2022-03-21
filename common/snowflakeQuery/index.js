@@ -45,6 +45,10 @@ const queryDataset = async (sqlWork, connection) => {
         ConnectionOptionsObj.authenticator = 'OAUTH';
         ConnectionOptionsObj.client_session_keep_alive = true;
         ConnectionOptionsObj.max_connection_pool = 20;
+        // delete this for security
+        if ('password' in ConnectionOptionsObj) {
+            delete ConnectionOptionsObj['password'];
+        }
     }
 
     console.log("Getting Connection");
@@ -154,8 +158,10 @@ const getDatabaseConnection = (ConnectionOptions) => {
         return ConnectionOptionsObj;
     }
 
-    if (!ConnectionOptionsObj.username || !ConnectionOptionsObj.password || !ConnectionOptionsObj.account | !ConnectionOptionsObj.warehouse) {
-        throw new Error('You need local.settings.json to contain a JSON connection string {account,warehouse,username,password} to use the dataset features');
+    if ((!ConnectionOptionsObj.token && !ConnectionOptionsObj.password) ||
+        !ConnectionOptionsObj.username ||
+        !ConnectionOptionsObj.account || !ConnectionOptionsObj.warehouse) {
+        throw new Error('You need local.settings.json to contain a JSON connection string {account,warehouse,username,password/token} to use the dataset features');
     }
 
     const connection = snowflake.createConnection(ConnectionOptionsObj);
