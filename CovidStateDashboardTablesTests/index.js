@@ -29,7 +29,7 @@ module.exports = async function (context) {
   const slack = new SlackConnector(slackBotGetToken(), debugChannel, {username:slackBotName});
 
   try {
-    await slack.Chat(`${appName} (Every weekday @ 7:30am)`);
+    await slack.Chat(`${appName} (Every Tue,Fri @ 7:30am)`);
 
     if (isIdleDay({weekends_off:true, holidays_off:true})) {
       await slack.Reply(`${appName} snoozed (weekend or holiday)`);
