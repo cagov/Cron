@@ -4,7 +4,7 @@
         "name": "CovidPostvaxData",
         "type": "timerTrigger",
         "direction": "in",
-        "schedule": "0 35 14 * * Wed"
+        "schedule": "0 35 14 * * Fri"
       }
     ]
   }

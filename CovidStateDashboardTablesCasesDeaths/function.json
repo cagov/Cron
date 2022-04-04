@@ -4,7 +4,7 @@
       "name": "CovidStateDashboardTablesCasesDeaths",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 10 14 * * *"
+      "schedule": "0 10 14 * * Tue,Fri"
     }
   ]
 }
