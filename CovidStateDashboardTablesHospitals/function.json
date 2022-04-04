@@ -4,7 +4,7 @@
       "name": "CovidStateDashboardTablesHospitals",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 20 14 * * *"
+      "schedule": "0 20 14 * * Tue,Fri"
     }
   ]
 }
