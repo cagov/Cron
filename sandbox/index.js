@@ -80,17 +80,21 @@ const doWork = async opt => {
         break;
     case '14':
         console.log("Running doCovidPostvaxData");
-        await doCovidPostvaxData();
+        await doCovidPostvaxData(false);
+        break;
+    case '14p':
+        console.log("Running doCovidPostvaxDataPreview");
+        await doCovidPostvaxData(true);
         break;
     case '15':
         console.log("Running doCovidVaccinesSparklineData");
         await doCovidVaccinesSparklineData();
         break;
-    case '16main':
+    case '16':
         console.log("Running doCovidVariantsData");
         await doCovidVariantsData(false);
         break;
-    case '16preview':
+    case '16p':
         console.log("Running doCovidVariantsDataPreview");
         await doCovidVariantsData(true);
         break;

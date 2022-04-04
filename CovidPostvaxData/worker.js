@@ -14,7 +14,7 @@ const targetBranch = 'main';
  * Check to see if we need stats update PRs, make them if we do.
  * @returns The PR created if changes were made
  */
-const doCovidPostvaxData = async () => {
+const doCovidPostvaxData = async (previewOnly) => {
     const gitToken = process.env["GITHUB_TOKEN"];
     const prTitle = `${todayDateString()} Postvax Data Update`;
 
@@ -31,28 +31,32 @@ const doCovidPostvaxData = async () => {
     });
 
     stagingTree.syncFile(fileName, jsonData);
-    await stagingTree.treePush();
+    const stagingResult = await stagingTree.treePush();
 
-    const mainTree = new GitHubTreePush(gitToken, {
-        owner: githubOwner,
-        repo: githubRepo,
-        path: githubPath,
-        base: targetBranch,
-        removeOtherFiles: true,
-        commit_message: prTitle,
-        pull_request: true,
-        pull_request_options: {
-            title: prTitle,
-            issue_options: {
-                labels: PrLabels
+    if (!previewOnly) {
+        const mainTree = new GitHubTreePush(gitToken, {
+            owner: githubOwner,
+            repo: githubRepo,
+            path: githubPath,
+            base: targetBranch,
+            removeOtherFiles: true,
+            commit_message: prTitle,
+            pull_request: true,
+            pull_request_options: {
+                title: prTitle,
+                issue_options: {
+                    labels: PrLabels
+                }
             }
-        }
-    });
+        });
 
-    mainTree.syncFile(fileName, jsonData);
-    const mainResult = await mainTree.treePush();
+        mainTree.syncFile(fileName, jsonData);
+        const mainResult = await mainTree.treePush();
 
-    return mainResult;
+        return mainResult;
+    } else {
+        return stagingResult;
+    }
 };
 
 module.exports = {
