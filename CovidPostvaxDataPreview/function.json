@@ -1,0 +1,10 @@
+{
+    "bindings": [
+      {
+        "name": "CovidPostvaxDataPreview",
+        "type": "timerTrigger",
+        "direction": "in",
+        "schedule": "0 30 23 * * Tue"
+      }
+    ]
+  }
