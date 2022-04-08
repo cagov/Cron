@@ -17,7 +17,7 @@ const getData_daily_stats_v2 = async () => {
           metrics: getSQL('CDT_COVID/Daily-stats-v2/Metrics'),
           hospitalizations : getSQL('CDT_COVID/Daily-stats-v2/Hospitalizations')
       }
-      ,process.env["SNOWFLAKE_CDT_COVID_OAUTH"]
+      ,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
   );
 //   const resultsVaccines = await queryDataset(
 //       getSQL('CDTCDPH_VACCINE/Vaccines'),
