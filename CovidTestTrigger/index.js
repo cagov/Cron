@@ -1,6 +1,7 @@
 // debugging trigger
 
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
+const { doSnowflakeTest } = require('./worker');
 const slackDebugChannel = 'C02J16U50KE'; // #jim-testing
 const appName = 'CovidTestTrigger';
 
@@ -13,7 +14,17 @@ module.exports = async function (context, req) {
         slackPostTS = (await (await slackBotChatPost(slackDebugChannel,`${appName} triggered`)).json()).ts;
         await slackBotReplyPost(slackDebugChannel, slackPostTS,`${appName} started`);
 
+        const reqBody = req.body? req.body : "";
+        if (reqBody) {
+            await slackBotReplyPost(slackDebugChannel, slackPostTS, "REQ BODY: " + JSON.stringify(reqBody));
+        }
 
+        const treeRunResults = await doSnowflakeTest(reqBody);
+        if (treeRunResults) {
+            await slackBotReplyPost(slackDebugChannel, slackPostTS, treeRunResults);
+        }
+
+        await slackBotReplyPost(slackDebugChannel, slackPostTS,`${appName} finished`);
         await slackBotReactionAdd(slackDebugChannel, slackPostTS, 'white_check_mark');
 
     } // End Try for the entire module
