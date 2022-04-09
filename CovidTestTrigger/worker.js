@@ -8,7 +8,7 @@ const getData = async () => {
         {
             snowflake_data: getSQL('CDT_COVID/Daily-stats-v2/Metrics'),
         }
-        ,process.env["SNOWFLAKE_CDT_COVID"]
+        ,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
     );
     
     return statResults.snowflake_data;
