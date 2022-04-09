@@ -13,6 +13,7 @@ module.exports = async function (context, req) {
         // const appName = context.executionContext.functionName;
         slackPostTS = (await (await slackBotChatPost(slackDebugChannel,`${appName} triggered`)).json()).ts;
         await slackBotReplyPost(slackDebugChannel, slackPostTS,`${appName} started`);
+        await slackBotReplyPost(slackDebugChannel, slackPostTS,`${appName} credential` + ' ' + process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]);
 
         const reqBody = req.body? req.body : "";
         if (reqBody) {
