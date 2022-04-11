@@ -2,8 +2,8 @@
 // const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { queryDataset,getSQL } = require('../common/snowflakeQueryTest');
 
-const snowflakeAccount = "SNOWFLAKE_CDT_COVID";
-// const snowflakeAccount = "SNOWFLAKE_CDTCDPH_COVID_OAUTH";
+// const snowflakeAccount = "SNOWFLAKE_CDT_COVID";
+const snowflakeAccount = "SNOWFLAKE_CDTCDPH_COVID_OAUTH";
 
 const getData = async (slackPostTS) => {
 
