@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 
 const { slackBotReplyPost } = require('../../common/slackBot');
 const slackDebugChannel = 'C02J16U50KE'; // #jim-testing
+var gTokenResponseJSON;
 
 //https://docs.snowflake.com/en/user-guide/nodejs-driver.html
 
@@ -40,12 +41,14 @@ const queryDataset = async (sqlWork, connection, slackPostTS) => {
     if ('client_id' in ConnectionOptionsObj) {
         console.log("Obtaining OAuth Token");
         await slackBotReplyPost(slackDebugChannel, slackPostTS, "Obtaining OAuth Token");
-        const token = await getToken(ConnectionOptionsObj, slackPostTS);
+        const token = await getToken(ConnectionOptionsObj);
         if (token) {
             console.log("Token obtained");
             await slackBotReplyPost(slackDebugChannel, slackPostTS, "Token obtained");
         } else {
             await slackBotReplyPost(slackDebugChannel, slackPostTS, "Token not obtained");
+            await slackBotReplyPost(slackDebugChannel, slackPostTS, "TOKEN RESPONSE: " + JSON.stringify(gTokenResponseJSON));
+
         }
 
         // reset parameters for OAuth connection
@@ -120,7 +123,7 @@ const getDbPromise = (connection, name, sqlText) => new Promise((resolve, reject
  * @returns 
  */
 
-const getToken = async (ConnectionOptionsObj, slackPostTS) => {
+const getToken = async (ConnectionOptionsObj) => {
     const AUTH_GRANT_TYPE = 'password';
     const SCOPE_URL = "https://1ac25458-542c-4ecb-8105-36c15005b656/session:role-any";
     const TOKEN_URL = "https://login.microsoftonline.com/1f311b51-f6d9-4153-9bac-55e0ef9641b8/oauth2/v2.0/token";
@@ -150,9 +153,7 @@ const getToken = async (ConnectionOptionsObj, slackPostTS) => {
               })
         .then((response) => response.json())
         .then((data) => { 
-
-            await slackBotReplyPost(slackDebugChannel, slackPostTS, "TOKEN RESPONSE: " + JSON.stringify(data));
-
+            gTokenResponseJSON = data;
             return data.access_token; 
         } );
  };
