@@ -5,6 +5,7 @@ const slackDebugChannel = 'C02J16U50KE'; // #jim-testing
 
 const { doSnowflakeTest } = require('./worker');
 const appName = 'CovidTestTrigger';
+const fetch = require('node-fetch');
 
 module.exports = async function (context, req) {
 
@@ -15,6 +16,11 @@ module.exports = async function (context, req) {
         slackPostTS = (await (await slackBotChatPost(slackDebugChannel,`${appName} triggered`)).json()).ts;
         await slackBotReplyPost(slackDebugChannel, slackPostTS,`${appName} started`);
         // await slackBotReplyPost(slackDebugChannel, slackPostTS,`${appName} credential` + ' ' + process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]);
+
+        await fetch("https://krazydad.com/azure_ip_test")
+            .then(response => {
+
+            });
 
         const reqBody = req.body? req.body : "";
         if (reqBody) {
