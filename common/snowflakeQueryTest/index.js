@@ -6,6 +6,7 @@ const fetch = require('node-fetch');
 const { slackBotReplyPost } = require('../../common/slackBot');
 const slackDebugChannel = 'C02J16U50KE'; // #jim-testing
 var gTokenResponseJSON;
+var gTokenPayload;
 
 //https://docs.snowflake.com/en/user-guide/nodejs-driver.html
 
@@ -47,9 +48,9 @@ const queryDataset = async (sqlWork, connection, slackPostTS) => {
             await slackBotReplyPost(slackDebugChannel, slackPostTS, "Token obtained");
         } else {
             await slackBotReplyPost(slackDebugChannel, slackPostTS, "Token not obtained");
-            await slackBotReplyPost(slackDebugChannel, slackPostTS, "TOKEN RESPONSE: " + JSON.stringify(gTokenResponseJSON));
-
         }
+        await slackBotReplyPost(slackDebugChannel, slackPostTS, "TOKEN PAYLOAD: " + JSON.stringify(gTokenPayload));
+        await slackBotReplyPost(slackDebugChannel, slackPostTS, "TOKEN RESPONSE: " + JSON.stringify(gTokenResponseJSON));
 
         // reset parameters for OAuth connection
         ConnectionOptionsObj.token = token;
@@ -144,6 +145,8 @@ const getToken = async (ConnectionOptionsObj) => {
         elems.push(encodeURIComponent(key) + '=' + encodeURIComponent(dict_payload[key]));
     }
     const payload = elems.join('&');
+
+    gTokenPayload = payload;
 
     // note: the token service does NOT appear to support application/json for the payload.
     return fetch(TOKEN_URL, {
