@@ -38,6 +38,8 @@ const queryDataset = async (sqlWork, connection) => {
         const token = await getToken(ConnectionOptionsObj);
         if (token) {
             console.log("Token obtained");
+        } else {
+            throw new Error('OAuth token not obtained.');
         }
 
         // reset parameters for OAuth connection
