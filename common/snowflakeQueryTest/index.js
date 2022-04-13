@@ -128,8 +128,8 @@ const getToken = async (ConnectionOptionsObj) => {
     const AUTH_GRANT_TYPE = 'password';
     const SCOPE_URL = "https://1ac25458-542c-4ecb-8105-36c15005b656/session:role-any";
     const TOKEN_URL = "https://login.microsoftonline.com/1f311b51-f6d9-4153-9bac-55e0ef9641b8/oauth2/v2.0/token";
-    // const USER_AGENT = "Fetch/ODI";
-    const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36";
+    const USER_AGENT = "Fetch/ODI";
+    // const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36";
 
     const   HEADERS = {
         'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8',
