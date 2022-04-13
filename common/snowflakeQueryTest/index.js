@@ -43,14 +43,15 @@ const queryDataset = async (sqlWork, connection, slackPostTS) => {
         console.log("Obtaining OAuth Token");
         await slackBotReplyPost(slackDebugChannel, slackPostTS, "Obtaining OAuth Token");
         const token = await getToken(ConnectionOptionsObj);
+        await slackBotReplyPost(slackDebugChannel, slackPostTS, "TOKEN PAYLOAD: " + JSON.stringify(gTokenPayload));
+        await slackBotReplyPost(slackDebugChannel, slackPostTS, "TOKEN RESPONSE: " + JSON.stringify(gTokenResponseJSON));
         if (token) {
             console.log("Token obtained");
             await slackBotReplyPost(slackDebugChannel, slackPostTS, "Token obtained");
         } else {
             await slackBotReplyPost(slackDebugChannel, slackPostTS, "Token not obtained");
+            throw new Error('OAuth Token not obtained.');
         }
-        await slackBotReplyPost(slackDebugChannel, slackPostTS, "TOKEN PAYLOAD: " + JSON.stringify(gTokenPayload));
-        await slackBotReplyPost(slackDebugChannel, slackPostTS, "TOKEN RESPONSE: " + JSON.stringify(gTokenResponseJSON));
 
         // reset parameters for OAuth connection
         ConnectionOptionsObj.token = token;
