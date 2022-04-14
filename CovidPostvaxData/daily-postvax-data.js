@@ -11,7 +11,7 @@ const getData_daily_postvax_data = async () => {
       {
           postvax_data: getSQL('CDT_COVID/postvax-data/Postvax'),
       }
-      ,process.env["SNOWFLAKE_CDT_COVID"]
+      ,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
   );
 
   const report_date = statResults.postvax_data[0].REPORT_DATE;

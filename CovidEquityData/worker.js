@@ -45,7 +45,7 @@ If there are issues with the data:
         
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/[file]/input/schema.json','schema/[file]/input/sample.json','schema/[file]/input/fail/');
 
-    const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDT_COVID"]);
+    const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]);
 
     Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
         const schemaObject = sqlWorkAndSchemas.schema[file];
