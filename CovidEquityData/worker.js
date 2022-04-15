@@ -12,7 +12,7 @@ const committer = {
   name: process.env["GITHUB_NAME"],
   email: process.env["GITHUB_EMAIL"]
 };
-const PrLabels = ['Automatic Deployment'];
+// const PrLabels = ['Automatic Deployment'];
 const PrReviewers = ['sindhuravuri','tomasleon','cmhoove14'];
 const sqlRootPath = "../SQL/CDT_COVID/Equity/";
 const schemaPath = `${sqlRootPath}schema/`;
@@ -36,11 +36,11 @@ const doCovidEquityData = async () => {
     const productionPrMessage = `
 Equity dashboard stats updates in this PR may be reviewed on staging - [here](https://staging.covid19.ca.gov/equity/).
 
-After reviewing, if all looks well, approve and merge this Pull Request.
+After reviewing, if all looks well, approve BUT DO NOT MERGE this Pull Request.
 
 If there are issues with the data:
 - Note concerns or issues here by commenting on this PR
-- Work with Triston directly to resolve data issues
+- Work with CDPH directly to resolve data issues
 - Alert the COVID19 site team in Slack (in the [Equity page channel](https://cadotgov.slack.com/archives/C01BMCQK0F6))`;
         
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/[file]/input/schema.json','schema/[file]/input/sample.json','schema/[file]/input/fail/');
@@ -274,9 +274,9 @@ If there are issues with the data:
         .data;
 
         //Label the Pr
-        await gitIssues.editIssue(Pr.number,{
-            labels: PrLabels
-        });
+        // await gitIssues.editIssue(Pr.number,{
+        //     labels: PrLabels
+        // });
 
         await sleep(5000); //give PR time to check actions
         //Approve Pr
@@ -300,9 +300,9 @@ If there are issues with the data:
         .data;
 
         //label pr
-        await gitIssues.editIssue(Pr.number,{
-            labels: PrLabels
-        });
+        // await gitIssues.editIssue(Pr.number,{
+        //     labels: PrLabels
+        // });
 
         //Request reviewers for Pr
         //https://docs.github.com/en/free-pro-team@latest/rest/reference/pulls#request-reviewers-for-a-pull-request
