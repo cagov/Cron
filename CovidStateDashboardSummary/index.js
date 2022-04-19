@@ -12,7 +12,7 @@ module.exports = async function (context, myTimer) {
     const TreeRunResults = await doCovidStateDashboardSummary();
 
     if(TreeRunResults.Pull_Request_URL) {
-      const prMessage = `Daily stats summary ready\n${TreeRunResults.Pull_Request_URL}`;
+      const prMessage = `Biweekly stats summary ready\n${TreeRunResults.Pull_Request_URL}`;
       await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
       await slackBotChatPost(notifyChannel, prMessage);

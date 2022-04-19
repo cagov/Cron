@@ -3,7 +3,7 @@
 This service is used to retrieve data to populate the cases and deaths charts on the <a href="https://covid19.ca.gov/state-dashboard/">state dashboard</a>
 
 - Data is retrieved from snowflake
-- Data is not published before the statewide coordinated daily stats release time 9:30am daily
+- Data is not published before the statewide coordinated biweekly stats release time 9:30am Tuesday and Friday.
 - Data is published as static json files to the covid-static-data repository and from there pushed to files.covid19.ca.gov
 - Data will be initially published as an open pull request on the static repository. 
 - Data publishing can be stopped by applying a "do not publish" label to the pull request
