@@ -22,7 +22,7 @@ const getData_daily_vaccines_sparkline = async () => {
     populationResults,
     dailyaverageResults,
     resultsVaccines
-  } = await queryDataset(sqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
+  } = await queryDataset(sqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE_OAUTH"]);
 
 
   // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');

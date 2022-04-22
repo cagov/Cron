@@ -21,7 +21,7 @@ const getData_daily_stats_v2 = async () => {
   );
 //   const resultsVaccines = await queryDataset(
 //       getSQL('CDTCDPH_VACCINE/Vaccines'),
-//       process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
+//       process.env["SNOWFLAKE_CDTCDPH_VACCINE_OAUTH"]
 //   );
 
 //   validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');

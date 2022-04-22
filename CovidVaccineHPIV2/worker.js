@@ -77,7 +77,7 @@ const getData = async () => {
       data: getSQL(`${SnowFlakeSqlPath}vaccine_hpi`),
       doses: getSQL(`${SnowFlakeSqlPath}vaccine_doses`)
     }
-    , process.env["SNOWFLAKE_CDTCDPH_VACCINE"]
+    , process.env["SNOWFLAKE_CDTCDPH_VACCINE_OAUTH"]
   );
 
   // validateJSON('vaccine-hpi.json failed input validation', sqlResults.data,`${schemaPath}input/schema.json`,`${schemaPath}input/pass/`);

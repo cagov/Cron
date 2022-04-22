@@ -28,7 +28,7 @@ const doCovidVaccineEquity = async () => {
     const PrTitle = `${todayDateString()} Vaccine Equity`;
 
     const sqlWorkAndSchemas = getSqlWorkAndSchemas(sqlRootPath,'schema/[file]/input/schema.json','schema/[file]/input/sample.json');
-    const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE"]);
+    const allData = await queryDataset(sqlWorkAndSchemas.DbSqlWork,process.env["SNOWFLAKE_CDTCDPH_VACCINE_OAUTH"]);
 
     Object.keys(sqlWorkAndSchemas.schema).forEach(file => {
         const schemaObject = sqlWorkAndSchemas.schema[file];
