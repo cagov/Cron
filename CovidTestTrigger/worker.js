@@ -3,13 +3,15 @@ const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 // const { queryDataset,getSQL } = require('../common/snowflakeQueryTest');
 
 // const snowflakeAccount = "SNOWFLAKE_CDT_COVID";
-const snowflakeAccount = "SNOWFLAKE_CDTCDPH_COVID_OAUTH";
+// const snowflakeAccount = "SNOWFLAKE_CDTCDPH_COVID_OAUTH";
+const snowflakeAccount = "SNOWFLAKE_CDTCDPH_VACCINE_OAUTH";
 
 const getData = async (slackPostTS) => {
 
     const statResults = await queryDataset(
         {
-            snowflake_data: getSQL('CDT_COVID/Daily-stats-v2/Metrics'),
+            // snowflake_data: getSQL('CDT_COVID/Daily-stats-v2/Metrics'),
+            snowflake_data: getSQL('CDTCDPH_VACCINE/statedashboard-vaccines/totalvaxed'),
         }
         ,process.env[snowflakeAccount]
         // ,slackPostTS
