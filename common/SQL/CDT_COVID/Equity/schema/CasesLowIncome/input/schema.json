@@ -9,6 +9,11 @@
       "minimum": 1,
       "maximum": 99999999
     },
+    "number-one-to-everyone": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 99999999
+    },
     "rate-per-100k": {
       "type": "number",
       "exclusiveMinimum": 0,
@@ -44,7 +49,7 @@
         "$ref": "#/definitions/integer-one-to-everyone"
       },
       "CASES_7DAYAVG_7DAYSAGO": {
-        "$ref": "#/definitions/integer-one-to-everyone"
+        "$ref": "#/definitions/number-one-to-everyone"
       },
       "RATE_DIFF_30_DAYS": {
         "type": "number"
