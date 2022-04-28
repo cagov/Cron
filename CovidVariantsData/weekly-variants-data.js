@@ -14,6 +14,10 @@ const getData_weekly_variants_data = async () => {
       ,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
   );
 
+  //temp output
+      console.log(JSON.stringify(statResults.variants_data),null,2);
+
+
   // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
 
   // PROCESS DATA HERE
@@ -82,8 +86,7 @@ const getData_weekly_variants_data = async () => {
   };
 
   // Minimal validation for now (but some validation!)
-  // Temporarily removing all validation
-  // validateJSON(`Variants failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
+  validateJSON(`Variants failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
   return json;
 };
