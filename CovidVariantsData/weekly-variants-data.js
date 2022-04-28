@@ -15,7 +15,7 @@ const getData_weekly_variants_data = async () => {
   );
 
   //temp output
-      console.log(JSON.stringify(statResults.variants_data),null,2);
+      console.log(JSON.stringify(statResults.variants_data,null,2));
 
 
   // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
