@@ -1,5 +1,5 @@
 // @ts-check
-const { queryDataset, getSQL } = require('../common/snowflakeQuery');
+const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 const { todayDateString } = require('../common/gitTreeCommon');
 
@@ -8,21 +8,24 @@ const schemaTestGoodFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/pass
 const schemaTestBadFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/fail/";
 
 const getData_weekly_variants_data = async () => {
-  console.log(process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]);
+console.log(`Auth = ${process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]}`)
 
-  /** @type {{variants_data:{VARIANT_NAME:string, METRIC_NAME:string, REPORT_DATE:string, DATE:string, VALUE: number}[]}} */
+
+
+
+/** @type {{variants_data:{VARIANT_NAME:string, METRIC_NAME:string, REPORT_DATE:string, DATE:string, VALUE: number}[]}} */
   const statResults = await queryDataset(
-    {
-      variants_data: getSQL('CDT_COVID/variants-data/Variants'),
-    }
-    , process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
+      {
+          variants_data: getSQL('CDT_COVID/variants-data/Variants'),
+      }
+      ,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
   );
 
 
 
 
   //temp output
-  console.log(JSON.stringify(statResults.variants_data, null, 2));
+      console.log(JSON.stringify(statResults.variants_data,null,2));
 
 
   // validateJSON('CDTCDPH_VACCINE/Vaccines.sql failed validation', resultsVaccines,'../SQL/CDTCDPH_VACCINE/Vaccines.sql.Schema.json','../SQL/CDTCDPH_VACCINE/Vaccines.sql.Sample.json');
@@ -32,8 +35,8 @@ const getData_weekly_variants_data = async () => {
   // Produce a list of unique variant names (not including 'All') sorted alphabetically.
   let variants_nomdict = {};
   let variants_series_nomdict = {};
-  statResults.variants_data.forEach((rec) => {
-    variants_series_nomdict[rec.VARIANT_NAME + '_' + rec.METRIC_NAME.replace(' ', '-')] = 1;
+  statResults.variants_data.forEach( (rec) => {
+    variants_series_nomdict[rec.VARIANT_NAME + '_' + rec.METRIC_NAME.replace(' ','-')] = 1;
     if (rec.VARIANT_NAME != 'All' && rec.VARIANT_NAME != 'Total') {
       variants_nomdict[rec.VARIANT_NAME] = 1;
     }
@@ -48,16 +51,16 @@ const getData_weekly_variants_data = async () => {
 
   // Produce variant time series for all unique pairings
   let variant_series = {};
-  variants_series_noms.forEach((tseries_name) => {
+  variants_series_noms.forEach( (tseries_name) => {
     let tdata = [];
 
-    statResults.variants_data.forEach((rec) => {
-      const recKey = rec.VARIANT_NAME + '_' + rec.METRIC_NAME.replace(' ', '-');
+    statResults.variants_data.forEach( (rec) => {
+      const recKey = rec.VARIANT_NAME + '_' + rec.METRIC_NAME.replace(' ','-');
       if (recKey == tseries_name) {
-        tdata.push({ DATE: rec.DATE, VALUE: rec.VALUE || 0 });
+        tdata.push({DATE:rec.DATE, VALUE: rec.VALUE});
       }
     });
-    variant_series[tseries_name] = { VALUES: tdata };
+    variant_series[tseries_name] = {VALUES: tdata};
   });
 
   // Compute 7-day Averages
@@ -82,22 +85,22 @@ const getData_weekly_variants_data = async () => {
 
   // produce final output json block...
   let json = {
-    meta: {
-      PUBLISHED_DATE: todayDateString(),
-      REPORT_DATE: report_date,
-      VARIANTS: variant_noms
-    },
-    data: {
-      time_series: variant_series
-    }
+      meta: {
+        PUBLISHED_DATE: todayDateString(),
+        REPORT_DATE: report_date,
+        VARIANTS: variant_noms
+      },
+      data: { 
+        time_series: variant_series
+      }
   };
 
   // Minimal validation for now (but some validation!)
-  validateJSON(`Variants failed validation`, json, schemaFileName, schemaTestGoodFilePath, schemaTestBadFilePath);
+  validateJSON(`Variants failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
   return json;
 };
 
 module.exports = {
-  getData_weekly_variants_data: getData_weekly_variants_data
+    getData_weekly_variants_data: getData_weekly_variants_data
 };
