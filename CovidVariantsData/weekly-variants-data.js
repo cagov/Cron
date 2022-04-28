@@ -8,13 +8,14 @@ const schemaTestGoodFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/pass
 const schemaTestBadFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/fail/";
 
 const getData_weekly_variants_data = async () => {
+  console.log(process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]);
 
   /** @type {{variants_data:{VARIANT_NAME:string, METRIC_NAME:string, REPORT_DATE:string, DATE:string, VALUE: number}[]}} */
   const statResults = await queryDataset(
     {
       variants_data: getSQL('CDT_COVID/variants-data/Variants'),
     }
-    , process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"].replace(/PRODUCTION/g, 'DEVELOPMENT')
+    , process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
   );
 
 
