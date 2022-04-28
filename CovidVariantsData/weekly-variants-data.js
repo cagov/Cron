@@ -1,3 +1,4 @@
+// @ts-check
 const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 const { todayDateString } = require('../common/gitTreeCommon');
@@ -7,12 +8,17 @@ const schemaTestGoodFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/pass
 const schemaTestBadFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/fail/";
 
 const getData_weekly_variants_data = async () => {
+
+/** @type {{variants_data:{VARIANT_NAME:string, METRIC_NAME:string, REPORT_DATE:string, DATE:string, VALUE: number}[]}} */
   const statResults = await queryDataset(
       {
           variants_data: getSQL('CDT_COVID/variants-data/Variants'),
       }
       ,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
   );
+
+
+
 
   //temp output
       console.log(JSON.stringify(statResults.variants_data,null,2));
@@ -47,7 +53,7 @@ const getData_weekly_variants_data = async () => {
     statResults.variants_data.forEach( (rec) => {
       const recKey = rec.VARIANT_NAME + '_' + rec.METRIC_NAME.replace(' ','-');
       if (recKey == tseries_name) {
-        tdata.push({DATE:rec.DATE, VALUE: rec.VALUE});
+        tdata.push({DATE:rec.DATE, VALUE: rec.VALUE || 0});
       }
     });
     variant_series[tseries_name] = {VALUES: tdata};
