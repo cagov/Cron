@@ -54,7 +54,7 @@ const getData_weekly_variants_data = async () => {
     statResults.variants_data.forEach( (rec) => {
       const recKey = rec.VARIANT_NAME + '_' + rec.METRIC_NAME.replace(' ','-');
       if (recKey == tseries_name) {
-        tdata.push({DATE:rec.DATE, VALUE: rec.VALUE || 0});
+        tdata.push({DATE:rec.DATE, VALUE: rec.VALUE});
       }
     });
     variant_series[tseries_name] = {VALUES: tdata};
