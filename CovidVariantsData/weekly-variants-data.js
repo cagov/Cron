@@ -8,9 +8,6 @@ const schemaTestGoodFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/pass
 const schemaTestBadFilePath = "../SQL/CDT_COVID/variants-data/schema/tests/fail/";
 
 const getData_weekly_variants_data = async () => {
-console.log(`Auth = ${process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]}`)
-
-
 
 
 /** @type {{variants_data:{VARIANT_NAME:string, METRIC_NAME:string, REPORT_DATE:string, DATE:string, VALUE: number}[]}} */
@@ -57,7 +54,7 @@ console.log(`Auth = ${process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]}`)
     statResults.variants_data.forEach( (rec) => {
       const recKey = rec.VARIANT_NAME + '_' + rec.METRIC_NAME.replace(' ','-');
       if (recKey == tseries_name) {
-        tdata.push({DATE:rec.DATE, VALUE: rec.VALUE});
+        tdata.push({DATE:rec.DATE, VALUE: rec.VALUE || 0});
       }
     });
     variant_series[tseries_name] = {VALUES: tdata};
