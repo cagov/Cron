@@ -14,7 +14,7 @@ const getData_weekly_variants_data = async () => {
     {
       variants_data: getSQL('CDT_COVID/variants-data/Variants'),
     }
-    , process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"].replace(/PRODUCTION/, 'DEVELOPMENT')
+    , process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"].replace(/PRODUCTION/g, 'DEVELOPMENT')
   );
 
 
