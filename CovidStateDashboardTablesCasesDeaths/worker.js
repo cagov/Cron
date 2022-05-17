@@ -97,7 +97,8 @@ const doCovidStateDashboardTablesCasesDeaths = async () => {
                     if (caseList[i].DATE.toISOString().split("T")[0] == pending_dateC) {
                         parse_state = 1;
                     }
-                } else {
+                }
+                if (parse_state == 1) {
                     sumCasesCount += caseList[i].VALUE;
                     summed_days += 1;
                 }
@@ -121,7 +122,8 @@ const doCovidStateDashboardTablesCasesDeaths = async () => {
                     if (deathsList[i].DATE.toISOString().split("T")[0] == pending_dateD) {
                         parse_state = 1;
                     }
-                } else {
+                } 
+                if (parse_state == 1) {
                     sumDeathsCount += deathsList[i].VALUE;
                     summed_days += 1;
                 }
