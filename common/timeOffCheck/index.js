@@ -6,6 +6,7 @@ const cron_holidays = [
             '2022-02-21', // presidents day
             '2022-03-31', // cesar chavez day
             '2022-05-30', // memorial day
+            '2022-05-31', // Tuesday after memorial day
             '2022-07-04', // independence day
             '2022-09-05', // labor day
             '2022-11-11', // veterens day
