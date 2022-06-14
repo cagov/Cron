@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "date-YYYY-MM-DD": {
+      "type": "string",
+      "pattern": "^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+    },
+    "values_per100k_array": {
+      "type": "object",
+      "required": ["VALUES"],
+      "properties": {
+        "VALUES": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["DATE", "VALUE"],
+            "properties": {
+              "DATE": {
+                "$ref": "#/definitions/date-YYYY-MM-DD"
+              },
+              "VALUE": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100000
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["meta", "data"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "refer back to the schema to help with troubleshooting samples",
+      "examples": ["../.././schema.json"]
+    },
+    "meta": {
+      "type": "object",
+      "required": ["PUBLISHED_DATE", "REPORT_DATE", "CATEGORIES"],
+      "properties": {
+        "PUBLISHED_DATE": {
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        },
+        "REPORT_DATE": {
+          "$ref": "#/definitions/date-YYYY-MM-DD"
+        },
+        "CATEGORIES": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 7,
+          "maxItems": 7,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["time_series"],
+      "properties": {
+        "time_series": {
+          "type": "object",
+          "required": [
+            "African_American_cases",
+            "African_American_deaths",
+            "African_American_tests",
+            "American_Indian_cases",
+            "American_Indian_deaths",
+            "American_Indian_tests",
+            "Asian_American_cases",
+            "Asian_American_deaths",
+            "Asian_American_tests",
+            "Latino_cases",
+            "Latino_deaths",
+            "Latino_tests",
+            "Native_Hawaiian_and_other_Pacific_Islander_cases",
+            "Native_Hawaiian_and_other_Pacific_Islander_deaths",
+            "Native_Hawaiian_and_other_Pacific_Islander_tests",
+            "White_cases",
+            "White_deaths",
+            "White_tests",
+            "Multi-Race_cases",
+            "Multi-Race_deaths",
+            "Multi-Race_tests"
+          ],
+          "properties": {
+            "African_American_cases": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "African_American_deaths": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "African_American_tests": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "American_Indian_cases": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "American_Indian_deaths": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "American_Indian_tests": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Asian_American_cases": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Asian_American_deaths": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Asian_American_tests": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Latino_cases": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Latino_deaths": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Latino_tests": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Native_Hawaiian_and_other_Pacific_Islander_cases": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Native_Hawaiian_and_other_Pacific_Islander_deaths": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Native_Hawaiian_and_other_Pacific_Islander_tests": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "White_cases": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "White_deaths": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "White_tests": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Multi-Race_cases": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Multi-Race_deaths": {
+              "$ref": "#/definitions/values_per100k_array"
+            },
+            "Multi-Race_tests": {
+              "$ref": "#/definitions/values_per100k_array"
+            }
+          }
+        }
+      }
+    }
+  }
+}

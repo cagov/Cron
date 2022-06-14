@@ -21,6 +21,7 @@ const { doCovidVaccinesSparklineData } = require('../CovidStateDashboardVaccines
 //const tempFunction = async () => {           };
 
 const { doCovidEquityData } = require('../CovidEquityData/worker');
+const { doCovidEquityImpact } = require('../CovidEquityImpact/worker');
 
 //const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 //const notifyChannel = 'C01DBP67MSQ';
@@ -37,6 +38,10 @@ const doWork = async opt => {
     case '1':
         console.log("Running CovidEquityData");
         await doCovidEquityData();
+        break;
+    case '1i':
+        console.log("Running CovidEquityImpact");
+        await doCovidEquityImpact();
         break;
     case '3':
         console.log("Running doTranslationPrUpdate");
@@ -98,7 +103,7 @@ const doWork = async opt => {
         console.log("Running doCovidVariantsDataPreview");
         await doCovidVariantsData(true);
         break;
-        case 'temp':
+    case 'temp':
         //Put some temporary code here
         console.log("Running Temp code");
         

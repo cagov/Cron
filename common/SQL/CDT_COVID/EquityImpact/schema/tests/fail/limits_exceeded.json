@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "PUBLISHED_DATE": "2022-06-09",
+    "REPORT_DATE": "2022-06-07",
+    "CATEGORIES": [
+      "African American",
+      "American Indian",
+      "Asian American",
+      "Latino",
+      "Multi-Race",
+      "Native Hawaiian and other Pacific Islander",
+      "White"
+    ],
+    "AREA": "California",
+    "AREA_TYPE": "State"
+  },
+  "data": {
+    "time_series": {
+      "African_American_cases": {
+        "VALUES": [
+          {
+            "DATE": "2020-07-04",
+            "VALUE": 100001
+          }
+        ]
+      }
+    }
+  }
+}

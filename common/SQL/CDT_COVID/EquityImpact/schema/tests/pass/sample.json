@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "PUBLISHED_DATE": "2022-06-09",
+    "REPORT_DATE": "2022-06-07",
+    "CATEGORIES": [
+      "African American",
+      "American Indian",
+      "Asian American",
+      "Latino",
+      "Multi-Race",
+      "Native Hawaiian and other Pacific Islander",
+      "White"
+    ],
+    "AREA": "California",
+    "AREA_TYPE": "State"
+  },
+  "data": {
+    "time_series": {
+      "African_American_cases": {
+        "VALUES": [
+          {
+            "DATE": "2020-07-04",
+            "VALUE": 76.24301
+          }
+        ]
+      },
+      "American_Indian_cases": {
+        "VALUES": [
+          {
+            "DATE": "2020-07-04",
+            "VALUE": 57.22988
+          }
+        ]
+      },
+      "Asian_American_cases": {
+        "VALUES": [
+          {
+            "DATE": "2020-07-04",
+            "VALUE": 32.39266
+          }
+        ]
+      },
+      "Latino_cases": {
+        "VALUES": [
+          {
+            "DATE": "2020-07-04",
+            "VALUE": 189.30733
+          }
+        ]
+      },
+      "Multi-Race_cases": {
+        "VALUES": [
+          {
+            "DATE": "2020-07-04",
+            "VALUE": 57.06533
+          }
+        ]
+      },
+      "Native_Hawaiian_and_other_Pacific_Islander_cases": {
+        "VALUES": [
+          {
+            "DATE": "2020-07-04",
+            "VALUE": 145.15071
+          }
+        ]
+      },
+      "White_cases": {
+        "VALUES": [
+          {
+            "DATE": "2020-07-04",
+            "VALUE": 56.42389
+          }
+        ]
+      },
+      "African_American_deaths": {
+        "VALUES": [
+          {
+            "DATE": "2020-07-04",
+            "VALUE": 1.67108
+          }
+        ]
+      },
+      "American_Indian_deaths": {
+        "VALUES": [
+          {
+            "DATE": "2022-05-14",
+            "VALUE": 0
+          }
+        ]
+      },
+      "Asian_American_deaths": {
+        "VALUES": [
+          {
+            "DATE": "2022-05-14",
+            "VALUE": 0.11309
+          }
+        ]
+      },
+      "Latino_deaths": {
+        "VALUES": [
+          {
+            "DATE": "2022-05-14",
+            "VALUE": 0.0832
+          }
+        ]
+      },
+      "Multi-Race_deaths": {
+        "VALUES": [
+          {
+            "DATE": "2022-05-14",
+            "VALUE": 0
+          }
+        ]
+      },
+      "Native_Hawaiian_and_other_Pacific_Islander_deaths": {
+        "VALUES": [
+          {
+            "DATE": "2022-05-14",
+            "VALUE": 1.47361
+          }
+        ]
+      },
+      "White_deaths": {
+        "VALUES": [
+          {
+            "DATE": "2022-05-14",
+            "VALUE": 0.27906
+          }
+        ]
+      },
+      "African_American_tests": {
+        "VALUES": [
+          {
+            "DATE": "2022-06-04",
+            "VALUE": 1408.51131
+          }
+        ]
+      },
+      "American_Indian_tests": {
+        "VALUES": [
+          {
+            "DATE": "2022-06-04",
+            "VALUE": 1290.09729
+          }
+        ]
+      },
+      "Asian_American_tests": {
+        "VALUES": [
+          {
+            "DATE": "2022-06-04",
+            "VALUE": 1783.85837
+          }
+        ]
+      },
+      "Latino_tests": {
+        "VALUES": [
+          {
+            "DATE": "2022-06-04",
+            "VALUE": 1639.72701
+          }
+        ]
+      },
+      "Multi-Race_tests": {
+        "VALUES": [
+          {
+            "DATE": "2022-06-04",
+            "VALUE": 197.92422
+          }
+        ]
+      },
+      "Native_Hawaiian_and_other_Pacific_Islander_tests": {
+        "VALUES": [
+          {
+            "DATE": "2022-06-04",
+            "VALUE": 3130.68722
+          }
+        ]
+      },
+      "White_tests": {
+        "VALUES": [
+          {
+            "DATE": "2022-06-04",
+            "VALUE": 1485.97659
+          }
+        ]
+      }
+    }
+  }
+}
