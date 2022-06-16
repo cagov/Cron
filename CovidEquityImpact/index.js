@@ -1,6 +1,5 @@
 const { doCovidEquityImpact } = require('./worker');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
-const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
 
 module.exports = async function (context, myTimer) {
@@ -16,7 +15,7 @@ module.exports = async function (context, myTimer) {
             const prMessage = `Weekly Equity Impact data ready\n${TreeRunResults.Pull_Request_URL}`;
             await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
             await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
-            await slackBotChatPost(notifyChannel, prMessage);
+            await slackBotChatPost(debugChannel, prMessage);
         }
 
         await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
