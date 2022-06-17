@@ -15,7 +15,6 @@ const { doCovidStateDashboardTablesTests } = require('../CovidStateDashboardTabl
 const { doCovidPostvaxData } = require('../CovidPostvaxData/worker');
 const { doCovidVariantsData } = require('../CovidVariantsData/worker');
 const { doCovidVaccinesSparklineData } = require('../CovidStateDashboardVaccines/worker');
-const { doCovidEquityImpact } = require('../CovidEquityImpact/worker.js');
 
 
 //
@@ -105,10 +104,6 @@ const doWork = async opt => {
     case '16p':
         console.log("Running doCovidVariantsDataPreview");
         await doCovidVariantsData(true);
-        break;
-    case '17':
-        console.log("Running doCovidEquityImpact");
-        await doCovidEquityImpact(true);
         break;
     case 'temp':
         //Put some temporary code here
