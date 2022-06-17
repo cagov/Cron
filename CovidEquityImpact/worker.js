@@ -34,7 +34,7 @@ const doCovidEquityImpact = async () => {
         repo: githubRepo,
         path: githubPath,
         base: stagingBranch,
-        removeOtherFiles: true,
+        removeOtherFiles: false,
         commit_message: prTitle,
         pull_request: false
     });
@@ -48,7 +48,7 @@ const doCovidEquityImpact = async () => {
         repo: githubRepo,
         path: githubPath,
         base: targetBranch,
-        removeOtherFiles: true,
+        removeOtherFiles: false,
         commit_message: prTitle,
         pull_request: true,
         pull_request_options: {
