@@ -9,7 +9,7 @@ const schemaFileName = '../SQL/CDT_COVID/EquityImpact/schema/schema.json';
 const schemaTestGoodFilePath = '../SQL/CDT_COVID/EquityImpact/schema/tests/pass/';
 const schemaTestBadFilePath = '../SQL/CDT_COVID/EquityImpact/schema/tests/fail/';
 
-const PrLabels = ['Automatic Deployment', 'Add to Rollup', 'Publish at 9:15 a.m. ☀'];
+const PrLabels = ['Automatic Deployment', 'Add to Rollup', 'Publish at 9:15 a.m. ☀️'];
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
 const githubPath = 'data/reviewed/equitydash';
