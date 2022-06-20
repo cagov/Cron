@@ -43,7 +43,11 @@ const doWork = async opt => {
         break;
     case '1i':
         console.log("Running CovidEquityImpact");
-        await doCovidEquityImpact();
+        await doCovidEquityImpact(false);
+        break;
+    case '1ip':
+        console.log("Running CovidEquityImpactPreview");
+        await doCovidEquityImpact(true);
         break;
     case '3':
         console.log("Running doTranslationPrUpdate");
