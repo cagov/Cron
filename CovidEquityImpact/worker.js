@@ -17,7 +17,7 @@ const fileName = 'disparity-california.json';
 const stagingBranch = 'CovidEquityImpact_Staging';
 const targetBranch = 'main';
 
-const doCovidEquityImpact = async () => {
+const doCovidEquityImpact = async (previewOnly) => {
     const gitToken = process.env['GITHUB_TOKEN'];
     const prTitle = `${todayDateString()} Equity Community Impact Data Update`;
 
@@ -40,28 +40,33 @@ const doCovidEquityImpact = async () => {
     });
 
     stagingTree.syncFile(fileName, jsonData);
-    await stagingTree.treePush();
+    const stagingResult = await stagingTree.treePush();
 
-    // Push to main
-    const mainTree = new GitHubTreePush(gitToken, {
-        owner: githubOwner,
-        repo: githubRepo,
-        path: githubPath,
-        base: targetBranch,
-        removeOtherFiles: false,
-        commit_message: prTitle,
-        pull_request: true,
-        pull_request_options: {
-            title: prTitle,
-            issue_options: {
-                labels: PrLabels
+    if (!previewOnly) {
+
+        // Push to main
+        const mainTree = new GitHubTreePush(gitToken, {
+            owner: githubOwner,
+            repo: githubRepo,
+            path: githubPath,
+            base: targetBranch,
+            removeOtherFiles: false,
+            commit_message: prTitle,
+            pull_request: true,
+            pull_request_options: {
+                title: prTitle,
+                issue_options: {
+                    labels: PrLabels
+                }
             }
-        }
-    });
+        });
 
-    mainTree.syncFile(fileName, jsonData);
-    const mainResult = await mainTree.treePush();
-    return mainResult;
+        mainTree.syncFile(fileName, jsonData);
+        const mainResult = await mainTree.treePush();
+        return mainResult;
+    } else {
+        return stagingResult;
+    }
 };
 
 module.exports = {

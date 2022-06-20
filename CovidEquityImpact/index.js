@@ -9,7 +9,7 @@ module.exports = async function (context, myTimer) {
     try {
         slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Friday @ 8:05am)`)).json()).ts;
 
-        const TreeRunResults = await doCovidEquityImpact();
+        const TreeRunResults = await doCovidEquityImpact(false);
 
         if (TreeRunResults.Pull_Request_URL) {
             const prMessage = `Weekly Equity Impact data ready\n${TreeRunResults.Pull_Request_URL}`;
