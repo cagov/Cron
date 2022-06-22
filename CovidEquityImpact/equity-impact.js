@@ -21,6 +21,10 @@ const getData_equity_impact = async () => {
     // Track unique categories here
     let categories = {};
 
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    }
+
     function myReplaceAll(str, find, replace) {
         return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
     }
