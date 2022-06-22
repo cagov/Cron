@@ -15,12 +15,15 @@ const { doCovidStateDashboardTablesTests } = require('../CovidStateDashboardTabl
 const { doCovidPostvaxData } = require('../CovidPostvaxData/worker');
 const { doCovidVariantsData } = require('../CovidVariantsData/worker');
 const { doCovidVaccinesSparklineData } = require('../CovidStateDashboardVaccines/worker');
+
+
 //
 //const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 
 //const tempFunction = async () => {           };
 
 const { doCovidEquityData } = require('../CovidEquityData/worker');
+const { doCovidEquityImpact } = require('../CovidEquityImpact/worker');
 
 //const debugChannel = 'C01DBP67MSQ'; // 'C01AA1ZB05B';
 //const notifyChannel = 'C01DBP67MSQ';
@@ -37,6 +40,14 @@ const doWork = async opt => {
     case '1':
         console.log("Running CovidEquityData");
         await doCovidEquityData();
+        break;
+    case '1i':
+        console.log("Running CovidEquityImpact");
+        await doCovidEquityImpact(false);
+        break;
+    case '1ip':
+        console.log("Running CovidEquityImpactPreview");
+        await doCovidEquityImpact(true);
         break;
     case '3':
         console.log("Running doTranslationPrUpdate");
@@ -98,7 +109,7 @@ const doWork = async opt => {
         console.log("Running doCovidVariantsDataPreview");
         await doCovidVariantsData(true);
         break;
-        case 'temp':
+    case 'temp':
         //Put some temporary code here
         console.log("Running Temp code");
         
