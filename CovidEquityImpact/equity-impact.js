@@ -26,7 +26,14 @@ const getData_equity_impact = async () => {
 
         categories[record.DEMOG_CAT] = 1;
 
+        try {
         let metric = record.DEMOG_CAT.replaceAll(' ', '_') + '_' + record.METRIC_CAT;
+        } catch (e) {
+            console.log('searchme');
+            console.log(record);
+            console.log(record.DEMOG_CAT);
+            throw(e);
+        }
 
         if (equity_data[metric] === undefined) {
             equity_data[metric] = {VALUES: []};
