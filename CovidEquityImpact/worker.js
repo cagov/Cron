@@ -9,13 +9,13 @@ const schemaFileName = '../SQL/CDT_COVID/EquityImpact/schema/schema.json';
 const schemaTestGoodFilePath = '../SQL/CDT_COVID/EquityImpact/schema/tests/pass/';
 const schemaTestBadFilePath = '../SQL/CDT_COVID/EquityImpact/schema/tests/fail/';
 
-const PrLabels = ['Automatic Deployment', 'Add to Rollup', 'Publish at 9:15 a.m. ☀️'];
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
-const githubPath = 'data/reviewed/equitydash';
+const previewGithubPath = 'data/to-review/equitydash';
+const previewBranch = 'main';
+const publishGithubPath = 'data/reviewed/equitydash';
+const publishBranch = 'main';
 const fileName = 'disparity-california.json';
-const stagingBranch = 'CovidEquityImpact_Staging';
-const targetBranch = 'main';
 
 const doCovidEquityImpact = async (previewOnly) => {
     const gitToken = process.env['GITHUB_TOKEN'];
@@ -32,8 +32,8 @@ const doCovidEquityImpact = async (previewOnly) => {
     const stagingTree = new GitHubTreePush(gitToken, {
         owner: githubOwner,
         repo: githubRepo,
-        path: githubPath,
-        base: stagingBranch,
+        path: previewGithubPath,
+        base: previewBranch,
         removeOtherFiles: false,
         commit_message: prTitle,
         pull_request: false
@@ -48,16 +48,13 @@ const doCovidEquityImpact = async (previewOnly) => {
         const mainTree = new GitHubTreePush(gitToken, {
             owner: githubOwner,
             repo: githubRepo,
-            path: githubPath,
-            base: targetBranch,
+            path: publishGithubPath,
+            base: publishBranch,
             removeOtherFiles: false,
             commit_message: prTitle,
             pull_request: true,
             pull_request_options: {
-                title: prTitle,
-                issue_options: {
-                    labels: PrLabels
-                }
+                title: prTitle
             }
         });
 
