@@ -21,13 +21,19 @@ const getData_equity_impact = async () => {
     // Track unique categories here
     let categories = {};
 
+    function myReplaceAll(str, find, replace) {
+        return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+    }
+
     // Do one pass-through of data from snowflake
     statResults.impact_data.forEach( (record) => {
 
         categories[record.DEMOG_CAT] = 1;
 
         try {
-        let metric = record.DEMOG_CAT.replaceAll(' ', '_') + '_' + record.METRIC_CAT;
+            // replaceAll not currently supported on our Azure instance
+           // let metric = record.DEMOG_CAT.replaceAll(' ', '_') + '_' + record.METRIC_CAT;
+           let metric = myReplaceAll(record.DEMOG_CAT,' ', '_') + '_' + record.METRIC_CAT;
         } catch (e) {
             console.log('searchme');
             console.log(record);
