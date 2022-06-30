@@ -8,6 +8,7 @@ const cron_holidays = [
             '2022-05-30', // memorial day
             '2022-05-31', // Tuesday after memorial day
             '2022-07-04', // independence day
+            '2022-07-05', // Tuesday after independence day
             '2022-09-05', // labor day
             '2022-11-11', // veterens day
             '2022-11-24', // thanksgiving
