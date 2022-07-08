@@ -21,7 +21,7 @@
     "cheerio": "*",
     "fetch-retry": "^4.1.1",
     "github-api": "^3.4.0",
-    "jsdom": "^16.4.0",
+    "jsdom": "^16.5.0",
     "jsonschema": "^1.4.0",
     "md5": "^2.3.0",
     "moment": "^2.29.2",
