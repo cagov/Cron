@@ -1,0 +1,10 @@
+{
+  "bindings": [
+    {
+      "name": "CovidStateDashboardSummaryV2",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 45 14 * * Tue,Fri"
+    }
+  ]
+}
