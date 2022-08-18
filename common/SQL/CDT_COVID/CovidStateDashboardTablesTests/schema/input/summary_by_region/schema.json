@@ -94,7 +94,8 @@
       "new_tests_reported",
       "new_tests_reported_delta_1_day",
       "test_positivity_7_days",
-      "test_positivity_7_days_delta_7_days"
+      "test_positivity_7_days_delta_7_days",
+      "latest_confident_avg_total_tests_7_days"
     ],
     "additionalProperties": false,
     "properties": {
@@ -124,6 +125,9 @@
         "$ref": "#/definitions/number-non-neg"
       },
       "test_positivity_7_days_delta_7_days": {
+        "type": "number"
+      },
+      "latest_confident_avg_total_tests_7_days": {
         "type": "number"
       }
     }
