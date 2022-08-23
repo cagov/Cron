@@ -199,7 +199,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
                     workForValidation.push(newWork)
                 }
             }
-            splitArrayIntoChunks(workForValidation, 40).forEach(a => {
+            splitArrayIntoChunks(workForValidation, 20).forEach(a => {
                 promises.push(validateJSON_Remote("failed validation", outputSchema.json, a));
             })
         }
