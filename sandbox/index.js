@@ -12,7 +12,7 @@ const { doCovidAutoBuilder } = require('../CovidAutoBuilder/worker');
 const { doCovidStateDashboardTablesCasesDeaths } = require('../CovidStateDashboardTablesCasesDeaths/worker');
 const { doCovidStateDashboardTablesHospitals } = require('../CovidStateDashboardTablesHospitals/worker');
 const { doCovidStateDashboardTablesTests } = require('../CovidStateDashboardTablesTests/worker');
-const { doCovidPostvaxData } = require('../CovidPostvaxData/worker');
+const { doCovidPostvaxData } = require('../CovidPostvaxDataNoboost/worker');
 const { doCovidVariantsData } = require('../CovidVariantsData/worker');
 const { doCovidVaccinesSparklineData } = require('../CovidStateDashboardVaccines/worker');
 
@@ -90,11 +90,11 @@ const doWork = async opt => {
         await doCovidStateDashboardTablesTests();
         break;
     case '14':
-        console.log("Running doCovidPostvaxData");
+        console.log("Running doCovidPostvaxDataNoboost");
         await doCovidPostvaxData(false);
         break;
     case '14p':
-        console.log("Running doCovidPostvaxDataPreview");
+        console.log("Running doCovidPostvaxDataPreviewNoboost");
         await doCovidPostvaxData(true);
         break;
     case '15':
