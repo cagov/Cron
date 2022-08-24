@@ -1,0 +1,10 @@
+{
+    "bindings": [
+      {
+        "name": "CovidPostvaxDataNoboost",
+        "type": "timerTrigger",
+        "direction": "in",
+        "schedule": "0 35 14 * * Fri"
+      }
+    ]
+  }
