@@ -1,0 +1,112 @@
+{
+    "definitions": {
+      "date-YYYY-MM-DD":{
+        "type":"string",
+        "pattern":"^\\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$"
+      },
+      "integer-zero-to-everyone":{
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 99999999
+      },
+      "100k-report-rate": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100000
+      },
+      "1m-report-rate": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1000000
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+       "meta": {
+         "type":"object",
+         "required": [
+           "PUBLISHED_DATE",
+           "REPORT_DATE",
+           "AREA",
+           "AREA_TYPE",
+           "CASES_SAMPLE_SIZE",
+           "HOSP_SAMPLE_SIZE",
+           "DEATHS_SAMPLE_SIZE"
+         ],
+         "properties": {
+            "PUBLISHED_DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "REPORT_DATE":{
+              "$ref": "#/definitions/date-YYYY-MM-DD"
+            },
+            "AREA": {
+              "required": true,
+              "const": "California"
+            },
+            "AREA_TYPE": {
+              "required": true,
+              "const": "State"
+            },
+            "CASES_SAMPLE_SIZE": {
+              "required": true,
+              "const": 100000
+            },
+            "HOSP_SAMPLE_SIZE": {
+              "required": true,
+              "const": 1000000
+            },
+            "DEATHS_SAMPLE_SIZE": {
+              "required": true,
+              "const": 1000000
+            }
+     }
+        },
+       "data": {
+            "type":"array",
+            "uniqueItems": true,
+            "items": {
+              "required": true,
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "DATE",
+                "UNVAX_CASE_RATE",
+                    "UNVAX_HOSP_RATE",
+                    "UNVAX_DEATH_DOD_RATE",
+                    "VAX_CASE_RATE",
+                    "VAX_HOSP_RATE",
+                    "VAX_DEATH_DOD_RATE",
+                "REPORT_DATE"
+              ],
+              "properties": {
+                "DATE":{
+                  "$ref": "#/definitions/date-YYYY-MM-DD"
+                },
+                "UNVAX_CASE_RATE":{
+                  "$ref": "#/definitions/100k-report-rate"
+                },
+                "UNVAX_HOSP_RATE":{
+                  "$ref": "#/definitions/1m-report-rate"
+                },
+                "UNVAX_DEATH_DOD_RATE":{
+                  "$ref": "#/definitions/1m-report-rate"
+                },
+                "VAX_CASE_RATE":{
+                  "$ref": "#/definitions/100k-report-rate"
+                },
+                "VAX_HOSP_RATE":{
+                  "$ref": "#/definitions/1m-report-rate"
+                },
+                "VAX_DEATH_DOD_RATE":{
+                  "$ref": "#/definitions/1m-report-rate"
+                },
+                "REPORT_DATE":{
+                  "$ref": "#/definitions/date-YYYY-MM-DD"
+                }
+              }
+
+            }
+        }
+    }
+}
