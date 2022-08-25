@@ -14,7 +14,7 @@ const getData_daily_postvax_data = async () => {
       }
       ,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
   );
-  const lastMonthRates = statResults.monthlyrate_data[statResults.monthlyrate_data.length-1];
+  const lastMonthRates = statResults.monthlyrate_data[0];
   const report_date = statResults.postvax_data[0].REPORT_DATE;
 
   // pull a subset of fields  here...
@@ -28,6 +28,7 @@ const getData_daily_postvax_data = async () => {
         HOSP_SAMPLE_SIZE: 1000000,
         DEATHS_SAMPLE_SIZE: 1000000,
         EPMONTH: lastMonthRates.EPMONTH,
+        DATE_CEILING: lastMonthRates.DATE_CEILING,
         RR_CASE: lastMonthRates.RR_CASE,
         RR_HOSP: lastMonthRates.RR_HOSP,
         RR_DEATH: lastMonthRates.RR_DEATH,
