@@ -10,10 +10,11 @@ const getData_daily_postvax_data = async () => {
   const statResults = await queryDataset(
       {
           postvax_data: getSQL('CDT_COVID/postvax-data-v2/Postvax'),
+          monthlyrate_data: getSQL('CDT_COVID/postvax-data-v2/MonthlyRates'),
       }
       ,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
   );
-
+  const lastMonthRates = statResults.monthlyrate_data[statResults.monthlyrate_data.length-1];
   const report_date = statResults.postvax_data[0].REPORT_DATE;
 
   // pull a subset of fields  here...
@@ -25,7 +26,11 @@ const getData_daily_postvax_data = async () => {
         AREA_TYPE: "State",
         CASES_SAMPLE_SIZE: 100000,
         HOSP_SAMPLE_SIZE: 1000000,
-        DEATHS_SAMPLE_SIZE: 1000000
+        DEATHS_SAMPLE_SIZE: 1000000,
+        EPMONTH: lastMonthRates.EPMONTH,
+        RR_CASE: lastMonthRates.RR_CASE,
+        RR_HOSP: lastMonthRates.RR_HOSP,
+        RR_DEATH: lastMonthRates.RR_DEATH,
       },
       data: statResults.postvax_data
   };
