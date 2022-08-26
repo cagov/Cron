@@ -9,7 +9,7 @@ module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   let slackPostTS = null;
   try {
-    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Friday @ 7:35am (should snooze if not week-1))`)).json()).ts;
+    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Friday @ 7:35am -- should snooze unless first week of month)`)).json()).ts;
     if (isIdleDay({weekends_off:true, holidays_off:true, first_week_only:true})) {
       await slackBotReplyPost(debugChannel, slackPostTS,`${appName} snoozed`);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'zzz');
