@@ -1,6 +1,7 @@
 
 const { doCovidPostvaxData } = require('./worker');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
+const { isIdleDay } = require('../common/timeOffCheck');
 const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
 
