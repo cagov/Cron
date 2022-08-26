@@ -8,19 +8,24 @@ module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
   let slackPostTS = null;
   try {
-    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Wednesday @ 8am)`)).json()).ts;
+    slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Wednesday @ 8am (will snooze if not week-1) )`)).json()).ts;
 
-    const TreeRunResults = await doCovidPostvaxData(true);
+    if (isIdleDay({weekends_off:true, holidays_off:true, first_week_only:true})) {
+      await slackBotReplyPost(debugChannel, slackPostTS,`${appName} snoozed`);
+      await slackBotReactionAdd(debugChannel, slackPostTS, 'zzz');
+    } else {
+      const TreeRunResults = await doCovidPostvaxData(true);
 
-    if(TreeRunResults.Pull_Request_URL) {
-      const prMessage = `Weekly Postvax preview data ready\n${TreeRunResults.Pull_Request_URL}`;
-      await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
-      await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
-      await slackBotChatPost(notifyChannel, prMessage);
+      if(TreeRunResults.Pull_Request_URL) {
+        const prMessage = `Weekly Postvax preview data ready\n${TreeRunResults.Pull_Request_URL}`;
+        await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
+        await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
+        await slackBotChatPost(notifyChannel, prMessage);
+      }
+
+      await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
+      await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
     }
-
-    await slackBotReplyPost(debugChannel, slackPostTS,`${appName} finished`);
-    await slackBotReactionAdd(debugChannel, slackPostTS, 'white_check_mark');
   } catch (e) {
     await slackBotReportError(debugChannel,`Error running ${appName}`,e,context,myTimer);
 

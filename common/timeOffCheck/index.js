@@ -17,13 +17,17 @@ const cron_holidays = [
             ]
 
 
-const isIdleDay = ({weekends_off = true, holidays_off = true}) => {
+const isIdleDay = ({weekends_off = true, holidays_off = true, first_week_only = false}) => {
     const todayDateStr = todayDateString();
     const dayOfWeekIdx = (new Date()).getDay(); // sunday is zero
+    const dayOfMonth = (new Date()).getDate(); // 1-31
     if (holidays_off && cron_holidays.includes(todayDateStr)) {
         return true;
     }
     if (weekends_off && (dayOfWeekIdx == 0 || dayOfWeekIdx == 6)) {
+        return true;
+    }
+    if (first_week_only && (dayOfMonth > 7)) {
         return true;
     }
     return false;
