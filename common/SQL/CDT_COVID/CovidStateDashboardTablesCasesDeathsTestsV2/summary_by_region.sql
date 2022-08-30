@@ -30,7 +30,7 @@ select
     SUM(LATEST_POSITIVITY_RATE_7_DAYS) "test_positivity_7_days",
     SUM(LATEST_INCREASE_POSITIVITY_RATE_7_DAYS) "test_positivity_7_days_delta_7_days"
 from
-    COVID.DEVELOPMENT.VW_JLO_TMP
+    COVID.PRODUCTION.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS
 where
     area not in ('Out of state','Unknown')
 group by
