@@ -6,12 +6,10 @@ const { doTranslationPrUpdate } = require('../CovidTranslationPrApproval/worker'
 const { doAutoApprover } = require('../CovidTranslationPrApproval/AutoApprover');
 const { doHealthCheck } = require('../CovidSiteHealth/worker');
 const { doCovidStateDashboardSummary } = require('../CovidStateDashboardSummary/worker');
-const { doCovidStateDashboardSummaryV2 } = require('../CovidStateDashboardSummaryV2/worker');
 const { doCovidVaccineEquity } = require('../CovidVaccineEquity/worker');
 const { doCovidVaccineHPIV2 } = require('../CovidVaccineHPIV2/worker');
 const { doCovidAutoBuilder } = require('../CovidAutoBuilder/worker');
 const { doCovidStateDashboardTablesCasesDeaths } = require('../CovidStateDashboardTablesCasesDeaths/worker');
-const { doCovidStateDashboardTablesCasesDeathsV2 } = require('../CovidStateDashboardTablesCasesDeathsV2/worker');
 const { doCovidStateDashboardTablesHospitals } = require('../CovidStateDashboardTablesHospitals/worker');
 const { doCovidStateDashboardTablesTests } = require('../CovidStateDashboardTablesTests/worker');
 const { doCovidPostvaxData } = require('../CovidPostvaxData/worker');
@@ -63,9 +61,6 @@ const doWork = async opt => {
         console.log("Running doCovidStateDashboardSummary"); // formerly DashboardV2
         await doCovidStateDashboardSummary();
         break;
-    case '7v2':
-        console.log("Running doCovidStateDashboardSummaryV2");
-        await doCovidStateDashboardSummaryV2();
     case '8':
         console.log("Running doCovidVaccineEquity");
         await doCovidVaccineEquity();
@@ -85,10 +80,6 @@ const doWork = async opt => {
     case '13a':
         console.log("Running doCovidStateDashboardTablesCasesDeaths");
         await doCovidStateDashboardTablesCasesDeaths();
-        break;
-    case '13av2':
-        console.log("Running doCovidStateDashboardTablesCasesDeathsV2");
-        await doCovidStateDashboardTablesCasesDeathsV2();
         break;
     case '13b':
         console.log("Running doCovidStateDashboardTablesHospitals");
