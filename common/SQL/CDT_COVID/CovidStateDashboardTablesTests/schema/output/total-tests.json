@@ -115,6 +115,10 @@
                   "required": true,
                   "type": "number"
                 },
+                "avg_total_tests_7_days": {
+                  "required": true,
+                  "type": "number"
+                },
                 "TESTING_UNCERTAINTY_PERIOD": {
                   "required": true,
                   "$ref": "#/definitions/date-YYYY-MM-DD"

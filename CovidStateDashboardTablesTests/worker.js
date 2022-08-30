@@ -138,6 +138,7 @@ const doCovidStateDashboardTablesTests = async (slack) => {
                                 total_tests_performed: summary_by_region.total_tests_performed,
                                 new_tests_reported: summary_by_region.new_tests_reported,
                                 new_tests_reported_delta_1_day: summary_by_region.new_tests_reported_delta_1_day,
+                                avg_total_tests_7_days: summary_by_region.latest_confident_avg_total_tests_7_days,
                                 TESTING_UNCERTAINTY_PERIOD: summary_by_region.TESTING_UNCERTAINTY_PERIOD,
                                 POPULATION: summary_by_region.POPULATION
                             }
