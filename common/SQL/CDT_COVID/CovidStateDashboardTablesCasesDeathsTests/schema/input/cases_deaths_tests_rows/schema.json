@@ -90,8 +90,12 @@
       "DATE",
       "CASES",
       "REPORTED_CASES",
+      "PROBABLE_CASES",
+      "COMBINED_CASES",
       "AVG_CASE_RATE_PER_100K_7_DAYS",
       "AVG_CASE_REPORT_RATE_PER_100K_7_DAYS",
+      "AVG_PROBABLE_CASE_RATE_PER_100K_7_DAYS",
+      "AVG_COMBINED_CASE_RATE_PER_100K_7_DAYS",
       "DEATHS",
       "REPORTED_DEATHS",
       "AVG_DEATH_RATE_PER_100K_7_DAYS",
@@ -117,10 +121,22 @@
       "REPORTED_CASES": {
         "type": "integer"
       },
+      "PROBABLE_CASES": {
+        "$ref": "#/definitions/integer-zero-to-everyone"
+      },
+      "COMBINED_CASES": {
+        "$ref": "#/definitions/integer-zero-to-everyone"
+      },
       "AVG_CASE_RATE_PER_100K_7_DAYS": {
         "$ref": "#/definitions/100k-report-rate"
       },
       "AVG_CASE_REPORT_RATE_PER_100K_7_DAYS": {
+        "$ref": "#/definitions/100k-report-rate"
+      },
+      "AVG_PROBABLE_CASE_RATE_PER_100K_7_DAYS": {
+        "$ref": "#/definitions/100k-report-rate"
+      },
+      "AVG_COMBINED_CASE_RATE_PER_100K_7_DAYS": {
         "$ref": "#/definitions/100k-report-rate"
       },
       "DEATHS": {

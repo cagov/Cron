@@ -35,7 +35,7 @@ const PrInfoList = [
     {
         title: "Covid Dashboard Tables - Cases/Deaths",
         folders: [
-            "confirmed-cases",
+            "combined-cases",
             "confirmed-deaths"
         ]
     }
@@ -85,28 +85,40 @@ const doCovidStateDashboardTablesCasesDeaths = async () => {
         let summary_by_region = allData.summary_by_region.find(f => f.REGION === myRegion);
         let rows_by_region = allData.cases_deaths_tests_rows.filter(f => f.REGION === myRegion);
         if (summary_by_region && rows_by_region.length) {
+            const case_keys = {
+                'confirmed': ['CASES',          'EPISODE_UNCERTAINTY_PERIOD'],
+                'probable':  ['PROBABLE_CASES', 'PROBABLE_UNCERTAINTY_PERIOD'],
+                'combined':  ['COMBINED_CASES', 'COMBINED_UNCERTAINTY_PERIOD']
+            };
+            let avg_cases_results = {};
+
             // precompute daily average cases for last 7 non-pending days - jbum
-            let sumCasesCount = 0;
-            let CONFIRMED_CASES_EPISODE_DATE = getDateValueRows(rows_by_region, 'CASES');
-            const pending_dateC = summary_by_region.EPISODE_UNCERTAINTY_PERIOD.toISOString().split("T")[0];
-            const caseList = CONFIRMED_CASES_EPISODE_DATE.VALUES;
-            let parse_state = 0;
-            let summed_days = 0;
-            for (let i = 0; i < caseList.length; ++i) {
-                if (parse_state == 0) {
-                    if (caseList[i].DATE.toISOString().split("T")[0] == pending_dateC) {
-                        parse_state = 1;
+            for (let key in case_keys) {
+                let cases_field_name = case_keys[key][0];
+                let period_name = case_keys[key][1];
+
+                let sumCasesCount = 0;
+                const caseList = getDateValueRows(rows_by_region, cases_field_name).VALUES;
+                const pending_dateC = summary_by_region[period_name].toISOString().split("T")[0];
+                let parse_state = 0;
+                let summed_days = 0;
+                for (let i = 0; i < caseList.length; ++i) {
+                    if (parse_state == 0) {
+                        if (caseList[i].DATE.toISOString().split("T")[0] == pending_dateC) {
+                            parse_state = 1;
+                        }
+                    }
+                    if (parse_state == 1) {
+                        sumCasesCount += caseList[i].VALUE;
+                        summed_days += 1;
+                    }
+                    if (summed_days == 7) {
+                        break;
                     }
                 }
-                if (parse_state == 1) {
-                    sumCasesCount += caseList[i].VALUE;
-                    summed_days += 1;
-                }
-                if (summed_days == 7) {
-                    break;
-                }
+                avg_cases_results[key] = summed_days > 0 ? sumCasesCount / summed_days : NaN;
             }
-            let CASES_DAILY_AVERAGE = summed_days > 0 ? sumCasesCount / summed_days : NaN;
+
             // if(myRegion == 'California') {
             //     console.log("CASES DAILY AVG",CASES_DAILY_AVERAGE,myRegion,summed_days,pending_dateC);
             // }
@@ -133,7 +145,7 @@ const doCovidStateDashboardTablesCasesDeaths = async () => {
             }
             let DEATHS_DAILY_AVERAGE = summed_days > 0 ? sumDeathsCount / summed_days : NaN;
 
-            allFilesMap.set(`confirmed-cases/${regionFileName}.json`,
+            allFilesMap.set(`combined-cases/${regionFileName}.json`,
                 {
                     meta: {
                         PUBLISHED_DATE: todayDateString(),
@@ -141,21 +153,43 @@ const doCovidStateDashboardTablesCasesDeaths = async () => {
                     },
                     data: {
                         latest: {
-                            CONFIRMED_CASES: {
+                            CONFIRMED_CASES: { // can be deleted in the future
                                 total_confirmed_cases: summary_by_region.total_confirmed_cases,
                                 new_cases: summary_by_region.new_cases,
                                 new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
                                 cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days,
                                 EPISODE_UNCERTAINTY_PERIOD: summary_by_region.EPISODE_UNCERTAINTY_PERIOD,
                                 POPULATION: summary_by_region.POPULATION,
-                                CASES_DAILY_AVERAGE: CASES_DAILY_AVERAGE
+                                CASES_DAILY_AVERAGE: avg_cases_results['confirmed'],
+                            },
+                            CASES: {
+                                total_confirmed_cases: summary_by_region.total_confirmed_cases,
+                                total_probable_cases: summary_by_region.total_probable_cases,
+                                total_combined_cases: summary_by_region.total_combined_cases,
+                                new_cases: summary_by_region.new_cases,
+                                new_cases_delta_1_day: summary_by_region.new_cases_delta_1_day,
+                                confirmed_cases_per_100k_7_days: summary_by_region.cases_per_100k_7_days,
+                                probable_cases_per_100k_7_days: summary_by_region.probable_cases_per_100k_7_days,
+                                combined_cases_per_100k_7_days: summary_by_region.combined_cases_per_100k_7_days,
+
+                                EPISODE_UNCERTAINTY_PERIOD: summary_by_region.EPISODE_UNCERTAINTY_PERIOD,
+                                PROBABLE_UNCERTAINTY_PERIOD: summary_by_region.PROBABLE_UNCERTAINTY_PERIOD,
+                                COMBINED_UNCERTAINTY_PERIOD: summary_by_region.COMBINED_UNCERTAINTY_PERIOD,
+                                POPULATION: summary_by_region.POPULATION,
+                                CONFIRMED_CASES_DAILY_AVERAGE: avg_cases_results['confirmed'],
+                                PROBABLE_CASES_DAILY_AVERAGE: avg_cases_results['probable'],
+                                COMBINED_CASES_DAILY_AVERAGE: avg_cases_results['combined']
                             }
                         },
                         time_series: {
-                            CONFIRMED_CASES_EPISODE_DATE: CONFIRMED_CASES_EPISODE_DATE,
+                            CONFIRMED_CASES_EPISODE_DATE: getDateValueRows(rows_by_region, 'CASES'),
                             CONFIRMED_CASES_REPORTED_DATE: getDateValueRows(rows_by_region, 'REPORTED_CASES'),
+                            PROBABLE_CASES_EPISODE_DATE: getDateValueRows(rows_by_region, 'PROBABLE_CASES'),
+                            COMBINED_CASES_EPISODE_DATE: getDateValueRows(rows_by_region, 'COMBINED_CASES'),
                             AVG_CASE_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_CASE_RATE_PER_100K_7_DAYS'),
-                            AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_CASE_REPORT_RATE_PER_100K_7_DAYS')
+                            AVG_CASE_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_CASE_REPORT_RATE_PER_100K_7_DAYS'),
+                            AVG_PROBABLE_CASE_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_PROBABLE_CASE_RATE_PER_100K_7_DAYS'),
+                            AVG_COMBINED_CASE_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_COMBINED_CASE_RATE_PER_100K_7_DAYS')
                         }
                     }
                 });

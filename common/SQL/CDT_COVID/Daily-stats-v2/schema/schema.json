@@ -31,9 +31,11 @@
           "required": [
             "DATE",
             "LATEST_TOTAL_CONFIRMED_CASES",
+            "LATEST_TOTAL_COMBINED_CASES",
             "NEWLY_REPORTED_CASES",
             "LATEST_PCT_CH_CASES_REPORTED_1_DAY",
             "LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS",
+            "LATEST_CONFIDENT_AVG_COMBINED_CASE_RATE_PER_100K_7_DAYS",
             "LATEST_CONFIDENT_INCREASE_CASE_RATE_PER_100K_7_DAYS",
             "NEWLY_REPORTED_CASES_LAST_7_DAYS"
           ],
@@ -47,6 +49,11 @@
               "minimum": 999999,
               "maximum": 99999999
             },
+            "LATEST_TOTAL_COMBINED_CASES":{
+              "type": "integer",
+              "minimum": 999999,
+              "maximum": 99999999
+            },
             "NEWLY_REPORTED_CASES":{
               "type": "integer",
               "maximum": 99999999
@@ -55,6 +62,11 @@
               "type": "number"
             },
             "LATEST_CONFIDENT_AVG_CASE_RATE_PER_100K_7_DAYS":{
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100000
+            },
+            "LATEST_CONFIDENT_AVG_COMBINED_CASE_RATE_PER_100K_7_DAYS":{
               "type": "number",
               "minimum": 0,
               "maximum": 100000
