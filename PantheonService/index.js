@@ -235,7 +235,7 @@ module.exports = async function (context, req) {
                     }
                   });
                 if (errmsg == '') {
-                  await debugMessage(s`UPDATE SUCCESS: ${sourcefile.filename}`);
+                  await debugMessage(`UPDATE SUCCESS: ${sourcefile.filename}`);
                 } else {
                   await debugMessage(`UPDATE FAIL: ${sourcefile.filename} : ${errmsg}`);
                 }
