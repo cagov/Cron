@@ -55,6 +55,7 @@ const tag_nomaster = 'staging-only';
 //const slackErrorChannel = 'C01H6RB99E2'; //Carter's debug channel
 const slackErrorChannel = 'C01DBP67MSQ'; // #testingbot channel
 const slackDebugChannel = 'C02J16U50KE'; // #jbum-testing
+const slackDebug = true;
 
 /**
  * @param {number} timeout
@@ -64,6 +65,7 @@ const slackDebugChannel = 'C02J16U50KE'; // #jbum-testing
     setTimeout(resolve, timeout);
   });
 }
+
 
 
 module.exports = async function (context, req) {
@@ -137,6 +139,10 @@ module.exports = async function (context, req) {
 
     manifest.posts = await getWordPressPosts();
 
+    if (slackDebug) {
+      await slackBotReplyPost(slackDebugChannel, slackPostTS,`${manifest.posts.length} posts retrieved`);
+    }
+
     //Add custom columns to sourcefile data
     manifest.posts.forEach(sourcefile => {
       const tagtext = sourcefile.tags.length===0 ? '' : `tags: [${sourcefile.tags.map(x=>`"${x}"`) .join(',')}]\n`;
@@ -160,6 +166,9 @@ module.exports = async function (context, req) {
     });
 
     for(const mergetarget of mergetargets) {
+      if (slackDebug) {
+        await slackBotReplyPost(slackDebugChannel, slackPostTS,`\nMERGE target: ${mergetarget}\n`);
+      }
       //Query GitHub files
       const targetfiles = (await gitRepo.getContents(mergetarget,githubSyncFolder,false)).data
         .filter(x=>x.type==='file'&&(x.name.endsWith('.html')||x.name.endsWith('.json'))&&!ignoreFiles.includes(x.name));
@@ -173,7 +182,9 @@ module.exports = async function (context, req) {
       //Files to delete
       for(const deleteTarget of targetfiles.filter(x=>!manifest.posts.find(y=>x.filename===y.filename))) {
         await gitRepo.deleteFile(mergetarget,deleteTarget.path);
-        console.log(`DELETE Success: ${deleteTarget.path}`);
+        if (slackDebug) {
+          await slackBotReplyPost(slackDebugChannel, slackPostTS,`DELETE Success: ${deleteTarget.path}`);
+        }
         delete_count++;
       }
 
@@ -183,16 +194,22 @@ module.exports = async function (context, req) {
           //Manual translation request
           const targetfile = targetfiles.find(y=>sourcefile.filename===y.filename);
           if(targetfile) {
-            console.log(`Manually submitting translation request for "${forceTranslateSlug}"`);
+            if (slackDebug) {
+              await slackBotReplyPost(slackDebugChannel, slackPostTS,`Manually submitting translation request for "${forceTranslateSlug}"`);
+            }
             translationUpdateAddPost(sourcefile, `/${mergetarget}/${targetfile.path}`,translationUpdateList);
           }
         }
 
         if(sourcefile.ignore) {
-          console.log(`Ignored: ${sourcefile.filename}`);
+          if (slackDebug) {
+            await slackBotReplyPost(slackDebugChannel, slackPostTS,`Ignored: ${sourcefile.filename}`);
+          }
           ignore_count++;
         } else if(sourcefile.nomaster&&mergetarget===masterbranch) {
-          console.log(`PAGE Skipped: ${sourcefile.filename} -> ${mergetarget}`);
+          if (slackDebug) {
+            await slackBotReplyPost(slackDebugChannel, slackPostTS,`PAGE Skipped: ${sourcefile.filename} -> ${mergetarget}`);
+          }
           staging_only_count++;
         } else {
           let targetfile = targetfiles.find(y=>sourcefile.filename===y.filename);
@@ -202,10 +219,12 @@ module.exports = async function (context, req) {
           if(targetfile) {
             //UPDATE
             if(targetfile.sha===sourceSha) {
-              console.log(`SHA matched: ${sourcefile.filename}`);
-              if (sourcefile.filename == "sandbox") {
-                console.log("Sandbox HTML",sourcefile.html);
-              }
+              // if (slackDebug) {
+              //   await slackBotReplyPost(slackDebugChannel, slackPostTS,`SHA matched: ${sourcefile.filename}`);
+              // }
+              // if (sourcefile.filename == "sandbox") {
+              //   console.log("Sandbox HTML",sourcefile.html);
+              // }
               sha_match_count++;
             } else {
               //compare
@@ -226,15 +245,18 @@ module.exports = async function (context, req) {
                       throw error;
                     }
                   });
-
-                console.log(`UPDATE Success: ${sourcefile.filename}`);
+                if (slackDebug) {
+                  await slackBotReplyPost(slackDebugChannel, slackPostTS,`UPDATE Success: ${sourcefile.filename}`);
+                }   
                 update_count++;
 
                 if(mergetarget===masterbranch) {
                   translationUpdateAddPost(sourcefile, `/${mergetarget}/${targetfile.path}`,translationUpdateList);
                 }
               } else {
-                console.log(`File compare matched: ${sourcefile.filename}`);
+                if (slackDebug) {
+                  await slackBotReplyPost(slackDebugChannel, slackPostTS,`File compare matched: ${sourcefile.filename}`);
+                }   
 
                 binary_match_count++;
               }
@@ -246,7 +268,9 @@ module.exports = async function (context, req) {
             const message = gitHubMessage('Add page',newFileName);
             await gitRepo.writeFile(mergetarget, newFilePath, content, message, {committer,encode:false});
 
-            console.log(`ADD Success: ${sourcefile.filename}`);
+            if (slackDebug) {
+              await slackBotReplyPost(slackDebugChannel, slackPostTS,`ADD Success: ${sourcefile.filename}`);
+            }   
             add_count++;
 
             if(mergetarget===masterbranch) {
@@ -290,12 +314,14 @@ module.exports = async function (context, req) {
       await postTranslations(translationUpdateList);
     }
 
-    console.log('done.');
+    if (slackDebug) {
+      await slackBotReplyPost(slackDebugChannel, slackPostTS,'done.');
+    }
   } // End Try for the entire module
   catch (e) {
     //some error in the app.  Report it to slack.
     const errorTitle = `Problem running ${appName}`;
-    await slackBotReportError(slackErrorChannel,errorTitle,e,req);
+    await slackBotReportError(slackErrorChannel, errorTitle,e,req);
 
     context.res = {
       body: `<html><title>${errorTitle}</title><body><h1>${errorTitle}</h1><h2>Error Text</h2><pre>${e.stack}</pre><h2>Original Request</h2><pre>${JSON.stringify(req,null,2)}</pre></body></html>`,
