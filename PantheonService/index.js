@@ -55,7 +55,7 @@ const tag_nomaster = 'staging-only';
 //const slackErrorChannel = 'C01H6RB99E2'; //Carter's debug channel
 const slackErrorChannel = 'C01DBP67MSQ'; // #testingbot channel
 const slackDebugChannel = 'C02J16U50KE'; // #jbum-testing
-const slackDebug = true; // Use this for debugging azure as needed
+const slackDebug = false; // Use this for debugging azure as needed
 var slackPostTS = null;
 
 /**
