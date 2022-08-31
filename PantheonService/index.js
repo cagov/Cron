@@ -11,7 +11,7 @@ const {
   postTranslations,
   translationUpdateAddPost
 } = require('../common/avantPage');
-const { slackBotReportError,slackBotChatPost,slackBotReplyPost } = require('../common/slackBot');
+const { slackBotReportError,slackBotChatPost,slackBotReplyPost,slackBotReactionAdd } = require('../common/slackBot');
 
 const { JSDOM } = require('jsdom');
 const sha1 = require('sha1');
@@ -55,29 +55,33 @@ const tag_nomaster = 'staging-only';
 //const slackErrorChannel = 'C01H6RB99E2'; //Carter's debug channel
 const slackErrorChannel = 'C01DBP67MSQ'; // #testingbot channel
 const slackDebugChannel = 'C02J16U50KE'; // #jbum-testing
-const slackDebug = true;
+const slackDebug = false; // Use this for debugging azure as needed
+var slackPostTS = null;
 
 /**
  * @param {number} timeout
  */
- function wait(timeout) {
+function wait(timeout) {
   return new Promise(resolve => {
     setTimeout(resolve, timeout);
   });
 }
 
-
+async function debugMessage(msg) {
+  if (slackDebug && slackPostTS) {
+    await slackBotReplyPost(slackDebugChannel, slackPostTS, msg);
+  } else {
+    console.log(msg);
+  }
+}
 
 module.exports = async function (context, req) {
-
-  let slackPostTS = null;
-
   try { // The entire module
 
     slackPostTS = (await (await slackBotChatPost(slackDebugChannel,`${appName} triggered`)).json()).ts;
 
-    await wait(30 * 1000); // waiting 10 seconds to avoid sync issues with Pantheon notifications
-    await slackBotReplyPost(slackDebugChannel, slackPostTS,`${appName} started after delay`);
+    await wait(15 * 1000); // waiting 15 seconds to avoid sync issues with Pantheon notifications
+    await debugMessage(`${appName} started after delay`);
 
     const gitRepo = await new GitHub({token: process.env["GITHUB_TOKEN"]})
       .getRepo(githubUser,githubRepo);
@@ -139,9 +143,7 @@ module.exports = async function (context, req) {
 
     manifest.posts = await getWordPressPosts();
 
-    if (slackDebug) {
-      await slackBotReplyPost(slackDebugChannel, slackPostTS,`${manifest.posts.length} posts retrieved`);
-    }
+    await debugMessage(`${manifest.posts.length} posts retrieved`);
 
     //Add custom columns to sourcefile data
     manifest.posts.forEach(sourcefile => {
@@ -166,9 +168,7 @@ module.exports = async function (context, req) {
     });
 
     for(const mergetarget of mergetargets) {
-      if (slackDebug) {
-        await slackBotReplyPost(slackDebugChannel, slackPostTS,`\nMERGE target: ${mergetarget}\n`);
-      }
+      await debugMessage(`\nMERGE target: ${mergetarget}\n`);
       //Query GitHub files
       const targetfiles = (await gitRepo.getContents(mergetarget,githubSyncFolder,false)).data
         .filter(x=>x.type==='file'&&(x.name.endsWith('.html')||x.name.endsWith('.json'))&&!ignoreFiles.includes(x.name));
@@ -182,9 +182,7 @@ module.exports = async function (context, req) {
       //Files to delete
       for(const deleteTarget of targetfiles.filter(x=>!manifest.posts.find(y=>x.filename===y.filename))) {
         await gitRepo.deleteFile(mergetarget,deleteTarget.path);
-        if (slackDebug) {
-          await slackBotReplyPost(slackDebugChannel, slackPostTS,`DELETE Success: ${deleteTarget.path}`);
-        }
+        await debugMessage(`DELETE Success: ${deleteTarget.path}`);
         delete_count++;
       }
 
@@ -194,22 +192,16 @@ module.exports = async function (context, req) {
           //Manual translation request
           const targetfile = targetfiles.find(y=>sourcefile.filename===y.filename);
           if(targetfile) {
-            if (slackDebug) {
-              await slackBotReplyPost(slackDebugChannel, slackPostTS,`Manually submitting translation request for "${forceTranslateSlug}"`);
-            }
+            await debugMessage(`Manually submitting translation request for "${forceTranslateSlug}"`);
             translationUpdateAddPost(sourcefile, `/${mergetarget}/${targetfile.path}`,translationUpdateList);
           }
         }
 
         if(sourcefile.ignore) {
-          if (slackDebug) {
-            await slackBotReplyPost(slackDebugChannel, slackPostTS,`Ignored: ${sourcefile.filename}`);
-          }
+          await debugMessage(s`Ignored: ${sourcefile.filename}`);
           ignore_count++;
         } else if(sourcefile.nomaster&&mergetarget===masterbranch) {
-          if (slackDebug) {
-            await slackBotReplyPost(slackDebugChannel, slackPostTS,`PAGE Skipped: ${sourcefile.filename} -> ${mergetarget}`);
-          }
+          await debugMessage(`PAGE Skipped: ${sourcefile.filename} -> ${mergetarget}`);
           staging_only_count++;
         } else {
           let targetfile = targetfiles.find(y=>sourcefile.filename===y.filename);
@@ -219,12 +211,7 @@ module.exports = async function (context, req) {
           if(targetfile) {
             //UPDATE
             if(targetfile.sha===sourceSha) {
-              // if (slackDebug) {
-              //   await slackBotReplyPost(slackDebugChannel, slackPostTS,`SHA matched: ${sourcefile.filename}`);
-              // }
-              // if (sourcefile.filename == "sandbox") {
-              //   console.log("Sandbox HTML",sourcefile.html);
-              // }
+              // await debugMessage(`SHA matched: ${sourcefile.filename}`);
               sha_match_count++;
             } else {
               //compare
@@ -248,12 +235,10 @@ module.exports = async function (context, req) {
                       throw error;
                     }
                   });
-                if (slackDebug) {
-                  if (errmsg == '') {
-                    await slackBotReplyPost(slackDebugChannel, slackPostTS,`UPDATE Success: ${sourcefile.filename}`);
-                  } else {
-                    await slackBotReplyPost(slackDebugChannel, slackPostTS,`UPDATE FAIL: ${sourcefile.filename} : ${errmsg}`);
-                  }
+                if (errmsg == '') {
+                  await debugMessage(s`UPDATE SUCCESS: ${sourcefile.filename}`);
+                } else {
+                  await debugMessage(`UPDATE FAIL: ${sourcefile.filename} : ${errmsg}`);
                 }
                 update_count++;
 
@@ -261,10 +246,7 @@ module.exports = async function (context, req) {
                   translationUpdateAddPost(sourcefile, `/${mergetarget}/${targetfile.path}`,translationUpdateList);
                 }
               } else {
-                if (slackDebug) {
-                  await slackBotReplyPost(slackDebugChannel, slackPostTS,`File compare matched: ${sourcefile.filename}`);
-                }   
-
+                await debugMessage(`File compare matched: ${sourcefile.filename}`);
                 binary_match_count++;
               }
             }
@@ -274,10 +256,7 @@ module.exports = async function (context, req) {
             const newFilePath = `${githubSyncFolder}/${newFileName}`;
             const message = gitHubMessage('Add page',newFileName);
             await gitRepo.writeFile(mergetarget, newFilePath, content, message, {committer,encode:false});
-
-            if (slackDebug) {
-              await slackBotReplyPost(slackDebugChannel, slackPostTS,`ADD Success: ${sourcefile.filename}`);
-            }   
+            await debugMessage(`ADD Success: ${sourcefile.filename}`);
             add_count++;
 
             if(mergetarget===masterbranch) {
@@ -321,14 +300,15 @@ module.exports = async function (context, req) {
       await postTranslations(translationUpdateList);
     }
 
-    if (slackDebug) {
-      await slackBotReplyPost(slackDebugChannel, slackPostTS,'done.');
-    }
+    await debugMessage('done.');
+    await slackBotReactionAdd(slackDebugChannel, slackPostTS, 'white_check_mark');
+
   } // End Try for the entire module
   catch (e) {
     //some error in the app.  Report it to slack.
     const errorTitle = `Problem running ${appName}`;
     await slackBotReportError(slackErrorChannel, errorTitle,e,req);
+    await slackBotReactionAdd(slackDebugChannel, slackPostTS, 'x');
 
     context.res = {
       body: `<html><title>${errorTitle}</title><body><h1>${errorTitle}</h1><h2>Error Text</h2><pre>${e.stack}</pre><h2>Original Request</h2><pre>${JSON.stringify(req,null,2)}</pre></body></html>`,
