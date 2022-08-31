@@ -234,20 +234,27 @@ module.exports = async function (context, req) {
               if(content!==targetcontent) {
                 //Update file
                 const message = gitHubMessage('Update page',targetfile.name);
+                var errmsg = '';
                 await gitRepo.writeFile(mergetarget, targetfile.path, content, message, {committer,encode:false})
                   .catch(error => {
                     switch (error.response.status) {
                     case 409:
                       //conflicts could mean that the page was updated by another process.  No need to stop.
+                      errmsg = '409 conflict skipped';
                       console.error('409 conflict skipped');
                       return null;
                     default:
+                      errmsg = 'unspecified error';
                       throw error;
                     }
                   });
                 if (slackDebug) {
-                  await slackBotReplyPost(slackDebugChannel, slackPostTS,`UPDATE Success: ${sourcefile.filename}`);
-                }   
+                  if (errmsg == '') {
+                    await slackBotReplyPost(slackDebugChannel, slackPostTS,`UPDATE Success: ${sourcefile.filename}`);
+                  } else {
+                    await slackBotReplyPost(slackDebugChannel, slackPostTS,`UPDATE FAIL: ${sourcefile.filename} : ${errmsg}`);
+                  }
+                }
                 update_count++;
 
                 if(mergetarget===masterbranch) {
