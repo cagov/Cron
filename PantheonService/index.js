@@ -55,7 +55,7 @@ const tag_nomaster = 'staging-only';
 //const slackErrorChannel = 'C01H6RB99E2'; //Carter's debug channel
 const slackErrorChannel = 'C01DBP67MSQ'; // #testingbot channel
 const slackDebugChannel = 'C02J16U50KE'; // #jbum-testing
-const slackDebug = false; // Use this for debugging azure as needed
+const slackDebug = true; // Use this for debugging azure as needed
 var slackPostTS = null;
 
 /**
@@ -77,7 +77,6 @@ async function debugMessage(msg) {
 
 module.exports = async function (context, req) {
   try { // The entire module
-
     slackPostTS = (await (await slackBotChatPost(slackDebugChannel,`${appName} triggered`)).json()).ts;
 
     await wait(15 * 1000); // waiting 15 seconds to avoid sync issues with Pantheon notifications
@@ -307,8 +306,10 @@ module.exports = async function (context, req) {
   catch (e) {
     //some error in the app.  Report it to slack.
     const errorTitle = `Problem running ${appName}`;
-    await slackBotReportError(slackErrorChannel, errorTitle,e,req);
+    await slackBotReportError(slackErrorChannel, errorTitle, e, req);
     await slackBotReactionAdd(slackDebugChannel, slackPostTS, 'x');
+    const slackText = `${title}\n*Error Stack*\n\`\`\`${e.stack}\`\`\`` + `\n\n*Request*\n\`\`\`${JSON.stringify(req,null,2)}\`\`\``;
+    await slackBotReplyPost(slackDebugChannel, slackPostTS, msg);
 
     context.res = {
       body: `<html><title>${errorTitle}</title><body><h1>${errorTitle}</h1><h2>Error Text</h2><pre>${e.stack}</pre><h2>Original Request</h2><pre>${JSON.stringify(req,null,2)}</pre></body></html>`,
