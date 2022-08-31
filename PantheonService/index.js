@@ -306,9 +306,10 @@ module.exports = async function (context, req) {
   catch (e) {
     //some error in the app.  Report it to slack.
     const errorTitle = `Problem running ${appName}`;
-    await slackBotReportError(slackErrorChannel, errorTitle, e, req);
     await slackBotReactionAdd(slackDebugChannel, slackPostTS, 'x');
-    const slackText = `${title}\n*Error Stack*\n\`\`\`${e.stack}\`\`\`` + `\n\n*Request*\n\`\`\`${JSON.stringify(req,null,2)}\`\`\``;
+    const slackText = `${errorTitle}\n*Error Stack*\n\`\`\`${e.stack}\`\`\`` + `\n\n*Request*\n\`\`\`${JSON.stringify(req,null,2)}\`\`\``;
+    console.log(slackText);
+    await slackBotReportError(slackErrorChannel, errorTitle, e, req);
     await slackBotReplyPost(slackDebugChannel, slackPostTS, msg);
 
     context.res = {
