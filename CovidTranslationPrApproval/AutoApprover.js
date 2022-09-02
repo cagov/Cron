@@ -14,7 +14,7 @@ const dataTimeZone = 'America/Los_Angeles';
 const AutoApproverLabels = require('./AutoApproverLabels.json').data;
 const labelPublishASAP = AutoApproverLabels.specialLabels.PublishASAP;
 const labelDoNotPublish = AutoApproverLabels.specialLabels.DoNotPublish;
-const securityGroups = ['OWNER', 'CONTRIBUTOR', 'COLLABORATOR'];
+const securityGroups = ['OWNER', 'CONTRIBUTOR', 'COLLABORATOR','MEMBER'];
 const addToRollUptag = 'Add to Rollup';
 const rollUptag = 'Rollup';
 
@@ -39,7 +39,9 @@ const rollUptag = 'Rollup';
 const getPrList = async gitRepo => {
     /** @type {PrRow[]} */
     const purePrs = (await gitRepo.listPullRequests()).data;
-
+    if (purePrs.length > 0) {
+        console.log("Author association: ",purePrs[0].author_association);
+    }
     return purePrs
         .filter(p =>
             !p.draft //ignore drafts
