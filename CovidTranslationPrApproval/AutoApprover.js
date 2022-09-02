@@ -42,6 +42,12 @@ const getPrList = async gitRepo => {
     if (purePrs.length > 0) {
         console.log("Author association: ",purePrs[0].author_association);
     }
+    // Author Association does not appear to be editable, it is automatically assigned
+    // by Github (and not reliably) -- we have an active service account which is still
+    // considered 'member', so this is not a particularly useful mechanism for security
+    //
+    // The related concept of ROLES (e.g. read, write, maintain, admin) are editable, and work already.
+    // - jbum
     return purePrs
         .filter(p =>
             !p.draft //ignore drafts
