@@ -4,7 +4,7 @@
         "name": "CovidEquityImpactPreview",
         "type": "timerTrigger",
         "direction": "in",
-        "schedule": "0 30 20,21,22 * * Wed"
+        "schedule": "0 30 14 * * Wed"
       }
     ]
   }

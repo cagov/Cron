@@ -4,7 +4,7 @@
       "name": "CovidStateDashboardSummary",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 45 14 * * Tue,Fri"
+      "schedule": "0 45 14 * * Thu"
     }
   ]
 }
