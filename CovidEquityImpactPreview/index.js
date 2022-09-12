@@ -8,7 +8,7 @@ module.exports = async function (context, myTimer) {
 
   let slackPostTS = null;
   try {
-      slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Wednesday @ 1:30pm)`)).json()).ts;
+      slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Wednesday @ 7:30am)`)).json()).ts;
 
       const TreeRunResults = await doCovidEquityImpact(true); // preview run
 

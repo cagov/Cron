@@ -4,7 +4,7 @@
         "name": "CovidStateDashboardVaccines",
         "type": "timerTrigger",
         "direction": "in",
-        "schedule": "0 5 14 * * Fri"
+        "schedule": "0 5 14 * * Thu"
       }
     ]
   }
