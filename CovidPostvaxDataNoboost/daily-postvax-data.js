@@ -2,15 +2,15 @@ const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 const { todayDateString } = require('../common/gitTreeCommon');
 
-const schemaFileName = "../SQL/CDT_COVID/postvax-data-v2/schema/schema.json";
-const schemaTestGoodFilePath = "../SQL/CDT_COVID/postvax-data-v2/schema/tests/pass/";
-const schemaTestBadFilePath = "../SQL/CDT_COVID/postvax-data-v2/schema/tests/fail/";
+const schemaFileName = "../SQL/CDT_COVID/postvax-data/schema/schema.json";
+const schemaTestGoodFilePath = "../SQL/CDT_COVID/postvax-data/schema/tests/pass/";
+const schemaTestBadFilePath = "../SQL/CDT_COVID/postvax-data/schema/tests/fail/";
 
 const getData_daily_postvax_data = async () => {
   const statResults = await queryDataset(
       {
-          postvax_data: getSQL('CDT_COVID/postvax-data-v2/Postvax'),
-          monthlyrate_data: getSQL('CDT_COVID/postvax-data-v2/MonthlyRates'),
+          postvax_data: getSQL('CDT_COVID/postvax-data/Postvax'),
+          monthlyrate_data: getSQL('CDT_COVID/postvax-data/MonthlyRates'),
       }
       ,process.env["SNOWFLAKE_CDTCDPH_COVID_OAUTH"]
   );
@@ -37,7 +37,7 @@ const getData_daily_postvax_data = async () => {
   };
 
   // For now, don't bother validating until we get data into a form we really like...
-  validateJSON(`Postvax-v2 data failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
+  validateJSON(`Postvax data failed validation`, json,schemaFileName,schemaTestGoodFilePath,schemaTestBadFilePath);
 
   return json;
 };

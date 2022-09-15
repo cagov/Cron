@@ -77,9 +77,6 @@
                     "VAX_CASE_RATE",
                     "VAX_HOSP_RATE",
                     "VAX_DEATH_DOD_RATE",
-                    "BOOST_CASE_RATE",
-                    "BOOST_HOSP_RATE",
-                    "BOOST_DEATH_DOD_RATE",
                 "REPORT_DATE"
               ],
               "properties": {
@@ -102,15 +99,6 @@
                   "$ref": "#/definitions/1m-report-rate"
                 },
                 "VAX_DEATH_DOD_RATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "BOOST_CASE_RATE":{
-                  "$ref": "#/definitions/100k-report-rate"
-                },
-                "BOOST_HOSP_RATE":{
-                  "$ref": "#/definitions/1m-report-rate"
-                },
-                "BOOST_DEATH_DOD_RATE":{
                   "$ref": "#/definitions/1m-report-rate"
                 },
                 "REPORT_DATE":{

@@ -5,7 +5,7 @@ const { todayDateString, todayTimeString, sleep } = require('../common/gitTreeCo
 const PrLabels = ['Automatic Deployment','Add to Rollup','Publish at 9:15 a.m. ☀️'];
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
-const githubPath = 'data/dashboard/postvax-v2';
+const githubPath = 'data/dashboard/postvax';
 const fileName = 'california.json';
 const stagingBranch = 'CovidStateDashboardPostvax_Staging';
 const targetBranch = 'main';
@@ -16,7 +16,7 @@ const targetBranch = 'main';
  */
 const doCovidPostvaxData = async (previewOnly) => {
     const gitToken = process.env["GITHUB_TOKEN"];
-    const prTitle = `${todayDateString()} Postvax-v2 Data Update`;
+    const prTitle = `${todayDateString()} Postvax Data Update`;
 
     const jsonData =  await getData_daily_postvax_data();
 
