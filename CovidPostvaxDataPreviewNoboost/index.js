@@ -11,7 +11,7 @@ module.exports = async function (context, myTimer) {
   try {
     slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Wednesday @ 8:30am -- should snooze unless first week of month )`)).json()).ts;
 
-    if (isIdleDay({weekends_off:true, holidays_off:true, first_week_only:true})) {
+    if (isIdleDay({weekends_off:true, holidays_off:true, first_week_only:true, day_delta:1})) {
       await slackBotReplyPost(debugChannel, slackPostTS,`${appName} snoozed`);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'zzz');
     } else {
