@@ -18,10 +18,17 @@ const cron_holidays = [
             ]
 
 
-const isIdleDay = ({weekends_off = true, holidays_off = true, first_week_only = false}) => {
+const isIdleDay = ({weekends_off = true, holidays_off = true, first_week_only = false, day_delta = 0}) => {
     const todayDateStr = todayDateString();
-    const dayOfWeekIdx = (new Date()).getDay(); // sunday is zero
-    const dayOfMonth = (new Date()).getDate(); // 1-31
+
+    var check_date = new Date();
+    if (day_delta != 0) {
+        // For preview jobs, we may add a day or two so we compare against the publication day 
+        // to determine whether the preview can be skipped
+        check_date.setDate(check_date.getDate() + day_delta);
+    }
+    const dayOfWeekIdx = check_date.getDay(); // sunday is zero
+    const dayOfMonth = check_date.getDate(); // 1-31
     if (holidays_off && cron_holidays.includes(todayDateStr)) {
         return true;
     }
