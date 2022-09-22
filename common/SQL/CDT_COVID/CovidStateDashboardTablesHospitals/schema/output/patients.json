@@ -179,7 +179,7 @@
                   "type": "array",
                   "uniqueItems": true,
                   "minItems": 300,
-                  "maxItems": 900,
+                  "maxItems": 1200,
                   "items": {
                     "required": true,
                     "type": "object",
@@ -224,7 +224,7 @@
                   "type": "array",
                   "uniqueItems": true,
                   "minItems": 300,
-                  "maxItems": 900,
+                  "maxItems": 1200,
                   "items": {
                     "required": true,
                     "type": "object",
@@ -269,7 +269,7 @@
                   "type": "array",
                   "uniqueItems": true,
                   "minItems": 300,
-                  "maxItems": 900,
+                  "maxItems": 1200,
                   "items": {
                     "required": true,
                     "type": "object",
@@ -314,7 +314,7 @@
                   "type": "array",
                   "uniqueItems": true,
                   "minItems": 300,
-                  "maxItems": 900,
+                  "maxItems": 1200,
                   "items": {
                     "required": true,
                     "type": "object",
