@@ -16,7 +16,7 @@ const targetBranch = 'main';
  */
 const doCovidPostvaxData = async (previewOnly) => {
     const gitToken = process.env["GITHUB_TOKEN"];
-    const prTitle = `${todayDateString()} Postvax-v2 Data Update`;
+    const prTitle = `${todayDateString()} Postvax Data Update`;
 
     const jsonData =  await getData_daily_postvax_data();
 

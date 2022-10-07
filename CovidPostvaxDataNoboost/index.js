@@ -17,7 +17,7 @@ module.exports = async function (context, myTimer) {
       const TreeRunResults = await doCovidPostvaxData(false);
 
       if(TreeRunResults.Pull_Request_URL) {
-        const prMessage = `Weekly Postvax-v2 data ready\n${TreeRunResults.Pull_Request_URL}`;
+        const prMessage = `Weekly Postvax data ready\n${TreeRunResults.Pull_Request_URL}`;
         await slackBotReplyPost(debugChannel, slackPostTS, prMessage);
         await slackBotReactionAdd(debugChannel, slackPostTS, 'package');
         await slackBotChatPost(notifyChannel, prMessage);
