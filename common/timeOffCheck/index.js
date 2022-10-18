@@ -38,7 +38,7 @@ const isIdleDay = ({weekends_off = true, holidays_off = true, first_week_only = 
         return true;
     }
     // The first Monday after a prior Friday in a given month will always land between the 4th-10th
-    if (first_mon_after_fri && dayOfWeekIdx == 1 && (dayOfMonth > 3 && dayOfMonth < 11))) {
+    if (first_mon_after_fri && dayOfWeekIdx == 1 && (dayOfMonth > 3 && dayOfMonth < 11)) {
         return true;
     }
     return false;
