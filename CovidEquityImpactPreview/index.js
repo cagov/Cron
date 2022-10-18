@@ -1,6 +1,6 @@
-
 const { doCovidEquityImpact } = require('../CovidEquityImpact/worker'); // this piggy-backs off of the main cron
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
+const { isIdleDay } = require('../common/timeOffCheck');
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
 
 module.exports = async function (context, myTimer) {
