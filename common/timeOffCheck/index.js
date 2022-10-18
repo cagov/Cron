@@ -17,8 +17,7 @@ const cron_holidays = [
             '2022-12-25', // christmas
             ]
 
-
-const isIdleDay = ({weekends_off = true, holidays_off = true, first_week_only = false, day_delta = 0}) => {
+const isIdleDay = ({weekends_off = true, holidays_off = true, first_week_only = false, first_mon_after_fri = false, day_delta = 0}) => {
     const todayDateStr = todayDateString();
 
     var check_date = new Date();
@@ -36,6 +35,10 @@ const isIdleDay = ({weekends_off = true, holidays_off = true, first_week_only = 
         return true;
     }
     if (first_week_only && (dayOfMonth > 7)) {
+        return true;
+    }
+    // The first Monday after a prior Friday in a given month will always land between the 4th-10th
+    if (first_mon_after_fri && dayOfWeekIdx == 1 && (dayOfMonth > 3 && dayOfMonth < 11))) {
         return true;
     }
     return false;
