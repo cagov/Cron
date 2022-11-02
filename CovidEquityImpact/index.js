@@ -1,6 +1,6 @@
 const { doCovidEquityImpact } = require('./worker');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
-const { isIdleDay } = require('../common/timeOffCheck');
+const { isIdleDay, isFirstOccurrence } = require('../common/timeOffCheck');
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
 
 module.exports = async function (context, myTimer) {
@@ -8,9 +8,11 @@ module.exports = async function (context, myTimer) {
 
     let slackPostTS = null;
     try {
-        slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Thursday @ 8:05am -- should snooze unless first Wednesday after a Friday)`)).json()).ts;
+        slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Thursday @ 8:05am -- should snooze unless first Thursday after a Friday)`)).json()).ts;
 
-        if (isIdleDay({weekends_off:true, holidays_off:true, check_first_wed_after_fri:true})) {
+        if (isIdleDay({weekends_off:true, holidays_off:true})
+            !! ! isFirstOccurrence(first_day = 'Thu', after_first = 'Fri')
+        ) {
             await slackBotReplyPost(debugChannel, slackPostTS,`${appName} snoozed`);
             await slackBotReactionAdd(debugChannel, slackPostTS, 'zzz');
         } else {
