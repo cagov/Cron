@@ -1,6 +1,6 @@
 const { doCovidEquityImpact } = require('../CovidEquityImpact/worker'); // this piggy-backs off of the main cron
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
-const { isIdleDay } = require('../common/timeOffCheck');
+const { isIdleDay, isFirstOccurrence } = require('../common/timeOffCheck');
 const debugChannel = 'C01DBP67MSQ'; // #testingbot
 
 module.exports = async function (context, myTimer) {
@@ -10,7 +10,9 @@ module.exports = async function (context, myTimer) {
   try {
     slackPostTS = (await (await slackBotChatPost(debugChannel,`${appName} (Every Monday @ 8:10am -- should snooze unless first Monday after a Friday)`)).json()).ts;
 
-    if (isIdleDay({weekends_off:true, holidays_off:true, check_first_mon_after_fri:true})) {
+    if (isIdleDay({weekends_off:true, holidays_off:true})
+        || ! isFirstOccurrence(first_day = 'Mon', after_first = 'Fri')
+    ) {
       await slackBotReplyPost(debugChannel, slackPostTS,`${appName} snoozed`);
       await slackBotReactionAdd(debugChannel, slackPostTS, 'zzz');
     } else {
