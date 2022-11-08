@@ -4,7 +4,7 @@
         "name": "CovidPostvaxDataNoboost",
         "type": "timerTrigger",
         "direction": "in",
-        "schedule": "0 45 14 * * Thu"
+        "schedule": "0 45 15 * * Thu"
       }
     ]
   }
