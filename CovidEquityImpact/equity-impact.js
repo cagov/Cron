@@ -39,9 +39,6 @@ const getData_equity_impact = async () => {
            // let metric = record.DEMOG_CAT.replaceAll(' ', '_') + '_' + record.METRIC_CAT;
            metric = myReplaceAll(record.DEMOG_CAT,' ', '_') + '_' + record.METRIC_CAT;
         } catch (e) {
-            console.log('searchme');
-            console.log(record);
-            console.log(record.DEMOG_CAT);
             throw(e);
         }
 
