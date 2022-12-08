@@ -7,7 +7,7 @@ const todayDateString = () => nowPacTime({ year: 'numeric', month: '2-digit', da
 const PrLabels = ['Automatic Deployment', 'Add to Rollup', 'Publish at 9:15 a.m. ☀️'];
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
-const githubPath = 'data/dashboard';
+const githubPath = 'data/dashboard-new';
 const targetBranch = 'main'
 const stagingBranch = 'CovidStateDashboardTables_Staging';
 const doInputValidation = false;

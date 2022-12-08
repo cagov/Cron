@@ -2,7 +2,7 @@ const { queryDataset,getSQL } = require('../common/snowflakeQuery');
 const { validateJSON } = require('../common/schemaTester');
 const { todayDateString } = require('../common/gitTreeCommon');
 
-const path = 'infections-by-group/infections-by-group-california.json';
+const path = 'infections-by-group-new/infections-by-group-california.json';
 const schemaPath = "../SQL/CDT_COVID/Infections-by-group/schema/";
 const schemaFileName = `${schemaPath}output/schema.json`;
 const schemaTestGoodFilePath = `${schemaPath}output/tests/pass`;

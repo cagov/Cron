@@ -11,9 +11,9 @@ const schemaTestBadFilePath = '../SQL/CDT_COVID/EquityImpact/schema/tests/fail/'
 
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
-const previewGithubPath = 'data/to-review/equitydash';
+const previewGithubPath = 'data/to-review/equitydash-new';
 const previewBranch = 'main';
-const publishGithubPath = 'data/reviewed/equitydash';
+const publishGithubPath = 'data/reviewed/equitydash-new';
 const publishBranch = 'main';
 const fileName = 'disparity-california.json';
 

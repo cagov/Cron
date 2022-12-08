@@ -2,8 +2,8 @@ const { queryDataset } = require('../common/snowflakeQuery');
 const { validateJSON, validateJSON2, getSqlWorkAndSchemas } = require('../common/schemaTester');
 const { todayDateString, todayTimeString, sleep } = require('../common/gitTreeCommon');
 const masterBranch = 'main';
-const stagingFileLoc = 'data/to-review/equitydash/';
-const productionFileLoc = 'data/reviewed/equitydash/';
+const stagingFileLoc = 'data/to-review/equitydash-new/';
+const productionFileLoc = 'data/reviewed/equitydash-new/';
 const branchPrefix = 'data-';
 const GitHub = require('github-api');
 const githubUser = 'cagov';
@@ -306,7 +306,7 @@ If there are issues with the data:
 
         //Request reviewers for Pr
         //https://docs.github.com/en/free-pro-team@latest/rest/reference/pulls#request-reviewers-for-a-pull-request
-        await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/pulls/${Pr.number}/requested_reviewers`,{reviewers:PrReviewers});
+        //await gitRepo._request('POST', `/repos/${gitRepo.__fullname}/pulls/${Pr.number}/requested_reviewers`,{reviewers:PrReviewers});
     
         return Pr;
     }

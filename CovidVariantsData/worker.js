@@ -6,7 +6,7 @@ const todayDateString = () => nowPacTime({year: 'numeric',month: '2-digit',day: 
 const PrLabels = ['Automatic Deployment', 'Add to Rollup', 'Publish at 9:15 a.m. ☀️'];
 const githubOwner = 'cagov';
 const githubRepo = 'covid-static-data';
-const githubPath = 'data/variants';
+const githubPath = 'data/variants-new';
 const fileName = 'california.json';
 const stagingBranch = 'CovidStateDashboardVariants_Staging';
 const targetBranch = 'main';
