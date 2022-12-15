@@ -36,7 +36,7 @@ const PrInfoList = [
         title: "Covid Dashboard Tables - Cases/Deaths",
         folders: [
             "combined-cases",
-            "confirmed-deaths"
+            "combined-deaths"
         ]
     }
 ];
@@ -119,32 +119,6 @@ const doCovidStateDashboardTablesCasesDeaths = async () => {
                 avg_cases_results[key] = summed_days > 0 ? sumCasesCount / summed_days : NaN;
             }
 
-            // if(myRegion == 'California') {
-            //     console.log("CASES DAILY AVG",CASES_DAILY_AVERAGE,myRegion,summed_days,pending_dateC);
-            // }
-            // precompute daily average deaths for last 7 non-pending days - jbum
-            let sumDeathsCount = 0;
-            let CONFIRMED_DEATHS_DEATH_DATE = getDateValueRows(rows_by_region, 'DEATHS')
-            const pending_dateD = summary_by_region.DEATH_UNCERTAINTY_PERIOD.toISOString().split("T")[0];
-            const deathsList = CONFIRMED_DEATHS_DEATH_DATE.VALUES;
-            parse_state = 0;
-            summed_days = 0;
-            for (let i = 0; i < deathsList.length; ++i) {
-                if (parse_state == 0) {
-                    if (deathsList[i].DATE.toISOString().split("T")[0] == pending_dateD) {
-                        parse_state = 1;
-                    }
-                } 
-                if (parse_state == 1) {
-                    sumDeathsCount += deathsList[i].VALUE;
-                    summed_days += 1;
-                }
-                if (summed_days == 7) {
-                    break;
-                }
-            }
-            let DEATHS_DAILY_AVERAGE = summed_days > 0 ? sumDeathsCount / summed_days : NaN;
-
             allFilesMap.set(`combined-cases/${regionFileName}.json`,
                 {
                     meta: {
@@ -194,7 +168,7 @@ const doCovidStateDashboardTablesCasesDeaths = async () => {
                     }
                 });
 
-            allFilesMap.set(`confirmed-deaths/${regionFileName}.json`,
+            allFilesMap.set(`combined-deaths/${regionFileName}.json`,
                 {
                     meta: {
                         PUBLISHED_DATE: todayDateString(),
@@ -206,17 +180,36 @@ const doCovidStateDashboardTablesCasesDeaths = async () => {
                                 total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
                                 new_deaths: summary_by_region.new_deaths,
                                 new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
-                                deaths_per_100k_7_days: summary_by_region.deaths_per_100k_7_days,
+                                deaths_per_100k_7_days: summary_by_region.confirmed_deaths_per_100k_7_days,
                                 DEATH_UNCERTAINTY_PERIOD: summary_by_region.DEATH_UNCERTAINTY_PERIOD,
                                 POPULATION: summary_by_region.POPULATION,
-                                DEATHS_DAILY_AVERAGE: DEATHS_DAILY_AVERAGE
+                                DEATHS_DAILY_AVERAGE: summary_by_region.latest_confident_avg_confirmed_deaths_7_days
+                            },
+                            DEATHS: {
+                                total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
+                                total_probable_deaths: summary_by_region.total_probable_deaths,
+                                total_combined_deaths: summary_by_region.total_combined_deaths,
+                                confirmed_deaths_per_100k_7_days: summary_by_region.confirmed_deaths_per_100k_7_days,
+                                probable_deaths_per_100k_7_days: summary_by_region.probable_deaths_per_100k_7_days,
+                                combined_deaths_per_100k_7_days: summary_by_region.combined_deaths_per_100k_7_days,
+                                CONFIRMED_DEATHS_DAILY_AVERAGE: summary_by_region.latest_confident_avg_confirmed_deaths_7_days,
+                                PROBABLE_DEATHS_DAILY_AVERAGE: summary_by_region.latest_confident_avg_probable_deaths_7_days,
+                                COMBINED_DEATHS_DAILY_AVERAGE: summary_by_region.latest_confident_avg_combined_deaths_7_days,
+                                new_deaths: summary_by_region.new_deaths,
+                                new_deaths_delta_1_day: summary_by_region.new_deaths_delta_1_day,
+                                DEATH_UNCERTAINTY_PERIOD: summary_by_region.DEATH_UNCERTAINTY_PERIOD,
+                                POPULATION: summary_by_region.POPULATION,
                             }
                         },
                         time_series: {
-                            CONFIRMED_DEATHS_DEATH_DATE: CONFIRMED_DEATHS_DEATH_DATE,
+                            CONFIRMED_DEATHS_DEATH_DATE: getDateValueRows(rows_by_region, 'DEATHS'),
                             CONFIRMED_DEATHS_REPORTED_DATE: getDateValueRows(rows_by_region, 'REPORTED_DEATHS'),
-                            AVG_DEATH_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_DEATH_RATE_PER_100K_7_DAYS'),
-                            AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS')
+                            PROBABLE_DEATHS_DEATH_DATE: getDateValueRows(rows_by_region, 'PROBABLE_DEATHS'),
+                            COMBINED_DEATHS_DEATH_DATE: getDateValueRows(rows_by_region, 'COMBINED_DEATHS'),
+                            AVG_CONFIRMED_DEATH_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_DEATH_RATE_PER_100K_7_DAYS'),
+                            AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_DEATH_REPORT_RATE_PER_100K_7_DAYS'),
+                            AVG_PROBABLE_DEATH_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_PROBABLE_DEATH_RATE_PER_100K_7_DAYS'),
+                            AVG_COMBINED_DEATH_RATE_PER_100K_7_DAYS: getDateValueRows(rows_by_region, 'AVG_COMBINED_DEATH_RATE_PER_100K_7_DAYS')
                         }
                     }
                 });

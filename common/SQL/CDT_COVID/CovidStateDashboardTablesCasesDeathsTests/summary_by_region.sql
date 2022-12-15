@@ -19,9 +19,16 @@ select
     SUM(LATEST_CONFIDENT_AVG_COMBINED_CASE_RATE_PER_100K_7_DAYS) "combined_cases_per_100k_7_days",
 
     SUM(LATEST_TOTAL_CONFIRMED_DEATHS) "total_confirmed_deaths",
+    SUM(LATEST_TOTAL_PROBABLE_DEATHS) "total_probable_deaths",
+    SUM(LATEST_TOTAL_COMBINED_DEATHS) "total_combined_deaths",
     SUM(NEWLY_REPORTED_DEATHS) "new_deaths",
     SUM(LATEST_PCT_CH_DEATHS_REPORTED_1_DAY) "new_deaths_delta_1_day",
-    SUM(LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS) "deaths_per_100k_7_days",
+    SUM(LATEST_CONFIDENT_AVG_DEATHS_7_DAYS)          "latest_confident_avg_confirmed_deaths_7_days",
+    SUM(LATEST_CONFIDENT_AVG_PROBABLE_DEATHS_7_DAYS) "latest_confident_avg_probable_deaths_7_days",
+    SUM(LATEST_CONFIDENT_AVG_COMBINED_DEATHS_7_DAYS) "latest_confident_avg_combined_deaths_7_days",
+    SUM(LATEST_CONFIDENT_AVG_DEATH_RATE_PER_100K_7_DAYS) "confirmed_deaths_per_100k_7_days",
+    SUM(LATEST_CONFIDENT_AVG_PROBABLE_DEATH_RATE_PER_100K_7_DAYS) "probable_deaths_per_100k_7_days",
+    SUM(LATEST_CONFIDENT_AVG_COMBINED_DEATH_RATE_PER_100K_7_DAYS) "combined_deaths_per_100k_7_days",
 
     SUM(LATEST_TOTAL_TESTS_PERFORMED) "total_tests_performed",
     SUM(NEWLY_REPORTED_TESTS) "new_tests_reported",
@@ -30,7 +37,7 @@ select
     SUM(LATEST_POSITIVITY_RATE_7_DAYS) "test_positivity_7_days",
     SUM(LATEST_INCREASE_POSITIVITY_RATE_7_DAYS) "test_positivity_7_days_delta_7_days"
 from
-    COVID.PRODUCTION.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS
+    COVID.DEVELOPMENT.VW_CDPH_COUNTY_AND_STATE_TIMESERIES_METRICS
 where
     area not in ('Out of state','Unknown')
 group by
