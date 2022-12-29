@@ -153,6 +153,16 @@
                   "type": "integer",
                   "minimum": 0
                 },
+                "common_total_confirmed_deaths": {
+                  "required": true,
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "common_total_probable_deaths": {
+                  "required": true,
+                  "type": "integer",
+                  "minimum": 0
+                },
                 "confirmed_deaths_per_100k_7_days": {
                   "required": true,
                   "type": "number"

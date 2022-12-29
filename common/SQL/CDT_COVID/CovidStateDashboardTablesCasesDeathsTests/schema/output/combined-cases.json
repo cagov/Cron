@@ -153,6 +153,16 @@
                   "type": "integer",
                   "minimum": 0
                 },
+                "common_total_confirmed_cases": {
+                  "required": true,
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "common_total_probable_cases": {
+                  "required": true,
+                  "type": "integer",
+                  "minimum": 0
+                },
                 "new_cases": {
                   "required": true,
                   "type": "integer"
