@@ -189,6 +189,8 @@ const doCovidStateDashboardTablesCasesDeaths = async () => {
                                 total_confirmed_deaths: summary_by_region.total_confirmed_deaths,
                                 total_probable_deaths: summary_by_region.total_probable_deaths,
                                 total_combined_deaths: summary_by_region.total_combined_deaths,
+                                common_total_confirmed_deaths: summary_by_region.common_total_confirmed_deaths,
+                                common_total_probable_deaths: summary_by_region.common_total_probable_deaths,
                                 confirmed_deaths_per_100k_7_days: summary_by_region.confirmed_deaths_per_100k_7_days,
                                 probable_deaths_per_100k_7_days: summary_by_region.probable_deaths_per_100k_7_days,
                                 combined_deaths_per_100k_7_days: summary_by_region.combined_deaths_per_100k_7_days,
