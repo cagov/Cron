@@ -2,7 +2,7 @@ const { doHealthCheck } = require('./worker');
 const { slackBotChatPost, slackBotReportError } = require('../common/slackBot');
 const notifyChannel = 'C01DBP67MSQ'; //testingbot
 const debugChannel = 'C01DBP67MSQ'; //testingbot
-const tempChannel = 'C01H6RB99E2'; //carterDev
+const tempChannel = 'C02J16U50KE'; //jbum-testing
 const appName = 'CovidSiteHealth';
 
 module.exports = async function (context, myTimer) {

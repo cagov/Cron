@@ -6,8 +6,8 @@ const SlackConnector = require("@cagov/slack-connector");
 const slackBotName = "Covid State Dashboard Tables - Tests"
 
 //const notifyChannel = 'C01AA1ZB05B'; // #covid19-state-dash
-//const debugChannel = 'C01DBP67MSQ'; // #testingbot
-const debugChannel = process.env.debug ? "C01H6RB99E2" : 'C01DBP67MSQ' //#carter-dev vs #testingbot
+//const debugChannel = 'C01DBP67MSQ'; // #testingbot (renamed to #odi-engineering-bot-covid19-cron)
+const debugChannel = process.env.debug ? "C02J16U50KE" : 'C01DBP67MSQ' //#jbum-testing vs #testingbot
 
 const slackBotGetToken = () => {
   const token = process.env["SLACKBOT_TOKEN"];
