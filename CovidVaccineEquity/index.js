@@ -1,7 +1,7 @@
 const { doCovidVaccineEquity } = require('./worker');
 const { slackBotChatPost, slackBotReportError, slackBotReplyPost, slackBotReactionAdd } = require('../common/slackBot');
 const notifyChannel = 'C01HTTNKHBM'; //covid19-vaccines
-const debugChannel = 'C01DBP67MSQ'; // testingbot
+const debugChannel = 'C01DBP67MSQ'; // testingbot test
 
 module.exports = async function (context, myTimer) {
   const appName = context.executionContext.functionName;
