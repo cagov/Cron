@@ -2,6 +2,7 @@
 
 ## `CovidTranslationPrApproval` ##
 
+
 Scans the [Covid19 repo](https://github.com/cagov/covid19/pulls) for translation PRs and merges them.
 
 ### Merging Criteria ###
