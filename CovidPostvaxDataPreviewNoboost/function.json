@@ -4,7 +4,7 @@
         "name": "CovidPostvaxDataNoboostPreview",
         "type": "timerTrigger",
         "direction": "in",
-        "schedule": "0 0 16 * * Wed"
+        "schedule": "0 0 16,18,20,22 * * Wed"
       }
     ]
   }
