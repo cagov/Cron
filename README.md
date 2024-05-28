@@ -1,3 +1,5 @@
+## NOTE: As of 5-28-2024 This project is not actively maintained by ODI and this repo is being converted to Archive (read-only) status.
+
 # Functionality #
 
 ## `CovidTranslationPrApproval` ##
